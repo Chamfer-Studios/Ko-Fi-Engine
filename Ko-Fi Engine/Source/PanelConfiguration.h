@@ -21,6 +21,7 @@ private:
 	bool modifyAttributesMenu = false;
 	bool wireframe = false;
 	bool loadingIcon = false;
+	int masterVol = 5;
 };
 
 #endif // !__PANEL_CONFIG_H__

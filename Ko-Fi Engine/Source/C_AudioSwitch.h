@@ -16,7 +16,12 @@ public:
 
     bool Start() override;
     bool Update(float dt) override;
+
+    bool OnSceneSwitch() override;
     bool OnPlay() override;
+    bool OnPause() override;
+    bool OnStop() override;
+    bool OnResume() override;
 
     bool InspectorDraw(PanelChooser* chooser) override;
 
@@ -25,13 +30,14 @@ public:
 
     void UpdatePlayState();
 
-    void SwitchTrack(int newTrackIndex);
+    void SwitchTrack(int newTrackIndex, float secondsOffset);
     void PlayTrack(int trackIndex);
     void ResumeTrack(int trackIndex);
     void StopTrack(int trackIndex);
     void PauseTrack(int trackIndex);
 
     void SwitchFade(float fadeSeconds);
+    void CustomLoopLogic(R_Track* index);
 
     bool IsAnyTrackPlaying() const;
     R_Track* GetPlayingTrack() const;

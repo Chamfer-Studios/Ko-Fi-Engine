@@ -8,8 +8,10 @@
 #include "M_Input.h" 
 #include "M_SceneManager.h"
 #include "M_Physics.h"
+#include "M_Audio.h"
 #include "SceneIntro.h"
 #include "M_Camera3D.h"
+#include "M_Window.h"
 #include "ImGuiAppLog.h"
 
 #include <vector>
@@ -134,8 +136,9 @@ public:
 			"UNTAGGED", Tag::TAG_UNTAGGED,
 			"PLAYER", Tag::TAG_PLAYER,
 			"ENEMY", Tag::TAG_ENEMY,
-			"WALL", Tag::TAG_WALL,
-			"PROJECTILE", Tag::TAG_PROJECTILE);
+			"FLOOR", Tag::TAG_FLOOR,
+			"PICKUP", Tag::TAG_PICKUP,
+			"CORPSE", Tag::TAG_CORPSE);
 
 		/// Classes:
 		// float3 structure
@@ -306,7 +309,8 @@ public:
 			"PlayTrack", &C_AudioSwitch::PlayTrack,
 			"PauseTrack", &C_AudioSwitch::PauseTrack,
 			"ResumeTrack", &C_AudioSwitch::ResumeTrack,
-			"StopTrack", &C_AudioSwitch::StopTrack);
+			"StopTrack", &C_AudioSwitch::StopTrack,
+			"SwitchTrack", &C_AudioSwitch::SwitchTrack);
 
 		// Inspector Variables
 		lua.new_usertype<InspectorVariable>("InspectorVariable",
@@ -351,6 +355,11 @@ public:
 			sol::constructors<void(KoFiEngine*)>(),
 			"WorldToScreen", &M_Camera3D::WorldToScreen);
 
+		lua.new_usertype<M_Audio>("M_Audio",
+			sol::constructors<void(KoFiEngine*)>(),
+			"SetListenerVolume", &M_Audio::SetListenerVolume,
+			"GetListenerVolume", &M_Audio::GetListenerVolume);
+
 		/*lua.new_usertype<M_Physics>("M_Physics",
 			sol::constructors<void(KoFiEngine*)>(),
 			"Raycast", &M_Physics::Raycast);*/
@@ -362,6 +371,10 @@ public:
 		/// Functions
 		lua.set_function("GetMouseZ", &Scripting::LuaGetMouseZ, this);
 		lua.set_function("GetInput", &Scripting::LuaGetInput, this);
+		lua.set_function("GetVsync", &Scripting::LuaGetVsync, this);
+		lua.set_function("SetVsync", &Scripting::LuaSetVsync, this);
+		lua.set_function("GetFullscreen", &Scripting::LuaGetFullscreen, this);
+		lua.set_function("SetFullscreen", &Scripting::LuaSetFullscreen, this);
 		lua.set_function("InstantiatePrefab", &Scripting::LuaInstantiatePrefab, this);
 		lua.set_function("InstantiateNamedPrefab", &Scripting::LuaInstantiateNamedPrefab, this);
 		lua.set_function("DeleteGameObject", &Scripting::DeleteGameObject, this);
@@ -402,8 +415,29 @@ public:
 		appLog->AddLog("Quitting scripting system\n");
 		return true;
 	}
+
 	int LuaGetMouseZ() {
 		return gameObject->GetEngine()->GetInput()->GetMouseZ();
+	}
+
+	bool LuaGetVsync()
+	{
+		return gameObject->GetEngine()->GetRenderer()->GetVsync();
+	}
+
+	void LuaSetVsync(bool vSync)
+	{
+		gameObject->GetEngine()->GetRenderer()->SetVsync(vSync);
+	}
+
+	bool LuaGetFullscreen()
+	{
+		return gameObject->GetEngine()->GetWindow()->GetFullscreen();
+	}
+
+	void LuaSetFullscreen(bool fullscreen)
+	{
+		gameObject->GetEngine()->GetWindow()->SetFullscreen(fullscreen);
 	}
 
 	KEY_STATE LuaGetInput(int button)

@@ -97,6 +97,25 @@ void M_Audio::CreateM_AudioListener(float x, float y, float z)
 	alec(alListenerfv(AL_ORIENTATION, forwardUpVec));
 }
 
+void M_Audio::SetListenerVolume(int value, int numPoints)
+{
+	if (value <= 0)
+		value = 0;
+	else if (value >= numPoints)
+		value = numPoints;
+
+	float volGain = float(value) / float(numPoints);
+
+	alListenerf(AL_GAIN, volGain);
+}
+
+float M_Audio::GetListenerVolume()
+{
+	ALfloat volGain;
+	alGetListenerf(AL_GAIN, &volGain);
+	return volGain;
+}
+
 bool M_Audio::SaveConfiguration(Json& configModule) const
 {
 	return true;

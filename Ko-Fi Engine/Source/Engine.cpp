@@ -50,13 +50,13 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(physics);
 	AddModule(input);
 	AddModule(camera);
+	AddModule(audio);
 	AddModule(fileSystem);
 	AddModule(resourceManager);
 	AddModule(ui);
 	AddModule(sceneManager);
 
 	AddModule(navigation);
-	AddModule(audio);
 	AddModule(renderer);
 	AddModule(editor);
 
@@ -467,7 +467,13 @@ M_ResourceManager* KoFiEngine::GetResourceManager() const
 {
 	return this->resourceManager;
 }
+
 M_Navigation* KoFiEngine::GetNavigation() const
 {
 	return this->navigation;
+}
+
+M_Audio* KoFiEngine::GetAudio() const
+{
+	return this->audio;
 }

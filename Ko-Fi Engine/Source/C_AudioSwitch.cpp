@@ -65,6 +65,48 @@ bool C_AudioSwitch::Start()
     return true;
 }
 
+bool C_AudioSwitch::Update(float dt)
+{
+    bool ret = true;
+
+    if (switching)
+        SwitchFade(fadeTime);
+
+    if (switching)
+        pauseDifference = owner->GetEngine()->GetEngineConfig()->startupTime.ReadSec() - switchTime;
+
+    for (R_Track* index : tracks)
+    {
+        if (index->play && index->customLoop)
+            CustomLoopLogic(index);
+    }
+
+    UpdatePlayState();
+
+    return ret;
+}
+
+bool C_AudioSwitch::OnSceneSwitch()
+{
+    for (R_Track* index : tracks)
+    {
+        if (index->IsTrackLoaded())
+        {
+            StopAudio(index->source);
+            if (index->GetPlayOnStart())
+            {
+                playingTrack = index;
+
+                PlayAudio(index->source, index->offset);
+            }
+        }
+    }
+    switching = false;
+    switchTime = 0.0f;
+
+    return true;
+}
+
 bool C_AudioSwitch::OnPlay()
 {
     for (R_Track* index : tracks)
@@ -82,32 +124,34 @@ bool C_AudioSwitch::OnPlay()
     }
     switching = false;
     switchTime = 0.0f;
+
     return true;
 }
 
-bool C_AudioSwitch::Update(float dt)
+bool C_AudioSwitch::OnPause()
 {
-    bool ret = true;
-
     if (switching)
-        SwitchFade(fadeTime);
+        pauseDifference = owner->GetEngine()->GetEngineConfig()->startupTime.ReadSec() - switchTime;
 
+    if (playingTrack != nullptr)
+        PauseAudio(playingTrack->source);
+
+    return true;
+}
+
+bool C_AudioSwitch::OnStop()
+{
+    StopAllTracks();
+    
+    return true;
+}
+
+bool C_AudioSwitch::OnResume()
+{
     for (R_Track* index : tracks)
-    {
-        if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PAUSED)
-        {
-            PauseAudio(index->source);
-            if (switching)
-                pauseDifference = owner->GetEngine()->GetEngineConfig()->startupTime.ReadSec() - switchTime;
+        ResumeAudio(index->source);
 
-            continue;
-        }
-        //ResumeAudio(index->source);
-    }
-
-    UpdatePlayState();
-
-    return ret;
+    return true;
 }
 
 bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
@@ -173,7 +217,7 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
         // SWITCH BUTTON
         if (ImGui::Button("Switch To") && !switching)
         {
-            SwitchTrack(nextSwitchTrack);
+            SwitchTrack(nextSwitchTrack, 0.0f);
         }
         ImGui::SameLine();
         ImGui::DragInt("##Switch", &nextSwitchTrack, 0.1f, 0, tracks.size() - 1, "Track %d");
@@ -260,6 +304,15 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
                         ImGui::SameLine();
 
                         ImGui::SliderFloat("Offset", &index->offset, 0.0f, index->duration);
+                        
+                        ImGui::Spacing();
+
+                        if (index->mute)
+                            ImGui::BeginDisabled();
+                        if (ImGui::SliderFloat("Volume", &index->volume, 0.0f, 100.0f, "%.1f"))
+                            index->SetVolume();
+                        if (index->mute)
+                            ImGui::EndDisabled();
 
                         ImGui::Spacing();
                         ImGui::Text("Options");
@@ -274,6 +327,19 @@ bool C_AudioSwitch::InspectorDraw(PanelChooser* chooser)
 
                         if (ImGui::Checkbox("Loop", &index->loop))
                             index->SetLoop(index->loop);
+
+                        if (index->loop)
+                        {
+                            ImGui::Dummy(ImVec2{ 3, 0 });
+                            ImGui::SameLine();
+                            ImGui::Checkbox("Custom", &index->customLoop);
+                            if (index->customLoop)
+                            {
+                                ImGui::Dummy(ImVec2{ 3, 0 });
+                                ImGui::SameLine();
+                                ImGui::SliderFloat("Initial Offset", &index->loopOffset, 0.0f, index->duration, "%f seconds");
+                            }
+                        }
 
                         if (ImGui::Checkbox("Bypass SFX", &index->bypass))
                         {
@@ -313,6 +379,8 @@ void C_AudioSwitch::Save(Json& json) const
         jsonTrack["pan"] = track->GetPan();
         jsonTrack["transpose"] = track->GetTranspose();
         jsonTrack["offset"] = track->GetOffset();
+        jsonTrack["custom_loop"] = track->customLoop;
+        jsonTrack["loop_offset"] = track->loopOffset;
 
         json["tracks"].push_back(jsonTrack);
     }
@@ -354,10 +422,24 @@ void C_AudioSwitch::Load(Json& json)
             track->SetPlayOnStart(index.value().at("play_on_start"));
             track->SetLoop(index.value().at("loop"));
             track->SetBypass(index.value().at("bypass"));
+
+            track->volume = index.value().at("volume");
             track->SetVolume(index.value().at("volume"));
+
+            track->pan = index.value().at("pan");
             track->SetPanning(index.value().at("pan"));
+
+            track->transpose = index.value().at("transpose");
             track->SetTranspose(index.value().at("transpose"));
+
             track->SetOffset(index.value().at("offset"));
+
+            if (index.value().contains("custom_loop") &&
+                index.value().contains("loop_offset"))
+            { 
+                track->customLoop = index.value().at("custom_loop");
+                track->loopOffset = index.value().at("loop_offset");
+            }
 
             tracks.push_back(track);
         }
@@ -377,7 +459,7 @@ void C_AudioSwitch::UpdatePlayState()
     }
 }
 
-void C_AudioSwitch::SwitchTrack(int newTrackIndex)
+void C_AudioSwitch::SwitchTrack(int newTrackIndex, float secondsOffset)
 {
     if (newTrackIndex >= tracks.size())
         return;
@@ -386,6 +468,8 @@ void C_AudioSwitch::SwitchTrack(int newTrackIndex)
 
     oldTrack = GetPlayingTrack();
     newTrack = tracks[nextSwitchTrack];
+
+    oldOffset += secondsOffset;
 
     if (offsetSync && oldTrack != nullptr)
         alGetSourcef(oldTrack->source, AL_SEC_OFFSET, &oldOffset);
@@ -399,30 +483,66 @@ void C_AudioSwitch::SwitchTrack(int newTrackIndex)
 
 void C_AudioSwitch::PlayTrack(int trackIndex)
 {
-    if (tracks[trackIndex] != nullptr)
+    try
     {
-        playingTrack = tracks[trackIndex];
+        tracks.at(trackIndex);
+    }
+    catch (std::out_of_range const& exc)
+    {
+        return;
+    }
 
-        PlayAudio(tracks[trackIndex]->source, tracks[trackIndex]->offset);
+    if (tracks.at(trackIndex) != nullptr)
+    {
+        playingTrack = tracks.at(trackIndex);
+
+        PlayAudio(tracks.at(trackIndex)->source, tracks.at(trackIndex)->offset);
     }
 }
 
 void C_AudioSwitch::ResumeTrack(int trackIndex)
 {
-    if (tracks[trackIndex] != nullptr)
-        ResumeAudio(tracks[trackIndex]->source);
+    try
+    {
+        tracks.at(trackIndex);
+    }
+    catch (std::out_of_range const& exc)
+    {
+        return;
+    }
+
+    if (tracks.at(trackIndex) != nullptr)
+        ResumeAudio(tracks.at(trackIndex)->source);
 }
 
 void C_AudioSwitch::StopTrack(int trackIndex)
 {
-    if (tracks[trackIndex] != nullptr)
-        StopAudio(tracks[trackIndex]->source);
+    try
+    {
+        tracks.at(trackIndex);
+    }
+    catch (std::out_of_range const& exc)
+    {
+        return;
+    }
+
+    if (tracks.at(trackIndex) != nullptr)
+        StopAudio(tracks.at(trackIndex)->source);
 }
 
 void C_AudioSwitch::PauseTrack(int trackIndex)
 {
-    if (tracks[trackIndex] != nullptr)
-        PauseAudio(tracks[trackIndex]->source);
+    try
+    {
+        tracks.at(trackIndex);
+    }
+    catch (std::out_of_range const& exc)
+    {
+        return;
+    }
+
+    if (tracks.at(trackIndex) != nullptr)
+        PauseAudio(tracks.at(trackIndex)->source);
 }
 
 void C_AudioSwitch::SwitchFade(float fadeSeconds)
@@ -470,6 +590,23 @@ void C_AudioSwitch::SwitchFade(float fadeSeconds)
         nvolume = (nvolume / 100) * (t / d);
         alSourcef(newTrack->source, AL_GAIN, nvolume);
     }
+}
+
+void C_AudioSwitch::CustomLoopLogic(R_Track* index)
+{
+    // Calculate the actual second offset
+    float samples = 0.0f;
+    alGetSourcef(index->source, AL_SAMPLE_OFFSET, &samples);
+    float seconds = samples / index->sampleRate;
+
+    if (seconds - index->prevFrameSecOffset < 0)
+    {
+        seconds = index->loopOffset;
+        alSourcef(index->source, AL_SEC_OFFSET, seconds);
+    }
+
+    // Setting the actual second offset as prev for the next iteration
+    index->prevFrameSecOffset = seconds;
 }
 
 bool C_AudioSwitch::IsAnyTrackPlaying() const

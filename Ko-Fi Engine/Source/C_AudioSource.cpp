@@ -41,6 +41,26 @@ bool C_AudioSource::Start()
     return true;
 }
 
+bool C_AudioSource::Update(float dt)
+{
+    if (track != nullptr && track->IsTrackLoaded())
+        UpdatePlayState();
+
+    return true;
+}
+
+bool C_AudioSource::OnSceneSwitch()
+{
+    if (track != nullptr)
+    {
+        StopAudio(track->source);
+
+        if (track->playOnStart)
+            PlayAudio(track->source, track->offset);
+    }
+    return true;
+}
+
 bool C_AudioSource::OnPlay()
 {
     if (track != nullptr)
@@ -48,31 +68,34 @@ bool C_AudioSource::OnPlay()
         StopAudio(track->source);
 
         if (track->playOnStart)
-        {
             PlayAudio(track->source, track->offset);
-        }
     }
+
     return true;
 }
 
-bool C_AudioSource::Update(float dt)
+bool C_AudioSource::OnPause()
 {
-    bool ret = true;
-
     if (track != nullptr)
-    {
-        if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PAUSED)
-        {
-            PauseAudio(track->source);
-            return true;
-        }
-        //ResumeAudio(track->source);
-    }
+        PauseAudio(track->source);
 
-    if (track != nullptr && track->IsTrackLoaded())
-        UpdatePlayState();
+    return true;
+}
 
-    return ret;
+bool C_AudioSource::OnStop()
+{
+    if (track != nullptr)
+        StopAudio(track->source);
+
+    return true;
+}
+
+bool C_AudioSource::OnResume()
+{
+    if (track != nullptr)
+        ResumeAudio(track->source);
+
+    return true;
 }
 
 bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
@@ -164,6 +187,15 @@ bool C_AudioSource::InspectorDraw(PanelChooser* chooser)
             ImGui::SliderFloat("Offset", &track->offset, 0.0f, track->duration);
 
             ImGui::Spacing();
+
+            if (track->mute)
+                ImGui::BeginDisabled();
+            if (ImGui::SliderFloat("Volume", &track->volume, 0.0f, 100.0f, "%.1f"))
+                track->SetVolume();
+            if (track->mute)
+                ImGui::EndDisabled();
+
+            ImGui::Spacing();
             ImGui::Separator();
             ImGui::Spacing();
 
@@ -244,9 +276,16 @@ void C_AudioSource::Load(Json& json)
         track->SetPlayOnStart(json.at("play_on_start"));
         track->SetLoop(json.at("loop"));
         track->SetBypass(json.at("bypass"));
+
+        track->volume = json.at("volume");
         track->SetVolume(json.at("volume"));
+
+        track->pan = json.at("pan");
         track->SetPanning(json.at("pan"));
+
+        track->transpose = json.at("transpose");
         track->SetTranspose(json.at("transpose"));
+
         track->SetOffset(json.at("offset"));
     }
 }

@@ -14,6 +14,10 @@ R_Track::R_Track() //: Resource(ResourceType::TRACK)
 	playOnStart = false;
 	mute = false;
 
+	customLoop = false;
+	loopOffset = 0.0f;
+	prevFrameSecOffset = 0.0f;
+
 	pan = 0.0f;
 	transpose = 0.0f;
 	bypass = false;
@@ -92,7 +96,7 @@ void R_Track::SetVolume()
 		return;
 	}
 
-	volume = Pow(volume, 2.5f) / 1000.0f;
+	//volume = Pow(volume, 2.5f) / 1000.0f;
 
 	if (volume > 99.0f)
 		volume = 100.0f;
@@ -107,7 +111,7 @@ void R_Track::SetVolume(float volume)
 		return;
 	}
 
-	volume = Pow(volume, 2.5f) / 1000.0f;
+	//volume = Pow(volume, 2.5f) / 1000.0f;
 
 	if (volume > 99.0f)
 		volume = 100.0f;

@@ -30,6 +30,9 @@ public:
 
     void CreateM_AudioListener(float x, float y, float z);
 
+    void SetListenerVolume(int value, int numPoints);
+    float GetListenerVolume();
+
     // Engine config serialization --------------------------------------
     bool SaveConfiguration(Json& configModule) const override;
     bool LoadConfiguration(Json& configModule) override;

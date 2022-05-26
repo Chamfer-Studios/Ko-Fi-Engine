@@ -5,6 +5,7 @@
 #include "M_SceneManager.h"
 #include "M_Renderer3D.h"
 #include "M_Input.h"
+#include "M_Audio.h"
 #include "EngineConfig.h"
 #include "M_Editor.h"
 #include <imgui.h>
@@ -16,6 +17,7 @@ PanelConfiguration::PanelConfiguration(M_Editor* editor, EngineConfig* engineCon
 	
 	this->engineConfig = engineConfig;
 	this->editor = editor;
+	this->masterVol = 5;
 }
 
 PanelConfiguration::~PanelConfiguration()
@@ -241,6 +243,15 @@ bool PanelConfiguration::Update()
 			else
 				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		}
+	}
+
+	if (ImGui::CollapsingHeader("Audio"))
+	{
+		if (ImGui::SliderInt("Master Volume", &masterVol, 0, 5))
+			editor->engine->GetAudio()->SetListenerVolume(masterVol, 5);
+
+		std::string str = "Master Volume: " + std::to_string(editor->engine->GetAudio()->GetListenerVolume());
+		ImGui::Text(str.c_str());
 	}
 
 	ImGui::End();
