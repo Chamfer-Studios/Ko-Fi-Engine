@@ -49,6 +49,7 @@ public:
 
 	const Channel* FindNodeAnim(std::string nodeName);
 	const std::vector<float4x4> GetLastBoneTransforms(R_Mesh* mesh) const;
+	const inline std::map<R_Mesh*, std::vector<float4x4>> GetMeshesTransforms() { return transformsAnim; }
 
 	uint FindPosition(float AnimationTimeTicks, const Channel* pNodeAnim);
 	void CalcInterpolatedPosition(float3& Out, float AnimationTimeTicks, const Channel* pNodeAnim);

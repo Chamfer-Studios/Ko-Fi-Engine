@@ -920,7 +920,7 @@ void M_Renderer3D::RenderUI(GameObject* go)
 void M_Renderer3D::StepAnimatedMesh(GameObject* go, R_Mesh* mesh, uint shader)
 {
 	C_Animator* cAnimator = go->GetParent()->GetComponent<C_Animator>();
-	if (cAnimator != nullptr)
+	if (cAnimator != nullptr && cAnimator->GetMeshesTransforms().size() > 0)
 	{
 		AnimatorClip* animatorClip = cAnimator->GetSelectedClip();
 		if (animatorClip != nullptr)

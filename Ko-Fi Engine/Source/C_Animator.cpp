@@ -310,12 +310,15 @@ void C_Animator::Load(Json& json)
 			SetSelectedClip(json.at("selectedClip"));
 			selectedClip->SetFinishedBool(true);
 
-			for (const auto& mesh : json.at("meshes").items())
+			if (json.contains("meshes"))
 			{
-				UID uid = mesh.value().at("uid");
-				const char* assetPath = mesh.value().at("asset_path").get<std::string>().c_str();
-				owner->GetEngine()->GetResourceManager()->LoadResource(uid, assetPath);
-				transformsAnim.emplace((R_Mesh*)owner->GetEngine()->GetResourceManager()->RequestResource(uid), std::vector<float4x4>());
+				for (const auto& mesh : json.at("meshes").items())
+				{
+					UID uid = mesh.value().at("uid");
+					const char* assetPath = mesh.value().at("asset_path").get<std::string>().c_str();
+					owner->GetEngine()->GetResourceManager()->LoadResource(uid, assetPath);
+					transformsAnim.emplace((R_Mesh*)owner->GetEngine()->GetResourceManager()->RequestResource(uid), std::vector<float4x4>());
+				}
 			}
 		}
 	}
@@ -400,6 +403,9 @@ void C_Animator::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& t
 	rootNode = gameObject->GetParent();
 	mesh = gameObject->GetComponent<C_Mesh>()->GetMesh();
 	//----------------------------------------------------------------------------------------------------
+
+	if (transformsAnim.find(mesh) == transformsAnim.end())
+		return;
 
 	if (!owner->GetEngine()->GetRenderer()->isFirstPass)
 	{
