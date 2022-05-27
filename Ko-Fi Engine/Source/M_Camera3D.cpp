@@ -421,11 +421,11 @@ GameObject* M_Camera3D::MousePicking(const bool& isRightButton)
 	{
 		GameObject* gameObject = it->second;
 
-		if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING)
+		/*if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING)
 		{
 			if (gameObject->tag == Tag::TAG_DECORATION_FLOOR)
 				continue;
-		}
+		}*/
 
 		LineSegment rayLocal = newRay;
 		rayLocal.Transform(gameObject->GetComponent<C_Transform>()->GetGlobalTransform().Inverted());
