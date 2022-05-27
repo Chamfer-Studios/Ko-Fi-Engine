@@ -70,15 +70,15 @@
                                                                         5.265936374664307
                                                                     ],
                                                                     "rotation": [
-                                                                        -0.14782877266407013,
-                                                                        0.0012365960283204913,
-                                                                        -0.0059182834811508656,
-                                                                        0.9889944791793823
+                                                                        -0.14782874286174774,
+                                                                        0.0012365963775664568,
+                                                                        -0.005918501876294613,
+                                                                        0.9889945983886719
                                                                     ],
                                                                     "scale": [
-                                                                        0.9999932646751404,
-                                                                        1.0,
-                                                                        0.9999999403953552
+                                                                        0.999979555606842,
+                                                                        0.9999992847442627,
+                                                                        0.9999992847442627
                                                                     ],
                                                                     "type": 21
                                                                 }
@@ -325,7 +325,7 @@
                                                                             "scale": [
                                                                                 1.0,
                                                                                 1.0,
-                                                                                0.9999932646751404
+                                                                                0.999979555606842
                                                                             ],
                                                                             "type": 21
                                                                         }
@@ -874,7 +874,7 @@
                                                                 0.956791341304779
                                                             ],
                                                             "scale": [
-                                                                0.9999932646751404,
+                                                                0.999979555606842,
                                                                 1.0,
                                                                 1.0
                                                             ],
@@ -1043,12 +1043,12 @@
                                                             ],
                                                             "rotation": [
                                                                 0.2869023382663727,
-                                                                -0.005299449898302555,
+                                                                -0.005299449432641268,
                                                                 0.0015654294984415174,
                                                                 0.9579439163208008
                                                             ],
                                                             "scale": [
-                                                                0.9999932050704956,
+                                                                0.9999794960021973,
                                                                 0.9999999403953552,
                                                                 1.0
                                                             ],
@@ -1171,7 +1171,7 @@
                             ],
                             "rotation": [
                                 -0.01575528457760811,
-                                0.003195281373336911,
+                                0.0031953349243849516,
                                 -0.001295381342060864,
                                 0.9998699426651001
                             ],
@@ -1231,20 +1231,20 @@
                 {
                     "active": true,
                     "position": [
-                        -1719.5726318359375,
-                        0.0,
-                        -84.13180541992188
+                        -1777.109130859375,
+                        6.231147766113281,
+                        -594.37548828125
                     ],
                     "rotation": [
-                        -1.3947882507636677e-05,
-                        0.9977550506591797,
-                        9.303104775426618e-07,
-                        -0.06696876883506775
+                        4.1896182523259995e-08,
+                        -0.10890054702758789,
+                        4.5897823319762665e-09,
+                        0.9940526485443115
                     ],
                     "scale": [
-                        0.03000079095363617,
-                        0.03000018559396267,
-                        0.030000729486346245
+                        0.030000001192092896,
+                        0.030000006780028343,
+                        0.029999984428286552
                     ],
                     "type": 21
                 },
@@ -1257,7 +1257,7 @@
                         "draw_face_normals": false,
                         "draw_vertex_normals": false,
                         "is_animated": true,
-                        "root_node_UID": 1202964403,
+                        "root_node_UID": 2087236767,
                         "shape_type": 0,
                         "uid": 821724498
                     },
@@ -1297,9 +1297,9 @@
                         -1.0
                     ],
                     "lightPosition": [
-                        -1719.5726318359375,
-                        0.0,
-                        -84.13180541992188
+                        -1777.109130859375,
+                        6.231147766113281,
+                        -594.37548828125
                     ],
                     "linearAttenuationValue": 0.0,
                     "quadraticAttenuationValue": 0.0,
@@ -1357,7 +1357,7 @@
                         {
                             "name": "static",
                             "type": "bool",
-                            "value": false
+                            "value": true
                         },
                         {
                             "name": "speed",
@@ -1372,7 +1372,7 @@
                         {
                             "name": "visionConeAngle",
                             "type": "int",
-                            "value": 60
+                            "value": 90
                         },
                         {
                             "name": "visionConeRadius",
@@ -1434,7 +1434,9 @@
                     "tracks": [
                         {
                             "bypass": false,
+                            "custom_loop": false,
                             "loop": false,
+                            "loop_offset": 0.0,
                             "mute": false,
                             "offset": 0.0,
                             "pan": 0.0,
@@ -1445,7 +1447,9 @@
                         },
                         {
                             "bypass": false,
+                            "custom_loop": false,
                             "loop": false,
+                            "loop_offset": 0.0,
                             "mute": false,
                             "offset": 0.0,
                             "pan": 0.0,
@@ -1456,7 +1460,9 @@
                         },
                         {
                             "bypass": false,
+                            "custom_loop": false,
                             "loop": false,
+                            "loop_offset": 0.0,
                             "mute": false,
                             "offset": 0.0,
                             "pan": 0.0,
@@ -1473,6 +1479,471 @@
             "isPrefab": false,
             "name": "HarkonnenMesh",
             "tag": 2
+        },
+        {
+            "active": true,
+            "children": [
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.20000000298023224,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.17499999701976776,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                }
+                                            ],
+                                            "name": "Debuff",
+                                            "texture_path": "Assets/Textures/Particles/arrow.png"
+                                        }
+                                    ],
+                                    "name": "Debuff Indicator"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Enemy Debuff Particle",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 2.5,
+                                                    "particlesPerSpawn": 2,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.32499998807907104,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 1,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        1.5,
+                                                        1.5,
+                                                        1.5
+                                                    ],
+                                                    "type": 4
+                                                },
+                                                {
+                                                    "followForward": false,
+                                                    "maxAcceleration": [
+                                                        0.25,
+                                                        0.25,
+                                                        0.25
+                                                    ],
+                                                    "maxDirection": [
+                                                        0.20000000298023224,
+                                                        1.0,
+                                                        0.20000000298023224
+                                                    ],
+                                                    "maxPosition": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "maxVelocity": 6.0,
+                                                    "minAcceleration": [
+                                                        0.0,
+                                                        -0.03500000014901161,
+                                                        0.0
+                                                    ],
+                                                    "minDirection": [
+                                                        -0.20000000298023224,
+                                                        1.0,
+                                                        -0.20000000298023224
+                                                    ],
+                                                    "minPosition": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -1.0
+                                                    ],
+                                                    "minVelocity": 5.0,
+                                                    "randAcceleration": false,
+                                                    "randDirection": true,
+                                                    "randPosition": true,
+                                                    "randVelocity": true,
+                                                    "type": 2
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "position": 0.0
+                                                        },
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                0.0
+                                                            ],
+                                                            "position": 1.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                }
+                                            ],
+                                            "name": "Spark",
+                                            "texture_path": "Assets/Textures/Particles/light_2.png"
+                                        }
+                                    ],
+                                    "name": "Lootable Corpses"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Enemy Lootable Particle",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 320,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.5882353186607361
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "followForward": true,
+                                                    "maxAcceleration": [
+                                                        0.25,
+                                                        0.25,
+                                                        0.25
+                                                    ],
+                                                    "maxDirection": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -1.0
+                                                    ],
+                                                    "maxPosition": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "maxVelocity": 5.0,
+                                                    "minAcceleration": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minDirection": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "minPosition": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -5.0
+                                                    ],
+                                                    "minVelocity": 0.0,
+                                                    "randAcceleration": false,
+                                                    "randDirection": false,
+                                                    "randPosition": false,
+                                                    "randVelocity": false,
+                                                    "type": 2
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        20.0,
+                                                        20.0,
+                                                        20.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Blood Splatters",
+                                            "texture_path": "Assets/Textures/Particles/blood.png"
+                                        },
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.5882353186607361
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "followForward": true,
+                                                    "maxAcceleration": [
+                                                        0.25,
+                                                        0.25,
+                                                        0.25
+                                                    ],
+                                                    "maxDirection": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -1.0
+                                                    ],
+                                                    "maxPosition": [
+                                                        0.5,
+                                                        0.5,
+                                                        0.5
+                                                    ],
+                                                    "maxVelocity": 5.0,
+                                                    "minAcceleration": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minDirection": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "minPosition": [
+                                                        -0.5,
+                                                        -0.5,
+                                                        -5.0
+                                                    ],
+                                                    "minVelocity": 0.0,
+                                                    "randAcceleration": false,
+                                                    "randDirection": false,
+                                                    "randPosition": false,
+                                                    "randVelocity": false,
+                                                    "type": 2
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        20.0,
+                                                        20.0,
+                                                        20.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Blood Pools",
+                                            "texture_path": "Assets/Textures/Particles/blood_huge.png"
+                                        }
+                                    ],
+                                    "name": "Blood"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Enemy Blood Particle",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 21
+                }
+            ],
+            "is3D": true,
+            "isPrefab": true,
+            "name": "Enemy Particles",
+            "tag": 0
         }
     ],
     "components": [
@@ -1484,7 +1955,7 @@
             "active": true,
             "position": [
                 0.0,
-                0.0,
+                -6.099128723144531,
                 0.0
             ],
             "rotation": [
@@ -1494,9 +1965,9 @@
                 1.0
             ],
             "scale": [
-                0.9999986290931702,
                 1.0,
-                0.9999986290931702
+                1.0,
+                1.0
             ],
             "type": 21
         },

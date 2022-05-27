@@ -35,7 +35,7 @@ NewVariable(startingSpiceAmountIV)
 -------------------- Methods ---------------------
 function Start()
     characters = {Find("Zhib"), Find("Nerala"), Find("Omozra")}
-    characterSelectedParticle = Find("Selected Character")
+    characterSelectedParticle = Find("Selected Particle")
     staminaBar = Find("Stamina Bar")
 
     LoadGameState()
@@ -71,6 +71,11 @@ function Update(dt)
             gameOverTimer = gameOverTimer + dt
         else
             spiceAmount = spiceAmount - deadAllyPenalization
+
+            if (spiceAmount <= 0) then
+                spiceAmount = 0
+            end
+
             SetGameJsonInt("spice", spiceAmount)
 
             str = "Spice Amount " .. spiceAmount .. "\n"
@@ -96,7 +101,7 @@ function Update(dt)
 
     currentState = GetRuntimeState()
     if (currentState == RuntimeState.PLAYING) then
-        if (GetInput(1) == KEY_STATE.KEY_DOWN and omozraUltimate == false) then
+        if (GetInput(1) == KEY_STATE.KEY_DOWN and omozraUltimate == false and omozraPrimary == false) then
             local goHovered = GetGameObjectHovered()
             if (goHovered.tag == Tag.PLAYER) then
                 if (goHovered:GetName() == "Zhib" and changedCharacter ~= 1) then
@@ -140,15 +145,21 @@ function Update(dt)
             -- F3
         elseif (GetInput(42) == KEY_STATE.KEY_DOWN) then
             if (GodMode == false) then
-                Log("Character number " .. characterSelected .. " is GOD\n")
+                Log("I AM GOOODDDDDDDD\n")
                 GodMode = true
             elseif (GodMode == true) then
-                Log("Character nnumber " .. characterSelected .. " is not GOD\n")
+                Log("I am not god:(\n")
                 GodMode = false
             end
         end
         if (characterSelected ~= 0) then
+            if (characterSelected == 2 and characters[4] ~= nil) then
+                characterSelected = 4
+            end
             playerPos = characters[characterSelected]:GetTransform():GetPosition()
+            if (characterSelected == 4) then
+                characterSelected = 2
+            end
             staminaBar:GetTransform():SetPosition(float3.new(playerPos.x, playerPos.y + 30, playerPos.z))
             if (characterSelectedParticle ~= nil) then
                 characterSelectedParticle:GetTransform():SetPosition(
@@ -170,6 +181,7 @@ function Update(dt)
         characterSelected = 0
     end
     omozraUltimate = false
+    omozraPrimary = false
 end
 
 function EventHandler(key, fields)
@@ -187,10 +199,23 @@ function EventHandler(key, fields)
         DispatchGlobalEvent("Spice_Drop", {deadEnemyPos.x, deadEnemyPos.y, deadEnemyPos.z, deadEnemyType})
     elseif (key == "Omozra_Ultimate") then
         omozraUltimate = true
+    elseif (key == "Omozra_Primary") then
+        omozraPrimary = true
     elseif (key == "Player_Death") then
         if (gameOverTimer == nil) then
             gameOverTimer = 0
         end
+    elseif (key == "Dialogue_Opened") then
+        auxGodMode = GodMode
+        if (GodMode == false) then
+            GodMode = true
+        end
+    elseif (key == "Dialogue_Closed") then
+        GodMode = auxGodMode
+    elseif (key == "Mosquito_Spawn") then
+        characters[4] = fields[1]
+    elseif (key == "Mosquito_Death") then
+        characters[4] = nil
     end
 end
 --------------------------------------------------

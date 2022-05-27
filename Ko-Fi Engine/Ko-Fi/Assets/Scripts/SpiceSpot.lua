@@ -10,8 +10,6 @@ NewVariable(spiceSpotIV)
 
 ----------------------- Methods -------------------------
 function Start()
-    boxCollider = gameObject:GetBoxCollider()
-	componentRigidBody = gameObject:GetRigidBody()
 end
 
 ---------------------------------------------------------
@@ -24,11 +22,11 @@ end
 ------------------ Collisions ---------------------------
 function OnTriggerEnter(go)
     if (go.tag == Tag.PLAYER) then
-        DeleteGameObject()
         DispatchGlobalEvent("Spice_Reward", {spiceSpot})
+        DeleteGameObject()
     end
 end
 ---------------------------------------------------------
 
-print("SpiceSpot.lua compiled succesfully")
+print("SpiceSpot.lua compiled succesfully\n")
 Log("SpiceSpot.lua compiled succesfully\n")

@@ -34,7 +34,7 @@
                 "draw_vertex_normals": false,
                 "is_animated": false,
                 "shape_type": 0,
-                "uid": 1154121049
+                "uid": 1894847486
             },
             "type": 1
         },
@@ -86,8 +86,14 @@
         },
         {
             "active": true,
+            "file_name": "Assets/Scripts/Characters/Nerala/HunterSeeker.lua",
+            "id": 407982389,
+            "type": 5
+        },
+        {
+            "active": true,
             "file_name": "Assets/Scripts/Pathfinder.lua",
-            "id": 1734445449,
+            "id": 1523189347,
             "inspector_variables": [
                 {
                     "name": "minRetargetingDistance",
@@ -96,54 +102,6 @@
                 }
             ],
             "type": 5
-        },
-        {
-            "active": true,
-            "file_name": "Assets/Scripts/Characters/Nerala/HunterSeeker.lua",
-            "id": 821134019,
-            "type": 5
-        },
-        {
-            "active": true,
-            "fade_time": 2.0,
-            "offset_sync": false,
-            "total_tracks": 3,
-            "tracks": [
-                {
-                    "bypass": false,
-                    "loop": false,
-                    "mute": false,
-                    "offset": 0.0,
-                    "pan": 0.0,
-                    "play_on_start": false,
-                    "track_path": "Assets/Audio/SFX/Nerala/nerala_mosquito_startup_fx.wav",
-                    "transpose": 1.0,
-                    "volume": 100.0
-                },
-                {
-                    "bypass": false,
-                    "loop": false,
-                    "mute": false,
-                    "offset": 0.0,
-                    "pan": 0.0,
-                    "play_on_start": false,
-                    "track_path": "Assets/Audio/SFX/Nerala/nerala_mosquito_move_1_fx.wav",
-                    "transpose": 1.0,
-                    "volume": 100.0
-                },
-                {
-                    "bypass": false,
-                    "loop": false,
-                    "mute": false,
-                    "offset": 0.0,
-                    "pan": 0.0,
-                    "play_on_start": false,
-                    "track_path": "Assets/Audio/SFX/Nerala/nerala_mosquito_stab_1_fx.wav",
-                    "transpose": 1.0,
-                    "volume": 100.0
-                }
-            ],
-            "type": 11
         }
     ],
     "is3D": true,

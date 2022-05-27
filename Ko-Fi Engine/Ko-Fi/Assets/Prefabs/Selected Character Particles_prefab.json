@@ -1,0 +1,443 @@
+{
+    "active": true,
+    "children": [
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "resource": [
+                        {
+                            "emitters": [
+                                {
+                                    "loop": true,
+                                    "maxParticles": 500,
+                                    "modules": [
+                                        {
+                                            "maxParticleLife": 3.0,
+                                            "minParticleLife": 0.004999999888241291,
+                                            "particlesPerSpawn": 1,
+                                            "randomParticleLife": false,
+                                            "spawnTime": 0.0,
+                                            "type": 1
+                                        },
+                                        {
+                                            "billboardingType": 6,
+                                            "frontAxis": true,
+                                            "maxDegrees": 360,
+                                            "minDegrees": 0,
+                                            "sideAxis": false,
+                                            "topAxis": false,
+                                            "type": 5
+                                        },
+                                        {
+                                            "colors": [
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        1.0
+                                                    ],
+                                                    "position": 0.0
+                                                }
+                                            ],
+                                            "type": 3
+                                        },
+                                        {
+                                            "minInitialSize": [
+                                                50.0,
+                                                50.0,
+                                                50.0
+                                            ],
+                                            "type": 4
+                                        }
+                                    ],
+                                    "name": "Emitter",
+                                    "texture_path": "Assets/Textures/Particles/mouse_target.png"
+                                }
+                            ],
+                            "name": "Choosing Target"
+                        }
+                    ],
+                    "type": 3
+                }
+            ],
+            "is3D": true,
+            "isPrefab": false,
+            "name": "Target Particle",
+            "tag": 0
+        },
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "resource": [
+                        {
+                            "emitters": [
+                                {
+                                    "loop": true,
+                                    "maxParticles": 500,
+                                    "modules": [
+                                        {
+                                            "maxParticleLife": 3.0,
+                                            "minParticleLife": 0.004999999888241291,
+                                            "particlesPerSpawn": 1,
+                                            "randomParticleLife": false,
+                                            "spawnTime": 0.0,
+                                            "type": 1
+                                        },
+                                        {
+                                            "billboardingType": 6,
+                                            "frontAxis": true,
+                                            "maxDegrees": 360,
+                                            "minDegrees": 0,
+                                            "sideAxis": false,
+                                            "topAxis": false,
+                                            "type": 5
+                                        },
+                                        {
+                                            "colors": [
+                                                {
+                                                    "color": [
+                                                        0.0,
+                                                        0.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "position": 0.0
+                                                }
+                                            ],
+                                            "type": 3
+                                        },
+                                        {
+                                            "minInitialSize": [
+                                                20.0,
+                                                20.0,
+                                                20.0
+                                            ],
+                                            "type": 4
+                                        }
+                                    ],
+                                    "name": "Emitter",
+                                    "texture_path": "Assets/Textures/Particles/mouse_target.png"
+                                }
+                            ],
+                            "name": "Selected Character"
+                        }
+                    ],
+                    "type": 3
+                }
+            ],
+            "is3D": true,
+            "isPrefab": false,
+            "name": "Selected Particle",
+            "tag": 0
+        },
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "resource": [
+                        {
+                            "emitters": [
+                                {
+                                    "loop": false,
+                                    "maxParticles": 500,
+                                    "modules": [
+                                        {
+                                            "maxParticleLife": 3.0,
+                                            "minParticleLife": 0.3499999940395355,
+                                            "particlesPerSpawn": 1,
+                                            "randomParticleLife": false,
+                                            "spawnTime": 0.3799999952316284,
+                                            "type": 1
+                                        },
+                                        {
+                                            "billboardingType": 2,
+                                            "frontAxis": true,
+                                            "maxDegrees": 360,
+                                            "minDegrees": 0,
+                                            "sideAxis": false,
+                                            "topAxis": false,
+                                            "type": 5
+                                        },
+                                        {
+                                            "followForward": false,
+                                            "maxAcceleration": [
+                                                0.25,
+                                                0.25,
+                                                0.25
+                                            ],
+                                            "maxDirection": [
+                                                -1.0,
+                                                -1.0,
+                                                -1.0
+                                            ],
+                                            "maxPosition": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "maxVelocity": 5.0,
+                                            "minAcceleration": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "minDirection": [
+                                                0.0,
+                                                -1.0,
+                                                0.0
+                                            ],
+                                            "minPosition": [
+                                                0.0,
+                                                15.0,
+                                                0.0
+                                            ],
+                                            "minVelocity": 20.0,
+                                            "randAcceleration": false,
+                                            "randDirection": false,
+                                            "randPosition": false,
+                                            "randVelocity": false,
+                                            "type": 2
+                                        },
+                                        {
+                                            "colors": [
+                                                {
+                                                    "color": [
+                                                        0.07058823853731155,
+                                                        0.5254902243614197,
+                                                        0.5529412031173706,
+                                                        1.0
+                                                    ],
+                                                    "position": 0.5
+                                                }
+                                            ],
+                                            "type": 3
+                                        },
+                                        {
+                                            "minInitialSize": [
+                                                10.0,
+                                                10.0,
+                                                10.0
+                                            ],
+                                            "type": 4
+                                        }
+                                    ],
+                                    "name": "Arrow",
+                                    "texture_path": "Assets/Textures/Particles/arrow.png"
+                                },
+                                {
+                                    "loop": false,
+                                    "maxParticles": 500,
+                                    "modules": [
+                                        {
+                                            "maxParticleLife": 3.0,
+                                            "minParticleLife": 0.3499999940395355,
+                                            "particlesPerSpawn": 1,
+                                            "randomParticleLife": false,
+                                            "spawnTime": 0.3799999952316284,
+                                            "type": 1
+                                        },
+                                        {
+                                            "billboardingType": 6,
+                                            "frontAxis": true,
+                                            "maxDegrees": 360,
+                                            "minDegrees": 0,
+                                            "sideAxis": false,
+                                            "topAxis": false,
+                                            "type": 5
+                                        },
+                                        {
+                                            "minFinalSize": [
+                                                12.0,
+                                                12.0,
+                                                12.0
+                                            ],
+                                            "minInitialSize": [
+                                                22.0,
+                                                22.0,
+                                                22.0
+                                            ],
+                                            "type": 4
+                                        },
+                                        {
+                                            "colors": [
+                                                {
+                                                    "color": [
+                                                        0.07058823853731155,
+                                                        0.5254902243614197,
+                                                        0.5529412031173706,
+                                                        1.0
+                                                    ],
+                                                    "position": 0.5
+                                                }
+                                            ],
+                                            "type": 3
+                                        },
+                                        {
+                                            "followForward": true,
+                                            "maxAcceleration": [
+                                                0.25,
+                                                0.25,
+                                                0.25
+                                            ],
+                                            "maxDirection": [
+                                                -1.0,
+                                                -1.0,
+                                                -1.0
+                                            ],
+                                            "maxPosition": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "maxVelocity": 5.0,
+                                            "minAcceleration": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "minDirection": [
+                                                1.0,
+                                                1.0,
+                                                1.0
+                                            ],
+                                            "minPosition": [
+                                                0.0,
+                                                5.0,
+                                                0.0
+                                            ],
+                                            "minVelocity": 0.0,
+                                            "randAcceleration": false,
+                                            "randDirection": false,
+                                            "randPosition": false,
+                                            "randVelocity": false,
+                                            "type": 2
+                                        }
+                                    ],
+                                    "name": "Circle",
+                                    "texture_path": "Assets/Textures/Particles/wave.png"
+                                }
+                            ],
+                            "name": "Click Feedback"
+                        }
+                    ],
+                    "type": 3
+                }
+            ],
+            "is3D": true,
+            "isPrefab": false,
+            "name": "Mouse Particle",
+            "tag": 0
+        }
+    ],
+    "components": [
+        {
+            "active": true,
+            "type": 23
+        },
+        {
+            "active": true,
+            "position": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": 21
+        }
+    ],
+    "is3D": true,
+    "isPrefab": true,
+    "name": "Selected Character Particles",
+    "tag": 0
+}

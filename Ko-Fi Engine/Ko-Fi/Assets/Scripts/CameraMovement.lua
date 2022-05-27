@@ -6,13 +6,19 @@ scrollspeed = 15.0
 targetAngle = 0.0
 newZoomedPos = float3.new(0, 0, 0)
 zoomSpeed = 50
+mosquitoAlive = false
+
 function Update(dt)
     id = GetVariable("GameState.lua", "characterSelected", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
     if (id == 1) then
         target = Find("Zhib"):GetTransform():GetPosition()
         lastTarget = id
     elseif (id == 2) then
-        target = Find("Nerala"):GetTransform():GetPosition()
+        if (mosquito ~= nil) then
+            target = mosquito:GetTransform():GetPosition()
+        else
+            target = Find("Nerala"):GetTransform():GetPosition()
+        end
         lastTarget = id
     elseif (id == 3) then
         target = Find("Omozra"):GetTransform():GetPosition()
@@ -21,7 +27,11 @@ function Update(dt)
         if (lastTarget == 1) then
             target = Find("Zhib"):GetTransform():GetPosition()
         elseif (lastTarget == 2) then
-            target = Find("Nerala"):GetTransform():GetPosition()
+            if (mosquitoAlive == true and mosquito ~= nil) then
+                target = mosquito:GetTransform():GetPosition()
+            else
+                target = Find("Nerala"):GetTransform():GetPosition()
+            end
         elseif (lastTarget == 3) then
             target = Find("Omozra"):GetTransform():GetPosition()
         end
@@ -85,3 +95,10 @@ function MoveTowards(current, target, maxDistanceDelta)
     return target
 end
 
+function EventHandler(key, fields)
+    if (key == "Mosquito_Spawn") then
+        mosquito = fields[1]
+    elseif (key == "Mosquito_Death") then
+        mosquito = nil
+    end
+end

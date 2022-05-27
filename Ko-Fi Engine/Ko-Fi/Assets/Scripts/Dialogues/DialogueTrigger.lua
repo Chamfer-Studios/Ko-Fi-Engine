@@ -5,11 +5,10 @@ NewVariable(idIV)
 
 triggered = false
 
-
 function OnTriggerEnter(go)
-	
-	if (go.tag == Tag.PLAYER and triggered == false) then
-		DispatchGlobalEvent("DialogueTriggered", { id })
-		triggered = true
-	end
+
+    if (triggered == false and (go:GetName() == "Zhib" or go:GetName() == "Nerala" or go:GetName() == "Omozra")) then
+        DispatchGlobalEvent("DialogueTriggered", {id})
+        triggered = true
+    end
 end
