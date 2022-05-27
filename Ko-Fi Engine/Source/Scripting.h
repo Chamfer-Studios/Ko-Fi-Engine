@@ -345,6 +345,7 @@ public:
 			sol::constructors<void(GameObject*)>(),
 			"SetDirection", &C_LightSource::SetDirection,
 			"SetAngle", &C_LightSource::SetAngle,
+			"SetDiffuse", &C_LightSource::SetDiffuse,
 			"SetRange", &C_LightSource::SetRange);
 
 		lua.new_usertype<M_Navigation>("M_Navigation",
