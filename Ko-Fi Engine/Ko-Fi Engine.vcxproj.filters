@@ -1353,6 +1353,9 @@
     <ClInclude Include="Source\Log.h">
       <Filter>Source\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Cursor.h">
+      <Filter>Source\Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\M_ResourceManager.h">

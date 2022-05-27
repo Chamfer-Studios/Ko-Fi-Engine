@@ -337,6 +337,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\AdditionNode.h" />
+    <ClInclude Include="Source\Cursor.h" />
     <ClInclude Include="Source\C_Walkable.h" />
     <ClInclude Include="Source\C_BoxCollider.h" />
     <ClInclude Include="Source\C_CapsuleCollider.h" />
