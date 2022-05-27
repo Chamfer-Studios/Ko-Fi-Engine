@@ -935,16 +935,15 @@ function RecastUltimate(position)
 
     ChangeTrack(4)
 
-end
-
-function DoUltimateRecast() -- Ult step 7
     ultimateTimer = 0.0
     abilities.AbilityUltimate = AbilityStatus.Cooldown
     DispatchGlobalEvent("Player_Ability", {characterID, Ability.Ultimate, AbilityStatus.Cooldown})
+end
+
+function DoUltimateRecast() -- Ult step 7
+    DispatchGlobalEvent("Sadiq_Update_Target", {target, 3}) -- fields[1] -> target; fields[2] -> targeted for (1 -> warning; 2 -> eat; 3 -> spit)
 
     abilities.AbilityUltimateRecast = AbilityStatus.Normal -- Used this only for drawing
-
-    DispatchGlobalEvent("Sadiq_Update_Target", {target, 3}) -- fields[1] -> target; fields[2] -> targeted for (1 -> warning; 2 -> eat; 3 -> spit)
     StopMovement(false)
     componentAnimator:SetSelectedClip("PointToIdle")
     SetState(State.IDLE)
