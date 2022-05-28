@@ -324,7 +324,7 @@ void C_Animator::Load(Json& json)
 					const char* assetPath = mesh.value().at("asset_path").get<std::string>().c_str();
 					owner->GetEngine()->GetResourceManager()->LoadResource(uid, assetPath);
 					R_Mesh* rMesh = (R_Mesh*)owner->GetEngine()->GetResourceManager()->RequestResource(uid);
-					meshesInfo.emplace(rMesh, MeshInfo(rMesh->boneInfo, std::vector<float4x4>()));
+					SetMeshInfo(rMesh);
 				}
 			}
 		}

@@ -390,7 +390,7 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 						{
 							//rMesh->SetAnimation(rAnimation);
 
-							// Adding a reference to the mesh for the component cAnimator to be aware of it.
+							// Adding a reference to the mesh for the component animator to be aware of it.
 							cAnimator->SetMeshInfo(rMesh);
 						}
 					}
