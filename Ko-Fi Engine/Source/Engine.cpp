@@ -17,6 +17,7 @@
 #include "M_ResourceManager.h"
 #include "M_Audio.h"
 #include "M_Navigation.h"
+#include "M_MouseGraphics.h"
 
 #include <iostream>
 #include <sstream>
@@ -43,6 +44,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	resourceManager = new M_ResourceManager(this);
 	audio = new M_Audio(this);
 	navigation = new M_Navigation(this);
+	mouseGraphics = new M_MouseGraphics(this);
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -54,6 +56,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(fileSystem);
 	AddModule(resourceManager);
 	AddModule(ui);
+	AddModule(mouseGraphics);
 	AddModule(sceneManager);
 
 	AddModule(navigation);
@@ -477,5 +480,3 @@ M_Audio* KoFiEngine::GetAudio() const
 {
 	return this->audio;
 }
-
-

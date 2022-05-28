@@ -11,7 +11,7 @@
 #include "SDL_opengl.h"
 #include <gl/GL.h>
 #include <gl/GLU.h>
-#include <functional>
+
 #include "SkyBox.h"
 #include "Quadtree.h"
 
@@ -73,7 +73,9 @@ public:
 	}
 
 	GameObject* GetGameObject(int uid);
+
 	bool IsGameObjectInScene(std::string name);
+
 	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr, GameObject* parent = nullptr, bool is3D = true);
 
 	//Cleans current Scene
@@ -100,8 +102,6 @@ public:
 
 	void SetShadowCaster(GameObject* shadowCaster);
 	GameObject* GetShadowCaster();
-
-
 
 public:
 	std::string name = "";

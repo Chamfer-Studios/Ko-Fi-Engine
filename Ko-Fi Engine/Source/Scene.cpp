@@ -7,7 +7,6 @@
 // GameObject
 #include "GameObject.h"
 #include "C_LightSource.h"
-#include "C_Button.h"
 
 #include <vector>
 #include "M_Physics.h"
@@ -27,8 +26,6 @@ GameObject* Scene::GetGameObject(int uid)
 	}
 	return nullptr;
 }
-
-
 
 bool Scene::IsGameObjectInScene(std::string name)
 {

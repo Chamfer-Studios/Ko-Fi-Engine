@@ -9,7 +9,6 @@
 class GameObject;
 struct PhysBody3D;
 struct PhysMotor3D;
-struct M_SceneManager;
 
 class SceneIntro : public Scene
 {
@@ -24,7 +23,6 @@ public:
 	bool CleanUp();
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
-	void OnAnyButtonHovered(const std::function<void()>& onAnyButtonHovered, const std::function<void()>& onNoButtonHovered);
 
 	bool switchScene = false;
 	bool quitPlease = false;
@@ -36,7 +34,7 @@ private:
 	Json j;
 	// Temporal to manage the use of the camera
 	GameObject* camera = nullptr;
-	M_SceneManager* sceneManager = nullptr;
+
 };
 
 #endif // !__SCENE_INTRO_H__

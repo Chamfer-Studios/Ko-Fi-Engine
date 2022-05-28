@@ -18,13 +18,7 @@ class SDL_Surface;
 class MyPlane;
 
 class C_Button : public C_RenderedUI {
-
 public:
-	enum class BUTTON_STATE {
-		IDLE,
-		HOVER,
-		PRESSED
-	};
 	C_Button(GameObject* parent);
 	~C_Button();
 
@@ -50,10 +44,13 @@ public:
 	bool IsHovered();
 	bool IsIdle();
 	void OnStoped();
-	inline BUTTON_STATE GetState() { return state; }
 
 private:
-
+	enum class BUTTON_STATE {
+		IDLE,
+		HOVER,
+		PRESSED
+	};
 
 	void FreeTextures(BUTTON_STATE type);
 

@@ -173,7 +173,8 @@ bool M_Editor::Start()
 	ImNodes::CreateContext();
 	//ImGuizmo::SetImGuiContext(ImGui::GetCurrentContext());
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_NavEnableSetMousePos | ImGuiConfigFlags_DockingEnable | ImGuiConfigFlags_NoMouseCursorChange;
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard | ImGuiConfigFlags_NavEnableSetMousePos | ImGuiConfigFlags_DockingEnable;
+
 	styleHandler.SetKoFiStyle();
 	ImGui_ImplSDL2_InitForOpenGL(engine->GetWindow()->window, engine->GetRenderer()->context);
 	ImGui_ImplOpenGL3_Init();
