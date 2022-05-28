@@ -1,0 +1,108 @@
+{
+    "Pick Up": {
+        "emitters": [
+            {
+                "loop": true,
+                "maxParticles": 500,
+                "modules": [
+                    {
+                        "maxParticleLife": 3.0,
+                        "minParticleLife": 2.5,
+                        "particlesPerSpawn": 3,
+                        "randomParticleLife": false,
+                        "spawnTime": 0.32499998807907104,
+                        "type": 1
+                    },
+                    {
+                        "billboardingType": 2,
+                        "frontAxis": true,
+                        "maxDegrees": 360,
+                        "minDegrees": 0,
+                        "sideAxis": false,
+                        "topAxis": false,
+                        "type": 5
+                    },
+                    {
+                        "minFinalSize": [
+                            0.5,
+                            0.5,
+                            0.5
+                        ],
+                        "minInitialSize": [
+                            3.0,
+                            3.0,
+                            3.0
+                        ],
+                        "type": 4
+                    },
+                    {
+                        "followForward": false,
+                        "maxAcceleration": [
+                            0.25,
+                            0.25,
+                            0.25
+                        ],
+                        "maxDirection": [
+                            0.20000000298023224,
+                            1.0,
+                            0.20000000298023224
+                        ],
+                        "maxPosition": [
+                            5.0,
+                            5.0,
+                            5.0
+                        ],
+                        "maxVelocity": 6.0,
+                        "minAcceleration": [
+                            0.0,
+                            -0.03500000014901161,
+                            0.0
+                        ],
+                        "minDirection": [
+                            -0.20000000298023224,
+                            1.0,
+                            -0.20000000298023224
+                        ],
+                        "minPosition": [
+                            -5.0,
+                            -5.0,
+                            -5.0
+                        ],
+                        "minVelocity": 5.0,
+                        "randAcceleration": false,
+                        "randDirection": true,
+                        "randPosition": true,
+                        "randVelocity": true,
+                        "type": 2
+                    },
+                    {
+                        "colors": [
+                            {
+                                "color": [
+                                    1.0,
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ],
+                                "position": 0.0
+                            },
+                            {
+                                "color": [
+                                    1.0,
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ],
+                                "position": 1.0
+                            }
+                        ],
+                        "type": 3
+                    }
+                ],
+                "name": "Spark",
+                "texture_path": "Assets/Textures/Particles/light_2.png"
+            }
+        ],
+        "name": "Pick Up"
+    }
+}

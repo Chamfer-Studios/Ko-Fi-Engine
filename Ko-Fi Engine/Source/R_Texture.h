@@ -17,7 +17,7 @@ public:
 	bool SaveMeta(Json& json) const override;
 
 	void SetUpTexture();
-
+	void DeleteTexture();
 	inline uint GetTextureId() const { return textureID; }
 	inline void SetTextureId(const uint id) { textureID = id; }
 	inline int GetTextureWidth() const { return width; }

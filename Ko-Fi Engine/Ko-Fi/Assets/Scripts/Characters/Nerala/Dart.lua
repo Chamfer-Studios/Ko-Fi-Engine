@@ -61,6 +61,11 @@ function MoveToDestination(dt)
 
     if (d > 2.0) then
 
+        -- Adapt speed on arrive
+        if (d < 15.0) then
+            speed = speed * 0.5
+        end
+
         -- Movement
         vec2 = Normalize(vec2, d)
         if (componentRigidBody ~= nil) then

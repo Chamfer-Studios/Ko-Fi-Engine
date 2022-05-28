@@ -6,11 +6,11 @@
                 "maxParticles": 500,
                 "modules": [
                     {
-                        "maxParticleLife": 3.0,
-                        "minParticleLife": 2.5,
-                        "particlesPerSpawn": 5,
-                        "randomParticleLife": false,
-                        "spawnTime": 0.30000001192092896,
+                        "maxParticleLife": 2.5,
+                        "minParticleLife": 1.75,
+                        "particlesPerSpawn": 2,
+                        "randomParticleLife": true,
+                        "spawnTime": 0.22499999403953552,
                         "type": 1
                     },
                     {
@@ -24,19 +24,19 @@
                     },
                     {
                         "maxFinalSize": [
-                            5.0,
-                            5.0,
-                            5.0
+                            3.0,
+                            3.0,
+                            3.0
                         ],
                         "minFinalSize": [
-                            2.5,
-                            2.5,
-                            2.5
+                            1.5,
+                            1.5,
+                            1.5
                         ],
                         "minInitialSize": [
-                            5.0,
-                            5.0,
-                            5.0
+                            7.0,
+                            7.0,
+                            7.0
                         ],
                         "type": 4
                     },
@@ -53,9 +53,9 @@
                             0.10000000149011612
                         ],
                         "maxPosition": [
-                            20.0,
-                            20.0,
-                            20.0
+                            15.0,
+                            25.0,
+                            10.0
                         ],
                         "maxVelocity": 5.0,
                         "minAcceleration": [
@@ -69,9 +69,9 @@
                             -0.10000000149011612
                         ],
                         "minPosition": [
-                            -20.0,
-                            -20.0,
-                            -20.0
+                            -15.0,
+                            0.0,
+                            -10.0
                         ],
                         "minVelocity": 4.0,
                         "randAcceleration": false,

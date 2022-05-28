@@ -7,17 +7,17 @@
                 "modules": [
                     {
                         "maxParticleLife": 3.0,
-                        "minParticleLife": 1.5,
+                        "minParticleLife": 0.004999999888241291,
                         "particlesPerSpawn": 1,
                         "randomParticleLife": false,
-                        "spawnTime": 0.75,
+                        "spawnTime": 0.0,
                         "type": 1
                     },
                     {
                         "billboardingType": 2,
                         "frontAxis": true,
                         "maxDegrees": 360,
-                        "minDegrees": 0,
+                        "minDegrees": 320,
                         "sideAxis": false,
                         "topAxis": false,
                         "type": 5
@@ -29,9 +29,9 @@
                                     1.0,
                                     0.0,
                                     0.0,
-                                    1.0
+                                    0.5882353186607361
                                 ],
-                                "position": 0.5
+                                "position": 0.0
                             }
                         ],
                         "type": 3
@@ -67,14 +67,22 @@
                         "minPosition": [
                             -1.0,
                             -1.0,
-                            -1.0
+                            -5.0
                         ],
                         "minVelocity": 0.0,
                         "randAcceleration": false,
                         "randDirection": false,
-                        "randPosition": true,
+                        "randPosition": false,
                         "randVelocity": false,
                         "type": 2
+                    },
+                    {
+                        "minInitialSize": [
+                            20.0,
+                            20.0,
+                            20.0
+                        ],
+                        "type": 4
                     }
                 ],
                 "name": "Blood Splatters",
@@ -86,10 +94,10 @@
                 "modules": [
                     {
                         "maxParticleLife": 3.0,
-                        "minParticleLife": 3.5,
+                        "minParticleLife": 0.004999999888241291,
                         "particlesPerSpawn": 1,
                         "randomParticleLife": false,
-                        "spawnTime": 1.0,
+                        "spawnTime": 0.0,
                         "type": 1
                     },
                     {
@@ -108,9 +116,9 @@
                                     1.0,
                                     0.0,
                                     0.0,
-                                    1.0
+                                    0.5882353186607361
                                 ],
-                                "position": 0.5
+                                "position": 0.0
                             }
                         ],
                         "type": 3
@@ -146,14 +154,22 @@
                         "minPosition": [
                             -0.5,
                             -0.5,
-                            -0.5
+                            -5.0
                         ],
                         "minVelocity": 0.0,
                         "randAcceleration": false,
                         "randDirection": false,
-                        "randPosition": true,
+                        "randPosition": false,
                         "randVelocity": false,
                         "type": 2
+                    },
+                    {
+                        "minInitialSize": [
+                            20.0,
+                            20.0,
+                            20.0
+                        ],
+                        "type": 4
                     }
                 ],
                 "name": "Blood Pools",

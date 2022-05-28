@@ -38,7 +38,9 @@ AbilityStatus = {
     Active = 2,
     Cooldown = 3,
     Using = 4,
-    Pickable = 5
+    Pickable = 5,
+    Disabled = 6,
+    Casting = 7 -- Casting is for intern code
 }
 abilities = {
     AbilityPrimary = AbilityStatus.Normal,
@@ -72,8 +74,8 @@ attackTime = 2.5
 
 -- Primary ability --
 primaryCastRange = 100
-maxKnives = 2
-knifeSpeed = 3000
+maxKnives = 1
+knifeSpeed = 7000
 unawareChanceHarkKnife = 100
 awareChanceHarkKnife = 80
 aggroChanceHarkKnife = 20
@@ -97,66 +99,67 @@ ultimateSpiceCost = 2000
 doubleClickDuration = 0.5
 doubleClickTimer = 0.0
 isDoubleClicking = false
+isDialogueOpen = false
 ---------------------------------------------------------
 
 ------------------- Inspector setter --------------------
--- Globals --
-maxHPIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-maxHPIV = InspectorVariable.new("maxHP", maxHPIVT, maxHP)
-NewVariable(maxHPIV)
+-- -- Globals --
+-- maxHPIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+-- maxHPIV = InspectorVariable.new("maxHP", maxHPIVT, maxHP)
+-- NewVariable(maxHPIV)
 
-speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-speedIV = InspectorVariable.new("speed", speedIVT, speed)
-NewVariable(speedIV)
+-- speedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+-- speedIV = InspectorVariable.new("speed", speedIVT, speed)
+-- NewVariable(speedIV)
 
-crouchMultiplierPercentageIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-crouchMultiplierPercentageIV = InspectorVariable.new("crouchMultiplierPercentage", crouchMultiplierPercentageIVT,
-    crouchMultiplierPercentage)
-NewVariable(crouchMultiplierPercentageIV)
+-- crouchMultiplierPercentageIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+-- crouchMultiplierPercentageIV = InspectorVariable.new("crouchMultiplierPercentage", crouchMultiplierPercentageIVT,
+--     crouchMultiplierPercentage)
+-- NewVariable(crouchMultiplierPercentageIV)
 
-runMultiplierPercentageIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-runMultiplierPercentageIV = InspectorVariable.new("runMultiplierPercentage", runMultiplierPercentageIVT,
-    runMultiplierPercentage)
-NewVariable(runMultiplierPercentageIV)
+-- runMultiplierPercentageIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+-- runMultiplierPercentageIV = InspectorVariable.new("runMultiplierPercentage", runMultiplierPercentageIVT,
+--     runMultiplierPercentage)
+-- NewVariable(runMultiplierPercentageIV)
 
-staminaSecondsIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-staminaSecondsIV = InspectorVariable.new("staminaSeconds", staminaSecondsIVT, staminaSeconds)
-NewVariable(staminaSecondsIV)
+-- staminaSecondsIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+-- staminaSecondsIV = InspectorVariable.new("staminaSeconds", staminaSecondsIVT, staminaSeconds)
+-- NewVariable(staminaSecondsIV)
 
-recoveryTimeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-recoveryTimeIV = InspectorVariable.new("recoveryTime", recoveryTimeIVT, recoveryTime)
-NewVariable(recoveryTimeIV)
+-- recoveryTimeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+-- recoveryTimeIV = InspectorVariable.new("recoveryTime", recoveryTimeIVT, recoveryTime)
+-- NewVariable(recoveryTimeIV)
 
 ---- Primary ability --
-primaryCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-primaryCastRangeIV = InspectorVariable.new("primaryCastRange", primaryCastRangeIVT, primaryCastRange)
-NewVariable(primaryCastRangeIV)
+-- primaryCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+-- primaryCastRangeIV = InspectorVariable.new("primaryCastRange", primaryCastRangeIVT, primaryCastRange)
+-- NewVariable(primaryCastRangeIV)
 
-maxKnivesIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-maxKnivesIV = InspectorVariable.new("maxKnives", maxKnivesIVT, maxKnives)
-NewVariable(maxKnivesIV)
+-- maxKnivesIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+-- maxKnivesIV = InspectorVariable.new("maxKnives", maxKnivesIVT, maxKnives)
+-- NewVariable(maxKnivesIV)
 
-knifeSpeedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-knifeSpeedIV = InspectorVariable.new("knifeSpeed", knifeSpeedIVT, knifeSpeed)
-NewVariable(knifeSpeedIV)
+-- knifeSpeedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+-- knifeSpeedIV = InspectorVariable.new("knifeSpeed", knifeSpeedIVT, knifeSpeed)
+-- NewVariable(knifeSpeedIV)
 
 ---- Secondary ability --
-secondaryCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-secondaryCastRangeIV = InspectorVariable.new("secondaryCastRange", secondaryCastRangeIVT, secondaryCastRange)
-NewVariable(secondaryCastRangeIV)
+-- secondaryCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+-- secondaryCastRangeIV = InspectorVariable.new("secondaryCastRange", secondaryCastRangeIVT, secondaryCastRange)
+-- NewVariable(secondaryCastRangeIV)
 
-maxDecoyIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-maxDecoyIV = InspectorVariable.new("maxDecoy", maxDecoyIVT, maxDecoy)
-NewVariable(maxDecoyIV)
+-- maxDecoyIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+-- maxDecoyIV = InspectorVariable.new("maxDecoy", maxDecoyIVT, maxDecoy)
+-- NewVariable(maxDecoyIV)
 
 ---- Ultimate ability --
-ultimateCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-ultimateCastRangeIV = InspectorVariable.new("ultimateCastRange", ultimateCastRangeIVT, ultimateCastRange)
-NewVariable(ultimateCastRangeIV)
+-- ultimateCastRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+-- ultimateCastRangeIV = InspectorVariable.new("ultimateCastRange", ultimateCastRangeIVT, ultimateCastRange)
+-- NewVariable(ultimateCastRangeIV)
 
-ultimateSpiceCostIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
-ultimateSpiceCostIV = InspectorVariable.new("ultimateSpiceCost", ultimateSpiceCostIVT, ultimateSpiceCost)
-NewVariable(ultimateSpiceCostIV)
+-- ultimateSpiceCostIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+-- ultimateSpiceCostIV = InspectorVariable.new("ultimateSpiceCost", ultimateSpiceCostIVT, ultimateSpiceCost)
+-- NewVariable(ultimateSpiceCostIV)
 ---------------------------------------------------------
 
 ----------------------- Methods -------------------------
@@ -178,12 +181,20 @@ function Start()
     end
 
     -- Particles
-    mouseParticles = Find("Mouse Particles")
+    mouseParticles = Find("Mouse Particle")
     if (mouseParticles ~= nil) then
         mouseParticles:GetComponentParticle():StopParticleSpawn()
     end
-    choosingTargetParticle = Find("Choosing Target")
-    footstepsParticle = Find("Footsteps Particles")
+    choosingTargetParticle = Find("Target Particle")
+    bloodParticle = Find("Zhib Blood Particle")
+    if (bloodParticle ~= nil) then
+        bloodParticle:GetComponentParticle():StopParticleSpawn()
+    end
+    impactParticle = Find("Zhib Impact Particle") -- not used currently
+    slashParticle = Find("Zhib Slash Particle") -- not used currently
+    swooshParticle = Find("Zhib Swoosh Particle") -- not used currently
+    waveParticle = Find("Zhib Wave Particle") -- not used currently
+    footstepsParticle = Find("Zhib Footstep Particle")
 
     -- Audio
     currentTrackID = -1
@@ -204,12 +215,14 @@ end
 -- Called each loop iteration
 function Update(dt)
     DrawActiveAbilities()
+    DrawHoverParticle()
+
+    if (bloodParticle ~= nil) then
+        bloodParticle:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
 
     DispatchGlobalEvent("Player_Position", {componentTransform:GetPosition(), gameObject})
-
-    if (knifeCount == 1) then
-
-    end
 
     if (lastRotation ~= nil) then
         componentTransform:LookAt(lastRotation, float3.new(0, 1, 0))
@@ -240,7 +253,6 @@ function Update(dt)
     if (IsSelected() == true) then
 
         UpdateStaminaBar()
-        DrawHoverParticle()
 
         if (footstepsParticle ~= nil) then
             footstepsParticle:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x,
@@ -258,10 +270,12 @@ function Update(dt)
                     target = GetGameObjectHovered()
                     if (target.tag ~= Tag.ENEMY) then
                         Log("[FAIL] Ability Primary: You have to select an enemy first!\n")
+                        target = nil
                     else
                         if (Distance3D(target:GetTransform():GetPosition(), componentTransform:GetPosition()) >
                             primaryCastRange) then
                             Log("[FAIL] Ability Primary: Ability out of range!\n")
+                            target = nil
                         else
                             if (componentAnimator ~= nil) then
                                 CastPrimary(target:GetTransform():GetPosition())
@@ -278,14 +292,21 @@ function Update(dt)
                     if (decoyCount <= 0) then
                         Log("[FAIL] Ability Secondary: You don't have enough decoy!\n")
                     else
-                        GetGameObjectHovered() -- GetGameObjectHovered updates the last mouse click
+                        -- GetGameObjectHovered updates the last mouse click
+                        target = GetGameObjectHovered()
                         local mouse = GetLastMouseClick()
                         if (Distance3D(mouse, componentTransform:GetPosition()) > secondaryCastRange) then
                             Log("[FAIL] Ability Secondary: Ability out of range!\n")
+                            target = nil
                         else
-                            target = mouse
-                            if (componentAnimator ~= nil) then
-                                CastSecondary(mouse)
+                            if (target.tag ~= Tag.FLOOR) then
+                                Log("[FAIL] Ability Secondary: You have to select floor!\n")
+                                target = nil
+                            else
+                                target = mouse
+                                if (componentAnimator ~= nil) then
+                                    CastSecondary(mouse)
+                                end
                             end
                         end
                     end
@@ -299,10 +320,12 @@ function Update(dt)
                     target = GetGameObjectHovered()
                     if (target.tag ~= Tag.ENEMY) then
                         Log("[FAIL] Ability Ultimate: You have to select an enemy first!\n")
+                        target = nil
                     else
                         if (Distance3D(target:GetTransform():GetPosition(), componentTransform:GetPosition()) >
                             ultimateCastRange) then
                             Log("[FAIL] Ability Ultimate: Ability out of range!\n")
+                            target = nil
                         else
                             if (componentAnimator ~= nil) then
                                 CastUltimate(target:GetTransform():GetPosition())
@@ -321,14 +344,20 @@ function Update(dt)
                     State.AIM_ULTIMATE) then
                     CancelAbilities()
                 else
-                    local isMoving = true
+                    isMoving = true
                     if (goHit.tag == Tag.ENEMY) then
                         SetState(State.ATTACK)
                         target = goHit
                         if (Distance3D(componentTransform:GetPosition(), goHit:GetTransform():GetPosition()) <=
                             attackRange) then
-                            isMoving = false
-                            Attack()
+                            if (attackTimer == nil) then
+                                Log("Already Atacking!\n")
+                                return
+                            else
+                                isMoving = false
+                                Attack()
+                            end
+
                         else
                             if (footstepsParticle ~= nil) then
                                 footstepsParticle:GetComponentParticle():ResumeParticleSpawn()
@@ -337,16 +366,26 @@ function Update(dt)
                             DispatchEvent("Pathfinder_UpdatePath",
                                 {{destination}, false, componentTransform:GetPosition()})
                         end
-                    elseif (Distance3D(componentTransform:GetPosition(), GetLastMouseClick()) > 10) then
+                    elseif (goHit.tag == Tag.PICKUP) then
+                        Log("Going to a pickup\n")
+                        target = nil
+                        currentState = State.IDLE
+                        destination = goHit:GetTransform():GetPosition()
+                        DispatchEvent("Pathfinder_UpdatePath", {{destination}, false, componentTransform:GetPosition()})
+                    elseif (goHit.tag == Tag.FLOOR) then
                         target = nil
                         currentState = State.IDLE
                         destination = GetLastMouseClick()
                         DispatchEvent("Pathfinder_UpdatePath", {{destination}, false, componentTransform:GetPosition()})
                     else
-                        if (footstepsParticle ~= nil) then
-                            footstepsParticle:GetComponentParticle():StopParticleSpawn()
+                        Log("No possible path\n")
+                        target = nil
+                        destination = nil
+                        if (currentState ~= State.IDLE) then
+                            SetState(State.IDLE)
                         end
                         isMoving = false
+                        DispatchEvent("Pathfinder_UpdatePath", {{destination}, false, componentTransform:GetPosition()})
                     end
 
                     if (currentMovement == Movement.WALK and isDoubleClicking == true and isMoving == true and isTired ==
@@ -358,7 +397,7 @@ function Update(dt)
                         end
                         isDoubleClicking = true
                     end
-                    if (mouseParticles ~= nil) then
+                    if (mouseParticles ~= nil and destination ~= nil) then
                         mouseParticles:GetComponentParticle():SetLoop(true)
                         mouseParticles:GetComponentParticle():ResumeParticleSpawn()
                         mouseParticles:GetTransform():SetPosition(destination)
@@ -474,20 +513,22 @@ function SetMovement(newMovement)
     end
 end
 
-function CancelAbilities()
-    if (currentState == State.AIM_PRIMARY) then
+function CancelAbilities(onlyAbilities)
+    if (currentState == State.AIM_PRIMARY and abilities.AbilityPrimary == AbilityStatus.Active) then
         abilities.AbilityPrimary = AbilityStatus.Normal
         DispatchGlobalEvent("Player_Ability", {characterID, Ability.Primary, AbilityStatus.Normal})
-    elseif (currentState == State.AIM_SECONDARY) then
+    elseif (currentState == State.AIM_SECONDARY and abilities.AbilitySecondary == AbilityStatus.Active) then
         abilities.AbilitySecondary = AbilityStatus.Normal
         DispatchGlobalEvent("Player_Ability", {characterID, Ability.Secondary, AbilityStatus.Normal})
-    elseif (currentState == State.AIM_ULTIMATE) then
+    elseif (currentState == State.AIM_ULTIMATE and abilities.AbilityUltimate == AbilityStatus.Active) then
         abilities.AbilityUltimate = AbilityStatus.Normal
         DispatchGlobalEvent("Player_Ability", {characterID, Ability.Ultimate, AbilityStatus.Normal})
     end
 
-    if (currentState ~= State.WORM) then
-        SetState(State.IDLE)
+    if (onlyAbilities == nil) then
+        if (currentState ~= State.WORM) then
+            SetState(State.IDLE)
+        end
     end
 end
 
@@ -498,34 +539,42 @@ function DrawHoverParticle()
 
     if (IsSelected() == true) then
         local drawingTarget = GetGameObjectHovered()
-        if ((currentState == State.AIM_PRIMARY or currentState == State.AIM_ULTIMATE) and
-            (drawingTarget.tag == Tag.ENEMY or drawingTarget.tag == Tag.PLAYER)) then
+        local finalPosition
+        if ((currentState == State.ATTACK or currentState == State.AIM_PRIMARY or currentState == State.AIM_SECONDARY or
+            currentState == State.AIM_ULTIMATE) and target ~= nil) then
+            if (target.x == nil) then
+                t = target:GetTransform():GetPosition()
+            else
+                t = target
+            end
+            choosingTargetParticle:GetComponentParticle():SetColor(255, 0, 255, 255)
+            finalPosition = float3.new(t.x, t.y + 1, t.z)
+        elseif ((currentState == State.AIM_PRIMARY or currentState == State.AIM_ULTIMATE) and
+            (drawingTarget.tag == Tag.ENEMY)) then
             local dist = Distance3D(drawingTarget:GetTransform():GetPosition(), componentTransform:GetPosition())
-            if (((currentState == State.AIM_PRIMARY and dist <= primaryCastRange) or
-                (currentState == State.AIM_ULTIMATE and dist <= ultimateCastRange)) and drawingTarget.tag == Tag.ENEMY) then
-                choosingTargetParticle:GetComponentParticle():SetColor(255, 255, 0, 255)
+            if ((currentState == State.AIM_PRIMARY and dist <= primaryCastRange) or
+                (currentState == State.AIM_ULTIMATE and dist <= ultimateCastRange)) then
+                choosingTargetParticle:GetComponentParticle():SetColor(0, 255, 0, 255)
             else
                 choosingTargetParticle:GetComponentParticle():SetColor(255, 0, 0, 255)
             end
-            choosingTargetParticle:GetComponentParticle():ResumeParticleSpawn()
-            choosingTargetParticle:GetTransform():SetPosition(
-                float3.new(drawingTarget:GetTransform():GetPosition().x,
-                    drawingTarget:GetTransform():GetPosition().y + 1, drawingTarget:GetTransform():GetPosition().z))
-        elseif (currentState == State.AIM_SECONDARY) then
+            finalPosition = drawingTarget:GetTransform():GetPosition()
+            finalPosition.y = finalPosition.y + 1
+        elseif (currentState == State.AIM_SECONDARY and drawingTarget.tag == Tag.FLOOR) then
             local mouseClick = GetLastMouseClick()
-            local dist = Distance3D(mouseClick, componentTransform:GetPosition())
-            if (dist <= secondaryCastRange) then
-                choosingTargetParticle:GetComponentParticle():SetColor(255, 255, 0, 255)
+            if (Distance3D(mouseClick, componentTransform:GetPosition()) <= secondaryCastRange) then
+                choosingTargetParticle:GetComponentParticle():SetColor(0, 255, 0, 255)
             else
                 choosingTargetParticle:GetComponentParticle():SetColor(255, 0, 0, 255)
             end
-            choosingTargetParticle:GetComponentParticle():ResumeParticleSpawn()
-            choosingTargetParticle:GetTransform():SetPosition(float3.new(mouseClick.x, mouseClick.y + 1, mouseClick.z))
+            -- This is only 1 instead of mouseClick.y + 1 because if hovering game objects with height like characters, the hovering particle will go up
+            finalPosition = float3.new(mouseClick.x, 1, mouseClick.z)
         else
             choosingTargetParticle:GetComponentParticle():StopParticleSpawn()
+            return
         end
-    else
-        choosingTargetParticle:GetComponentParticle():StopParticleSpawn()
+        choosingTargetParticle:GetComponentParticle():ResumeParticleSpawn()
+        choosingTargetParticle:GetTransform():SetPosition(finalPosition)
     end
 end
 
@@ -538,12 +587,15 @@ function DrawActiveAbilities()
             if (abilities.AbilityPrimary == AbilityStatus.Active) then
                 componentLight:SetRange(primaryCastRange)
                 componentLight:SetAngle(360 / 2)
+                componentLight:SetDiffuse(0.2)
             elseif (abilities.AbilitySecondary == AbilityStatus.Active) then
                 componentLight:SetRange(secondaryCastRange)
                 componentLight:SetAngle(360 / 2)
+                componentLight:SetDiffuse(0.2)
             elseif (abilities.AbilityUltimate == AbilityStatus.Active) then
                 componentLight:SetRange(ultimateCastRange)
                 componentLight:SetAngle(360 / 2)
+                componentLight:SetDiffuse(0.2)
             else
                 componentLight:SetAngle(0)
             end
@@ -563,6 +615,9 @@ end
 function ManageTimers(dt)
     local ret = true
 
+    if (isDialogueOpen == true) then
+        ret = false
+    end
     if (currentMovement == Movement.RUN and
         GetVariable("GameState.lua", "GodMode", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL) == false) then
         staminaTimer = staminaTimer - dt
@@ -600,6 +655,7 @@ function ManageTimers(dt)
         iFramesTimer = iFramesTimer + dt
         if (iFramesTimer >= iFrames) then
             iFramesTimer = nil
+            bloodParticle:GetComponentParticle():StopParticleSpawn()
         end
     end
 
@@ -781,7 +837,9 @@ function Attack()
     SetState(State.ATTACK)
 
     componentAnimator:SetSelectedClip("Attack")
-
+    impactParticle:GetComponentParticle():SetLoop(true)
+    impactParticle:GetTransform():SetPosition(float3.new(target:GetTransform():GetPosition().x,
+        target:GetTransform():GetPosition().y + 17, target:GetTransform():GetPosition().z + 5))
     LookAtTarget(target:GetTransform():GetPosition())
 end
 
@@ -799,6 +857,7 @@ function DoAttack()
     attackTimer = 0.0
 
     target = nil
+    impactParticle:GetComponentParticle():SetLoop(false)
 
     SetState(State.IDLE)
 end
@@ -818,6 +877,7 @@ function ActivePrimary()
 end
 
 function CastPrimary(position)
+    abilities.AbilityPrimary = AbilityStatus.Casting
 
     componentAnimator:SetSelectedClip("Knife")
     StopMovement(false)
@@ -834,7 +894,7 @@ function DoPrimary()
         abilities.AbilityPrimary = AbilityStatus.Normal
         DispatchGlobalEvent("Player_Ability", {characterID, Ability.Primary, AbilityStatus.Normal})
     else
-        abilities.AbilityPrimary = AbilityStatus.Cooldown
+        abilities.AbilityPrimary = AbilityStatus.Cooldown -- Should be state disabled 
         DispatchGlobalEvent("Player_Ability", {characterID, Ability.Primary, AbilityStatus.Cooldown})
     end
 
@@ -859,6 +919,7 @@ function ActiveSecondary()
 end
 
 function CastSecondary(position)
+    abilities.AbilitySecondary = AbilityStatus.Casting
 
     componentAnimator:SetSelectedClip("Decoy")
     StopMovement(false)
@@ -868,7 +929,7 @@ function CastSecondary(position)
 end
 
 function DoSecondary()
-
+    abilities.AbilitySecondary = AbilityStatus.Using
     InstantiatePrefab("Decoy")
 
     decoyCount = decoyCount - 1
@@ -881,8 +942,9 @@ end
 
 -- Ultimate ability
 function ActiveUltimate()
-    if (ultimateTimer == nil and GetVariable("GameState.lua", "spiceAmount", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT) >=
-        ultimateSpiceCost) then
+    if (ultimateTimer == nil and
+        (GetVariable("GameState.lua", "spiceAmount", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT) >= ultimateSpiceCost or
+            GetVariable("GameState.lua", "GodMode", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL) == true)) then
         if (currentState == State.AIM_ULTIMATE) then
             CancelAbilities()
         else
@@ -895,26 +957,29 @@ function ActiveUltimate()
 end
 
 function CastUltimate(position)
+    abilities.AbilityUltimate = AbilityStatus.Casting
 
     componentAnimator:SetSelectedClip("UltimateStart")
     ultimateTimer = 0.0
     StopMovement(false)
 
-    abilities.AbilityUltimate = AbilityStatus.Cooldown
-    DispatchGlobalEvent("Player_Ability", {characterID, Ability.Ultimate, AbilityStatus.Cooldown})
-
     LookAtTarget(position)
-
 end
 
 function DoUltimate()
-    -- Subtracts spice cost when using ultimate ability
-    OGSpice = GetVariable("GameState.lua", "spiceAmount", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
-    NewSpice = OGSpice - ultimateSpiceCost
-    SetVariable(NewSpice, "GameState.lua", "spiceAmount", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+    abilities.AbilityUltimate = AbilityStatus.Cooldown
 
-    str = "Spice Amount " .. NewSpice .. "\n"
-    Log(str)
+    DispatchGlobalEvent("Player_Ability", {characterID, Ability.Ultimate, AbilityStatus.Cooldown})
+
+    if (GetVariable("GameState.lua", "GodMode", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL) == false) then
+        -- Subtracts spice cost when using ultimate ability
+        OGSpice = GetVariable("GameState.lua", "spiceAmount", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+        NewSpice = OGSpice - ultimateSpiceCost
+        SetVariable(NewSpice, "GameState.lua", "spiceAmount", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+
+        str = "Spice Amount " .. NewSpice .. "\n"
+        Log(str)
+    end
 
     -- Get all enemies in range of the Mouse
     enemiesInRange = {target}
@@ -1001,6 +1066,7 @@ function TakeDamage(damage)
     end
 
     iFramesTimer = 0
+    bloodParticle:GetComponentParticle():ResumeParticleSpawn()
 
     if (damage == nil) then
         damage = 1
@@ -1062,12 +1128,16 @@ function EventHandler(key, fields)
     elseif (key == "Changed_Character") then -- fields[1] -> From ////// fields[2] -> To
         if (fields[1] == characterID) then
             -- If zhib is being changed
+            CancelAbilities(true)
         end
         if (fields[2] == characterID) then
             -- If game changed to Zhib, update HUD events depending on Abilities
             DispatchGlobalEvent("Player_Ability", {characterID, Ability.Primary, abilities.AbilityPrimary})
+            -- Log("Zhib: Primary = " .. abilities.AbilityPrimary .. "\n")
             DispatchGlobalEvent("Player_Ability", {characterID, Ability.Secondary, abilities.AbilitySecondary})
+            -- Log("Zhib: Secondary = " .. abilities.AbilitySecondary .. "\n")
             DispatchGlobalEvent("Player_Ability", {characterID, Ability.Ultimate, abilities.AbilityUltimate})
+            -- Log("Zhib: Ultimate = " .. abilities.AbilityUltimate .. "\n")
         end
     elseif (key == "Decoy_Grabbed") then
         Log("I have grabbed the decoy! \n")
@@ -1080,7 +1150,7 @@ function EventHandler(key, fields)
         abilities.AbilityPrimary = AbilityStatus.Normal
         DispatchGlobalEvent("Player_Ability", {characterID, Ability.Primary, AbilityStatus.Normal})
         knifeCount = knifeCount + 1
-    elseif key == "Sadiq_Update_Target" then -- fields[1] -> target; targeted for (1 -> warning; 2 -> eat; 3 -> spit)
+    elseif (key == "Sadiq_Update_Target") then -- fields[1] -> target; targeted for (1 -> warning; 2 -> eat; 3 -> spit)
         if (fields[1] == gameObject) then
             if (fields[2] == 1) then
                 SetState(State.WORM)
@@ -1093,6 +1163,7 @@ function EventHandler(key, fields)
                         componentTransform:GetPosition().z))
                 end
                 gameObject.active = false
+                DispatchGlobalEvent("Disable_Character", {characterID})
             end
         elseif (currentState == State.WORM and fields[2] == nil) then
 
@@ -1101,6 +1172,26 @@ function EventHandler(key, fields)
             end
             gameObject.active = true
             SetState(State.IDLE)
+            DispatchGlobalEvent("Enable_Character", {characterID})
+        end
+    elseif (key == "Dialogue_Opened") then
+        isDialogueOpen = true
+        StopMovement()
+        SetState(State.IDLE)
+        componentAnimator:SetSelectedClip("Idle")
+    elseif (key == "Dialogue_Closed") then
+        isDialogueOpen = false
+    elseif (key == "Spice_Reward") then
+        ChangeTrack(8)
+    elseif (key == "Spit_Heal_Hit") then
+        if (fields[1] == gameObject) then
+            if (currentHP < maxHP) then
+                currentHP = currentHP + 1
+                DispatchGlobalEvent("Player_Health", {characterID, currentHP, maxHP})
+                Log("Sadiq has healed Zhib. Current HP = " .. currentHP .. "\n")
+            else
+                Log("Sadiq has healed Zhib, but it was already full HP\n")
+            end
         end
     end
 end

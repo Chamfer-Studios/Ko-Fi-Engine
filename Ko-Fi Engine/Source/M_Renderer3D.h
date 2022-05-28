@@ -112,7 +112,7 @@ public:
 	// Primitives
 	void DrawCylinder(float4x4 transform);
 	void DrawCone(float3 position, float3 forward, float3 up, float angle, int length);
-	void DrawCircle(float3 position, float radius);
+	void DrawCircle(float3 position, float radius, float3 color, float stroke);
 	void DrawLine(float3 a, float3 b);
 
 	// Debug ray for mouse picking

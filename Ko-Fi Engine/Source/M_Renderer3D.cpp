@@ -697,9 +697,11 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 
 				GLint depthMap = glGetUniformLocation(shader, "shadowMap");
 				glUniform1i(depthMap, 3);
-
+				
 				//Draw Mesh
 				mesh->Draw();
+				
+
 				glUseProgram(0);
 
 				glActiveTexture(GL_TEXTURE1);
@@ -1029,7 +1031,7 @@ void M_Renderer3D::DrawCone(float3 position, float3 forward, float3 up, float an
 	glColor3f(1.0f, 1.0f, 1.0f);
 }
 
-void M_Renderer3D::DrawCircle(float3 position, float radius)
+void M_Renderer3D::DrawCircle(float3 position, float radius, float3 color, float stroke)
 {
 	GLfloat x = 0.0;
 	GLfloat y = 0.0;
@@ -1038,8 +1040,8 @@ void M_Renderer3D::DrawCircle(float3 position, float radius)
 	GLfloat angle_stepsize = 0.1;
 
 	/** Draw the circle on top of cylinder */
-	glColor3f(1.0f, 1.0f, 1.0f);
-	glLineWidth(3.0f);
+	glColor3f(color.x / 255.0f, color.y / 255.0f, color.z / 255.0f);
+	glLineWidth(stroke);
 	glBegin(GL_POLYGON);
 	angle = 0.0;
 	while (angle < 2 * M_PI) {

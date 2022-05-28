@@ -6,15 +6,15 @@
                 "maxParticles": 500,
                 "modules": [
                     {
-                        "maxParticleLife": 3.0,
+                        "maxParticleLife": 3.5,
                         "minParticleLife": 2.5,
-                        "particlesPerSpawn": 2,
-                        "randomParticleLife": false,
-                        "spawnTime": 0.32499998807907104,
+                        "particlesPerSpawn": 1,
+                        "randomParticleLife": true,
+                        "spawnTime": 0.25,
                         "type": 1
                     },
                     {
-                        "billboardingType": 1,
+                        "billboardingType": 2,
                         "frontAxis": true,
                         "maxDegrees": 360,
                         "minDegrees": 0,
@@ -24,9 +24,9 @@
                     },
                     {
                         "minInitialSize": [
-                            1.5,
-                            1.5,
-                            1.5
+                            7.0,
+                            7.0,
+                            7.0
                         ],
                         "type": 4
                     },
@@ -43,14 +43,14 @@
                             0.20000000298023224
                         ],
                         "maxPosition": [
-                            1.0,
-                            1.0,
-                            1.0
+                            10.0,
+                            20.0,
+                            10.0
                         ],
-                        "maxVelocity": 6.0,
+                        "maxVelocity": 8.0,
                         "minAcceleration": [
                             0.0,
-                            -0.03500000014901161,
+                            -0.029999999329447746,
                             0.0
                         ],
                         "minDirection": [
@@ -59,11 +59,11 @@
                             -0.20000000298023224
                         ],
                         "minPosition": [
-                            -1.0,
-                            -1.0,
-                            -1.0
+                            -10.0,
+                            0.0,
+                            -10.0
                         ],
-                        "minVelocity": 5.0,
+                        "minVelocity": 6.0,
                         "randAcceleration": false,
                         "randDirection": true,
                         "randPosition": true,

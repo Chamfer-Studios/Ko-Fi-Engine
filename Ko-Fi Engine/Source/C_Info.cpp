@@ -48,7 +48,7 @@ bool C_Info::InspectorDraw(PanelChooser* chooser)
 		ImGui::SameLine();
 		tag = (int)owner->tag;
 		// Take care with the order in the combo, it has to follow the Tag enum class order
-		if (ImGui::Combo("##tagcombo", &tag, "Untagged\0Player\0Enemy\0Floor\0PickUp\0Corpse\0Dialogue")) // TODO: Change to BeginCombo()
+		if (ImGui::Combo("##tagcombo", &tag, "Untagged\0Player\0Enemy\0Floor\0DecorationFloor\0PickUp\0Corpse\0Dialogue")) // TODO: Change to BeginCombo()
 		{
 			if (owner->tag != (Tag)tag)
 				owner->tag = (Tag)tag;

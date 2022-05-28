@@ -137,6 +137,7 @@ public:
 			"PLAYER", Tag::TAG_PLAYER,
 			"ENEMY", Tag::TAG_ENEMY,
 			"FLOOR", Tag::TAG_FLOOR,
+			"DECORATIONFLOOR", Tag::TAG_DECORATION_FLOOR,
 			"PICKUP", Tag::TAG_PICKUP,
 			"CORPSE", Tag::TAG_CORPSE);
 
@@ -345,6 +346,7 @@ public:
 			sol::constructors<void(GameObject*)>(),
 			"SetDirection", &C_LightSource::SetDirection,
 			"SetAngle", &C_LightSource::SetAngle,
+			"SetDiffuse", &C_LightSource::SetDiffuse,
 			"SetRange", &C_LightSource::SetRange);
 
 		lua.new_usertype<M_Navigation>("M_Navigation",
@@ -401,6 +403,7 @@ public:
 		lua.set_function("GetDialogueTargetID", &Scripting::GetDialogueTargetID, this);
 		lua.set_function("LoadJsonFile", &Scripting::LoadJsonFile, this);
 		lua.set_function("DrawCone", &Scripting::DrawCone, this);
+		lua.set_function("DrawCircle", &Scripting::DrawCircle, this);
 		lua.set_function("DrawLine", &Scripting::DrawLine, this);
 		lua.set_function("RNG", &Scripting::RNG, this);
 		lua.set_function("SaveGameState", &Scripting::SaveGameState, this);
@@ -852,9 +855,9 @@ public:
 		}
 	}
 
-	void DrawCircle(float range, float3 position)
+	void DrawCircle(float3 position, float range, float3 color, float stroke)
 	{
-		gameObject->GetEngine()->GetRenderer()->DrawCircle(position, range);
+		gameObject->GetEngine()->GetRenderer()->DrawCircle(position, range, color, stroke);
 	}
 
 	bool LoadJsonFile(const char* path);

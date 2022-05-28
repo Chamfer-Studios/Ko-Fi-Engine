@@ -389,11 +389,21 @@ function EventHandler(key, fields)
     elseif key == "Die" then
         Die(fields[1])
     elseif key == "Sadiq_Update_Target" then -- fields[1] -> target; targeted for (1 -> warning; 2 -> eat; 3 -> spit)
-        if (fields[1] == gameObject) then
+        if (fields[1] == gameObject and state ~= STATE.DEAD) then
             if (fields[2] == 1) then
                 StopMovement()
             end
         end
+    elseif (key == "Dialogue_Opened") then
+        isDialogueOpen = true
+        oldSpeed = speed
+        speed = 0
+        oldChaseSpeed = chaseSpeed
+        chaseSpeed = 0
+    elseif (key == "Dialogue_Closed") then
+        isDialogueOpen = false
+        speed = oldSpeed
+        chaseSpeed = oldChaseSpeed
     end
 end
 

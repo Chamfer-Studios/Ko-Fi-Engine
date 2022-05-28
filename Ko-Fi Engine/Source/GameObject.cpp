@@ -391,7 +391,7 @@ void GameObject::AttachChild(GameObject* child)
 	child->parentUid = this->uid;
 	child->parent = this;
 	children.push_back(child);
-	// child->PropagateTransform();
+	//child->PropagateTransform();
 }
 
 void GameObject::RemoveChild(GameObject* child)
