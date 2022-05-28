@@ -388,10 +388,10 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 						R_Mesh* rMesh = cMesh->GetMesh();
 						if (rMesh->IsAnimated())
 						{
-							rMesh->SetAnimation(rAnimation);
+							//rMesh->SetAnimation(rAnimation);
 
 							// Adding a reference to the mesh for the component cAnimator to be aware of it.
-							cAnimator->SetMesh(rMesh);
+							cAnimator->SetMeshTransforms(rMesh);
 						}
 					}
 				}

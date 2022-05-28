@@ -31,7 +31,7 @@ public:
 	void Reset();
 
 	void SetAnimation(R_Animation* anim);
-	void SetMesh(R_Mesh* mesh);
+	void SetMeshTransforms(R_Mesh* mesh);
 
 	bool CreateClip(const AnimatorClip& clip);
 	void SetSelectedClip(std::string name);
