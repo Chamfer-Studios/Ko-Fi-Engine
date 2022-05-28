@@ -407,6 +407,10 @@ void PhysicsEventListener::onContact(const reactphysics3d::CollisionCallback::Ca
 
 		go1 = mPhysics->GetGameObjectFromBody(contactPair.getBody1());
 		go2 = mPhysics->GetGameObjectFromBody(contactPair.getBody2());
+
+		if (go1->GetEngine()->GetSceneManager()->GetGameState() != GameState::PLAYING)
+			return;
+
 		if (go1 && go2)
 		{
 
@@ -588,6 +592,10 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 
 		go1 = mPhysics->GetGameObjectFromBody(overlapPair.getBody1());
 		go2 = mPhysics->GetGameObjectFromBody(overlapPair.getBody2());
+
+		if (go1->GetEngine()->GetSceneManager()->GetGameState() != GameState::PLAYING)
+			return;
+
 		if (go1 && go2)
 		{
 
