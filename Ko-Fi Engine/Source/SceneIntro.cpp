@@ -32,7 +32,7 @@
 
 SceneIntro::SceneIntro(KoFiEngine *engine) : Scene()
 {
-	name = "bosco";
+	name = "SceneIntro";
 
 	// Needed modules
 	this->engine = engine;

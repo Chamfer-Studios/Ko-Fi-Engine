@@ -359,7 +359,7 @@ void C_Animator::SetAnimation(R_Animation* anim)
 	this->animation = anim;
 }
 
-void C_Animator::SetMeshTransforms(R_Mesh* mesh)
+void C_Animator::SetMesh(R_Mesh* mesh)
 {
 	transformsAnim.emplace(mesh, std::vector<float4x4>());
 }
@@ -463,9 +463,6 @@ void C_Animator::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& t
 void C_Animator::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode, const float4x4& parentTransform)
 {
 	OPTICK_EVENT();
-
-	if (pNode->GetComponent<C_Mesh>())
-		return;
 
 	std::string nodeName(pNode->GetName());
 

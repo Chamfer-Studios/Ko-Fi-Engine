@@ -74,7 +74,7 @@
     },
     "ResourceManager": null,
     "SceneManager": {
-        "DefaultScene": "bosco"
+        "DefaultScene": "SceneTutorial"
     },
     "UI": null,
     "Window": {
@@ -85,7 +85,7 @@
         "Icon": "Assets/Icons/icon.bmp",
         "Resizable": true,
         "Scale": 0,
-        "Title": "Ko-Fi Engine - bosco",
+        "Title": "Ko-Fi Engine - SceneTutorial",
         "Width": 1920
     }
 }

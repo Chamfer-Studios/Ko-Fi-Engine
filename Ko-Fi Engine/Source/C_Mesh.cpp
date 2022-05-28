@@ -102,12 +102,12 @@ void C_Mesh::Save(Json& json) const
 		json["mesh"]["draw_face_normals"] = mesh->GetFaceNormals();
 		json["mesh"]["is_animated"] = mesh->IsAnimated();
 
-		/*if (mesh->IsAnimated())
+		if (mesh->IsAnimated())
 		{
 			json["mesh"]["root_node_UID"] = mesh->GetRootNode()->GetUID();
 			json["mesh"]["anim_uid"] = mesh->GetAnimation()->GetUID();
 			json["mesh"]["anim_path"] = mesh->GetAnimation()->GetAssetPath();
-		}*/
+		}
 	}
 }
 
@@ -133,14 +133,14 @@ void C_Mesh::Load(Json& json)
 			mesh->SetFaceNormals(jsonMesh.at("draw_face_normals"));
 			mesh->SetIsAnimated(jsonMesh.at("is_animated"));
 
-			//if (mesh->IsAnimated())
-			//{
-			//	// Setting the animation root node for the bones management.
-			//	mesh->SetRootNode(owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(jsonMesh.at("root_node_UID")));
-			//	// Setting the animation...
-			//	owner->GetEngine()->GetResourceManager()->LoadResource(jsonMesh.at("anim_uid"), jsonMesh.at("anim_path").get<std::string>().c_str());
-			//	mesh->SetAnimation((R_Animation*)owner->GetEngine()->GetResourceManager()->RequestResource(jsonMesh.at("anim_uid")));
-			//}
+			if (mesh->IsAnimated())
+			{
+				// Setting the animation root node for the bones management.
+				mesh->SetRootNode(owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(jsonMesh.at("root_node_UID")));
+				// Setting the animation...
+				owner->GetEngine()->GetResourceManager()->LoadResource(jsonMesh.at("anim_uid"), jsonMesh.at("anim_path").get<std::string>().c_str());
+				mesh->SetAnimation((R_Animation*)owner->GetEngine()->GetResourceManager()->RequestResource(jsonMesh.at("anim_uid")));
+			}
 		}
 	}
 }

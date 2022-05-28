@@ -52,7 +52,7 @@ public:
 	void Disable();
 
 	template <class T>
-	T *GetComponent() const
+	T *GetComponent()
 	{
 		T *component = nullptr;
 		for (Component *c : components)
