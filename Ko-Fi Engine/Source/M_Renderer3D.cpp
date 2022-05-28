@@ -707,9 +707,11 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 
 				GLint depthMap = glGetUniformLocation(shader, "shadowMap");
 				glUniform1i(depthMap, 3);
-
+				
 				//Draw Mesh
 				mesh->Draw();
+				
+
 				glUseProgram(0);
 
 				glActiveTexture(GL_TEXTURE1);
