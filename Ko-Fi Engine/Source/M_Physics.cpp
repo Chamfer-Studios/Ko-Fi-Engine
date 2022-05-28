@@ -55,6 +55,7 @@ bool M_Physics::Update(float dt)
 	else {
 		world->update(0.000000001f);
 	}
+
 	return true;
 }
 
@@ -374,7 +375,7 @@ void M_Physics::RayCastHits(float3 startPoint, float3 endPoint, std::string filt
 	reactphysics3d::Ray ray(sPoint, ePoint);
 
 	// Create an instance of your callback class 
-	CustomRayCastCallback callbackObject(senderGo, uid, callback);
+	CustomRayCastCallback callbackObject = CustomRayCastCallback(senderGo, uid, callback);
 	unsigned int mask = 0;
 	for (auto filter : filters)
 	{
@@ -764,8 +765,11 @@ reactphysics3d::decimal CustomRayCastCallback::notifyRaycastHit(const reactphysi
 		if (component->GetType() != ComponentType::SCRIPT)
 			continue;
 		C_Script* script = (C_Script*)component;
-		if (!script->s->path.empty())
-		script->s->handler->lua["OnRayCastHit"]();
+		if (!script->s->path.empty()) {
+			auto onRayCastHit = sol::protected_function(script->s->handler->lua["OnRayCastHit"]);
+			if (onRayCastHit.valid())
+				script->s->handler->lua["OnRayCastHit"]();
+		}
 	}
 
 	if (this->callback != nullptr) this->callback->call(uid);
