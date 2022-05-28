@@ -92,12 +92,10 @@ bool C_Particle::PostUpdate(float dt)
 
 bool C_Particle::CleanUp()
 {
-	for (std::vector<EmitterInstance*>::const_iterator it = emitterInstances.begin(); it != emitterInstances.end();++it)
+	for (std::vector<EmitterInstance*>::const_iterator it = emitterInstances.begin(); it != emitterInstances.end();)
 	{
-		emitterInstances.erase(it);
 		delete *it;
-		if (emitterInstances.empty())
-			break;
+		it = emitterInstances.erase(it);
 	}
 	emitterInstances.clear();
 	emitterInstances.shrink_to_fit();

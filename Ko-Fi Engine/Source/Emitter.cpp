@@ -27,11 +27,9 @@ bool Emitter::Update(float dt)
 
 bool Emitter::Cleanup()
 {
-	for (std::vector<ParticleModule*>::iterator i = modules.begin(); i != modules.end(); ++i)
+	for (std::vector<ParticleModule*>::iterator i = modules.begin(); i != modules.end();)
 	{
-		modules.erase(i);
-		if (modules.empty())
-			break;
+		i = modules.erase(i);
 	}
 
 	texture = nullptr;

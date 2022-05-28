@@ -1,5 +1,4 @@
-#ifndef __GAMEOBJECT_H__
-#define __GAMEOBJECT_H__
+#pragma once
 
 #include "R_Mesh.h"
 #include <vector>
@@ -155,5 +154,3 @@ private:
 	KoFiEngine *engine = nullptr;
 	C_Transform *transform = nullptr;
 };
-
-#endif // !__GAMEOBJECT_H__

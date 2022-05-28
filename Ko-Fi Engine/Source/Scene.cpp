@@ -14,6 +14,7 @@
 #include "M_Camera3D.h" 
 #include "C_Camera.h"
 #include "C_RigidBody.h"
+#include "M_Navigation.h"
 
 GameObject* Scene::GetGameObject(int uid)
 {
@@ -70,6 +71,7 @@ void Scene::DeleteCurrentScene()
 	engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
 	rootGo = new GameObject(0, engine, "Root");
 	gameObjectList.push_back(rootGo);
+	engine->GetNavigation()->CleanUp();
 }
 
 void Scene::DeleteGameObject(GameObject* gameObject)
