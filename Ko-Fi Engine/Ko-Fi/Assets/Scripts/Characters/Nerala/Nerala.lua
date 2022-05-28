@@ -1066,6 +1066,7 @@ function EventHandler(key, fields)
                         componentTransform:GetPosition().z))
                 end
                 gameObject.active = false
+                DispatchGlobalEvent("Disable_Character", {characterID})
             end
         elseif (currentState == State.WORM and fields[2] == nil) then
 
@@ -1074,6 +1075,7 @@ function EventHandler(key, fields)
             end
             gameObject.active = true
             SetState(State.IDLE)
+            DispatchGlobalEvent("Enable_Character", {characterID})
         end
     elseif (key == "Dialogue_Opened") then
         isDialogueOpen = true

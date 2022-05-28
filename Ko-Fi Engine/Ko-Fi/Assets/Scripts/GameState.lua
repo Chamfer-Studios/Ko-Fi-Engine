@@ -20,6 +20,9 @@ omozra_secondary_level = 0
 omozra_ultimate_level = 0
 
 changedCharacter = false
+zhibAvailable = true
+neralaAvailable = true
+omozraAvailable = true
 
 GodMode = false
 
@@ -116,7 +119,7 @@ function Update(dt)
                 end
             end
             -- Z
-        elseif (GetInput(6) == KEY_STATE.KEY_DOWN) then
+        elseif (GetInput(6) == KEY_STATE.KEY_DOWN and zhibAvailable == true) then
             if (characterSelected == 1) then
                 DispatchGlobalEvent("Changed_Character", {characterSelected, 0}) -- From character 1 to 0
                 characterSelected = 0
@@ -125,7 +128,7 @@ function Update(dt)
                 characterSelected = 1
             end
             -- X
-        elseif (GetInput(8) == KEY_STATE.KEY_DOWN) then
+        elseif (GetInput(8) == KEY_STATE.KEY_DOWN and neralaAvailable == true) then
             if (characterSelected == 2) then
                 DispatchGlobalEvent("Changed_Character", {characterSelected, 0}) -- From character 2 to 0
                 characterSelected = 0
@@ -134,7 +137,7 @@ function Update(dt)
                 characterSelected = 2
             end
             -- C
-        elseif (GetInput(9) == KEY_STATE.KEY_DOWN) then
+        elseif (GetInput(9) == KEY_STATE.KEY_DOWN and omozraAvailable == true) then
             if (characterSelected == 3) then
                 DispatchGlobalEvent("Changed_Character", {characterSelected, 0}) -- From character 3 to 0
                 characterSelected = 0
@@ -216,6 +219,40 @@ function EventHandler(key, fields)
         characters[4] = fields[1]
     elseif (key == "Mosquito_Death") then
         characters[4] = nil
+    elseif (key == "Disable_Character") then
+        if (fields[1] == 1) then
+            if (fields[1] == characterSelected) then
+                DispatchGlobalEvent("Changed_Character", {characterSelected, 0}) -- From character 3 to 0
+                characterSelected = 0
+                zhibAvailable = false
+            else
+                zhibAvailable = false
+            end
+        elseif (fields[1] == 2) then
+            if (fields[1] == characterSelected) then
+                DispatchGlobalEvent("Changed_Character", {characterSelected, 0}) -- From character 3 to 0
+                characterSelected = 0
+                neralaAvailable = false
+            else
+                neralaAvailable = false
+            end
+        elseif (fields[1] == 3) then
+            if (fields[1] == characterSelected) then
+                DispatchGlobalEvent("Changed_Character", {characterSelected, 0}) -- From character 3 to 0
+                characterSelected = 0
+                omozraAvailable = false
+            else
+                omozraAvailable = false
+            end
+        end
+    elseif (key == "Enable_Character") then
+        if (fields[1] == 1) then
+            zhibAvailable = true
+        elseif (fields[1] == 2) then
+            neralaAvailable = true
+        elseif (fields[1] == 3) then
+            omozraAvailable = true
+        end
     end
 end
 --------------------------------------------------
