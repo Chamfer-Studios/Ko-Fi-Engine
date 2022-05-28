@@ -348,6 +348,11 @@ AnimatorClip* C_Animator::GetSelectedClip()
 	return selectedClip;
 }
 
+std::string C_Animator::GetSelectedClipName()
+{
+	return selectedClip->GetName();
+}
+
 bool C_Animator::IsCurrentClipPlaying()
 {
 	return !GetSelectedClip()->GetFinishedBool();

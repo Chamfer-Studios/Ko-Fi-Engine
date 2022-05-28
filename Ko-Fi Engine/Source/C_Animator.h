@@ -5,6 +5,8 @@
 #include "MathGeoLib/Math/float4x4.h"
 #include "AnimatorClip.h"
 
+#include <string>
+
 class GameObject;
 class R_Animation;
 class map;
@@ -32,6 +34,7 @@ public:
 	bool CreateClip(const AnimatorClip& clip);
 	void SetSelectedClip(std::string name);
 	AnimatorClip* GetSelectedClip();
+	std::string GetSelectedClipName();
 
 	bool IsCurrentClipPlaying();
 	bool IsCurrentClipLooping();

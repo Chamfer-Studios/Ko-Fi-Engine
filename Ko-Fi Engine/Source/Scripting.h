@@ -293,6 +293,7 @@ public:
 		lua.new_usertype<C_Animator>("ComponentAnimator",
 			sol::constructors<void(GameObject*)>(),
 			"SetSelectedClip", &C_Animator::SetSelectedClip,
+			"GetSelectedClip", &C_Animator::GetSelectedClip,
 			"IsCurrentClipLooping", &C_Animator::IsCurrentClipLooping,
 			"IsCurrentClipPlaying", &C_Animator::IsCurrentClipPlaying);
 
