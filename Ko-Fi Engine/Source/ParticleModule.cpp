@@ -45,6 +45,11 @@ EmitterDefault::EmitterDefault()
 	type = ParticleModuleType::DEFAULT;
 }
 
+EmitterDefault::~EmitterDefault()
+{
+	instance = nullptr;
+}
+
 void EmitterDefault::Spawn(Particle* particle, EmitterInstance* emitter)
 {
 	LCG random;

@@ -16,7 +16,9 @@ Emitter::Emitter(const char* newName)
 }
 
 Emitter::~Emitter()
-{}
+{
+	Cleanup();
+}
 
 bool Emitter::Update(float dt)
 {
@@ -25,6 +27,18 @@ bool Emitter::Update(float dt)
 
 bool Emitter::Cleanup()
 {
+	for (std::vector<ParticleModule*>::iterator i = modules.begin(); i != modules.end(); ++i)
+	{
+		modules.erase(i);
+		if (modules.empty())
+			break;
+	}
+
+	texture = nullptr;
+
+	name.clear();
+	name.shrink_to_fit();
+
 	return true;
 }
 
