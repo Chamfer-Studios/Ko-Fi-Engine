@@ -11,6 +11,15 @@ class R_Animation;
 class R_Mesh;
 class map;
 struct Channel;
+struct BoneInfo;
+
+struct MeshInfo
+{
+	MeshInfo(std::vector<BoneInfo> boneInfo, std::vector<float4x4> transformsAnim) : boneInfo(boneInfo), transformsAnim(transformsAnim) {}
+	~MeshInfo() {}
+	std::vector<BoneInfo> boneInfo;
+	std::vector<float4x4> transformsAnim;
+};
 
 class C_Animator : public Component
 {
@@ -31,7 +40,7 @@ public:
 	void Reset();
 
 	void SetAnimation(R_Animation* anim);
-	void SetMesh(R_Mesh* mesh);
+	void SetMeshInfo(R_Mesh* mesh);
 
 	bool CreateClip(const AnimatorClip& clip);
 	void SetSelectedClip(std::string name);
@@ -49,7 +58,7 @@ public:
 
 	const Channel* FindNodeAnim(std::string nodeName);
 	const std::vector<float4x4> GetLastBoneTransforms(R_Mesh* mesh) const;
-	const inline std::map<R_Mesh*, std::vector<float4x4>> GetMeshesTransforms() { return transformsAnim; }
+	const inline std::map<R_Mesh*, MeshInfo> GetMeshesInfo() { return meshesInfo; }
 
 	uint FindPosition(float AnimationTimeTicks, const Channel* pNodeAnim);
 	void CalcInterpolatedPosition(float3& Out, float AnimationTimeTicks, const Channel* pNodeAnim);
@@ -81,7 +90,7 @@ private:
 	float animTime = 0.0f; // Total animation time
 
 	// Bone transforms
-	std::map<R_Mesh*, std::vector<float4x4>> transformsAnim;
+	std::map<R_Mesh*, MeshInfo> meshesInfo;
 
 	// This two variables should not be there. Manage them the proper way when possible.
 	const GameObject* rootNode = nullptr;

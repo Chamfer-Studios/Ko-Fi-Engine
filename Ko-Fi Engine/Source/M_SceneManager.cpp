@@ -388,10 +388,10 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 						R_Mesh* rMesh = cMesh->GetMesh();
 						if (rMesh->IsAnimated())
 						{
-							rMesh->SetAnimation(rAnimation);
+							//rMesh->SetAnimation(rAnimation);
 
 							// Adding a reference to the mesh for the component cAnimator to be aware of it.
-							cAnimator->SetMesh(rMesh);
+							cAnimator->SetMeshInfo(rMesh);
 						}
 					}
 				}
@@ -417,18 +417,18 @@ void M_SceneManager::CreateComponentsFromNode(R_Model* model, ModelNode node, Ga
 	// Mesh
 	if (node.mesh != 0)
 	{
-		C_Mesh* mesh = (C_Mesh*)gameobject->AddComponentByType(ComponentType::MESH);
+		C_Mesh* cMesh = (C_Mesh*)gameobject->AddComponentByType(ComponentType::MESH);
 		R_Mesh* rMesh = (R_Mesh*)engine->GetResourceManager()->RequestResource(node.mesh);
 		if (rMesh == nullptr)
 		{
 			KOFI_ERROR(" Scene: Could not get resource mesh from model node.");
-			gameobject->DeleteComponent(mesh);
+			gameobject->DeleteComponent(cMesh);
 			return;
 		}
-		if (mesh != nullptr)
+		if (cMesh != nullptr)
 		{
-			mesh->SetMesh(rMesh);
-			rMesh->SetRootNode(gameobject->GetParent());
+			cMesh->SetMesh(rMesh);
+			//rMesh->SetRootNode(gameobject->GetParent());
 		}
 
 		// Material & Shader

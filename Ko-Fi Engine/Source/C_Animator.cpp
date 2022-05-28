@@ -7,6 +7,7 @@
 #include "M_ResourceManager.h"
 #include "M_SceneManager.h"
 #include "M_Renderer3D.h"
+#include "M_Editor.h"
 
 // GameObject
 #include "GameObject.h"
@@ -95,10 +96,7 @@ bool C_Animator::PostUpdate()
 bool C_Animator::CleanUp()
 {
 	if (animation != nullptr)
-	{
 		owner->GetEngine()->GetResourceManager()->FreeResource(animation->GetUID());
-		animation = nullptr;
-	}
 
 	clips.clear();
 
@@ -152,7 +150,7 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 		if (ImGui::DragInt("Edit End", &newEndFrame, 0, animation->duration))
 			animation->endFrame = newEndFrame;
 
-		if (ImGui::Button("Create Clip", ImVec2(80, 35)))
+		if (ImGui::Button("Create Clip ##", ImVec2(80, 35)))
 		{
 			if (animation->endFrame > animation->startFrame)
 			{
@@ -167,10 +165,12 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 			ImGui::TextColored(Red.ToImVec4(), "Please, select a valid clip interval.");
 
 		ImGui::Text("Select Clip");
-		if (ImGui::BeginCombo("Select Clip", ((selectedClip != nullptr) ? selectedClip->GetName().c_str() : "[SELECT CLIP]"), ImGuiComboFlags_None))
+		if (ImGui::BeginCombo("Select Clip ##", ((selectedClip != nullptr) ? selectedClip->GetName().c_str() : "[SELECT CLIP]"), ImGuiComboFlags_None))
 		{
 			for (auto clip = clips.begin(); clip != clips.end(); ++clip)
 			{
+				ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
+
 				if (ImGui::Selectable(clip->second.GetName().c_str(), (&clip->second == selectedClip), ImGuiSelectableFlags_None))
 				{
 					selectedClip = &clip->second;
@@ -185,16 +185,20 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 
 					editedMax = (selectedAnimation != nullptr) ? selectedAnimation->GetDuration() : 0;*/
 				}
+
+				ImGui::PopID();
 			}
 
 			ImGui::EndCombo();
 		}
 
 		ImGui::Text("Delete Clip");
-		if (ImGui::BeginCombo("Delete Clip", ((clipToDelete != nullptr) ? clipToDelete->GetName().c_str() : "[DELETE CLIP]"), ImGuiComboFlags_None))
+		if (ImGui::BeginCombo("Delete Clip ##", ((clipToDelete != nullptr) ? clipToDelete->GetName().c_str() : "[DELETE CLIP]"), ImGuiComboFlags_None))
 		{
 			for (auto clip = clips.begin(); clip != clips.end(); ++clip)
 			{
+				ImGui::PushID(owner->GetEngine()->GetEditor()->idTracker++);
+
 				if (ImGui::Selectable(clip->second.GetName().c_str(), (&clip->second == clipToDelete), ImGuiSelectableFlags_None))
 				{
 					if (clip->second.GetName() != "Default clip")
@@ -205,6 +209,8 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 					else
 						deleteDefaultClipMessage = true;
 				}
+
+				ImGui::PopID();
 			}
 
 			ImGui::EndCombo();
@@ -267,7 +273,7 @@ void C_Animator::Save(Json& json) const
 		json["selectedClip"] = selectedClip->GetName();
 
 		Json jsonMeshes;
-		for (auto mesh : transformsAnim)
+		for (auto mesh : meshesInfo)
 		{
 			jsonMeshes["uid"] = mesh.first->GetUID();
 			jsonMeshes["asset_path"] = mesh.first->GetAssetPath();
@@ -317,7 +323,8 @@ void C_Animator::Load(Json& json)
 					UID uid = mesh.value().at("uid");
 					const char* assetPath = mesh.value().at("asset_path").get<std::string>().c_str();
 					owner->GetEngine()->GetResourceManager()->LoadResource(uid, assetPath);
-					transformsAnim.emplace((R_Mesh*)owner->GetEngine()->GetResourceManager()->RequestResource(uid), std::vector<float4x4>());
+					R_Mesh* rMesh = (R_Mesh*)owner->GetEngine()->GetResourceManager()->RequestResource(uid);
+					meshesInfo.emplace(rMesh, MeshInfo(rMesh->boneInfo, std::vector<float4x4>()));
 				}
 			}
 		}
@@ -359,9 +366,9 @@ void C_Animator::SetAnimation(R_Animation* anim)
 	this->animation = anim;
 }
 
-void C_Animator::SetMesh(R_Mesh* mesh)
+void C_Animator::SetMeshInfo(R_Mesh* mesh)
 {
-	transformsAnim.emplace(mesh, std::vector<float4x4>());
+	meshesInfo.emplace(mesh, MeshInfo(mesh->boneInfo, std::vector<float4x4>()));
 }
 
 AnimatorClip* C_Animator::GetSelectedClip()
@@ -404,16 +411,16 @@ void C_Animator::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& t
 	mesh = gameObject->GetComponent<C_Mesh>()->GetMesh();
 	//----------------------------------------------------------------------------------------------------
 
-	if (transformsAnim.find(mesh) == transformsAnim.end())
+	if (meshesInfo.find(mesh) == meshesInfo.end())
 		return;
 
 	if (!owner->GetEngine()->GetRenderer()->isFirstPass)
 	{
-		transforms.resize(transformsAnim.find(mesh)->second.size());
+		transforms.resize(meshesInfo.find(mesh)->second.transformsAnim.size());
 
-		for (uint i = 0; i < transformsAnim.find(mesh)->second.size(); i++)
+		for (uint i = 0; i < meshesInfo.find(mesh)->second.transformsAnim.size(); i++)
 		{
-			transforms[i] = transformsAnim.find(mesh)->second[i];
+			transforms[i] = meshesInfo.find(mesh)->second.transformsAnim[i];
 		}
 
 		return;
@@ -425,7 +432,6 @@ void C_Animator::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& t
 	float timeInTicks = timeInSeconds * ticksPerSecond;
 
 	float startFrame, endFrame, animDur;
-	AnimatorClip* selectedClip = gameObject->GetParent()->GetComponent<C_Animator>()->GetSelectedClip();
 	if (selectedClip != nullptr)
 	{
 		startFrame = selectedClip->GetStartFrame();
@@ -450,19 +456,22 @@ void C_Animator::GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& t
 	}
 
 	ReadNodeHeirarchy(animationTimeTicks + startFrame, gameObject->GetParent(), identity); // We add startFrame as an offset to the duration.
-	transforms.resize(mesh->boneInfo.size());
-	transformsAnim.find(mesh)->second.resize(mesh->boneInfo.size());
+	transforms.resize(meshesInfo.find(mesh)->second.boneInfo.size());
+	meshesInfo.find(mesh)->second.transformsAnim.resize(meshesInfo.find(mesh)->second.boneInfo.size());
 
-	for (uint i = 0; i < mesh->boneInfo.size(); i++)
+	for (uint i = 0; i < meshesInfo.find(mesh)->second.boneInfo.size(); i++)
 	{
-		transforms[i] = mesh->boneInfo[i].finalTransformation;
-		transformsAnim.find(mesh)->second[i] = mesh->boneInfo[i].finalTransformation;
+		transforms[i] = meshesInfo.find(mesh)->second.boneInfo[i].finalTransformation;
+		meshesInfo.find(mesh)->second.transformsAnim[i] = meshesInfo.find(mesh)->second.boneInfo[i].finalTransformation;
 	}
 }
 
 void C_Animator::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* pNode, const float4x4& parentTransform)
 {
 	OPTICK_EVENT();
+
+	if (pNode->GetComponent<C_Mesh>() != nullptr)
+		return;
 
 	std::string nodeName(pNode->GetName());
 
@@ -497,8 +506,8 @@ void C_Animator::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* p
 	{
 		uint boneIndex = mesh->boneNameToIndexMap[nodeName];
 		float4x4 globalInversedTransform = rootNode->GetTransform()->GetGlobalTransform().Inverted();
-		float4x4 delta = globalInversedTransform * globalTransformation * mesh->boneInfo[boneIndex].offsetMatrix;
-		mesh->boneInfo[boneIndex].finalTransformation = delta.Transposed();
+		float4x4 delta = globalInversedTransform * globalTransformation * meshesInfo.find(mesh)->second.boneInfo[boneIndex].offsetMatrix;
+		meshesInfo.find(mesh)->second.boneInfo[boneIndex].finalTransformation = delta.Transposed();
 	}
 
 	for (uint i = 0; i < pNode->GetChildren().size(); i++)
@@ -516,7 +525,7 @@ const Channel* C_Animator::FindNodeAnim(std::string nodeName)
 
 const std::vector<float4x4> C_Animator::GetLastBoneTransforms(R_Mesh* mesh) const
 {
-	return transformsAnim.find(mesh)->second;
+	return meshesInfo.find(mesh)->second.transformsAnim;
 }
 
 uint C_Animator::FindPosition(float AnimationTimeTicks, const Channel* pNodeAnim)
