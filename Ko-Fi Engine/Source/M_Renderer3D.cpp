@@ -1250,13 +1250,10 @@ void M_Renderer3D::AddParticle(R_Texture& tex, Color color, const float4x4 trans
 
 void M_Renderer3D::RenderAllParticles()
 {
-
-	CONSOLE_LOG("particles: %d\n", particles.size());
 	for (std::map<float,ParticleRenderer>::reverse_iterator particle = particles.rbegin();particle != particles.rend();++particle)
 	{
 		RenderParticle(&particle->second);
 	}
-	
 
 	particles.clear();
 }
