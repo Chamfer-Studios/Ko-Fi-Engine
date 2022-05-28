@@ -18,6 +18,7 @@ bool R_Particle::CleanUp()
 	for (std::vector<Emitter*>::iterator it = emitters.begin(); it != emitters.end(); ++it)
 	{
 		emitters.erase(it);
+		delete *it;
 		if (emitters.empty())
 			break;
 	}

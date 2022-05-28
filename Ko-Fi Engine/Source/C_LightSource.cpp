@@ -150,14 +150,17 @@ void C_LightSource::Load(Json& json)
 		std::vector<float> values = json.at("lightPosition").get<std::vector<float>>();
 		currentLight->position = (float3(values[0], values[1], values[2]));
 		values.clear();
+		values.shrink_to_fit();;
 
 		values = json.at("lightColor").get<std::vector<float>>();
 		currentLight->color = (float3(values[0], values[1], values[2]));
 		values.clear();
+		values.shrink_to_fit();
 
 		values = json.at("lightDirection").get<std::vector<float>>();
 		currentLight->direction = (float3(values[0], values[1], values[2]));
 		values.clear();
+		values.shrink_to_fit();;
 
 		currentLight->ambient = json.at("ambientValue");
 		currentLight->diffuse = json.at("diffuseValue");
@@ -171,10 +174,12 @@ void C_LightSource::Load(Json& json)
 		std::vector<float> values = json.at("lightPosition").get<std::vector<float>>();
 		currentLight->position = (float3(values[0], values[1], values[2]));
 		values.clear();
+		values.shrink_to_fit();;
 
 		values = json.at("lightColor").get<std::vector<float>>();
 		currentLight->color = (float3(values[0], values[1], values[2]));
 		values.clear();
+		values.shrink_to_fit();;
 
 		currentLight->ambient = json.at("ambientValue");
 		currentLight->diffuse = json.at("diffuseValue");
@@ -192,10 +197,12 @@ void C_LightSource::Load(Json& json)
 		std::vector<float> values = json.at("lightPosition").get<std::vector<float>>();
 		currentLight->position = (float3(values[0], values[1], values[2]));
 		values.clear();
+		values.shrink_to_fit();;
 
 		values = json.at("lightColor").get<std::vector<float>>();
 		currentLight->color = (float3(values[0], values[1], values[2]));
 		values.clear();
+		values.shrink_to_fit();;
 
 		currentLight->ambient = json.at("ambientValue");
 		currentLight->diffuse = json.at("diffuseValue");
@@ -206,6 +213,7 @@ void C_LightSource::Load(Json& json)
 		values = json.at("lightDirection").get<std::vector<float>>();
 		currentLight->lightDirection = (float3(values[0], values[1], values[2]));
 		values.clear();
+		values.shrink_to_fit();;
 
 		currentLight->constant = json.at("constantAttenuationValue");
 		currentLight->linear = json.at("linearAttenuationValue");

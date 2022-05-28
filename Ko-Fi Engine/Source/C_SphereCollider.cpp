@@ -138,6 +138,7 @@ void C_SphereCollider::Load(Json& json)
 	std::vector<float> values = json.at("center").get<std::vector<float>>();
 	center = float3(values[0], values[1], values[2]);
 	values.clear();
+	values.shrink_to_fit();;
 	UpdateCenter();
 }
 

@@ -104,6 +104,7 @@ R_Mesh::~R_Mesh()
 	boneInfo.clear();
 	boneInfo.shrink_to_fit();
 	boneNameToIndexMap.clear();
+	
 }
 
 void R_Mesh::SetUpMeshBuffers()
@@ -185,7 +186,7 @@ void R_Mesh::DebugDraw()
 
 float* R_Mesh::GetTransformedVertices(float4x4 transform)
 {
-	float* ret = (float*)malloc(verticesSizeBytes);
+	float* ret = (float*)malloc(verticesSizeBytes); //DONE
 
 	int nvf = verticesSizeBytes / sizeof(float);
 	for (int i = 0; i < nvf; i += 3) {
@@ -197,6 +198,7 @@ float* R_Mesh::GetTransformedVertices(float4x4 transform)
 		ret[i + 1] = homogenized.y;
 		ret[i + 2] = homogenized.z;
 	}
+
 
 	return ret;
 }
@@ -239,7 +241,7 @@ R_Mesh* R_Mesh::MeshUnion(std::vector<R_Mesh*> meshes, std::vector<float4x4> tra
 
 		indicesOffset += m->verticesSizeBytes / sizeof(float3);
 
-		free(vertices);
+		free(vertices); //DONE
 	}
 
 	for (int i = 0; i < outputVertices.size(); i++) {

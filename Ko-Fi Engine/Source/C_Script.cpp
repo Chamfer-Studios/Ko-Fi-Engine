@@ -324,6 +324,7 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 					if (ImGui::DragInt("Path length", &nWaypoints, 1.0f, 0))
 					{
 						waypoints.clear();
+						waypoints.shrink_to_fit();;
 						for (int i = 0; i < nWaypoints; i++)
 						{
 							waypoints.push_back(float3(0, 0, 0));

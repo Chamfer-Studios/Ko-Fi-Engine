@@ -95,6 +95,7 @@ bool C_Particle::CleanUp()
 	for (std::vector<EmitterInstance*>::const_iterator it = emitterInstances.begin(); it != emitterInstances.end();++it)
 	{
 		emitterInstances.erase(it);
+		delete *it;
 		if (emitterInstances.empty())
 			break;
 	}

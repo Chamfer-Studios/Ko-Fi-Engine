@@ -108,6 +108,7 @@ bool GameObject::PreUpdate()
 	}
 
 	componentsToBeDeleted.clear();
+	componentsToBeDeleted.shrink_to_fit();;
 
 	for (Component* component : components)
 		ret = component->PreUpdate();
