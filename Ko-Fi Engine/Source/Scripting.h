@@ -195,6 +195,7 @@ public:
 									 "GetText", &GameObject::GetComponent<C_Text>,
 									 "GetComponentAnimator", &GameObject::GetComponent<C_Animator>,
 									 "GetComponentParticle", &GameObject::GetComponent<C_Particle>,
+									 "GetAudioSource", &GameObject::GetComponent<C_AudioSource>,
 									 "GetAudioSwitch", &GameObject::GetComponent<C_AudioSwitch>,
 									 "GetCamera", &GameObject::GetComponent<C_Camera>,
 									 "IsSelected", &GameObject::IsSelected,
@@ -304,6 +305,14 @@ public:
 			"SetLoop",&C_Particle::SetLoop,
 			"SetColor",&C_Particle::SetColor);
 
+		// Component Audio Source
+		lua.new_usertype<C_AudioSource>("C_AudioSource",
+			sol::constructors<void(GameObject*)>(),
+			"PlayTrack", &C_AudioSource::PlayTrack,
+			"PauseTrack", &C_AudioSource::PauseTrack,
+			"ResumeTrack", &C_AudioSource::ResumeTrack,
+			"StopTrack", &C_AudioSource::StopTrack);
+
 		// Component Audio Switch
 		lua.new_usertype<C_AudioSwitch>("C_AudioSwitch",
 			sol::constructors<void(GameObject*)>(),
@@ -311,7 +320,10 @@ public:
 			"PauseTrack", &C_AudioSwitch::PauseTrack,
 			"ResumeTrack", &C_AudioSwitch::ResumeTrack,
 			"StopTrack", &C_AudioSwitch::StopTrack,
-			"SwitchTrack", &C_AudioSwitch::SwitchTrack);
+			"SwitchTrack", &C_AudioSwitch::SwitchTrack,
+			"IsAnyTrackPlaying", &C_AudioSwitch::IsAnyTrackPlaying,
+			"GetPlayingTrackID", &C_AudioSwitch::GetPlayingTrackID,
+			"StopAllTracks", &C_AudioSwitch::StopAllTracks);
 
 		// Inspector Variables
 		lua.new_usertype<InspectorVariable>("InspectorVariable",
@@ -868,6 +880,8 @@ public:
 
 	bool LoadGameState();
 	bool SaveGameState();
+
+	void SetGameJsonArray(const char* key) { gameJson[key] = Json::array(); }
 
 	int GetGameJsonInt(const char* key) { return gameJson.at(key); }
 	void SetGameJsonInt(const char* key, int value) { gameJson[key] = value; }
