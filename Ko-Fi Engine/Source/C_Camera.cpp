@@ -49,6 +49,7 @@ C_Camera::C_Camera(GameObject* parent) : Component(parent)
 
 C_Camera::~C_Camera()
 {
+	CleanUp();
 }
 
 bool C_Camera::Start()

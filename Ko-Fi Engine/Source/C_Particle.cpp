@@ -37,7 +37,7 @@ C_Particle::C_Particle(GameObject* parent) : Component(parent)
 
 C_Particle::~C_Particle()
 {
-
+	CleanUp();
 }
 
 bool C_Particle::Start()

@@ -85,6 +85,7 @@ bool C_Animator::PostUpdate()
 
 bool C_Animator::CleanUp()
 {
+	//can improve a lot
 	if (animation != nullptr)
 	{
 		owner->GetEngine()->GetResourceManager()->FreeResource(animation->GetUID());

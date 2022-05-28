@@ -1,3 +1,12 @@
+#ifndef KOFI_GAME
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+#endif // !KOFI_GAME
+
+
+
+
 #include "Engine.h"
 
 #include "M_Window.h"
@@ -27,6 +36,11 @@
 // Constructor
 KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 {
+#ifndef KOFI_GAME
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtSetReportMode(_CRT_WARN | _CRT_ERROR , _CRTDBG_MODE_DEBUG);
+#endif // !KOFI_GAME
+
 	engineConfig = new EngineConfig();
 	PERF_START(ptimer);
 	Importer::GetInstance(this);
@@ -140,6 +154,8 @@ bool KoFiEngine::Start()
 
 	// Setting hardware info
 	SetHardwareInfo();
+
+
 
 	std::list<Module*>::iterator item = modules.begin();;
 

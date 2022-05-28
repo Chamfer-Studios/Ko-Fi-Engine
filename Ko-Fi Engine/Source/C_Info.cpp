@@ -16,7 +16,8 @@ C_Info::C_Info(GameObject* parent) : Component(parent)
 }
 
 C_Info::~C_Info()
-{}
+{
+}
 
 bool C_Info::CleanUp()
 {

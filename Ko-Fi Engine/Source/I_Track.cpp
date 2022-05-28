@@ -36,6 +36,7 @@ bool I_Track::Import(const char* path, R_Track* track)
     track->name = engine->GetFileSystem()->GetNameFromPath(path);
 
     std::filesystem::path filePath = path;
+
     if (filePath.extension() == ".mp3" || filePath.extension() == ".MP3")
     {
         ret = LoadMP3(path, track);
@@ -53,6 +54,7 @@ bool I_Track::Import(const char* path, R_Track* track)
 
 bool I_Track::LoadMP3(const char* path, R_Track* track)
 {
+    appLog->AddLog("Volume Loading the Track: %f \n ", track->GetVolume());
     track->format = AudioFormat::MP3;
 
     drmp3_uint64 totalPCMFrameCount = 0;
@@ -76,8 +78,14 @@ bool I_Track::LoadMP3(const char* path, R_Track* track)
         KOFI_ERROR(": Too much data in file for 32bit addressed vector.");
         return false;
     }
-
+   
     track->pcmData.resize(size_t(track->GetTotalSamples()));
+
+    if (track->pcmData.size() == 0)
+    {
+        KOFI_ERROR(": Audio File Corrupted, Exiting Without Data.");
+        return false;
+    }
     std::memcpy(track->pcmData.data(), pSampleData, track->pcmData.size() * 2);
     drmp3_free(pSampleData, nullptr);
 
@@ -90,7 +98,7 @@ bool I_Track::LoadMP3(const char* path, R_Track* track)
     track->duration = bufferSize / (track->sampleRate * track->channels * 2); //(2 bytes == 16 Bits)
 
     track->buffer = buffer;
-
+    
     return true;
 }
 
