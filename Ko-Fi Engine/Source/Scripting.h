@@ -423,6 +423,10 @@ public:
 		lua.set_function("LoadGameState", &Scripting::LoadGameState, this);
 		lua.set_function("SetGameJsonInt", &Scripting::SetGameJsonInt, this);
 		lua.set_function("GetGameJsonInt", &Scripting::GetGameJsonInt, this);
+		lua.set_function("SetGameJsonArray", &Scripting::SetGameJsonArray, this);
+		lua.set_function("GetGameJsonArraySize", &Scripting::GetGameJsonArraySize, this);
+		lua.set_function("SetGameJsonIntItem", &Scripting::SetGameJsonIntItem, this);
+		lua.set_function("GetGameJsonIntItem", &Scripting::GetGameJsonIntItem, this);
 	}
 
 	bool CleanUp()
