@@ -882,7 +882,20 @@ public:
 	bool LoadGameState();
 	bool SaveGameState();
 
-	void SetGameJsonArray(const char* key) { gameJson[key] = Json::array(); }
+	int GetGameJsonArraySize(const char* arrayKey) { gameJson.at(arrayKey).size(); }
+	void SetGameJsonArray(const char* arrayKey) { gameJson[arrayKey] = Json::array(); }
+
+	int GetGameJsonIntItem(const char* arrayKey, int index)
+	{
+		return gameJson.at(arrayKey).at(index);
+	}
+
+	void SetGameJsonIntItem(const char* arrayKey, const char* key, int value)
+	{
+		Json gameJsonItem;
+		gameJsonItem[key] = value;
+		gameJson[arrayKey].push_back(gameJsonItem);
+	}
 
 	int GetGameJsonInt(const char* key) { return gameJson.at(key); }
 	void SetGameJsonInt(const char* key, int value) { gameJson[key] = value; }
