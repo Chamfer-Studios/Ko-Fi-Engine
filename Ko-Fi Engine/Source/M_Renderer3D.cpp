@@ -508,16 +508,11 @@ void M_Renderer3D::QueryScene1(C_Camera* camera)
 
 					}
 				}
-
 			}
-
 		}
-
-
 	}
-
-
 }
+
 void M_Renderer3D::QueryScene2(C_Camera* camera)
 {
 	OPTICK_EVENT();
@@ -529,10 +524,9 @@ void M_Renderer3D::QueryScene2(C_Camera* camera)
 			C_Mesh* cMesh = go->GetComponent<C_Mesh>();
 			if (cMesh)
 			{
-
 				if (cMesh->GetMesh() != nullptr)
 				{
-					//render the meshes
+					// Render the meshes
 					uint shader = occlusionMat->shaderProgramID;
 					if (shader != 0)
 					{
@@ -548,7 +542,7 @@ void M_Renderer3D::QueryScene2(C_Camera* camera)
 						glUniform4f(color, static_cast <float> (rand()) / static_cast <float> (RAND_MAX), static_cast <float> (rand()) / static_cast <float> (RAND_MAX), static_cast <float> (rand()) / static_cast <float> (RAND_MAX), 1.0f);
 	
 						query->BeginQuery();
-						//Draw Mesh
+						// Draw Mesh
 						cMesh->GetMesh()->Draw();
 						query->EndQuery();
 						bool active = query->AnySamplesPassed();
@@ -557,12 +551,8 @@ void M_Renderer3D::QueryScene2(C_Camera* camera)
 				
 					}
 				}
-
 			}
-
 		}
-
-
 	}
 }
 
@@ -876,7 +866,7 @@ void M_Renderer3D::LightUniforms(uint shader)
 				GLint diffuseValue = glGetUniformLocation(shader, ("focalLights[" + number + "].diffuse").c_str());
 				glUniform1f(diffuseValue, lightSource->diffuse);
 
-				// -- light cone parameters -- 
+				// -- light cone parameters --
 				//float cutOffAngle
 				GLint cutOffValue = glGetUniformLocation(shader, ("focalLights[" + number + "].cutOffAngle").c_str());
 				glUniform1f(cutOffValue, lightSource->cutOffAngle);
@@ -921,6 +911,7 @@ void M_Renderer3D::LightUniforms(uint shader)
 		glUniform1i(numFocalLights, 0);
 	}
 }
+
 void M_Renderer3D::RenderUI(GameObject* go)
 {
 	C_RenderedUI* cRenderedUI = go->GetComponent<C_RenderedUI>();
@@ -930,7 +921,7 @@ void M_Renderer3D::RenderUI(GameObject* go)
 void M_Renderer3D::StepAnimatedMesh(GameObject* go, R_Mesh* mesh, uint shader)
 {
 	C_Animator* cAnimator = go->GetParent()->GetComponent<C_Animator>();
-	if (cAnimator != nullptr)
+	if (cAnimator != nullptr && cAnimator->GetMeshesInfo().size() > 0)
 	{
 		AnimatorClip* animatorClip = cAnimator->GetSelectedClip();
 		if (animatorClip != nullptr)
@@ -938,31 +929,24 @@ void M_Renderer3D::StepAnimatedMesh(GameObject* go, R_Mesh* mesh, uint shader)
 			if (animatorClip->GetFinishedBool() && animatorClip->GetLoopBool())
 				animatorClip->SetFinishedBool(false);
 
+			std::vector<float4x4> transformsAnim;
 			if (!animatorClip->GetFinishedBool())
 			{
 				float animationTimeSec = cAnimator->GetAnimTime();
-				std::vector<float4x4> transformsAnim;
-				mesh->GetBoneTransforms(animationTimeSec, transformsAnim, go);
-
-				GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
-				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
-				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
-				glUniform1i(isAnimated, mesh->IsAnimated());
+				cAnimator->GetBoneTransforms(animationTimeSec, transformsAnim, go);
 			}
 			else
 			{
-				std::vector<float4x4> transformsAnim;
-
-				if (mesh->GetLastBoneTransforms().size() == 0)
-					mesh->GetBoneTransforms(0, transformsAnim, go);
-
-				transformsAnim = mesh->GetLastBoneTransforms();
-
-				GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
-				glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
-				GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
-				glUniform1i(isAnimated, mesh->IsAnimated());
+				transformsAnim.resize(mesh->boneInfo.size());
+				for (int i = 0; i < transformsAnim.size(); ++i)
+				{
+					transformsAnim[i] = float4x4::identity;
+				}
 			}
+			GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
+			glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
+			GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
+			glUniform1i(isAnimated, true);
 		}
 	}
 }
@@ -1258,13 +1242,10 @@ void M_Renderer3D::AddParticle(R_Texture& tex, Color color, const float4x4 trans
 
 void M_Renderer3D::RenderAllParticles()
 {
-
-	CONSOLE_LOG("particles: %d\n", particles.size());
 	for (std::map<float,ParticleRenderer>::reverse_iterator particle = particles.rbegin();particle != particles.rend();++particle)
 	{
 		RenderParticle(&particle->second);
 	}
-	
 
 	particles.clear();
 }
