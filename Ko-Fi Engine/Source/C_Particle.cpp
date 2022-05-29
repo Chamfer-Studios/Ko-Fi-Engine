@@ -30,8 +30,6 @@ C_Particle::C_Particle(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::PARTICLE;
 	resource = nullptr;
-	emitterInstances.clear();
-	emitterInstances.shrink_to_fit();
 }
 
 C_Particle::~C_Particle()
@@ -91,12 +89,20 @@ bool C_Particle::PostUpdate(float dt)
 
 bool C_Particle::CleanUp()
 {
-	for (std::vector<EmitterInstance*>::const_iterator it = emitterInstances.begin(); it != emitterInstances.end();)
+	for (auto it : emitterInstances)
 	{
-		it = emitterInstances.erase(it);
+		RELEASE(it);
 	}
 	emitterInstances.clear();
 	emitterInstances.shrink_to_fit();
+
+	for (auto it : resourcesList)
+	{
+		it.clear();
+		it.shrink_to_fit();
+	}
+	resourcesList.clear();
+	resourcesList.shrink_to_fit();
 
 	RELEASE(resource);
 	return true;
