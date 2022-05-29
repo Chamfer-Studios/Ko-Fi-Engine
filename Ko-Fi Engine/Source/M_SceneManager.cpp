@@ -126,7 +126,7 @@ bool M_SceneManager::PostUpdate(float dt)
 
 	OPTICK_EVENT();
 
-	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
+ 	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
 		ret = (*scene)->PostUpdate(dt);
 	}
@@ -650,3 +650,20 @@ void M_SceneManager::UpdateGuizmo()
 	}
 #endif // KOFI_GAME
 }
+
+bool M_SceneManager::ChangeMouseTexture(std::string texturePathToBMPImage)
+{
+	mouseTexture = SDL_LoadBMP(texturePathToBMPImage.c_str());
+
+	SDL_Cursor* cursor = SDL_CreateColorCursor(mouseTexture, 0, 0);
+	if (!cursor)
+	{
+		return false;
+	}
+
+	SDL_SetCursor(cursor);
+	SDL_FreeSurface(mouseTexture);
+	return true;
+}
+
+

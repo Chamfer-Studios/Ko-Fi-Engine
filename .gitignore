@@ -92,6 +92,8 @@ StyleCopReport.xml
 *.pidb
 *.svclog
 *.scc
+*.tlog
+*.lastbuildstate
 
 # Chutzpah Test files
 _Chutzpah*
@@ -351,3 +353,5 @@ MigrationBackup/
 
 # Engine generated files
 Library/
+
+Ko-Fi Engine/ReleaseGame/Ko-Fi Engine.exe.recipe

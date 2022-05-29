@@ -6,6 +6,8 @@
 #include "AnimatorClip.h"
 #include "Assimp.h"
 
+#include <string>
+
 class GameObject;
 class R_Animation;
 class R_Mesh;
@@ -45,6 +47,7 @@ public:
 	bool CreateClip(const AnimatorClip& clip);
 	void SetSelectedClip(std::string name);
 	AnimatorClip* GetSelectedClip();
+	std::string GetSelectedClipName();
 
 	bool IsCurrentClipPlaying();
 	bool IsCurrentClipLooping();

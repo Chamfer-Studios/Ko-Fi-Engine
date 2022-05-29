@@ -168,7 +168,6 @@ bool M_Renderer3D::PostUpdate(float dt)
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	RenderScene(engine->GetCamera3D()->currentCamera);
-
 	engine->GetNavigation()->DrawNavmesh();
 
 	isFirstPass = false;

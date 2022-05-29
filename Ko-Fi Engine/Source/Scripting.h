@@ -293,6 +293,7 @@ public:
 		lua.new_usertype<C_Animator>("ComponentAnimator",
 			sol::constructors<void(GameObject*)>(),
 			"SetSelectedClip", &C_Animator::SetSelectedClip,
+			"GetSelectedClip", &C_Animator::GetSelectedClipName,
 			"IsCurrentClipLooping", &C_Animator::IsCurrentClipLooping,
 			"IsCurrentClipPlaying", &C_Animator::IsCurrentClipPlaying);
 
@@ -422,6 +423,10 @@ public:
 		lua.set_function("LoadGameState", &Scripting::LoadGameState, this);
 		lua.set_function("SetGameJsonInt", &Scripting::SetGameJsonInt, this);
 		lua.set_function("GetGameJsonInt", &Scripting::GetGameJsonInt, this);
+		lua.set_function("SetGameJsonArray", &Scripting::SetGameJsonArray, this);
+		lua.set_function("GetGameJsonArraySize", &Scripting::GetGameJsonArraySize, this);
+		lua.set_function("SetGameJsonIntItem", &Scripting::SetGameJsonIntItem, this);
+		lua.set_function("GetGameJsonIntItem", &Scripting::GetGameJsonIntItem, this);
 	}
 
 	bool CleanUp()
@@ -881,7 +886,20 @@ public:
 	bool LoadGameState();
 	bool SaveGameState();
 
-	void SetGameJsonArray(const char* key) { gameJson[key] = Json::array(); }
+	int GetGameJsonArraySize(const char* arrayKey) { gameJson.at(arrayKey).size(); }
+	void SetGameJsonArray(const char* arrayKey) { gameJson[arrayKey] = Json::array(); }
+
+	int GetGameJsonIntItem(const char* arrayKey, int index)
+	{
+		return gameJson.at(arrayKey).at(index);
+	}
+
+	void SetGameJsonIntItem(const char* arrayKey, const char* key, int value)
+	{
+		Json gameJsonItem;
+		gameJsonItem[key] = value;
+		gameJson[arrayKey].push_back(gameJsonItem);
+	}
 
 	int GetGameJsonInt(const char* key) { return gameJson.at(key); }
 	void SetGameJsonInt(const char* key, int value) { gameJson[key] = value; }
