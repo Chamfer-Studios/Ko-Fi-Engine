@@ -954,7 +954,7 @@ std::string GameObject::SetObjectNumberedName(const char* _name)
 
 	if (_name == nullptr)
 	{
-		std::string tmp = std::string("GameObject") + std::to_string(uid);
+		std::string tmp = std::string("GameObject ") + std::to_string(uid);
 		return tmp;
 	}
 
