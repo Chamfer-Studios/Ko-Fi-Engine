@@ -9,6 +9,7 @@
 #include "ImGuizmo.h"
 #include "Scene.h"
 
+#include <string>
 #include <imgui.h>
 #include <imgui_internal.h>
 
@@ -145,7 +146,7 @@ private:
 	// Real Time Delta Time: last frame time expressed in seconds (Real Time Clock) --> Engine.cpp
 	// ----------------------------------------------------------------------------------------------------
 	//Current Mouse Texture
-	SDL_Surface* mouseTexture = nullptr;
+	std::string currentMouseTextPath = "";
 };
 
 #endif // !__M_SCENE_MANAGER_H__

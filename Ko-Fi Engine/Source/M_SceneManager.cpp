@@ -111,7 +111,7 @@ bool M_SceneManager::Update(float dt)
 	bool ret = true;
 
 	OPTICK_EVENT();
-	
+
 	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
 		ret = (*scene)->Update(dt);
@@ -126,7 +126,7 @@ bool M_SceneManager::PostUpdate(float dt)
 
 	OPTICK_EVENT();
 
- 	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
+	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
 		ret = (*scene)->PostUpdate(dt);
 	}
@@ -167,7 +167,7 @@ bool M_SceneManager::SaveConfiguration(Json& configModule) const
 bool M_SceneManager::LoadConfiguration(Json& configModule)
 {
 	defaultScene = configModule["DefaultScene"];
-	
+
 	return true;
 }
 
@@ -319,7 +319,7 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 
 	//first = old UID (repeated)
 	//second = new UID
-	std::map<UID,UID> repeatedUIDs;
+	std::map<UID, UID> repeatedUIDs;
 
 	//save repeated UIDs
 	for (const auto& it : tmp)
@@ -327,7 +327,7 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 		if (currentScene->GetGameObject(it.first) != nullptr)
 		{
 			it.second->SetUID(RNG::GetRandomUint());
-			repeatedUIDs.emplace(it.first,it.second->GetUID());
+			repeatedUIDs.emplace(it.first, it.second->GetUID());
 		}
 		currentScene->gameObjectList.push_back(it.second);
 	}
@@ -505,7 +505,7 @@ void M_SceneManager::OnStop()
 	gameClockSpeed = 0.0f;
 	gameTime = 0.0f;
 
-	Importer::GetInstance()->sceneImporter->LoadScene(currentScene,currentScene->name.c_str());
+	Importer::GetInstance()->sceneImporter->LoadScene(currentScene, currentScene->name.c_str());
 	// Load the scene we saved before in .json
 	//LoadScene(currentScene, "SceneIntro");
 	for (GameObject* go : currentScene->gameObjectList)
@@ -653,16 +653,21 @@ void M_SceneManager::UpdateGuizmo()
 
 bool M_SceneManager::ChangeMouseTexture(std::string texturePathToBMPImage)
 {
-	mouseTexture = SDL_LoadBMP(texturePathToBMPImage.c_str());
-
-	SDL_Cursor* cursor = SDL_CreateColorCursor(mouseTexture, 0, 0);
-	if (!cursor)
+	
+	if (currentMouseTextPath != texturePathToBMPImage)
 	{
-		return false;
+		SDL_Surface* mouseTexture = SDL_LoadBMP(texturePathToBMPImage.c_str());
+		SDL_Cursor* newCursor = SDL_CreateColorCursor(mouseTexture, 0, 0);
+		if (!newCursor)
+		{
+			return false;
+		}
+		currentMouseTextPath = texturePathToBMPImage;
+		SDL_SetCursor(newCursor);
+		SDL_FreeSurface(mouseTexture);
 	}
 
-	SDL_SetCursor(cursor);
-	SDL_FreeSurface(mouseTexture);
+
 	return true;
 }
 

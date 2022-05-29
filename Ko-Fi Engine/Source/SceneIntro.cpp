@@ -226,24 +226,7 @@ bool SceneIntro::PostUpdate(float dt)
 	return true;
 }
 
-void SceneIntro::OnAnyButtonHovered(const std::function<void()>& onAnyButtonHovered, const std::function<void()>& onNoButtonHovered)
-{
-	for (GameObject* go : this->gameObjectList)
-	{
-		C_Button* cBtn = go->GetComponent<C_Button>();
-		if (cBtn)
-		{
-			
-			if (cBtn->GetState() == C_Button::BUTTON_STATE::HOVER)
-			{
-				onAnyButtonHovered();
-				return;
-			}
 
-		}
-	}
-	onNoButtonHovered();
-}
 
 
 // Load assets

@@ -425,6 +425,7 @@ public:
 		lua.set_function("GetGameJsonInt", &Scripting::GetGameJsonInt, this);
 		lua.set_function("SetGameJsonArray", &Scripting::SetGameJsonArray, this);
 		lua.set_function("GetGameJsonArraySize", &Scripting::GetGameJsonArraySize, this);
+		lua.set_function("ChangeMouseTexture", &Scripting::LuaChangeMouseTexture, this);
 		lua.set_function("AddGameJsonArrayElement", &Scripting::AddGameJsonArrayElement, this);
 		lua.set_function("GetGameJsonArrayElement", &Scripting::GetGameJsonArrayElement, this);
 	}
@@ -596,7 +597,10 @@ public:
 	{
 		return gameObject->GetEngine()->GetPhysics();
 	}
-
+	void LuaChangeMouseTexture(std::string texturePath)
+	{
+		gameObject->GetEngine()->GetSceneManager()->ChangeMouseTexture(texturePath);
+	}
 	void LuaInstantiateNamedPrefab(std::string prefab, std::string name)
 	{
 		gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectListToCreate.emplace(name, prefab);
