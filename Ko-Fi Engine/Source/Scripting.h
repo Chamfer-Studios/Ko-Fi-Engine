@@ -893,14 +893,16 @@ public:
 	int GetGameJsonArraySize(const char* arrayKey) { gameJson.at(arrayKey).size(); }
 	void SetGameJsonArray(const char* arrayKey) { gameJson[arrayKey] = Json::array(); }
 
-	int GetGameJsonArrayElement(const char* arrayKey, int element)
+	int GetGameJsonArrayKey(const char* arrayKey, int element)
 	{
-		return gameJson.at(arrayKey).at(element);
+		std::string key = std::to_string(element);
+		return gameJson.at(arrayKey).at(key);
 	}
 
-	void AddGameJsonArrayElement(const char* arrayKey, int element)
+	void AddGameJsonArrayKey(const char* arrayKey, int element)
 	{
-		gameJson[arrayKey].emplace_back(element);
+		std::string key = std::to_string(element);
+		gameJson.at(arrayKey).emplace_back(key);
 	}
 
 	int GetGameJsonInt(const char* key) { return gameJson.at(key); }
