@@ -29,7 +29,6 @@
 C_Particle::C_Particle(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::PARTICLE;
-	//resource = new R_Particle();
 	resource = nullptr;
 	emitterInstances.clear();
 	emitterInstances.shrink_to_fit();
@@ -94,15 +93,12 @@ bool C_Particle::CleanUp()
 {
 	for (std::vector<EmitterInstance*>::const_iterator it = emitterInstances.begin(); it != emitterInstances.end();)
 	{
-		delete *it;
 		it = emitterInstances.erase(it);
 	}
 	emitterInstances.clear();
 	emitterInstances.shrink_to_fit();
 
-	if (resource != nullptr)
-		owner->GetEngine()->GetResourceManager()->FreeResource(resource->GetUID());
-	resource = nullptr;
+	RELEASE(resource);
 	return true;
 }
 
@@ -932,11 +928,11 @@ void C_Particle::Load(Json& json)
 				ei->Init();
 				ei->loop = emitter.value().at("loop");
 				e->maxParticles = emitter.value().at("maxParticles");
-				e->texture = new R_Texture();
+				e->texture = nullptr;
 				if (emitter.value().contains("texture_path"))
-					e->texture->SetAssetPath(emitter.value().at("texture_path").get<std::string>().c_str());
-				if (e->texture->GetAssetPath() != "")
-					Importer::GetInstance()->textureImporter->Import(e->texture->GetAssetPath(), e->texture);
+					e->texture = (R_Texture*)owner->GetEngine()->GetResourceManager()->GetResourceFromLibrary(emitter.value().at("texture_path").get<std::string>().c_str());
+				else
+					e->texture = Importer::GetInstance()->textureImporter->GetCheckerTexture();
 
 				e->modules.clear();
 				e->modules.shrink_to_fit();
