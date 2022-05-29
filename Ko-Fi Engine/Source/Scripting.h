@@ -425,8 +425,8 @@ public:
 		lua.set_function("GetGameJsonInt", &Scripting::GetGameJsonInt, this);
 		lua.set_function("SetGameJsonArray", &Scripting::SetGameJsonArray, this);
 		lua.set_function("GetGameJsonArraySize", &Scripting::GetGameJsonArraySize, this);
-		lua.set_function("SetGameJsonIntItem", &Scripting::SetGameJsonIntItem, this);
-		lua.set_function("GetGameJsonIntItem", &Scripting::GetGameJsonIntItem, this);
+		lua.set_function("AddGameJsonArrayElement", &Scripting::AddGameJsonArrayElement, this);
+		lua.set_function("GetGameJsonArrayElement", &Scripting::GetGameJsonArrayElement, this);
 	}
 
 	bool CleanUp()
@@ -889,16 +889,14 @@ public:
 	int GetGameJsonArraySize(const char* arrayKey) { gameJson.at(arrayKey).size(); }
 	void SetGameJsonArray(const char* arrayKey) { gameJson[arrayKey] = Json::array(); }
 
-	int GetGameJsonIntItem(const char* arrayKey, int index)
+	int GetGameJsonArrayElement(const char* arrayKey, int element)
 	{
-		return gameJson.at(arrayKey).at(index);
+		return gameJson.at(arrayKey).at(element);
 	}
 
-	void SetGameJsonIntItem(const char* arrayKey, const char* key, int value)
+	void AddGameJsonArrayElement(const char* arrayKey, int element)
 	{
-		Json gameJsonItem;
-		gameJsonItem[key] = value;
-		gameJson[arrayKey].push_back(gameJsonItem);
+		gameJson[arrayKey].emplace_back(element);
 	}
 
 	int GetGameJsonInt(const char* key) { return gameJson.at(key); }
