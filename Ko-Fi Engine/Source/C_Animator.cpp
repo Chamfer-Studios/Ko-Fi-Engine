@@ -473,7 +473,10 @@ void C_Animator::ReadNodeHeirarchy(float animationTimeTicks, const GameObject* p
 	if (pNode->GetComponent<C_Mesh>() != nullptr)
 		return;
 
-	std::string nodeName(pNode->GetName());
+	std::string nodeName = pNode->GetName();
+	std::size_t start = nodeName.find_last_of("(");
+	if (start != std::string::npos)
+		nodeName = nodeName.substr(0, start - 1);
 
 	float4x4 nodeTransformation(pNode->GetTransform()->GetLocalTransform());
 

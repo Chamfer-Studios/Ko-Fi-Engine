@@ -954,7 +954,7 @@ std::string GameObject::SetObjectNumberedName(const char* _name)
 
 	if (_name == nullptr)
 	{
-		std::string tmp = std::string("GameObject ") + std::to_string(uid);
+		std::string tmp = std::string("GameObject") + std::to_string(uid);
 		return tmp;
 	}
 
@@ -968,7 +968,7 @@ std::string GameObject::SetObjectNumberedName(const char* _name)
 	{
 		count++;
 		number = std::to_string(count);
-		chainName = name + number;
+		chainName = name + " (" + number + ")";
 	}
 	else
 		return name; // If there is no object with that name return the name asigned
@@ -977,7 +977,7 @@ std::string GameObject::SetObjectNumberedName(const char* _name)
 	{
 		count++;
 		number = std::to_string(count);
-		chainName = name + number;
+		chainName = name + " (" + number + ")";
 	}
 
 	return chainName;
