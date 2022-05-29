@@ -426,8 +426,8 @@ public:
 		lua.set_function("SetGameJsonArray", &Scripting::SetGameJsonArray, this);
 		lua.set_function("GetGameJsonArraySize", &Scripting::GetGameJsonArraySize, this);
 		lua.set_function("ChangeMouseTexture", &Scripting::LuaChangeMouseTexture, this);
-		lua.set_function("AddGameJsonArrayElement", &Scripting::AddGameJsonArrayElement, this);
-		lua.set_function("GetGameJsonArrayElement", &Scripting::GetGameJsonArrayElement, this);
+		lua.set_function("AddGameJsonArrayKey", &Scripting::AddGameJsonArrayKey, this);
+		lua.set_function("GetGameJsonArrayKey", &Scripting::GetGameJsonArrayKey, this);
 	}
 
 	bool CleanUp()
