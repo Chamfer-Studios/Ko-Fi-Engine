@@ -71,7 +71,6 @@ void Scene::DeleteCurrentScene()
 	engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
 	rootGo = new GameObject(0, engine, "Root");
 	gameObjectList.push_back(rootGo);
-	engine->GetNavigation()->CleanUp();
 }
 
 void Scene::DeleteGameObject(GameObject* gameObject)

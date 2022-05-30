@@ -92,13 +92,26 @@ bool C_Animator::CleanUp()
 		animation = nullptr;
 	}
 
+
+	for (std::map<std::string, AnimatorClip>::iterator it = clips.begin(); it != clips.end(); it++)
+	{
+		owner->GetEngine()->GetResourceManager()->FreeResource(it->second.GetAnimation()->GetUID());
+	}
 	clips.clear();
 
 	if (selectedClip)
+	{
+		owner->GetEngine()->GetResourceManager()->FreeResource(selectedClip->GetAnimation()->GetUID());
 		selectedClip = nullptr;
+	}
+		
 
 	if (clipToDelete)
+	{
+		owner->GetEngine()->GetResourceManager()->FreeResource(clipToDelete->GetAnimation()->GetUID());
 		clipToDelete = nullptr;
+	}
+		
 
 	C_Mesh* cMesh = owner->GetComponent<C_Mesh>();
 	if (cMesh != nullptr)

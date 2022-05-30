@@ -353,6 +353,7 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 
 		scene->active = jsonScene.at("active");
 
+		engine->GetNavigation()->CleanUp();
 		// Create Root
 		if (jsonScene.find("navmesh") != jsonScene.end())
 			engine->GetNavigation()->Load(jsonScene.at("navmesh"));
