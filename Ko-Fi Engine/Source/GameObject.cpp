@@ -236,6 +236,17 @@ void GameObject::Disable()
 	active = false;
 }
 
+std::vector<C_Script*> GameObject::GetAllScripts()
+{
+	std::vector<C_Script*> ret;
+	for (const auto& comp : components)
+	{
+		if (comp->type == ComponentType::SCRIPT)
+			ret.push_back((C_Script*)comp);
+	}
+	return ret;
+}
+
 void GameObject::DeleteComponent(Component* component)
 {
 	componentsToBeDeleted.push_back(component);

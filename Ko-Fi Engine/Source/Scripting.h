@@ -648,11 +648,12 @@ public:
 	{
 		for (GameObject* go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
 		{
-			C_Script* script = go->GetComponent<C_Script>();
-			if (script)
+			// C_Script* script = go->GetComponent<C_Script>();
+			std::vector<C_Script*> scripts = go->GetAllScripts();
+			for (const auto& script : scripts)
 			{
-
-				if (path == script->s->path.substr(script->s->path.find_last_of('/') + 1))
+				std::string str = script->s->path.substr(script->s->path.find_last_of('/') + 1);
+				if (path == str)
 				{
 					switch (type)
 					{

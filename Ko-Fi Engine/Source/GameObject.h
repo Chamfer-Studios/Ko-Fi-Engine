@@ -63,6 +63,7 @@ public:
 		}
 		return component;
 	}
+	std::vector<C_Script*> GetAllScripts();
 
 	// New way
 	void DeleteComponent(Component *component);
