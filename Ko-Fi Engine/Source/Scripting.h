@@ -342,6 +342,7 @@ public:
 			"SetDynamic", &C_RigidBody::SetBodyDynamic,
 			"FreezePositionY", &C_RigidBody::FreezePositionY,
 			"SetLinearVelocity", &C_RigidBody::SetLinearVelocity,
+			"GetLinearVelocity", &C_RigidBody::GetLinearVelocity,
 			"SetRigidBodyPos", &C_RigidBody::SetRigidBodyPos,
 			"SetUseGravity", &C_RigidBody::SetUseGravity,
 			"UpdateEnableGravity", &C_RigidBody::UpdateEnableGravity);

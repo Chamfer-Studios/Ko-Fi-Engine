@@ -173,6 +173,13 @@ bool C_RigidBody::InspectorDraw(PanelChooser* chooser)
 
 				ImGui::TreePop();
 			}
+
+			if (ImGui::TreeNodeEx("Velocity"))
+			{
+				float a[3] = { GetLinearVelocity().x, GetLinearVelocity().y, GetLinearVelocity().z };
+				ImGui::SliderFloat3("##vel", a, -1000, 1000, "%.3f", ImGuiSliderFlags_ReadOnly);
+				ImGui::TreePop();
+			}
 		}
 	}
 	else
