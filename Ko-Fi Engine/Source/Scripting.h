@@ -423,11 +423,11 @@ public:
 		lua.set_function("LoadGameState", &Scripting::LoadGameState, this);
 		lua.set_function("SetGameJsonInt", &Scripting::SetGameJsonInt, this);
 		lua.set_function("GetGameJsonInt", &Scripting::GetGameJsonInt, this);
-		lua.set_function("SetGameJsonArray", &Scripting::SetGameJsonArray, this);
+		lua.set_function("ClearGameJsonArray", &Scripting::ClearGameJsonArray, this);
 		lua.set_function("GetGameJsonArraySize", &Scripting::GetGameJsonArraySize, this);
 		lua.set_function("ChangeMouseTexture", &Scripting::LuaChangeMouseTexture, this);
-		lua.set_function("AddGameJsonArrayKey", &Scripting::AddGameJsonArrayKey, this);
-		lua.set_function("GetGameJsonArrayKey", &Scripting::GetGameJsonArrayKey, this);
+		lua.set_function("AddGameJsonElement", &Scripting::AddGameJsonElement, this);
+		lua.set_function("GetGameJsonElement", &Scripting::GetGameJsonElement, this);
 	}
 
 	bool CleanUp()
@@ -891,23 +891,35 @@ public:
 	bool LoadGameState();
 	bool SaveGameState();
 
-	int GetGameJsonArraySize(const char* arrayKey) { gameJson.at(arrayKey).size(); }
-	void SetGameJsonArray(const char* arrayKey) { gameJson[arrayKey] = Json::array(); }
-
-	int GetGameJsonArrayKey(const char* arrayKey, int element)
+	void ClearGameJsonArray(const char* arrayKey)
 	{
-		std::string key = std::to_string(element);
-		return gameJson.at(arrayKey).at(key);
+		gameJson.at(arrayKey).clear();
 	}
 
-	void AddGameJsonArrayKey(const char* arrayKey, int element)
+	int GetGameJsonArraySize(const char* arrayKey)
 	{
-		std::string key = std::to_string(element);
-		gameJson.at(arrayKey).emplace_back(key);
+		return gameJson.at(arrayKey).size();
 	}
 
-	int GetGameJsonInt(const char* key) { return gameJson.at(key); }
-	void SetGameJsonInt(const char* key, int value) { gameJson[key] = value; }
+	int GetGameJsonElement(const char* arrayKey, int index)
+	{
+		return gameJson.at(arrayKey).at(index);
+	}
+
+	void AddGameJsonElement(const char* arrayKey, int element)
+	{
+		gameJson[arrayKey].push_back(element);
+	}
+
+	int GetGameJsonInt(const char* key)
+	{
+		return gameJson.at(key);
+	}
+
+	void SetGameJsonInt(const char* key, int value)
+	{
+		gameJson[key] = value;
+	}
 
 public:
 	sol::state lua;
