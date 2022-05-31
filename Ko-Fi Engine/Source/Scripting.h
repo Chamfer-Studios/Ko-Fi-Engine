@@ -423,6 +423,8 @@ public:
 		lua.set_function("LoadGameState", &Scripting::LoadGameState, this);
 		lua.set_function("SetGameJsonInt", &Scripting::SetGameJsonInt, this);
 		lua.set_function("GetGameJsonInt", &Scripting::GetGameJsonInt, this);
+		lua.set_function("SetGameJsonFloat3", &Scripting::SetGameJsonFloat3, this);
+		lua.set_function("GetGameJsonFloat3", &Scripting::GetGameJsonFloat3, this);
 		lua.set_function("ClearGameJsonArray", &Scripting::ClearGameJsonArray, this);
 		lua.set_function("GetGameJsonArraySize", &Scripting::GetGameJsonArraySize, this);
 		lua.set_function("ChangeMouseTexture", &Scripting::LuaChangeMouseTexture, this);
@@ -919,6 +921,18 @@ public:
 	void SetGameJsonInt(const char* key, int value)
 	{
 		gameJson[key] = value;
+	}
+
+	void SetGameJsonFloat3(const char* key, float3 value)
+	{
+		gameJson[key] = { value.x, value.y, value.z };
+	}
+
+	float3 GetGameJsonFloat3(const char* key)
+	{
+		std::vector<float> values = gameJson.at(key).get<std::vector<float>>();
+		float3 ret = float3(values[0], values[1], values[2]);
+		return ret;
 	}
 
 public:
