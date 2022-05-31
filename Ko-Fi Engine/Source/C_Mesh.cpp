@@ -180,6 +180,8 @@ float3 C_Mesh::GetCenterPointInWorldCoords() const
 {
 	if (this->mesh != nullptr)
 		return owner->GetTransform()->GetGlobalTransform().TransformPos(GetCenterPoint());
+	else
+		return float3::zero;
 }
 
 uint C_Mesh::GetVertices()

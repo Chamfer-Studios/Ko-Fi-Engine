@@ -345,6 +345,8 @@ bool C_Animator::CreateClip(const AnimatorClip& clip)
 	}
 
 	clips.emplace(clip.GetName(), clip);
+
+	return true;
 }
 
 void C_Animator::Reset()

@@ -102,6 +102,8 @@ bool EmitterDefault::Update(float dt, EmitterInstance* instance)
 				GetCameraFrustum().WorldMatrix().TranslatePart() - particle->position).LengthSq();
 		}
 	}
+
+	return true;
 }
 
 EmitterMovement::EmitterMovement()
