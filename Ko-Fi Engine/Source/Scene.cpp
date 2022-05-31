@@ -7,6 +7,7 @@
 // GameObject
 #include "GameObject.h"
 #include "C_LightSource.h"
+#include "C_Button.h"
 
 #include <vector>
 #include "M_Physics.h"
@@ -28,6 +29,8 @@ GameObject* Scene::GetGameObject(int uid)
 	return nullptr;
 }
 
+
+
 bool Scene::IsGameObjectInScene(std::string name)
 {
 	for (GameObject* go : gameObjectList)
@@ -40,7 +43,24 @@ bool Scene::IsGameObjectInScene(std::string name)
 
 	return false;
 }
+void Scene::OnAnyButtonHovered(const std::function<void()>& onAnyButtonHovered, const std::function<void()>& onNoButtonHovered)
+{
+	for (GameObject* go : gameObjectList)
+	{
+		C_Button* cBtn = go->GetComponent<C_Button>();
+		if (cBtn)
+		{
 
+			if (cBtn->GetState() == C_Button::BUTTON_STATE::HOVER)
+			{
+				onAnyButtonHovered();
+				return;
+			}
+
+		}
+	}
+	onNoButtonHovered();
+}
 GameObject* Scene::CreateEmptyGameObject(const char* name, GameObject* parent, bool is3D)
 {
 	GameObject* go = new GameObject(RNG::GetRandomUint(), engine, name, is3D);

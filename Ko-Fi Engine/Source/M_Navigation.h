@@ -33,6 +33,7 @@ public:
 		int maxVertsPerPoly = 6;
 		float detailSampleMaxError = 5.f;
 		float detailSampleDist = 10.0f;
+		float extents[3] = { 5, 5, 5 };
 	};
 
 	enum PolyAreas

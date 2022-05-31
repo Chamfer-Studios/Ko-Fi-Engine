@@ -111,7 +111,7 @@ bool M_SceneManager::Update(float dt)
 	bool ret = true;
 
 	OPTICK_EVENT();
-	
+
 	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
 		ret = (*scene)->Update(dt);
@@ -167,7 +167,7 @@ bool M_SceneManager::SaveConfiguration(Json& configModule) const
 bool M_SceneManager::LoadConfiguration(Json& configModule)
 {
 	defaultScene = configModule["DefaultScene"];
-	
+
 	return true;
 }
 
@@ -319,7 +319,7 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 
 	//first = old UID (repeated)
 	//second = new UID
-	std::map<UID,UID> repeatedUIDs;
+	std::map<UID, UID> repeatedUIDs;
 
 	//save repeated UIDs
 	for (const auto& it : tmp)
@@ -327,7 +327,7 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 		if (currentScene->GetGameObject(it.first) != nullptr)
 		{
 			it.second->SetUID(RNG::GetRandomUint());
-			repeatedUIDs.emplace(it.first,it.second->GetUID());
+			repeatedUIDs.emplace(it.first, it.second->GetUID());
 		}
 		currentScene->gameObjectList.push_back(it.second);
 	}
@@ -374,11 +374,11 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 		// Animation
 		if (model->animation != 0 && model->animationName != "")
 		{
-			C_Animator* animator = (C_Animator*)modelRoot->AddComponentByType(ComponentType::ANIMATOR);
-			RELEASE(animator->animation);
+			C_Animator* cAnimator = (C_Animator*)modelRoot->AddComponentByType(ComponentType::ANIMATOR);
+			RELEASE(cAnimator->animation);
 
 			R_Animation* rAnimation = (R_Animation*)engine->GetResourceManager()->RequestResource(model->animation);
-			if (animator != nullptr && rAnimation != nullptr)
+			if (cAnimator != nullptr && rAnimation != nullptr)
 			{
 				for (GameObject* go : modelRoot->GetChildren())
 				{
@@ -387,13 +387,18 @@ bool M_SceneManager::CreateGameObjectsFromModel(R_Model* model)
 					{
 						R_Mesh* rMesh = cMesh->GetMesh();
 						if (rMesh->IsAnimated())
-							rMesh->SetAnimation(rAnimation);
+						{
+							//rMesh->SetAnimation(rAnimation);
+
+							// Adding a reference to the mesh for the component animator to be aware of it.
+							cAnimator->SetMeshInfo(rMesh);
+						}
 					}
 				}
-				animator->SetAnimation(rAnimation);
+				cAnimator->SetAnimation(rAnimation);
 
 				// Updating default clip with all the keyframes of the animation.
-				AnimatorClip* animClip = animator->GetSelectedClip();
+				AnimatorClip* animClip = cAnimator->GetSelectedClip();
 				animClip->SetStartFrame(0);
 				animClip->SetEndFrame(rAnimation->duration);
 				animClip->SetDuration(((float)(animClip->GetEndFrame() - animClip->GetStartFrame())) / 1.0f);
@@ -412,18 +417,18 @@ void M_SceneManager::CreateComponentsFromNode(R_Model* model, ModelNode node, Ga
 	// Mesh
 	if (node.mesh != 0)
 	{
-		C_Mesh* mesh = (C_Mesh*)gameobject->AddComponentByType(ComponentType::MESH);
+		C_Mesh* cMesh = (C_Mesh*)gameobject->AddComponentByType(ComponentType::MESH);
 		R_Mesh* rMesh = (R_Mesh*)engine->GetResourceManager()->RequestResource(node.mesh);
 		if (rMesh == nullptr)
 		{
 			KOFI_ERROR(" Scene: Could not get resource mesh from model node.");
-			gameobject->DeleteComponent(mesh);
+			gameobject->DeleteComponent(cMesh);
 			return;
 		}
-		if (mesh != nullptr)
+		if (cMesh != nullptr)
 		{
-			mesh->SetMesh(rMesh);
-			rMesh->SetRootNode(gameobject->GetParent());
+			cMesh->SetMesh(rMesh);
+			//rMesh->SetRootNode(gameobject->GetParent());
 		}
 
 		// Material & Shader
@@ -500,7 +505,7 @@ void M_SceneManager::OnStop()
 	gameClockSpeed = 0.0f;
 	gameTime = 0.0f;
 
-	Importer::GetInstance()->sceneImporter->LoadScene(currentScene,currentScene->name.c_str());
+	Importer::GetInstance()->sceneImporter->LoadScene(currentScene, currentScene->name.c_str());
 	// Load the scene we saved before in .json
 	//LoadScene(currentScene, "SceneIntro");
 	for (GameObject* go : currentScene->gameObjectList)
@@ -645,3 +650,25 @@ void M_SceneManager::UpdateGuizmo()
 	}
 #endif // KOFI_GAME
 }
+
+bool M_SceneManager::ChangeMouseTexture(std::string texturePathToBMPImage)
+{
+	
+	if (currentMouseTextPath != texturePathToBMPImage)
+	{
+		SDL_Surface* mouseTexture = SDL_LoadBMP(texturePathToBMPImage.c_str());
+		SDL_Cursor* newCursor = SDL_CreateColorCursor(mouseTexture, 0, 0);
+		if (!newCursor)
+		{
+			return false;
+		}
+		currentMouseTextPath = texturePathToBMPImage;
+		SDL_SetCursor(newCursor);
+		SDL_FreeSurface(mouseTexture);
+	}
+
+
+	return true;
+}
+
+

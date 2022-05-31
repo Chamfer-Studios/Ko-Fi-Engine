@@ -353,18 +353,17 @@ std::tuple<std::vector<float3>> M_Navigation::FindPath(float3 origin, float3 des
 
 	query->init(dtNavMesh, maxPolyLength);
 
-	float extents[3] = { 5, 5, 5 };
 	dtQueryFilter* filter = new dtQueryFilter();
 
 	dtPolyRef originPoly;
 	float originArray[3] = { origin.x, origin.y, origin.z };
 	float originPolyPos[3] = { 0, 0, 0 };
-	query->findNearestPoly(originArray, extents, filter, &originPoly, originPolyPos);
+	query->findNearestPoly(originArray, navMeshConfig.extents, filter, &originPoly, originPolyPos);
 
 	dtPolyRef destinationPoly;
 	float destinationArray[3] = { destination.x, destination.y, destination.z };
 	float destinationPolyPos[3] = { 0, 0, 0 };
-	query->findNearestPoly(destinationArray, extents, filter, &destinationPoly, destinationPolyPos);
+	query->findNearestPoly(destinationArray, navMeshConfig.extents, filter, &destinationPoly, destinationPolyPos);
 
 	dtPolyRef* polyPath = (dtPolyRef*)malloc(sizeof(dtPolyRef*) * maxPolyLength);
 	memset(polyPath, 0, sizeof(dtPolyRef) * maxPolyLength);
@@ -586,6 +585,12 @@ void M_Navigation::OnGui()
 	ImGui::DragInt("Max Verts Poly", &navMeshConfig.maxVertsPerPoly, 0.2f, 3, 6);
 	ImGui::DragFloat("Detail Sample Error", &navMeshConfig.detailSampleMaxError, 0.02f);
 	ImGui::DragFloat("Detail Sample Distance", &navMeshConfig.detailSampleDist, 0.02f);
+	float3 ex = float3(navMeshConfig.extents[0], navMeshConfig.extents[1], navMeshConfig.extents[2]);
+	if (ImGui::DragFloat3("Query Extents", ex.ptr(), 0.02f)) {
+		navMeshConfig.extents[0] = ex.x;
+		navMeshConfig.extents[1] = ex.y;
+		navMeshConfig.extents[2] = ex.z;
+	}
 
 	if (ImGui::Button("Bake Navmesh")) {
 		ComputeNavmesh();
@@ -624,6 +629,12 @@ bool M_Navigation::InspectorDraw()
 		ImGui::DragInt("Max Verts Poly", &navMeshConfig.maxVertsPerPoly, 0.2f, 3, 6);
 		ImGui::DragFloat("Detail Sample Error", &navMeshConfig.detailSampleMaxError, 0.02f);
 		ImGui::DragFloat("Detail Sample Distance", &navMeshConfig.detailSampleDist, 0.02f);
+		float3 ex = float3(navMeshConfig.extents[0], navMeshConfig.extents[1], navMeshConfig.extents[2]);
+		if (ImGui::DragFloat3("Query Extents", ex.ptr(), 0.02f)) {
+			navMeshConfig.extents[0] = ex.x;
+			navMeshConfig.extents[1] = ex.y;
+			navMeshConfig.extents[2] = ex.z;
+		}
 
 		if (ImGui::Button("Bake Navmesh")) {
 			ComputeNavmesh();

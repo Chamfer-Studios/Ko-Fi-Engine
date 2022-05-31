@@ -237,6 +237,17 @@ void GameObject::Disable()
 	active = false;
 }
 
+std::vector<C_Script*> GameObject::GetAllScripts()
+{
+	std::vector<C_Script*> ret;
+	for (const auto& comp : components)
+	{
+		if (comp->type == ComponentType::SCRIPT)
+			ret.push_back((C_Script*)comp);
+	}
+	return ret;
+}
+
 void GameObject::DeleteComponent(Component* component)
 {
 	componentsToBeDeleted.push_back(component);
@@ -392,7 +403,7 @@ void GameObject::AttachChild(GameObject* child)
 	child->parentUid = this->uid;
 	child->parent = this;
 	children.push_back(child);
-	// child->PropagateTransform();
+	//child->PropagateTransform();
 }
 
 void GameObject::RemoveChild(GameObject* child)
@@ -969,7 +980,7 @@ std::string GameObject::SetObjectNumberedName(const char* _name)
 	{
 		count++;
 		number = std::to_string(count);
-		chainName = name + number;
+		chainName = name + " (" + number + ")";
 	}
 	else
 		return name; // If there is no object with that name return the name asigned
@@ -978,7 +989,7 @@ std::string GameObject::SetObjectNumberedName(const char* _name)
 	{
 		count++;
 		number = std::to_string(count);
-		chainName = name + number;
+		chainName = name + " (" + number + ")";
 	}
 
 	return chainName;

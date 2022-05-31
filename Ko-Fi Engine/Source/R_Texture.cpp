@@ -59,3 +59,9 @@ void R_Texture::SetUpTexture()
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
+
+void R_Texture::DeleteTexture()
+{
+	glDeleteTextures(1, &textureID);
+	textureID = TEXTUREID_DEFAULT;
+}

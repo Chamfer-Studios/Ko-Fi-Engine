@@ -1373,7 +1373,7 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 	if (cMesh != nullptr)
 	{
 		cMesh->SetMesh(mesh);
-		mesh->SetRootNode(gameObj->GetParent());
+		//mesh->SetRootNode(gameObj->GetParent());
 	}
 	else
 	{
@@ -1390,16 +1390,17 @@ void I_Scene::ImportMesh(const char* nodeName, const aiMesh* assimpMesh, GameObj
 	R_Animation* anim = new R_Animation();
 	Importer::GetInstance()->animationImporter->Import(assimpScene->mAnimations[0], anim);
 	mesh->SetIsAnimated(true);
-	mesh->SetAnimation(anim);
+	//mesh->SetAnimation(anim);
 
 	C_Animator* cAnim = (C_Animator*)gameObj->AddComponentByType(ComponentType::ANIMATOR);
-	if (cAnim != nullptr)
-		cAnim->SetAnimation(anim);
-	else
+	if (!cAnim)
 	{
 		KOFI_ERROR(" Component Animator is nullptr.");
 		return;
 	}
+
+	cAnim->SetAnimation(anim); // Setting the animation to the animation component in order to manage it later.
+	cAnim->SetMeshInfo(mesh); // Setting variable data of the mesh (boneInfo & transformsAnim).
 
 	// Creating a default clip with all the keyframes of the animation.
 	AnimatorClip animClip(anim, "Default clip", 0, anim->duration, 1.0f, true);

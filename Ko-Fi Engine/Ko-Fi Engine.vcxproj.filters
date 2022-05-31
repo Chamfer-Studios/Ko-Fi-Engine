@@ -164,6 +164,12 @@
     <Filter Include="Scripts\Characters\Raban">
       <UniqueIdentifier>{c6de36aa-faa1-4ca4-89c0-08d81df7dec3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Helpers\Animations">
+      <UniqueIdentifier>{dcc763ff-a757-4c11-b681-311744e850ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Helpers\Timing">
+      <UniqueIdentifier>{2bcf4363-b298-41fe-af73-7194e7cc3c95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -406,9 +412,6 @@
     <ClCompile Include="Source\R_Animation.cpp">
       <Filter>Source\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AnimatorClip.cpp">
-      <Filter>Source\Helpers</Filter>
-    </ClCompile>
     <ClCompile Include="Source\I_Animations.cpp">
       <Filter>Source\Importers</Filter>
     </ClCompile>
@@ -498,9 +501,6 @@
     </ClCompile>
     <ClCompile Include="Source\C_LightSource.cpp">
       <Filter>Source\GameObject\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Channel.cpp">
-      <Filter>Source\Helpers</Filter>
     </ClCompile>
     <ClCompile Include="Source\Scene.cpp">
       <Filter>Source\Scenes</Filter>
@@ -696,6 +696,12 @@
     </ClCompile>
     <ClCompile Include="Source\Log.cpp">
       <Filter>Source\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AnimatorClip.cpp">
+      <Filter>Source\Helpers\Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Channel.cpp">
+      <Filter>Source\Helpers\Animations</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -987,9 +993,6 @@
     <ClInclude Include="Source\R_Animation.h">
       <Filter>Source\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AnimatorClip.h">
-      <Filter>Source\Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="Source\I_Animations.h">
       <Filter>Source\Importers</Filter>
     </ClInclude>
@@ -1028,9 +1031,6 @@
     </ClInclude>
     <ClInclude Include="Source\R_Model.h">
       <Filter>Source\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Channel.h">
-      <Filter>Source\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="Source\C_SoundTriggerCreator.h">
       <Filter>Source\GameObject\Components\Testing</Filter>
@@ -1338,12 +1338,6 @@
     <ClInclude Include="Source\FSDefs.h">
       <Filter>Source\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="Source\PerfTimer.h">
-      <Filter>Source\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Timer.h">
-      <Filter>Source\Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="Source\JsonHandler.h">
       <Filter>Source\Helpers</Filter>
     </ClInclude>
@@ -1352,6 +1346,18 @@
     </ClInclude>
     <ClInclude Include="Source\Log.h">
       <Filter>Source\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\AnimatorClip.h">
+      <Filter>Source\Helpers\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Channel.h">
+      <Filter>Source\Helpers\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Timer.h">
+      <Filter>Source\Helpers\Timing</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PerfTimer.h">
+      <Filter>Source\Helpers\Timing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

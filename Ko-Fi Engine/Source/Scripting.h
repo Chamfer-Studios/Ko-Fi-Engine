@@ -195,6 +195,7 @@ public:
 									 "GetText", &GameObject::GetComponent<C_Text>,
 									 "GetComponentAnimator", &GameObject::GetComponent<C_Animator>,
 									 "GetComponentParticle", &GameObject::GetComponent<C_Particle>,
+									 "GetAudioSource", &GameObject::GetComponent<C_AudioSource>,
 									 "GetAudioSwitch", &GameObject::GetComponent<C_AudioSwitch>,
 									 "GetCamera", &GameObject::GetComponent<C_Camera>,
 									 "IsSelected", &GameObject::IsSelected,
@@ -292,6 +293,7 @@ public:
 		lua.new_usertype<C_Animator>("ComponentAnimator",
 			sol::constructors<void(GameObject*)>(),
 			"SetSelectedClip", &C_Animator::SetSelectedClip,
+			"GetSelectedClip", &C_Animator::GetSelectedClipName,
 			"IsCurrentClipLooping", &C_Animator::IsCurrentClipLooping,
 			"IsCurrentClipPlaying", &C_Animator::IsCurrentClipPlaying);
 
@@ -304,6 +306,14 @@ public:
 			"SetLoop",&C_Particle::SetLoop,
 			"SetColor",&C_Particle::SetColor);
 
+		// Component Audio Source
+		lua.new_usertype<C_AudioSource>("C_AudioSource",
+			sol::constructors<void(GameObject*)>(),
+			"PlayTrack", &C_AudioSource::PlayTrack,
+			"PauseTrack", &C_AudioSource::PauseTrack,
+			"ResumeTrack", &C_AudioSource::ResumeTrack,
+			"StopTrack", &C_AudioSource::StopTrack);
+
 		// Component Audio Switch
 		lua.new_usertype<C_AudioSwitch>("C_AudioSwitch",
 			sol::constructors<void(GameObject*)>(),
@@ -311,7 +321,10 @@ public:
 			"PauseTrack", &C_AudioSwitch::PauseTrack,
 			"ResumeTrack", &C_AudioSwitch::ResumeTrack,
 			"StopTrack", &C_AudioSwitch::StopTrack,
-			"SwitchTrack", &C_AudioSwitch::SwitchTrack);
+			"SwitchTrack", &C_AudioSwitch::SwitchTrack,
+			"IsAnyTrackPlaying", &C_AudioSwitch::IsAnyTrackPlaying,
+			"GetPlayingTrackID", &C_AudioSwitch::GetPlayingTrackID,
+			"StopAllTracks", &C_AudioSwitch::StopAllTracks);
 
 		// Inspector Variables
 		lua.new_usertype<InspectorVariable>("InspectorVariable",
@@ -410,6 +423,11 @@ public:
 		lua.set_function("LoadGameState", &Scripting::LoadGameState, this);
 		lua.set_function("SetGameJsonInt", &Scripting::SetGameJsonInt, this);
 		lua.set_function("GetGameJsonInt", &Scripting::GetGameJsonInt, this);
+		lua.set_function("ClearGameJsonArray", &Scripting::ClearGameJsonArray, this);
+		lua.set_function("GetGameJsonArraySize", &Scripting::GetGameJsonArraySize, this);
+		lua.set_function("ChangeMouseTexture", &Scripting::LuaChangeMouseTexture, this);
+		lua.set_function("AddGameJsonElement", &Scripting::AddGameJsonElement, this);
+		lua.set_function("GetGameJsonElement", &Scripting::GetGameJsonElement, this);
 	}
 
 	bool CleanUp()
@@ -579,7 +597,10 @@ public:
 	{
 		return gameObject->GetEngine()->GetPhysics();
 	}
-
+	void LuaChangeMouseTexture(std::string texturePath)
+	{
+		gameObject->GetEngine()->GetSceneManager()->ChangeMouseTexture(texturePath);
+	}
 	void LuaInstantiateNamedPrefab(std::string prefab, std::string name)
 	{
 		gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectListToCreate.emplace(name, prefab);
@@ -627,11 +648,12 @@ public:
 	{
 		for (GameObject* go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
 		{
-			C_Script* script = go->GetComponent<C_Script>();
-			if (script)
+			// C_Script* script = go->GetComponent<C_Script>();
+			std::vector<C_Script*> scripts = go->GetAllScripts();
+			for (const auto& script : scripts)
 			{
-
-				if (path == script->s->path.substr(script->s->path.find_last_of('/') + 1))
+				std::string str = script->s->path.substr(script->s->path.find_last_of('/') + 1);
+				if (path == str)
 				{
 					switch (type)
 					{
@@ -869,8 +891,35 @@ public:
 	bool LoadGameState();
 	bool SaveGameState();
 
-	int GetGameJsonInt(const char* key) { return gameJson.at(key); }
-	void SetGameJsonInt(const char* key, int value) { gameJson[key] = value; }
+	void ClearGameJsonArray(const char* arrayKey)
+	{
+		gameJson.at(arrayKey).clear();
+	}
+
+	int GetGameJsonArraySize(const char* arrayKey)
+	{
+		return gameJson.at(arrayKey).size();
+	}
+
+	int GetGameJsonElement(const char* arrayKey, int index)
+	{
+		return gameJson.at(arrayKey).at(index);
+	}
+
+	void AddGameJsonElement(const char* arrayKey, int element)
+	{
+		gameJson[arrayKey].push_back(element);
+	}
+
+	int GetGameJsonInt(const char* key)
+	{
+		return gameJson.at(key);
+	}
+
+	void SetGameJsonInt(const char* key, int value)
+	{
+		gameJson[key] = value;
+	}
 
 public:
 	sol::state lua;
