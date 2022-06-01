@@ -98,6 +98,13 @@ bool C_Animator::CleanUp()
 	if (animation != nullptr)
 		owner->GetEngine()->GetResourceManager()->FreeResource(animation->GetUID());
 
+	for (auto it : meshesInfo)
+	{
+		owner->GetEngine()->GetResourceManager()->FreeResource(it.first->GetUID());
+	}
+
+	meshesInfo.clear();
+
 	clips.clear();
 
 	if (selectedClip)
@@ -321,8 +328,8 @@ void C_Animator::Load(Json& json)
 				for (const auto& mesh : json.at("meshes").items())
 				{
 					UID uid = mesh.value().at("uid");
-					const char* assetPath = mesh.value().at("asset_path").get<std::string>().c_str();
-					owner->GetEngine()->GetResourceManager()->LoadResource(uid, assetPath);
+					std::string assetPath = mesh.value().at("asset_path").get<std::string>();
+					owner->GetEngine()->GetResourceManager()->LoadResource(uid, assetPath.c_str());
 					R_Mesh* rMesh = (R_Mesh*)owner->GetEngine()->GetResourceManager()->RequestResource(uid);
 					SetMeshInfo(rMesh);
 				}
