@@ -937,12 +937,17 @@ void M_Renderer3D::StepAnimatedMesh(GameObject* go, R_Mesh* mesh, uint shader)
 			}
 			else
 			{
-				transformsAnim.resize(mesh->boneInfo.size());
-				for (int i = 0; i < transformsAnim.size(); ++i)
-				{
-					transformsAnim[i] = float4x4::identity;
-				}
+				if (cAnimator->GetLastBoneTransforms(mesh).size() > 0)
+					transformsAnim = cAnimator->GetLastBoneTransforms(mesh);
+				else
+					cAnimator->GetBoneTransforms(0, transformsAnim, go);
+					/*transformsAnim.resize(mesh->boneInfo.size());
+					for (int i = 0; i < transformsAnim.size(); ++i)
+					{
+						transformsAnim[i] = float4x4::identity;
+					}*/
 			}
+
 			GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
 			glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
 			GLint isAnimated = glGetUniformLocation(shader, "isAnimated");
