@@ -60,6 +60,33 @@ void Scene::OnAnyButtonHovered(const std::function<void()>& onAnyButtonHovered, 
 	}
 	onNoButtonHovered();
 }
+
+void Scene::OnAnyEnemyHovered(const std::function<void()>& onAnyButtonHovered, const std::function<void()>& onNoButtonHovered)
+{
+	for (GameObject* go : gameObjectList)
+	{
+		if (go->tag == Tag::TAG_ENEMY)
+		{
+				onAnyButtonHovered();
+				return;
+		}
+	}
+	onNoButtonHovered();
+}
+
+void Scene::OnAnySpiceSpotHovered(const std::function<void()>& onAnyButtonHovered, const std::function<void()>& onNoButtonHovered)
+{
+	for (GameObject* go : gameObjectList)
+	{
+		if (go->tag == Tag::TAG_PICKUP)
+		{
+			onAnyButtonHovered();
+			return;
+		}
+	}
+	onNoButtonHovered();
+}
+
 GameObject* Scene::CreateEmptyGameObject(const char* name, GameObject* parent, bool is3D)
 {
 	GameObject* go = new GameObject(RNG::GetRandomUint(), engine, name, is3D);

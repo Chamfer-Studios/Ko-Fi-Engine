@@ -414,6 +414,7 @@ public:
 		lua.set_function("RayCast", &Scripting::RayCast, this);
 		lua.set_function("RayCastLambda", &Scripting::RayCastLambda, this);
 		lua.set_function("GetDialogueString", &Scripting::GetDialogueString, this);
+		lua.set_function("GetTransString", &Scripting::GetTransString, this);
 		lua.set_function("GetDialogueTargetID", &Scripting::GetDialogueTargetID, this);
 		lua.set_function("LoadJsonFile", &Scripting::LoadJsonFile, this);
 		lua.set_function("DrawCone", &Scripting::DrawCone, this);
@@ -888,6 +889,7 @@ public:
 	bool LoadJsonFile(const char* path);
 
 	std::string GetDialogueString(const char* key, int id);
+	std::string GetTransString(const char* key, int id);
 
 	int GetDialogueTargetID(const char* key, int id);
 

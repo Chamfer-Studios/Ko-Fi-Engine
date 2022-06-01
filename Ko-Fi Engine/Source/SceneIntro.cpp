@@ -220,6 +220,8 @@ bool SceneIntro::PostUpdate(float dt)
 	}
 #ifdef KOFI_GAME
 	OnAnyButtonHovered([this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/MouseUI.bmp"); }, [this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/MouseDefault.bmp"); });
+	OnAnyEnemyHovered([this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/mouseAttack.bmp"); }, [this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/MouseDefault.bmp"); });
+	OnAnySpiceSpotHovered([this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/mousePick.bmp"); }, [this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/MouseDefault.bmp"); });
 #endif // KOFI_GAME
 
 
