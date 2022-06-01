@@ -822,6 +822,16 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 			}
 			}
 		}
+		for (const auto& comp : components)
+		{
+			if (comp->type == ComponentType::BUTTON || comp->type == ComponentType::CANVAS || comp->type == ComponentType::IMAGE || comp->type == ComponentType::TEXT || comp->type == ComponentType::TRANSFORM2D)
+			{
+				if (transform)
+				{
+					this->DeleteComponent(transform);
+				}
+			}
+		}
 	}
 	Json jsonChd = jsonFile.at("children");
 	for (const auto& chdIt : jsonChd.items())
