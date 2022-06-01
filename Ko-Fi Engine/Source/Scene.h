@@ -75,8 +75,10 @@ public:
 	GameObject* GetGameObject(int uid);
 	bool IsGameObjectInScene(std::string name);
 	void OnAnyButtonHovered(const std::function<void()>& onAnyButtonHovered, const std::function<void()>& onNoButtonHovered);
-	void OnAnyEnemyHovered(const std::function<void()>& onAnyButtonHovered, const std::function<void()>& onNoButtonHovered);
-	void OnAnySpiceSpotHovered(const std::function<void()>& onAnyButtonHovered, const std::function<void()>& onNoButtonHovered);
+	void OnAnyEnemyHovered(const std::function<void()>& onAnyEnemyHovered, const std::function<void()>& onNoEnemyHovered);
+	void OnAnySpiceSpotHovered(const std::function<void()>& onAnySpiceSpotHovered, const std::function<void()>& onNoSpiceSpotHovered);
+
+	void SwitchCursor(const std::function<void(std::string)>& onChange, const std::function<void()>& onNoSpiceSpotHovered);
 	virtual GameObject* CreateEmptyGameObject(const char* name = nullptr, GameObject* parent = nullptr, bool is3D = true);
 
 	//Cleans current Scene

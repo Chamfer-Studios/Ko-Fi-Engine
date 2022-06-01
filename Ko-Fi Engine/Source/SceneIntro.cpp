@@ -218,11 +218,13 @@ bool SceneIntro::PostUpdate(float dt)
 			DeleteGameObject(GetGameObject(engine->GetEditor()->panelGameObjectInfo.selectedGameObjects[i]));
 		}
 	}
-#ifdef KOFI_GAME
-	OnAnyButtonHovered([this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/MouseUI.bmp"); }, [this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/MouseDefault.bmp"); });
-	OnAnyEnemyHovered([this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/mouseAttack.bmp"); }, [this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/MouseDefault.bmp"); });
-	OnAnySpiceSpotHovered([this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/mousePick.bmp"); }, [this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/MouseDefault.bmp"); });
-#endif // KOFI_GAME
+
+
+	SwitchCursor([this](std::string path) {engine->GetSceneManager()->ChangeMouseTexture(path); }, [this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/MouseDefault.bmp"); });
+	//OnAnyButtonHovered([this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/MouseUI.bmp"); }, [this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/MouseDefault.bmp"); });
+	//OnAnyEnemyHovered([this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/mouseAttack.bmp"); }, [this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/MouseDefault.bmp"); });
+	//OnAnySpiceSpotHovered([this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/mousePick.bmp"); }, [this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/MouseDefault.bmp"); });
+
 
 
 	return true;
