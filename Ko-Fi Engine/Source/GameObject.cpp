@@ -822,14 +822,14 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 			}
 			}
 		}
-		for (const auto& comp : components)
+	}
+	for (const auto& comp : components)
+	{
+		if (comp->type == ComponentType::BUTTON || comp->type == ComponentType::CANVAS || comp->type == ComponentType::IMAGE || comp->type == ComponentType::TEXT || comp->type == ComponentType::TRANSFORM2D)
 		{
-			if (comp->type == ComponentType::BUTTON || comp->type == ComponentType::CANVAS || comp->type == ComponentType::IMAGE || comp->type == ComponentType::TEXT || comp->type == ComponentType::TRANSFORM2D)
+			if (transform)
 			{
-				if (transform)
-				{
-					this->DeleteComponent(transform);
-				}
+				this->DeleteComponent(transform);
 			}
 		}
 	}
