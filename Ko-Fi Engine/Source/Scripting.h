@@ -86,18 +86,6 @@ public:
 			"KEY_REPEAT", KEY_STATE::KEY_REPEAT,
 			"KEY_UP", KEY_STATE::KEY_UP);
 
-		lua.new_enum("TAG",
-			"TAG_UNTAGGED", TAG::TAG_UNTAGGED,
-			"TAG_PLAYER", TAG::TAG_PLAYER,
-			"TAG_PICKUP", TAG::TAG_PICKUP,
-			"TAG_FLOOR", TAG::TAG_FLOOR,
-			"TAG_ENEMY", TAG::TAG_ENEMY,
-			"TAG_DIALOGUE", TAG::TAG_DIALOGUE,
-			"TAG_DECORATION_FLOOR", TAG::TAG_DECORATION_FLOOR,
-			"TAG_CORPSE", TAG::TAG_CORPSE,
-			"TAG_WALL", TAG::TAG_WALL
-		);
-
 		// ComponentType
 		lua.new_enum("ComponentType",
 			"NONE", ComponentType::NONE,
