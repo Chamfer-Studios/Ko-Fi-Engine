@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "C_Script.h"
 #include "Scripting.h"
+#include "C_Info.h"
 #include "M_SceneManager.h"
 #include "glew.h"
 #include <imgui_stdlib.h>
@@ -388,6 +389,45 @@ void M_Physics::RayCastHits(float3 startPoint, float3 endPoint, std::string filt
 
 	// Raycast test 
 	world->raycast(ray, &callbackObject, mask);
+}
+
+bool M_Physics::CustomRayCastQuery(float3 startPoint, float3 endPoint, Tag tag)
+{
+	std::vector<GameObject*> gameObjects = engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
+
+	std::vector<GameObject*> candidates;
+
+	for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
+	{
+		GameObject* gameObject = (*go);
+		C_Mesh* cMesh = gameObject->GetComponent<C_Mesh>();
+		if (!cMesh)
+			continue;
+		float3 middlePoint = startPoint + (endPoint - startPoint) / 2;
+		float3 closest = cMesh->GetGlobalAABB().ClosestPoint(middlePoint);
+		float distance = middlePoint.DistanceSq(closest);
+		float sCullingRadius = startPoint.Distance(endPoint) / 2;
+		if (distance < (sCullingRadius * sCullingRadius))
+		{
+			candidates.push_back(gameObject);
+		}
+	}
+	
+	Ray ray = Ray(startPoint, endPoint);
+
+	for (std::vector<GameObject*>::iterator go = candidates.begin(); go != candidates.end(); go++) {
+		OBB obb = (*go)->GetComponent<C_Mesh>()->obb;
+		
+		if ((*go)->tag == tag)
+		{
+			if (obb.Intersects(ray))
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
 }
 
 PhysicsEventListener::PhysicsEventListener(M_Physics* mPhysics)

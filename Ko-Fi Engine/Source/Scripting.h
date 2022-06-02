@@ -86,6 +86,17 @@ public:
 			"KEY_REPEAT", KEY_STATE::KEY_REPEAT,
 			"KEY_UP", KEY_STATE::KEY_UP);
 
+		lua.new_enum("TAG",
+			"TAG_UNTAGGED", Tag::TAG_UNTAGGED,
+			"TAG_PLAYER", Tag::TAG_PLAYER,
+			"TAG_PICKUP", Tag::TAG_PICKUP,
+			"TAG_FLOOR", Tag::TAG_FLOOR,
+			"TAG_ENEMY", Tag::TAG_ENEMY,
+			"TAG_DIALOGUE", Tag::TAG_DIALOGUE,
+			"TAG_DECORATION_FLOOR", Tag::TAG_DECORATION_FLOOR,
+			"TAG_CORPSE", Tag::TAG_CORPSE
+		);
+
 		// ComponentType
 		lua.new_enum("ComponentType",
 			"NONE", ComponentType::NONE,
@@ -585,6 +596,10 @@ public:
 	void RayCastLambda(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo, std::string uid, sol::function callback)
 	{
 		return gameObject->GetEngine()->GetPhysics()->RayCastHits(startPoint, endPoint, filterName, senderGo, uid, &callback);
+	}
+
+	bool CustomRayCastQuery(float3 startPoint, float3 endPoint, Tag tag) {
+		return gameObject->GetEngine()->GetPhysics()->CustomRayCastQuery(startPoint, endPoint, tag);
 	}
 
 	M_Navigation* GetNavigation()
