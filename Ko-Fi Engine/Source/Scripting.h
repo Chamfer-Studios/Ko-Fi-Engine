@@ -87,14 +87,15 @@ public:
 			"KEY_UP", KEY_STATE::KEY_UP);
 
 		lua.new_enum("TAG",
-			"TAG_UNTAGGED", Tag::TAG_UNTAGGED,
-			"TAG_PLAYER", Tag::TAG_PLAYER,
-			"TAG_PICKUP", Tag::TAG_PICKUP,
-			"TAG_FLOOR", Tag::TAG_FLOOR,
-			"TAG_ENEMY", Tag::TAG_ENEMY,
-			"TAG_DIALOGUE", Tag::TAG_DIALOGUE,
-			"TAG_DECORATION_FLOOR", Tag::TAG_DECORATION_FLOOR,
-			"TAG_CORPSE", Tag::TAG_CORPSE
+			"TAG_UNTAGGED", TAG::TAG_UNTAGGED,
+			"TAG_PLAYER", TAG::TAG_PLAYER,
+			"TAG_PICKUP", TAG::TAG_PICKUP,
+			"TAG_FLOOR", TAG::TAG_FLOOR,
+			"TAG_ENEMY", TAG::TAG_ENEMY,
+			"TAG_DIALOGUE", TAG::TAG_DIALOGUE,
+			"TAG_DECORATION_FLOOR", TAG::TAG_DECORATION_FLOOR,
+			"TAG_CORPSE", TAG::TAG_CORPSE,
+			"TAG_WALL", TAG::TAG_WALL
 		);
 
 		// ComponentType
@@ -144,13 +145,16 @@ public:
 
 		// Tags
 		lua.new_enum("Tag",
-			"UNTAGGED", Tag::TAG_UNTAGGED,
-			"PLAYER", Tag::TAG_PLAYER,
-			"ENEMY", Tag::TAG_ENEMY,
-			"FLOOR", Tag::TAG_FLOOR,
-			"DECORATIONFLOOR", Tag::TAG_DECORATION_FLOOR,
-			"PICKUP", Tag::TAG_PICKUP,
-			"CORPSE", Tag::TAG_CORPSE);
+			"UNTAGGED", TAG::TAG_UNTAGGED,
+			"PLAYER", TAG::TAG_PLAYER,
+			"ENEMY", TAG::TAG_ENEMY,
+			"FLOOR", TAG::TAG_FLOOR,
+			"DECORATIONFLOOR", TAG::TAG_DECORATION_FLOOR,
+			"PICKUP", TAG::TAG_PICKUP,
+			"CORPSE", TAG::TAG_CORPSE,
+			"WALL", TAG::TAG_WALL,
+			"DIALOGUE", TAG::TAG_DIALOGUE
+			);
 
 		/// Classes:
 		// float3 structure
@@ -424,6 +428,7 @@ public:
 		lua.set_function("DispatchGlobalEvent", &Scripting::DispatchGlobalEvent, this);
 		lua.set_function("RayCast", &Scripting::RayCast, this);
 		lua.set_function("RayCastLambda", &Scripting::RayCastLambda, this);
+		lua.set_function("CustomRayCast", &Scripting::CustomRayCastQuery, this);
 		lua.set_function("GetDialogueString", &Scripting::GetDialogueString, this);
 		lua.set_function("GetTransString", &Scripting::GetTransString, this);
 		lua.set_function("GetDialogueTargetID", &Scripting::GetDialogueTargetID, this);
@@ -598,7 +603,7 @@ public:
 		return gameObject->GetEngine()->GetPhysics()->RayCastHits(startPoint, endPoint, filterName, senderGo, uid, &callback);
 	}
 
-	bool CustomRayCastQuery(float3 startPoint, float3 endPoint, Tag tag) {
+	bool CustomRayCastQuery(float3 startPoint, float3 endPoint, TAG tag) {
 		return gameObject->GetEngine()->GetPhysics()->CustomRayCastQuery(startPoint, endPoint, tag);
 	}
 
@@ -650,7 +655,7 @@ public:
 		return nullptr;
 	}
 
-	std::vector<GameObject*> LuaGetObjectsByTag(Tag tag)
+	std::vector<GameObject*> LuaGetObjectsByTag(TAG tag)
 	{
 		std::vector<GameObject*> ret;
 		for (GameObject* go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)

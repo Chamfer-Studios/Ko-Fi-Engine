@@ -2,10 +2,7 @@ function Start()
 end
 
 function Update()
-    RayCast(float3.new(60, -30, 1000), float3.new(60, -30, -1000), "terrain", gameObject, Callback)
-    DrawLine(float3.new(60, -30, 1000), float3.new(60, -30, -1000))
-end
+    hit = CustomRayCast(float3.new(-1000, 0, 800), float3.new(1000, 0, 800), Tag.WALL)
 
-function Callback()
-    Log("hit\n")
+    Log(tostring(hit) .. "\n")
 end

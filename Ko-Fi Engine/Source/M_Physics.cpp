@@ -391,7 +391,7 @@ void M_Physics::RayCastHits(float3 startPoint, float3 endPoint, std::string filt
 	world->raycast(ray, &callbackObject, mask);
 }
 
-bool M_Physics::CustomRayCastQuery(float3 startPoint, float3 endPoint, Tag tag)
+bool M_Physics::CustomRayCastQuery(float3 startPoint, float3 endPoint, TAG tag)
 {
 	std::vector<GameObject*> gameObjects = engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
 
@@ -413,16 +413,25 @@ bool M_Physics::CustomRayCastQuery(float3 startPoint, float3 endPoint, Tag tag)
 		}
 	}
 	
-	Ray ray = Ray(startPoint, endPoint);
+	float3 dir = (endPoint - startPoint).Normalized();
+	Ray ray = Ray(startPoint, dir);
 
 	for (std::vector<GameObject*>::iterator go = candidates.begin(); go != candidates.end(); go++) {
 		OBB obb = (*go)->GetComponent<C_Mesh>()->obb;
 		
 		if ((*go)->tag == tag)
 		{
-			if (obb.Intersects(ray))
+			float dNear, dFar;
+			if (obb.Intersects(ray, dNear, dFar))
 			{
-				return true;
+				float3 pNear = startPoint + dir * dNear;
+				float3 pFar = startPoint + dir * dFar;
+				float endDistance = startPoint.DistanceSq(endPoint);
+				float pNearDistance = startPoint.DistanceSq(pNear);
+				float pFarDistance = startPoint.DistanceSq(pFar);
+
+				if (pNearDistance < endDistance && pFarDistance < endDistance)
+					return true;
 			}
 		}
 	}

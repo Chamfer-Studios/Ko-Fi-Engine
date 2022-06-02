@@ -15,7 +15,7 @@ class C_Collider2;
 class C_Animator;
 class C_LightSource;
 
-enum class Tag
+enum class TAG
 {
 	TAG_UNTAGGED,
 	TAG_PLAYER,
@@ -25,6 +25,7 @@ enum class Tag
 	TAG_PICKUP,
 	TAG_CORPSE,
 	TAG_DIALOGUE,
+	TAG_WALL,
 };
 
 class GameObject
@@ -138,7 +139,7 @@ public:
 	bool isQuitting = false;
 	std::string sceneName;
 	std::string prefabPath;
-	Tag tag;
+	TAG tag;
 
 	std::vector<GameObject *> children;
 

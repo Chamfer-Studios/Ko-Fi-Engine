@@ -52,7 +52,7 @@ GameObject::GameObject(UID uid, KoFiEngine* engine, const char* name, bool _is3D
 	if (is3D)
 		transform = (C_Transform*)AddComponentByType(ComponentType::TRANSFORM);
 
-	tag = Tag::TAG_UNTAGGED;
+	tag = TAG::TAG_UNTAGGED;
 
 	this->parent = nullptr;
 }
@@ -72,7 +72,7 @@ GameObject::GameObject()
 	if (is3D)
 		transform = (C_Transform*)AddComponentByType(ComponentType::TRANSFORM);
 
-	tag = Tag::TAG_UNTAGGED;
+	tag = TAG::TAG_UNTAGGED;
 
 	this->parent = nullptr;
 }
@@ -746,7 +746,7 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 	isPrefab = jsonFile.at("isPrefab");
 	active = jsonFile.at("active");
 	if (jsonFile.contains("tag"))
-		tag = (Tag)jsonFile["tag"];
+		tag = (TAG)jsonFile["tag"];
 	if (jsonFile.contains("is3D"))
 		is3D = jsonFile.at("is3D");
 	//if (jsonFile.contains("parent_UID"))
@@ -851,7 +851,7 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 	isPrefab = jsonFile.at("isPrefab");
 	active = jsonFile.at("active");
 	if (jsonFile.contains("tag"))
-		tag = (Tag)jsonFile["tag"];
+		tag = (TAG)jsonFile["tag"];
 	if (jsonFile.contains("is3D"))
 		is3D = jsonFile.at("is3D");
 	if (jsonFile.contains("parent_UID"))

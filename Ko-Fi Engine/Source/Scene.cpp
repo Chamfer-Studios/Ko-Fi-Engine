@@ -66,7 +66,7 @@ void Scene::OnAnyEnemyHovered(const std::function<void()>& onAnyEnemyHovered, co
 	GameObject* hit = engine->GetCamera3D()->MousePicking();
 	if (hit != nullptr)
 	{
-		if (hit->tag == Tag::TAG_ENEMY)
+		if (hit->tag == TAG::TAG_ENEMY)
 		{
 			onAnyEnemyHovered();
 			return;
@@ -81,7 +81,7 @@ void Scene::OnAnySpiceSpotHovered(const std::function<void()>& onAnySpiceSpotHov
 	GameObject* hit = engine->GetCamera3D()->MousePicking();
 	if (hit != nullptr)
 	{
-		if (hit->tag == Tag::TAG_PICKUP)
+		if (hit->tag == TAG::TAG_PICKUP)
 		{
 			onAnySpiceSpotHovered();
 			return;
@@ -111,13 +111,13 @@ void Scene::SwitchCursor(const std::function<void(std::string)>& onChange, const
 	GameObject* hit = engine->GetCamera3D()->MousePicking();
 	if (hit != nullptr)
 	{
-		if (hit->tag == Tag::TAG_PICKUP)
+		if (hit->tag == TAG::TAG_PICKUP)
 		{
 			std::string path = "Assets/New UI/mousePick.bmp";
 			onChange(path);
 			return;
 		}
-		else if (hit->tag == Tag::TAG_ENEMY)
+		else if (hit->tag == TAG::TAG_ENEMY)
 		{
 			std::string path = "Assets/New UI/mouseAttack.bmp";
 			onChange(path);
