@@ -159,6 +159,8 @@ public:
 
 	std::vector<GameObject *> children;
 
+	bool isCulled = false;
+
 private:
 	std::string name;
 	std::vector<Component*> components;

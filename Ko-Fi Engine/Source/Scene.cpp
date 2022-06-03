@@ -280,7 +280,7 @@ std::vector<GameObject*> Scene::GetLights(SourceType type)
 	std::vector<GameObject*> ret;
 
 	for (auto light : lights) {
-		if (light->GetSourceType() == type)
+		if (light->GetSourceType() == type && !light->owner->isCulled)
 		{
 			ret.push_back(light->owner);
 		}
