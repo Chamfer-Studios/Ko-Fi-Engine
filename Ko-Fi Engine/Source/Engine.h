@@ -20,7 +20,6 @@ class CollisionDetector;
 class M_ResourceManager;
 class M_Audio;
 class M_Navigation;
-class M_MouseGraphics;
 
 class KoFiEngine
 {
@@ -69,7 +68,6 @@ public:
 	M_ResourceManager* GetResourceManager() const;
 	M_Navigation* GetNavigation() const;
 	M_Audio* GetAudio() const;
-	M_MouseGraphics* GetMouseGraphics() const;
 
 	double GetEngineTime() { return ptimer.ReadMs(); };
 
@@ -110,7 +108,6 @@ private:
 	M_ResourceManager* resourceManager = nullptr;
 	M_Audio* audio = nullptr;
 	M_Navigation* navigation = nullptr;
-	M_MouseGraphics* mouseGraphics = nullptr;
 
 private:
 	int argc;

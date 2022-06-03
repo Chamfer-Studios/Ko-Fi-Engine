@@ -19,6 +19,7 @@ public:
 
 private:
 	int tag = 0;
+	bool showPopup = false;
 };
 
 #endif // !__C_INFO_H__

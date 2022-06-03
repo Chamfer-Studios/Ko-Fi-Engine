@@ -9,6 +9,7 @@
 #include "ImGuizmo.h"
 #include "Scene.h"
 
+#include <string>
 #include <imgui.h>
 #include <imgui_internal.h>
 
@@ -101,6 +102,10 @@ public:
 	void GuizmoTransformation();
 	void UpdateGuizmo();
 
+	//Mouse Texture functions
+	bool ChangeMouseTexture(std::string texturePathToBMPImage);
+
+
 public:
 	bool active;
 
@@ -140,6 +145,8 @@ private:
 	// Real Time Since Startup: seconds since game start (Real Time Clock) --> Engine.cpp
 	// Real Time Delta Time: last frame time expressed in seconds (Real Time Clock) --> Engine.cpp
 	// ----------------------------------------------------------------------------------------------------
+	//Current Mouse Texture
+	std::string currentMouseTextPath = "";
 };
 
 #endif // !__M_SCENE_MANAGER_H__

@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "C_Script.h"
 #include "Scripting.h"
+#include "C_Info.h"
 #include "M_SceneManager.h"
 #include "glew.h"
 #include <imgui_stdlib.h>
@@ -55,6 +56,7 @@ bool M_Physics::Update(float dt)
 	else {
 		world->update(0.000000001f);
 	}
+
 	return true;
 }
 
@@ -374,7 +376,7 @@ void M_Physics::RayCastHits(float3 startPoint, float3 endPoint, std::string filt
 	reactphysics3d::Ray ray(sPoint, ePoint);
 
 	// Create an instance of your callback class 
-	CustomRayCastCallback callbackObject(senderGo, uid, callback);
+	CustomRayCastCallback callbackObject = CustomRayCastCallback(senderGo, uid, callback);
 	unsigned int mask = 0;
 	for (auto filter : filters)
 	{
@@ -387,6 +389,54 @@ void M_Physics::RayCastHits(float3 startPoint, float3 endPoint, std::string filt
 
 	// Raycast test 
 	world->raycast(ray, &callbackObject, mask);
+}
+
+bool M_Physics::CustomRayCastQuery(float3 startPoint, float3 endPoint, TAG tag)
+{
+	std::vector<GameObject*> gameObjects = engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
+
+	std::vector<GameObject*> candidates;
+
+	for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
+	{
+		GameObject* gameObject = (*go);
+		C_Mesh* cMesh = gameObject->GetComponent<C_Mesh>();
+		if (!cMesh)
+			continue;
+		float3 middlePoint = startPoint + (endPoint - startPoint) / 2;
+		float3 closest = cMesh->GetGlobalAABB().ClosestPoint(middlePoint);
+		float distance = middlePoint.DistanceSq(closest);
+		float sCullingRadius = startPoint.Distance(endPoint) / 2;
+		if (distance < (sCullingRadius * sCullingRadius))
+		{
+			candidates.push_back(gameObject);
+		}
+	}
+	
+	float3 dir = (endPoint - startPoint).Normalized();
+	Ray ray = Ray(startPoint, dir);
+
+	for (std::vector<GameObject*>::iterator go = candidates.begin(); go != candidates.end(); go++) {
+		OBB obb = (*go)->GetComponent<C_Mesh>()->obb;
+		
+		if ((*go)->tag == tag)
+		{
+			float dNear, dFar;
+			if (obb.Intersects(ray, dNear, dFar))
+			{
+				float3 pNear = startPoint + dir * dNear;
+				float3 pFar = startPoint + dir * dFar;
+				float endDistance = startPoint.DistanceSq(endPoint);
+				float pNearDistance = startPoint.DistanceSq(pNear);
+				float pFarDistance = startPoint.DistanceSq(pFar);
+
+				if (pNearDistance < endDistance && pFarDistance < endDistance)
+					return true;
+			}
+		}
+	}
+
+	return false;
 }
 
 PhysicsEventListener::PhysicsEventListener(M_Physics* mPhysics)
@@ -406,6 +456,10 @@ void PhysicsEventListener::onContact(const reactphysics3d::CollisionCallback::Ca
 
 		go1 = mPhysics->GetGameObjectFromBody(contactPair.getBody1());
 		go2 = mPhysics->GetGameObjectFromBody(contactPair.getBody2());
+
+		if (go1->GetEngine()->GetSceneManager()->GetGameState() != GameState::PLAYING)
+			return;
+
 		if (go1 && go2)
 		{
 
@@ -587,6 +641,10 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 
 		go1 = mPhysics->GetGameObjectFromBody(overlapPair.getBody1());
 		go2 = mPhysics->GetGameObjectFromBody(overlapPair.getBody2());
+
+		if (go1->GetEngine()->GetSceneManager()->GetGameState() != GameState::PLAYING)
+			return;
+
 		if (go1 && go2)
 		{
 
@@ -764,8 +822,11 @@ reactphysics3d::decimal CustomRayCastCallback::notifyRaycastHit(const reactphysi
 		if (component->GetType() != ComponentType::SCRIPT)
 			continue;
 		C_Script* script = (C_Script*)component;
-		if (!script->s->path.empty())
-		script->s->handler->lua["OnRayCastHit"]();
+		if (!script->s->path.empty()) {
+			auto onRayCastHit = sol::protected_function(script->s->handler->lua["OnRayCastHit"]);
+			if (onRayCastHit.valid())
+				script->s->handler->lua["OnRayCastHit"]();
+		}
 	}
 
 	if (this->callback != nullptr) this->callback->call(uid);

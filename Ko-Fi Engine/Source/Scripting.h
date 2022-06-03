@@ -133,13 +133,16 @@ public:
 
 		// Tags
 		lua.new_enum("Tag",
-			"UNTAGGED", Tag::TAG_UNTAGGED,
-			"PLAYER", Tag::TAG_PLAYER,
-			"ENEMY", Tag::TAG_ENEMY,
-			"FLOOR", Tag::TAG_FLOOR,
-			"DECORATIONFLOOR", Tag::TAG_DECORATION_FLOOR,
-			"PICKUP", Tag::TAG_PICKUP,
-			"CORPSE", Tag::TAG_CORPSE);
+			"UNTAGGED", TAG::TAG_UNTAGGED,
+			"PLAYER", TAG::TAG_PLAYER,
+			"ENEMY", TAG::TAG_ENEMY,
+			"FLOOR", TAG::TAG_FLOOR,
+			"DECORATIONFLOOR", TAG::TAG_DECORATION_FLOOR,
+			"PICKUP", TAG::TAG_PICKUP,
+			"CORPSE", TAG::TAG_CORPSE,
+			"WALL", TAG::TAG_WALL,
+			"DIALOGUE", TAG::TAG_DIALOGUE
+			);
 
 		/// Classes:
 		// float3 structure
@@ -293,6 +296,7 @@ public:
 		lua.new_usertype<C_Animator>("ComponentAnimator",
 			sol::constructors<void(GameObject*)>(),
 			"SetSelectedClip", &C_Animator::SetSelectedClip,
+			"GetSelectedClip", &C_Animator::GetSelectedClipName,
 			"IsCurrentClipLooping", &C_Animator::IsCurrentClipLooping,
 			"IsCurrentClipPlaying", &C_Animator::IsCurrentClipPlaying);
 
@@ -341,6 +345,7 @@ public:
 			"SetDynamic", &C_RigidBody::SetBodyDynamic,
 			"FreezePositionY", &C_RigidBody::FreezePositionY,
 			"SetLinearVelocity", &C_RigidBody::SetLinearVelocity,
+			"GetLinearVelocity", &C_RigidBody::GetLinearVelocity,
 			"SetRigidBodyPos", &C_RigidBody::SetRigidBodyPos,
 			"SetUseGravity", &C_RigidBody::SetUseGravity,
 			"UpdateEnableGravity", &C_RigidBody::UpdateEnableGravity);
@@ -411,7 +416,9 @@ public:
 		lua.set_function("DispatchGlobalEvent", &Scripting::DispatchGlobalEvent, this);
 		lua.set_function("RayCast", &Scripting::RayCast, this);
 		lua.set_function("RayCastLambda", &Scripting::RayCastLambda, this);
+		lua.set_function("CustomRayCast", &Scripting::CustomRayCastQuery, this);
 		lua.set_function("GetDialogueString", &Scripting::GetDialogueString, this);
+		lua.set_function("GetTransString", &Scripting::GetTransString, this);
 		lua.set_function("GetDialogueTargetID", &Scripting::GetDialogueTargetID, this);
 		lua.set_function("LoadJsonFile", &Scripting::LoadJsonFile, this);
 		lua.set_function("DrawCone", &Scripting::DrawCone, this);
@@ -422,6 +429,13 @@ public:
 		lua.set_function("LoadGameState", &Scripting::LoadGameState, this);
 		lua.set_function("SetGameJsonInt", &Scripting::SetGameJsonInt, this);
 		lua.set_function("GetGameJsonInt", &Scripting::GetGameJsonInt, this);
+		lua.set_function("SetGameJsonFloat3", &Scripting::SetGameJsonFloat3, this);
+		lua.set_function("GetGameJsonFloat3", &Scripting::GetGameJsonFloat3, this);
+		lua.set_function("ClearGameJsonArray", &Scripting::ClearGameJsonArray, this);
+		lua.set_function("GetGameJsonArraySize", &Scripting::GetGameJsonArraySize, this);
+		lua.set_function("ChangeMouseTexture", &Scripting::LuaChangeMouseTexture, this);
+		lua.set_function("AddGameJsonElement", &Scripting::AddGameJsonElement, this);
+		lua.set_function("GetGameJsonElement", &Scripting::GetGameJsonElement, this);
 	}
 
 	bool CleanUp()
@@ -595,6 +609,10 @@ public:
 		return gameObject->GetEngine()->GetPhysics()->RayCastHits(startPoint, endPoint, filterName, senderGo, uid, &callback);
 	}
 
+	bool CustomRayCastQuery(float3 startPoint, float3 endPoint, TAG tag) {
+		return gameObject->GetEngine()->GetPhysics()->CustomRayCastQuery(startPoint, endPoint, tag);
+	}
+
 	M_Navigation* GetNavigation()
 	{
 		return gameObject->GetEngine()->GetNavigation();
@@ -609,7 +627,10 @@ public:
 	{
 		return gameObject->GetEngine()->GetPhysics();
 	}
-
+	void LuaChangeMouseTexture(std::string texturePath)
+	{
+		gameObject->GetEngine()->GetSceneManager()->ChangeMouseTexture(texturePath);
+	}
 	void LuaInstantiateNamedPrefab(std::string prefab, std::string name)
 	{
 		gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectListToCreate.emplace(name, prefab);
@@ -640,7 +661,7 @@ public:
 		return nullptr;
 	}
 
-	std::vector<GameObject*> LuaGetObjectsByTag(Tag tag)
+	std::vector<GameObject*> LuaGetObjectsByTag(TAG tag)
 	{
 		std::vector<GameObject*> ret;
 		for (GameObject* go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
@@ -657,11 +678,12 @@ public:
 	{
 		for (GameObject* go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
 		{
-			C_Script* script = go->GetComponent<C_Script>();
-			if (script)
+			// C_Script* script = go->GetComponent<C_Script>();
+			std::vector<C_Script*> scripts = go->GetAllScripts();
+			for (const auto& script : scripts)
 			{
-
-				if (path == script->s->path.substr(script->s->path.find_last_of('/') + 1))
+				std::string str = script->s->path.substr(script->s->path.find_last_of('/') + 1);
+				if (path == str)
 				{
 					switch (type)
 					{
@@ -706,8 +728,9 @@ public:
 	{
 		for (GameObject* go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
 		{
-			C_Script* script = go->GetComponent<C_Script>();
-			if (script)
+			// C_Script* script = go->GetComponent<C_Script>();
+			std::vector<C_Script*> scripts = go->GetAllScripts();
+			for (const auto& script : scripts)
 			{
 				if (path == script->s->path.substr(script->s->path.find_last_of('/') + 1))
 				{
@@ -893,16 +916,54 @@ public:
 	bool LoadJsonFile(const char* path);
 
 	std::string GetDialogueString(const char* key, int id);
+	std::string GetTransString(const char* key, int id);
 
 	int GetDialogueTargetID(const char* key, int id);
 
 	bool LoadGameState();
 	bool SaveGameState();
 
-	void SetGameJsonArray(const char* key) { gameJson[key] = Json::array(); }
+	void ClearGameJsonArray(const char* arrayKey)
+	{
+		gameJson.at(arrayKey).clear();
+	}
 
-	int GetGameJsonInt(const char* key) { return gameJson.at(key); }
-	void SetGameJsonInt(const char* key, int value) { gameJson[key] = value; }
+	int GetGameJsonArraySize(const char* arrayKey)
+	{
+		return gameJson.at(arrayKey).size();
+	}
+
+	int GetGameJsonElement(const char* arrayKey, int index)
+	{
+		return gameJson.at(arrayKey).at(index);
+	}
+
+	void AddGameJsonElement(const char* arrayKey, int element)
+	{
+		gameJson[arrayKey].push_back(element);
+	}
+
+	int GetGameJsonInt(const char* key)
+	{
+		return gameJson.at(key);
+	}
+
+	void SetGameJsonInt(const char* key, int value)
+	{
+		gameJson[key] = value;
+	}
+
+	void SetGameJsonFloat3(const char* key, float3 value)
+	{
+		gameJson[key] = { value.x, value.y, value.z };
+	}
+
+	float3 GetGameJsonFloat3(const char* key)
+	{
+		std::vector<float> values = gameJson.at(key).get<std::vector<float>>();
+		float3 ret = float3(values[0], values[1], values[2]);
+		return ret;
+	}
 
 public:
 	sol::state lua;

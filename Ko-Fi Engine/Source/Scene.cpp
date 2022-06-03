@@ -7,6 +7,7 @@
 // GameObject
 #include "GameObject.h"
 #include "C_LightSource.h"
+#include "C_Button.h"
 
 #include <vector>
 #include "M_Physics.h"
@@ -27,6 +28,8 @@ GameObject* Scene::GetGameObject(int uid)
 	return nullptr;
 }
 
+
+
 bool Scene::IsGameObjectInScene(std::string name)
 {
 	for (GameObject* go : gameObjectList)
@@ -38,6 +41,91 @@ bool Scene::IsGameObjectInScene(std::string name)
 	}
 
 	return false;
+}
+void Scene::OnAnyButtonHovered(const std::function<void()>& onAnyButtonHovered, const std::function<void()>& onNoButtonHovered)
+{
+	for (GameObject* go : gameObjectList)
+	{
+		C_Button* cBtn = go->GetComponent<C_Button>();
+		if (cBtn)
+		{
+
+			if (cBtn->GetState() == C_Button::BUTTON_STATE::HOVER)
+			{
+				onAnyButtonHovered();
+				return;
+			}
+
+		}
+	}
+	onNoButtonHovered();
+}
+
+void Scene::OnAnyEnemyHovered(const std::function<void()>& onAnyEnemyHovered, const std::function<void()>& onNoEnemyHovered)
+{
+	GameObject* hit = engine->GetCamera3D()->MousePicking();
+	if (hit != nullptr)
+	{
+		if (hit->tag == TAG::TAG_ENEMY)
+		{
+			onAnyEnemyHovered();
+			return;
+		}
+	}
+	
+	onNoEnemyHovered();
+}
+
+void Scene::OnAnySpiceSpotHovered(const std::function<void()>& onAnySpiceSpotHovered, const std::function<void()>& onNoSpiceSpotHovered)
+{
+	GameObject* hit = engine->GetCamera3D()->MousePicking();
+	if (hit != nullptr)
+	{
+		if (hit->tag == TAG::TAG_PICKUP)
+		{
+			onAnySpiceSpotHovered();
+			return;
+		}
+	}
+	onNoSpiceSpotHovered();
+}
+
+void Scene::SwitchCursor(const std::function<void(std::string)>& onChange, const std::function<void()>& onNothingHovered)
+{
+	//UI HAS PREFERENCE OVER ALL
+	for (GameObject* go : gameObjectList)
+	{
+		C_Button* cBtn = go->GetComponent<C_Button>();
+		if (cBtn)
+		{
+			if (cBtn->GetState() == C_Button::BUTTON_STATE::HOVER)
+			{
+				std::string path = "Assets/New UI/MouseUI.bmp";
+				onChange(path);
+				return;
+			}
+		}
+	}
+
+	//then pick up and then enemy
+	GameObject* hit = engine->GetCamera3D()->MousePicking();
+	if (hit != nullptr)
+	{
+		if (hit->tag == TAG::TAG_PICKUP)
+		{
+			std::string path = "Assets/New UI/mousePick.bmp";
+			onChange(path);
+			return;
+		}
+		else if (hit->tag == TAG::TAG_ENEMY)
+		{
+			std::string path = "Assets/New UI/mouseAttack.bmp";
+			onChange(path);
+			return;
+		}
+	}
+
+	onNothingHovered();
 }
 
 GameObject* Scene::CreateEmptyGameObject(const char* name, GameObject* parent, bool is3D)

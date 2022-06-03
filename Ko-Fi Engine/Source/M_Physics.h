@@ -10,6 +10,7 @@
 
 class GameObject;
 class M_Physics;
+enum class TAG;
 class PhysicsEventListener : public reactphysics3d::EventListener
 {
 public:
@@ -82,6 +83,7 @@ public:
 
 	//RayCast
 	void RayCastHits(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo, std::string uid = "", sol::function * callback = nullptr);
+	bool CustomRayCastQuery(float3 startPoint, float3 endPoint, TAG tag);
 
 	inline bool IsDebugPhysics() const { return debugPhysics; };
 	inline void DebugPhysics(const bool newDebugPhysics) { debugPhysics = newDebugPhysics; }

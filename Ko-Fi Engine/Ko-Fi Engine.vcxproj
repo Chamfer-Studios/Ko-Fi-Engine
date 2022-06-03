@@ -214,7 +214,6 @@
     <ClCompile Include="Source\External\MathGeoLib\MathGeoLib\Time\Clock.cpp" />
     <ClCompile Include="Source\I_Particles.cpp" />
     <ClCompile Include="Source\M_Audio.cpp" />
-    <ClCompile Include="Source\M_MouseGraphics.cpp" />
     <ClCompile Include="Source\PanelResources.cpp" />
     <ClCompile Include="Source\R_Animation.cpp" />
     <ClCompile Include="Source\AnimatorClip.cpp" />
@@ -349,7 +348,6 @@
     <ClInclude Include="Source\External\hash_library\sha1.h" />
     <ClInclude Include="Source\External\hash_library\sha256.h" />
     <ClInclude Include="Source\External\hash_library\sha3.h" />
-    <ClInclude Include="Source\M_MouseGraphics.h" />
     <ClInclude Include="Source\PanelResources.h" />
     <ClInclude Include="Source\par_shapes.h" />
     <ClInclude Include="Source\External\MathGeoLib\MathGeoLib\Algorithm\GJK.h" />

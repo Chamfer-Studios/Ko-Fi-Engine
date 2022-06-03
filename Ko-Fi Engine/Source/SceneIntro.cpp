@@ -14,6 +14,7 @@
 #include "C_Mesh.h"
 #include "C_Material.h"
 #include "C_Camera.h"
+#include "C_Button.h"
 #include "C_Script.h"
 #include "C_Transform.h"
 #include "C_LightSource.h"
@@ -60,6 +61,11 @@ bool SceneIntro::Start()
 {
 	bool ret = true;
 	skybox.Start();
+#ifdef KOFI_GAME
+	bool mouseChanged = engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/MouseDefault.bmp");
+	LOG("Mouse has changed: %d", mouseChanged);
+#endif // KOFI_GAME
+
 
 	// Load Default Screen (Can be changed from settings)
 	if (!engine->GetSceneManager()->GetDefaultScene().empty())
@@ -213,8 +219,19 @@ bool SceneIntro::PostUpdate(float dt)
 		}
 	}
 
+#ifdef KOFI_GAME
+	SwitchCursor([this](std::string path) {engine->GetSceneManager()->ChangeMouseTexture(path); }, [this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/MouseDefault.bmp"); });
+	//OnAnyButtonHovered([this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/MouseUI.bmp"); }, [this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/MouseDefault.bmp"); });
+	//OnAnyEnemyHovered([this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/mouseAttack.bmp"); }, [this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/MouseDefault.bmp"); });
+	//OnAnySpiceSpotHovered([this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/mousePick.bmp"); }, [this]() {engine->GetSceneManager()->ChangeMouseTexture("Assets/New UI/MouseDefault.bmp"); });
+#endif // KOFI_GAME
+
+
 	return true;
 }
+
+
+
 
 // Load assets
 bool SceneIntro::CleanUp()

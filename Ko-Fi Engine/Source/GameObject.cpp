@@ -52,7 +52,7 @@ GameObject::GameObject(UID uid, KoFiEngine* engine, const char* name, bool _is3D
 	if (is3D)
 		transform = (C_Transform*)AddComponentByType(ComponentType::TRANSFORM);
 
-	tag = Tag::TAG_UNTAGGED;
+	tag = TAG::TAG_UNTAGGED;
 
 	this->parent = nullptr;
 }
@@ -72,7 +72,7 @@ GameObject::GameObject()
 	if (is3D)
 		transform = (C_Transform*)AddComponentByType(ComponentType::TRANSFORM);
 
-	tag = Tag::TAG_UNTAGGED;
+	tag = TAG::TAG_UNTAGGED;
 
 	this->parent = nullptr;
 }
@@ -234,6 +234,17 @@ void GameObject::Enable()
 void GameObject::Disable()
 {
 	active = false;
+}
+
+std::vector<C_Script*> GameObject::GetAllScripts()
+{
+	std::vector<C_Script*> ret;
+	for (const auto& comp : components)
+	{
+		if (comp->type == ComponentType::SCRIPT)
+			ret.push_back((C_Script*)comp);
+	}
+	return ret;
 }
 
 void GameObject::DeleteComponent(Component* component)
@@ -735,7 +746,7 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 	isPrefab = jsonFile.at("isPrefab");
 	active = jsonFile.at("active");
 	if (jsonFile.contains("tag"))
-		tag = (Tag)jsonFile["tag"];
+		tag = (TAG)jsonFile["tag"];
 	if (jsonFile.contains("is3D"))
 		is3D = jsonFile.at("is3D");
 	//if (jsonFile.contains("parent_UID"))
@@ -812,6 +823,16 @@ bool GameObject::LoadPrefab(Json& jsonFile)
 			}
 		}
 	}
+	for (const auto& comp : components)
+	{
+		if (comp->type == ComponentType::BUTTON || comp->type == ComponentType::CANVAS || comp->type == ComponentType::IMAGE || comp->type == ComponentType::TEXT || comp->type == ComponentType::TRANSFORM2D)
+		{
+			if (transform)
+			{
+				this->DeleteComponent(transform);
+			}
+		}
+	}
 	Json jsonChd = jsonFile.at("children");
 	for (const auto& chdIt : jsonChd.items())
 	{
@@ -830,7 +851,7 @@ bool GameObject::UpdatePrefab(Json& jsonFile)
 	isPrefab = jsonFile.at("isPrefab");
 	active = jsonFile.at("active");
 	if (jsonFile.contains("tag"))
-		tag = (Tag)jsonFile["tag"];
+		tag = (TAG)jsonFile["tag"];
 	if (jsonFile.contains("is3D"))
 		is3D = jsonFile.at("is3D");
 	if (jsonFile.contains("parent_UID"))
@@ -968,7 +989,7 @@ std::string GameObject::SetObjectNumberedName(const char* _name)
 	{
 		count++;
 		number = std::to_string(count);
-		chainName = name + number;
+		chainName = name + " (" + number + ")";
 	}
 	else
 		return name; // If there is no object with that name return the name asigned
@@ -977,7 +998,7 @@ std::string GameObject::SetObjectNumberedName(const char* _name)
 	{
 		count++;
 		number = std::to_string(count);
-		chainName = name + number;
+		chainName = name + " (" + number + ")";
 	}
 
 	return chainName;

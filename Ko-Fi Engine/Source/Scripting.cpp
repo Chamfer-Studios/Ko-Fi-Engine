@@ -47,6 +47,28 @@ std::string Scripting::GetDialogueString(const char* key, int id)
 	return "no value";
 }
 
+std::string Scripting::GetTransString(const char* key, int id)
+{
+	const char* path = "Assets/Scenes/SceneTransitionUI/sceneTransition.json";
+	for (std::map<std::string, Json>::iterator file = files.begin(); file != files.end(); ++file)
+	{
+		if ((*file).first == path)
+		{
+			//KOFI_DEBUG("File Found: %s", (*file).first);
+			Json sceneTrans = (*file).second.at("sceneTransition");
+			for (const auto& node : sceneTrans.items())
+			{
+				if (node.value().at("id") == id)
+				{
+					std::string a = node.value().at(key);
+					return a;
+				}
+			}
+		}
+	}
+	return "no value";
+}
+
 int Scripting::GetDialogueTargetID(const char* key, int id)
 {
 	const char* path = "Assets/Dialogues/dialogues.json";

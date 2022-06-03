@@ -62,6 +62,7 @@ public:
 	inline bool GetFreezeRotationZ() const { return freezeRotationZ; }
 
 	inline void SetLinearVelocity(float3 velocity) const { body->setLinearVelocity(reactphysics3d::Vector3(velocity.x, velocity.y, velocity.z)); }
+	inline float3 GetLinearVelocity() const { return float3(body->getLinearVelocity().x, body->getLinearVelocity().y, body->getLinearVelocity().z); }
 
 private:
 	reactphysics3d::RigidBody* body = nullptr;

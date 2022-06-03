@@ -29,7 +29,7 @@
 #include <fstream>
 #include <vector>
 
-C_Script::C_Script(GameObject *parent) : Component(parent)
+C_Script::C_Script(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::SCRIPT;
 	SetId(RNG::GetRandomUint());
@@ -48,14 +48,14 @@ bool C_Script::Start()
 
 bool C_Script::CleanUp()
 {
-	if(s != nullptr)
+	if (s != nullptr)
 	{
 		s->handler->CleanUp();
 		s->inspectorVariables.clear();
 		s->inspectorVariables.shrink_to_fit();
 		RELEASE(s);
 	}
-	
+
 	return true;
 }
 
@@ -111,13 +111,13 @@ bool C_Script::Update(float dt)
 			}
 		}
 	}
-	
+
 	return true;
 }
 
 bool C_Script::PostUpdate(float dt)
 {
-	if(s != nullptr)
+	if (s != nullptr)
 	{
 		auto post_update = sol::protected_function(s->handler->lua["PostUpdate"]);
 		if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
@@ -136,7 +136,7 @@ bool C_Script::PostUpdate(float dt)
 			}
 		}
 	}
-	
+
 	return true;
 }
 
@@ -193,7 +193,7 @@ bool C_Script::OnSceneSwitch()
 	return ret;
 }
 
-bool C_Script::InspectorDraw(PanelChooser *chooser)
+bool C_Script::InspectorDraw(PanelChooser* chooser)
 {
 	bool ret = true; // TODO: We don't need it to return a bool... Make it void when possible.
 
@@ -219,7 +219,7 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 					s = new ScriptHandler(owner, this);
 					s->path = path;
 					ReloadScript(s);
-					
+
 				}
 			}
 		}
@@ -228,7 +228,7 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 
 		if (ImGui::Button("Add Script"))
 		{
-			chooser->OpenPanel("Add Script_" + std::to_string(id), "lua", {"lua"});
+			chooser->OpenPanel("Add Script_" + std::to_string(id), "lua", { "lua" });
 		}
 
 		if (s != nullptr)
@@ -238,7 +238,7 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 
 		bool isSeparatorNeeded = true;
 
-		if(s != nullptr)
+		if (s != nullptr)
 		{
 			for (std::vector<InspectorVariable*>::iterator variable = s->inspectorVariables.begin(); variable != s->inspectorVariables.end(); ++variable)
 			{
@@ -323,11 +323,14 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 					std::vector<float3> waypoints = std::get<std::vector<float3>>((*variable)->value);
 					if (ImGui::DragInt("Path length", &nWaypoints, 1.0f, 0))
 					{
-						waypoints.clear();
-						for (int i = 0; i < nWaypoints; i++)
-						{
-							waypoints.push_back(float3(0, 0, 0));
+						auto size = waypoints.size();
+						waypoints.resize(static_cast<size_t>(nWaypoints));
+						if (size < nWaypoints) {
+							for (int i = size; i < nWaypoints; i++) {
+								waypoints[i] = float3(0, 0, 0);
+							}
 						}
+
 						std::get<std::vector<float3>>((*variable)->value) = waypoints;
 						s->handler->lua[(*variable)->name.c_str()] = waypoints;
 					}
@@ -340,6 +343,15 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 						{
 							std::get<std::vector<float3>>((*variable)->value)[i] = waypoints[i];
 							s->handler->lua[(*variable)->name.c_str()] = waypoints;
+						}
+						ImGui::SameLine();
+						if (ImGui::Button(("Transform " + _label).c_str())) {
+							C_Transform* transform = owner->GetComponent<C_Transform>();
+							if (transform) {
+								waypoints[i] = transform->GetPosition();
+								std::get<std::vector<float3>>((*variable)->value)[i] = waypoints[i];
+								s->handler->lua[(*variable)->name.c_str()] = waypoints;
+							}
 						}
 					}
 					break;
@@ -365,7 +377,7 @@ bool C_Script::InspectorDraw(PanelChooser *chooser)
 				}
 			}
 		}
-		
+
 		if (!isSeparatorNeeded)
 		{
 			ImGui::Separator();
@@ -406,14 +418,14 @@ void C_Script::ReloadScript(ScriptHandler* handler)
 	handler->isScriptLoaded = true;
 }
 
-void C_Script::Save(Json &json) const
+void C_Script::Save(Json& json) const
 {
 	json["type"] = (int)type;
 
 	json["id"] = id;
 	json["file_name"] = s->path;
 	Json jsonIV;
-	for (InspectorVariable *variable : s->inspectorVariables)
+	for (InspectorVariable* variable : s->inspectorVariables)
 	{
 		switch (variable->type)
 		{
@@ -492,7 +504,7 @@ void C_Script::Save(Json &json) const
 			jsonIV["type"] = "gameObject";
 			if (std::get<GameObject*>(variable->value) != nullptr)
 			{
-				jsonIV["value"] = std::get<GameObject *>(variable->value)->GetUID();
+				jsonIV["value"] = std::get<GameObject*>(variable->value)->GetUID();
 			}
 			else {
 				jsonIV["value"] = 0;
@@ -504,7 +516,7 @@ void C_Script::Save(Json &json) const
 	}
 }
 
-void C_Script::Load(Json &json)
+void C_Script::Load(Json& json)
 {
 	if (s == nullptr) s = new ScriptHandler(owner, this);
 
@@ -526,11 +538,11 @@ void C_Script::SetId(int id)
 }
 
 
-void C_Script::LoadInspectorVariables(Json &json)
+void C_Script::LoadInspectorVariables(Json& json)
 {
 	if (!json.contains("inspector_variables"))
 		return;
-	for (const auto &var : json.at("inspector_variables").items())
+	for (const auto& var : json.at("inspector_variables").items())
 	{
 		std::string name = var.value().at("name").get<std::string>();
 		//auto v = s->handler->lua[name.c_str()]; // Old Inspector Variables should not be loaded if they are not in lua
@@ -539,7 +551,7 @@ void C_Script::LoadInspectorVariables(Json &json)
 
 		std::string type_s = var.value().at("type").get<std::string>();
 		INSPECTOR_VARIABLE_TYPE type = INSPECTOR_NO_TYPE;
-		std::variant<int, unsigned int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject *> value;
+		std::variant<int, unsigned int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> value;
 
 		if (type_s == "int")
 		{
@@ -597,7 +609,7 @@ void C_Script::LoadInspectorVariables(Json &json)
 			value = uid;
 		}
 
-		InspectorVariable *variable = new InspectorVariable(name, type, value);
+		InspectorVariable* variable = new InspectorVariable(name, type, value);
 		s->inspectorVariables.push_back(variable);
 	}
 }
