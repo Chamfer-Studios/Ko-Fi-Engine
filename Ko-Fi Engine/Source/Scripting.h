@@ -429,6 +429,8 @@ public:
 		lua.set_function("LoadGameState", &Scripting::LoadGameState, this);
 		lua.set_function("SetGameJsonInt", &Scripting::SetGameJsonInt, this);
 		lua.set_function("GetGameJsonInt", &Scripting::GetGameJsonInt, this);
+		lua.set_function("SetGameJsonBool", &Scripting::SetGameJsonBool, this);
+		lua.set_function("GetGameJsonBool", &Scripting::GetGameJsonBool, this);
 		lua.set_function("SetGameJsonFloat3", &Scripting::SetGameJsonFloat3, this);
 		lua.set_function("GetGameJsonFloat3", &Scripting::GetGameJsonFloat3, this);
 		lua.set_function("ClearGameJsonArray", &Scripting::ClearGameJsonArray, this);
@@ -931,6 +933,16 @@ public:
 	}
 
 	void SetGameJsonInt(const char* key, int value)
+	{
+		gameJson[key] = value;
+	}
+
+	bool GetGameJsonBool(const char* key)
+	{
+		return gameJson.at(key);
+	}
+
+	void SetGameJsonBool(const char* key, bool value)
 	{
 		gameJson[key] = value;
 	}
