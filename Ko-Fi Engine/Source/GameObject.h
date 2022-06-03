@@ -4,7 +4,13 @@
 #include "R_Mesh.h"
 #include <vector>
 
+#include <unordered_map>
+#include <typeindex>
+#include <typeinfo>
+
 #include "Component.h"
+
+#include <optick.h>
 
 class KoFiEngine;
 class C_Transform;
@@ -53,17 +59,27 @@ public:
 	void Disable();
 
 	template <class T>
-	T *GetComponent() const
-	{
-		T *component = nullptr;
-		for (Component *c : components)
+	T* GetComponent() const {
+		OPTICK_EVENT();
+
+		T* component = nullptr;
+
+		//std::type_index id = typeid(T);
+		//if (componentCache.find(id) != componentCache.end()) {
+		//	return dynamic_cast<T*>(componentCache.at(id));
+		///}
+
+		for (Component* c : components)
 		{
-			component = dynamic_cast<T *>(c);
-			if (component)
+			component = dynamic_cast<T*>(c);
+			if (component) {
+				//componentCache[id] = c;
 				break;
+			}
 		}
 		return component;
 	}
+	
 	std::vector<C_Script*> GetAllScripts();
 
 	// New way
@@ -146,6 +162,7 @@ public:
 private:
 	std::string name;
 	std::vector<Component*> components;
+	std::unordered_map<std::type_index, Component*> componentCache;
 
 	std::vector<Component*> componentsToBeDeleted;
 
@@ -156,6 +173,7 @@ private:
 
 	KoFiEngine *engine = nullptr;
 	C_Transform *transform = nullptr;
+	
 };
 
 #endif // !__GAMEOBJECT_H__

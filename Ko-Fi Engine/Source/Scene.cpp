@@ -256,14 +256,14 @@ void Scene::ComputeQuadTree()
 void Scene::AddLight(GameObject* newLight)
 {
 	if (newLight != nullptr)
-		lights.push_back(newLight);
+		lights.push_back(newLight->GetComponent<C_LightSource>());
 }
 
 void Scene::RemoveLight(GameObject* lightToDelete)
 {
-	for (std::vector<GameObject*>::iterator light = lights.begin(); light != lights.end();)
+	for (std::vector<C_LightSource*>::iterator light = lights.begin(); light != lights.end();)
 	{
-		if (lightToDelete == *light)
+		if (lightToDelete == (* light)->owner)
 		{
 			light = lights.erase(light);
 		}
@@ -275,19 +275,14 @@ void Scene::RemoveLight(GameObject* lightToDelete)
 
 std::vector<GameObject*> Scene::GetLights(SourceType type)
 {
+	OPTICK_EVENT();
+
 	std::vector<GameObject*> ret;
 
-	for (int i = 0; i < lights.size(); i++)
-	{
-		C_LightSource* light = lights[i]->GetComponent<C_LightSource>();
-		if (light == nullptr)
+	for (auto light : lights) {
+		if (light->GetSourceType() == type)
 		{
-			RemoveLight(lights[i]);
-			continue;
-		}
-		else if(light->GetSourceType() == type)
-		{
-			ret.push_back(lights[i]);
+			ret.push_back(light->owner);
 		}
 	}
 

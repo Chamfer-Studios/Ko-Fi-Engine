@@ -130,12 +130,12 @@ public:
 
 	std::vector<const char*> tags; // TODO: needs to be implemented!
 
-	std::vector<GameObject*> lights;
 	LineSegment ray;
 
 	GameObject* shadowCaster = nullptr; //current light that casts shadows
 	SkyBox skybox;
 
+	std::vector<C_LightSource*> lights;
 };
 
 

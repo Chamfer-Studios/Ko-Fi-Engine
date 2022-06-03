@@ -161,6 +161,8 @@ void R_Mesh::SetUpMeshBuffers()
 
 void R_Mesh::Draw()
 {
+	OPTICK_EVENT();
+
 	glBindVertexArray(VAO);
 
 	glDrawElements(GL_TRIANGLES, indicesSizeBytes / sizeof(uint), GL_UNSIGNED_INT, NULL);
