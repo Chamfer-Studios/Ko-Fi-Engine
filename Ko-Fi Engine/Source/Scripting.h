@@ -20,6 +20,7 @@
 #include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/Math/float4.h"
 #include "MathGeoLib/Math/Quat.h"
+#include "EngineConfig.h"
 #include "GameObject.h"
 #include "C_Transform.h"
 #include "C_Mesh.h"
@@ -288,6 +289,7 @@ public:
 
 		lua.new_usertype<C_Button>("C_Button",
 			sol::constructors<void(GameObject*)>(),
+			"SetIdleTexture", &C_Button::SetIdleTexture,
 			"IsPressed", &C_Button::IsPressed,
 			"IsIdle", &C_Button::IsIdle,
 			"IsHovered", &C_Button::IsHovered);
@@ -392,8 +394,16 @@ public:
 		lua.set_function("GetInput", &Scripting::LuaGetInput, this);
 		lua.set_function("GetVsync", &Scripting::LuaGetVsync, this);
 		lua.set_function("SetVsync", &Scripting::LuaSetVsync, this);
+		lua.set_function("SetBrightness", &Scripting::LuaSetBrightness, this);
 		lua.set_function("GetFullscreen", &Scripting::LuaGetFullscreen, this);
 		lua.set_function("SetFullscreen", &Scripting::LuaSetFullscreen, this);
+		lua.set_function("GetFullscreenDesktop", &Scripting::LuaGetFullscreenDesktop, this);
+		lua.set_function("SetFullscreenDesktop", &Scripting::LuaSetFullscreenDesktop, this);
+		lua.set_function("GetBorderless", &Scripting::LuaGetBorderless, this);
+		lua.set_function("SetFPS", &Scripting::LuaSetFullscreen, this);
+		lua.set_function("SetBorderless", &Scripting::LuaSetBorderless, this);
+		lua.set_function("GetResizable", &Scripting::LuaGetResizable, this);
+		lua.set_function("SetResizable", &Scripting::LuaSetResizable, this);
 		lua.set_function("InstantiatePrefab", &Scripting::LuaInstantiatePrefab, this);
 		lua.set_function("InstantiateNamedPrefab", &Scripting::LuaInstantiateNamedPrefab, this);
 		lua.set_function("DeleteGameObject", &Scripting::DeleteGameObject, this);
@@ -471,6 +481,47 @@ public:
 		gameObject->GetEngine()->GetWindow()->SetFullscreen(fullscreen);
 	}
 
+	bool LuaGetFullscreenDesktop()
+	{
+		return gameObject->GetEngine()->GetWindow()->GetFullscreenDesktop();
+	}
+
+	void LuaSetFullscreenDesktop(bool fullscreen)
+	{
+		gameObject->GetEngine()->GetWindow()->SetFullscreenDesktop(fullscreen);
+	}
+
+	bool LuaGetBorderless()
+	{
+		return gameObject->GetEngine()->GetWindow()->GetBorderless();
+	}
+
+	void LuaSetBorderless(bool borderless)
+	{
+		gameObject->GetEngine()->GetWindow()->SetBorderless(borderless);
+	}
+
+	bool LuaGetResizable()
+	{
+		return gameObject->GetEngine()->GetWindow()->GetResizable();
+	}
+
+	void LuaSetResizable(bool resizable)
+	{
+		gameObject->GetEngine()->GetWindow()->SetResizable(resizable);
+	}
+
+	void LuaSetFPS(int maxFPS)
+	{
+		gameObject->GetEngine()->GetEngineConfig()->maxFps = maxFPS;
+		gameObject->GetEngine()->GetEngineConfig()->cappedMs = 1000 / gameObject->GetEngine()->GetEngineConfig()->maxFps;
+	}
+
+	void LuaSetBrightness(float brightness)
+	{
+		gameObject->GetEngine()->GetWindow()->AdjustBrightness(brightness);
+	}
+
 	KEY_STATE LuaGetInput(int button)
 	{
 		if (button < 6 && button > 0)
@@ -534,8 +585,6 @@ public:
 		{
 			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_E);
 		}
-
-
 		case 21:
 		{
 			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_1);
