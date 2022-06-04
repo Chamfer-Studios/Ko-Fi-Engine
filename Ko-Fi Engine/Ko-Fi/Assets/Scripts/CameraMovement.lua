@@ -15,6 +15,7 @@ xPanning = 0.0 -- 1 to go right, -1 to go left
 --currentTarget = float3.new(0, 0, 0)
 closestY = -100.0
 furthestY = 2000.0
+rayCastCulling = {}
 local freePanningDebug
 --use the fokin start
 function Start()
@@ -25,6 +26,7 @@ end
 
 function Update(dt)
 
+    local lastFinalPos = componentTransform:GetPosition()
     --input: mouse wheel to zoom in and out
     -- local?
     if (GetMouseZ() > 0) then
@@ -128,6 +130,21 @@ function Update(dt)
     componentTransform:SetPosition(finalPos)
 
     gameObject:GetCamera():LookAt(target)
+
+    if componentTransform:GetPosition() ~= lastFinalPos then
+        for i=1, #rayCastCulling do
+            rayCastCulling[i].active = true
+        end
+        if #rayCastCulling > 0 then
+            rayCastCulling = {}
+        end
+        rayCastCulling = CustomRayCastList(finalPos, target, {Tag.UNTAGGED, Tag.WALL})
+        for j=1, #rayCastCulling do
+            rayCastCulling[j].active = false
+        end
+
+        Log(#rayCastCulling .. "\n")
+    end
     --1st iteration use look at to center at characters
     
 end

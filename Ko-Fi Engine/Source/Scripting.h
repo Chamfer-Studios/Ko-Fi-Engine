@@ -417,6 +417,7 @@ public:
 		lua.set_function("RayCast", &Scripting::RayCast, this);
 		lua.set_function("RayCastLambda", &Scripting::RayCastLambda, this);
 		lua.set_function("CustomRayCast", &Scripting::CustomRayCastQuery, this);
+		lua.set_function("CustomRayCastList", &Scripting::CustomRayCastQueryList, this);
 		lua.set_function("GetDialogueString", &Scripting::GetDialogueString, this);
 		lua.set_function("GetTransString", &Scripting::GetTransString, this);
 		lua.set_function("GetDialogueTargetID", &Scripting::GetDialogueTargetID, this);
@@ -613,6 +614,10 @@ public:
 
 	bool CustomRayCastQuery(float3 startPoint, float3 endPoint, TAG tag) {
 		return gameObject->GetEngine()->GetPhysics()->CustomRayCastQuery(startPoint, endPoint, tag);
+	}
+	
+	std::vector<GameObject*> CustomRayCastQueryList(float3 startPoint, float3 endPoint, std::vector<TAG> tagList) {
+		return gameObject->GetEngine()->GetPhysics()->CustomRayCastQueryList(startPoint, endPoint, tagList);
 	}
 
 	M_Navigation* GetNavigation()
