@@ -4,7 +4,7 @@ zoomSpeed = 50
 finalPos = float3.new(0, 0, 0)
 angle = 45.0
 remainingAngle = 0.0
-offset = float3.new(0, 240, 270)
+offset = float3.new(0, 200, 270)
 scrollspeed = 15.0
 targetAngle = 0.0
 newZoomedPos = float3.new(0, 0, 0)
@@ -13,9 +13,9 @@ zPanning = 0.0 -- 1 to go front, -1 to go back
 xPanning = 0.0 -- 1 to go right, -1 to go left
 --resetOffset = 1;
 --currentTarget = float3.new(0, 0, 0)
-local freePanning = true
-local closestY = 100.0
-local furthestY = 2000.0
+freePanningDebug = true
+closestY = -100.0
+furthestY = 2000.0
 
 --use the fokin start
 function Start()
@@ -28,16 +28,22 @@ function Update(dt)
     --input: mouse wheel to zoom in and out
     -- local?
     if (GetMouseZ() > 0) then
-        if finalPos.y < furthestY then
+        local deltaY = newZoomedPos.y + gameObject:GetCamera():GetFront().y * zoomSpeed
+        if math.abs(deltaY) < 110 then
             newZoomedPos.y = newZoomedPos.y + gameObject:GetCamera():GetFront().y * zoomSpeed
             newZoomedPos.x = newZoomedPos.x + gameObject:GetCamera():GetFront().x * zoomSpeed
             newZoomedPos.z = newZoomedPos.z + gameObject:GetCamera():GetFront().z * zoomSpeed
+        else
+            Log("max newZoomedPos: " .. newZoomedPos.y .. "\n")
         end
     elseif (GetMouseZ() < 0) then
-        if finalPos.y > closestY then
+        local deltaY = newZoomedPos.y - gameObject:GetCamera():GetFront().y * zoomSpeed
+        if math.abs(deltaY) < 110 then
             newZoomedPos.y = newZoomedPos.y - gameObject:GetCamera():GetFront().y * zoomSpeed
             newZoomedPos.x = newZoomedPos.x - gameObject:GetCamera():GetFront().x * zoomSpeed
             newZoomedPos.z = newZoomedPos.z - gameObject:GetCamera():GetFront().z * zoomSpeed
+        else
+            Log("min newZoomedPos: " .. newZoomedPos.y .. "\n")
         end
     end
 
@@ -71,8 +77,11 @@ function Update(dt)
 
     -- go back to the selected character
     if  (GetInput(10) == KEY_STATE.KEY_DOWN) then -- R
-        offset = float3.new(0, 240, 270)
         GetSelectedCharacter()
+        offset = float3.new(0, 240, 270)
+    end
+    if  (GetInput(5) == KEY_STATE.KEY_DOWN) then -- H
+        freePanningDebug = ~freePanningDebug
     end
 
     if  (GetInput(14) == KEY_STATE.KEY_REPEAT) then -- Q
@@ -86,16 +95,16 @@ function Update(dt)
 
     --Log("panning " .. xPanning .. " " .. zPanning .. "\n")
 
-
     --input: click mouse wheel to orbit the camera
     --TODO
-
-    local currentPanSpeed = panSpeed * dt
     
     -- modify target with the camera panning
-    if (freePanning == true) then
+    if (freePanningDebug == true) then
+        local currentPanSpeed = panSpeed * dt
         target.z = target.z + (zPanning * currentPanSpeed)
         target.x = target.x + (xPanning * currentPanSpeed)
+    else
+        GetSelectedCharacter()
     end
 
     --Log("current target " .. target.x .. " " .. target.z .. "\n")
