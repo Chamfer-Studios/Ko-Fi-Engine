@@ -29,6 +29,7 @@ C_LightSource::C_LightSource(GameObject* parent) : Component(parent)
 
 C_LightSource::~C_LightSource()
 {
+	CleanUp();
 }
 
 bool C_LightSource::Start()

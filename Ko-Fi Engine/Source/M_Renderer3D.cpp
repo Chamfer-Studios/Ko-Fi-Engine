@@ -765,7 +765,13 @@ void M_Renderer3D::LightUniforms(uint shader)
 				//current iteration to string
 				std::string number = std::to_string(i);
 				//get corresponding directional light
-				DirectionalLight* lightSource = (DirectionalLight*)light->GetComponent<C_LightSource>()->GetLightSource();
+				C_LightSource* c_light = light->GetComponent<C_LightSource>();
+
+				if (c_light == nullptr)
+					continue;
+
+				auto lightSource = (DirectionalLight*)c_light->GetLightSource();
+
 				//fill the first variable of the DirLight struct: vec3 color
 				GLint lightColor = glGetUniformLocation(shader, ("dirLights[" + number + "].color").c_str());
 				glUniform3f(lightColor, lightSource->color.x, lightSource->color.y, lightSource->color.z);
@@ -802,9 +808,12 @@ void M_Renderer3D::LightUniforms(uint shader)
 				std::string number = std::to_string(i);
 
 				//get corresponding point light
-				PointLight* lightSource = (PointLight*)light->GetComponent<C_LightSource>()->GetLightSource();
+				C_LightSource* c_light = light->GetComponent<C_LightSource>();
 
+				if (c_light == nullptr)
+					continue;
 				// --- basic light parameters ---
+				auto lightSource = (PointLight*)c_light->GetLightSource();
 
 				//fill the first variable of the PointLight struct: vec3 color
 				GLint lightColor = glGetUniformLocation(shader, ("pointLights[" + number + "].color").c_str());
@@ -864,7 +873,12 @@ void M_Renderer3D::LightUniforms(uint shader)
 				n--;
 
 				//get corresponding point light
-				FocalLight* lightSource = (FocalLight*)light->GetComponent<C_LightSource>()->GetLightSource();
+				C_LightSource* c_light = light->GetComponent<C_LightSource>();
+
+				if (c_light == nullptr)
+					continue;
+				// --- basic light parameters ---
+				auto lightSource = (FocalLight*)c_light->GetLightSource();
 
 				// -- basic light parameters --
 				//fill the first variable of the focalLights struct: vec3 color
