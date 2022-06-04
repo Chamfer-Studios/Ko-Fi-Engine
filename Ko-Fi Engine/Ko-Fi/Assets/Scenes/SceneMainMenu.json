@@ -1,7 +1,7 @@
 {
     "SceneMainMenu": {
         "active": true,
-        "game_objects_amount": 19,
+        "game_objects_amount": 51,
         "game_objects_list": [
             {
                 "UID": 1475716659,
@@ -917,6 +917,1466 @@
                 "isPrefab": false,
                 "name": "Music",
                 "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 255768270,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "logicalSize": [
+                            1920.0,
+                            1080.0
+                        ],
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            200.0,
+                            200.0
+                        ],
+                        "type": 13
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Settings Menu",
+                "parent_UID": 1606156178,
+                "tag": 0
+            },
+            {
+                "UID": 2055808393,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -148.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            1484.0,
+                            841.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/MainMenuRightBar.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Background ",
+                "parent_UID": 255768270,
+                "tag": 0
+            },
+            {
+                "UID": 1526965354,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 0,
+                        "pivot": [
+                            0.0,
+                            1.0
+                        ],
+                        "position": [
+                            31.0,
+                            -22.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            85.0,
+                            60.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/frame_corner.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Top Left",
+                "parent_UID": 2055808393,
+                "tag": 0
+            },
+            {
+                "UID": 1492684990,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 2,
+                        "pivot": [
+                            0.0,
+                            1.0
+                        ],
+                        "position": [
+                            -31.0,
+                            -22.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            3.1415927410125732,
+                            0.0
+                        ],
+                        "size": [
+                            85.0,
+                            60.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/frame_corner.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Top Right",
+                "parent_UID": 2055808393,
+                "tag": 0
+            },
+            {
+                "UID": 485761420,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 6,
+                        "pivot": [
+                            0.0,
+                            0.0
+                        ],
+                        "position": [
+                            31.0,
+                            84.0
+                        ],
+                        "rotation": [
+                            3.1415927410125732,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            85.0,
+                            60.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/frame_corner.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Bottom Left",
+                "parent_UID": 2055808393,
+                "tag": 0
+            },
+            {
+                "UID": 322594089,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 8,
+                        "pivot": [
+                            0.0,
+                            0.0
+                        ],
+                        "position": [
+                            -31.0,
+                            84.0
+                        ],
+                        "rotation": [
+                            3.1415927410125732,
+                            3.1415927410125732,
+                            0.0
+                        ],
+                        "size": [
+                            85.0,
+                            60.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/frame_corner.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Bottom Right",
+                "parent_UID": 2055808393,
+                "tag": 0
+            },
+            {
+                "UID": 153260454,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 1,
+                        "pivot": [
+                            0.5,
+                            1.0
+                        ],
+                        "position": [
+                            0.0,
+                            -22.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            261.0,
+                            28.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/decorative_vector.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Top Piece",
+                "parent_UID": 2055808393,
+                "tag": 0
+            },
+            {
+                "UID": 1064106311,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            300.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            351.0,
+                            113.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            230,
+                            131,
+                            63,
+                            255
+                        ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "type": 16,
+                        "value": "Settings"
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Settings Text",
+                "parent_UID": 2055808393,
+                "tag": 0
+            },
+            {
+                "UID": 1448512991,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 3,
+                        "pivot": [
+                            0.0,
+                            0.5
+                        ],
+                        "position": [
+                            45.0,
+                            97.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            390.0,
+                            27.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/slider_bar.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "MV Bar",
+                "parent_UID": 2055808393,
+                "tag": 0
+            },
+            {
+                "UID": 478942909,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            33.0,
+                            65.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/New UI/slider_button_hover.png",
+                        "idleTexture": "Assets/New UI/slider_button_default.png",
+                        "pressedTexture": "Assets/New UI/slider_button_pressed.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "MV Button",
+                "parent_UID": 1448512991,
+                "tag": 0
+            },
+            {
+                "UID": 1900895345,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            72.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            324.0,
+                            50.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                        "type": 16,
+                        "value": "Master Volume"
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "MV Text",
+                "parent_UID": 1448512991,
+                "tag": 0
+            },
+            {
+                "UID": 1407584223,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 5,
+                        "pivot": [
+                            1.0,
+                            0.5
+                        ],
+                        "position": [
+                            -45.0,
+                            97.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            390.0,
+                            27.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/slider_bar.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "SB Bar",
+                "parent_UID": 2055808393,
+                "tag": 0
+            },
+            {
+                "UID": 739976251,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            33.0,
+                            65.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/New UI/slider_button_hover.png",
+                        "idleTexture": "Assets/New UI/slider_button_default.png",
+                        "pressedTexture": "Assets/New UI/slider_button_pressed.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "SB Button",
+                "parent_UID": 1407584223,
+                "tag": 0
+            },
+            {
+                "UID": 1292816114,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            72.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            370.0,
+                            50.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                        "type": 16,
+                        "value": "Screen Brightness"
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "SB Text",
+                "parent_UID": 1407584223,
+                "tag": 0
+            },
+            {
+                "UID": 1816059730,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            169.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            107.0,
+                            50.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                        "type": 16,
+                        "value": "SPF"
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "FPS Text",
+                "parent_UID": 2055808393,
+                "tag": 0
+            },
+            {
+                "UID": 647261558,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            -135.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            151.0,
+                            122.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                        "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                        "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "60 Button",
+                "parent_UID": 1816059730,
+                "tag": 0
+            },
+            {
+                "UID": 1282529393,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            72.0,
+                            -80.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            151.0,
+                            122.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                        "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                        "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "30 Button",
+                "parent_UID": 1816059730,
+                "tag": 0
+            },
+            {
+                "UID": 1111096012,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -72.0,
+                            -80.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            151.0,
+                            122.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                        "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                        "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "120 Button",
+                "parent_UID": 1816059730,
+                "tag": 0
+            },
+            {
+                "UID": 1796188527,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            -207.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            58.0,
+                            40.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                        "type": 16,
+                        "value": "60"
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "60 Text",
+                "parent_UID": 1816059730,
+                "tag": 0
+            },
+            {
+                "UID": 173706163,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -179.0,
+                            -77.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            61.0,
+                            40.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                        "type": 16,
+                        "value": "30"
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "30 Text",
+                "parent_UID": 1816059730,
+                "tag": 0
+            },
+            {
+                "UID": 287488125,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            187.0,
+                            -77.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            86.0,
+                            40.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                        "type": 16,
+                        "value": "120"
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "120 Text",
+                "parent_UID": 1816059730,
+                "tag": 0
+            },
+            {
+                "UID": 148945762,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -520.0,
+                            -132.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            161.0,
+                            50.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                        "type": 16,
+                        "value": "V-Sync"
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Vsync Text",
+                "parent_UID": 2055808393,
+                "tag": 0
+            },
+            {
+                "UID": 1701848486,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            -95.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            151.0,
+                            122.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                        "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                        "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Vsync Button",
+                "parent_UID": 148945762,
+                "tag": 0
+            },
+            {
+                "UID": 757573716,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            -132.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            476.0,
+                            50.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                        "type": 16,
+                        "value": "Window Screen Mode"
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "WSM Text",
+                "parent_UID": 2055808393,
+                "tag": 0
+            },
+            {
+                "UID": 841311316,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            -135.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            151.0,
+                            122.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                        "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                        "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Borderless Button",
+                "parent_UID": 757573716,
+                "tag": 0
+            },
+            {
+                "UID": 393429371,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -72.0,
+                            -81.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            151.0,
+                            122.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                        "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                        "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                        "type": 15
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/HUD/UI_Fullscreen.lua",
+                        "id": 268692700,
+                        "type": 5
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "FS Button",
+                "parent_UID": 757573716,
+                "tag": 0
+            },
+            {
+                "UID": 548174983,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            73.0,
+                            -82.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            151.0,
+                            122.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                        "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                        "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Windowed Button",
+                "parent_UID": 757573716,
+                "tag": 0
+            },
+            {
+                "UID": 1512526623,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            -203.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            208.0,
+                            40.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                        "type": 16,
+                        "value": "Borderless"
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Borderless Text",
+                "parent_UID": 757573716,
+                "tag": 0
+            },
+            {
+                "UID": 1755389238,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -256.0,
+                            -77.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            213.0,
+                            40.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                        "type": 16,
+                        "value": "Full Screen"
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "FS Text",
+                "parent_UID": 757573716,
+                "tag": 0
+            },
+            {
+                "UID": 807271675,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            255.0,
+                            -81.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            213.0,
+                            40.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                        "type": 16,
+                        "value": "Windowed"
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Windowed Text",
+                "parent_UID": 757573716,
+                "tag": 0
+            },
+            {
+                "UID": 1266759538,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            500.0,
+                            -130.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            284.0,
+                            50.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                        "type": 16,
+                        "value": "Window Size"
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "WS Text",
+                "parent_UID": 2055808393,
+                "tag": 0
+            },
+            {
+                "UID": 207380102,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            -100.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            151.0,
+                            122.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                        "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                        "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "WS Button",
+                "parent_UID": 1266759538,
                 "tag": 0
             }
         ],

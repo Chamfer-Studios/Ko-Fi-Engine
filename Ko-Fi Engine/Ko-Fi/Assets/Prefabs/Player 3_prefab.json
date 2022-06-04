@@ -1,0 +1,1834 @@
+{
+    "active": true,
+    "children": [
+        {
+            "active": true,
+            "children": [
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": true,
+                            "children": [
+                                {
+                                    "active": true,
+                                    "children": [
+                                        {
+                                            "active": true,
+                                            "children": [
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [
+                                                                {
+                                                                    "active": true,
+                                                                    "children": [],
+                                                                    "components": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "type": 23
+                                                                        },
+                                                                        {
+                                                                            "active": true,
+                                                                            "position": [
+                                                                                0.0,
+                                                                                0.48121684789657593,
+                                                                                0.0
+                                                                            ],
+                                                                            "rotation": [
+                                                                                0.0,
+                                                                                0.0,
+                                                                                0.0,
+                                                                                1.0
+                                                                            ],
+                                                                            "scale": [
+                                                                                1.0,
+                                                                                1.0,
+                                                                                1.0
+                                                                            ],
+                                                                            "type": 21
+                                                                        }
+                                                                    ],
+                                                                    "is3D": true,
+                                                                    "isPrefab": false,
+                                                                    "name": "omozra_left_toe_end_end",
+                                                                    "tag": 0
+                                                                }
+                                                            ],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        -2.873130142688751e-07,
+                                                                        0.4812149405479431,
+                                                                        9.723007678985596e-07
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "omozra_left_toe_end",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                -8.310889825224876e-07,
+                                                                1.4820549488067627,
+                                                                5.476176738739014e-07
+                                                            ],
+                                                            "rotation": [
+                                                                0.2820289731025696,
+                                                                0.010017753578722477,
+                                                                -0.002943676430732012,
+                                                                0.9593490958213806
+                                                            ],
+                                                            "scale": [
+                                                                1.0,
+                                                                0.9999998807907104,
+                                                                1.0
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "omozra_left_toe_base",
+                                                    "tag": 0
+                                                }
+                                            ],
+                                            "components": [
+                                                {
+                                                    "active": true,
+                                                    "type": 23
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "position": [
+                                                        -2.2351741790771484e-07,
+                                                        3.6426279544830322,
+                                                        -2.9802322387695313e-08
+                                                    ],
+                                                    "rotation": [
+                                                        0.516391396522522,
+                                                        -0.005076299421489239,
+                                                        -0.04167148843407631,
+                                                        0.8553231358528137
+                                                    ],
+                                                    "scale": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "type": 21
+                                                }
+                                            ],
+                                            "is3D": true,
+                                            "isPrefab": false,
+                                            "name": "omozra_left_foot",
+                                            "tag": 0
+                                        }
+                                    ],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "position": [
+                                                -1.043081283569336e-07,
+                                                5.152480125427246,
+                                                -2.1606683731079102e-07
+                                            ],
+                                            "rotation": [
+                                                -0.20586541295051575,
+                                                -0.04826747253537178,
+                                                0.020010890439152718,
+                                                0.9771843552589417
+                                            ],
+                                            "scale": [
+                                                0.999997079372406,
+                                                1.0,
+                                                1.0
+                                            ],
+                                            "type": 21
+                                        }
+                                    ],
+                                    "is3D": true,
+                                    "isPrefab": false,
+                                    "name": "omozra_left_leg",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "position": [
+                                        1.5489217042922974,
+                                        -0.6373273730278015,
+                                        -0.4349631071090698
+                                    ],
+                                    "rotation": [
+                                        0.06793658435344696,
+                                        0.11041370034217834,
+                                        0.9904652833938599,
+                                        -0.046604420989751816
+                                    ],
+                                    "scale": [
+                                        1.0,
+                                        1.0,
+                                        1.0
+                                    ],
+                                    "type": 21
+                                }
+                            ],
+                            "is3D": true,
+                            "isPrefab": false,
+                            "name": "omozra_left_up_leg",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [
+                                {
+                                    "active": true,
+                                    "children": [
+                                        {
+                                            "active": true,
+                                            "children": [
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [
+                                                                {
+                                                                    "active": true,
+                                                                    "children": [],
+                                                                    "components": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "type": 23
+                                                                        },
+                                                                        {
+                                                                            "active": true,
+                                                                            "position": [
+                                                                                0.0,
+                                                                                0.9412484765052795,
+                                                                                0.0
+                                                                            ],
+                                                                            "rotation": [
+                                                                                0.0,
+                                                                                0.0,
+                                                                                0.0,
+                                                                                1.0
+                                                                            ],
+                                                                            "scale": [
+                                                                                1.0,
+                                                                                1.0,
+                                                                                1.0
+                                                                            ],
+                                                                            "type": 21
+                                                                        }
+                                                                    ],
+                                                                    "is3D": true,
+                                                                    "isPrefab": false,
+                                                                    "name": "omozra_right_toe_end_end",
+                                                                    "tag": 0
+                                                                }
+                                                            ],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        7.683411240577698e-08,
+                                                                        0.9412481188774109,
+                                                                        3.725290298461914e-09
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "omozra_right_toe_end",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                -2.784654498100281e-07,
+                                                                2.207825183868408,
+                                                                -1.7881393432617188e-07
+                                                            ],
+                                                            "rotation": [
+                                                                0.19083604216575623,
+                                                                0.0006408513872884214,
+                                                                0.0036589002702385187,
+                                                                0.981614887714386
+                                                            ],
+                                                            "scale": [
+                                                                1.0,
+                                                                1.0,
+                                                                0.9999999403953552
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "omozra_right_toe_base",
+                                                    "tag": 0
+                                                }
+                                            ],
+                                            "components": [
+                                                {
+                                                    "active": true,
+                                                    "type": 23
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "position": [
+                                                        1.9604340195655823e-07,
+                                                        3.5160791873931885,
+                                                        -4.470348358154297e-07
+                                                    ],
+                                                    "rotation": [
+                                                        0.6530930995941162,
+                                                        -0.003732283366844058,
+                                                        -6.160491466289386e-05,
+                                                        0.7572684288024902
+                                                    ],
+                                                    "scale": [
+                                                        0.999997079372406,
+                                                        1.0000001192092896,
+                                                        1.0
+                                                    ],
+                                                    "type": 21
+                                                }
+                                            ],
+                                            "is3D": true,
+                                            "isPrefab": false,
+                                            "name": "omozra_right_foot",
+                                            "tag": 0
+                                        }
+                                    ],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "position": [
+                                                -1.9371509552001953e-07,
+                                                5.148897647857666,
+                                                1.7881393432617188e-07
+                                            ],
+                                            "rotation": [
+                                                -0.2019316852092743,
+                                                0.011813641525804996,
+                                                0.006152123678475618,
+                                                0.9793090224266052
+                                            ],
+                                            "scale": [
+                                                1.0,
+                                                1.0,
+                                                0.9999998211860657
+                                            ],
+                                            "type": 21
+                                        }
+                                    ],
+                                    "is3D": true,
+                                    "isPrefab": false,
+                                    "name": "omozra_right_leg",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "position": [
+                                        -1.5489228963851929,
+                                        -0.6373332738876343,
+                                        0.1532701849937439
+                                    ],
+                                    "rotation": [
+                                        -0.09788817167282104,
+                                        0.052272897213697433,
+                                        0.9934875965118408,
+                                        0.025842895731329918
+                                    ],
+                                    "scale": [
+                                        1.0000001192092896,
+                                        1.0000044107437134,
+                                        0.9999987483024597
+                                    ],
+                                    "type": 21
+                                }
+                            ],
+                            "is3D": true,
+                            "isPrefab": false,
+                            "name": "omozra_right_up_leg",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [
+                                {
+                                    "active": true,
+                                    "children": [
+                                        {
+                                            "active": true,
+                                            "children": [
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [
+                                                                {
+                                                                    "active": true,
+                                                                    "children": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "children": [
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "children": [],
+                                                                                    "components": [
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "type": 23
+                                                                                        },
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "position": [
+                                                                                                0.0,
+                                                                                                3.4008965492248535,
+                                                                                                0.0
+                                                                                            ],
+                                                                                            "rotation": [
+                                                                                                0.0,
+                                                                                                0.0,
+                                                                                                0.0,
+                                                                                                1.0
+                                                                                            ],
+                                                                                            "scale": [
+                                                                                                1.0,
+                                                                                                1.0,
+                                                                                                1.0
+                                                                                            ],
+                                                                                            "type": 21
+                                                                                        }
+                                                                                    ],
+                                                                                    "is3D": true,
+                                                                                    "isPrefab": false,
+                                                                                    "name": "omozra_left_hand_end",
+                                                                                    "tag": 0
+                                                                                }
+                                                                            ],
+                                                                            "components": [
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "type": 23
+                                                                                },
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "position": [
+                                                                                        -3.5762786865234375e-07,
+                                                                                        3.400900363922119,
+                                                                                        -2.086162567138672e-07
+                                                                                    ],
+                                                                                    "rotation": [
+                                                                                        0.0,
+                                                                                        0.0,
+                                                                                        0.0,
+                                                                                        1.0
+                                                                                    ],
+                                                                                    "scale": [
+                                                                                        1.0,
+                                                                                        1.0,
+                                                                                        1.0
+                                                                                    ],
+                                                                                    "type": 21
+                                                                                }
+                                                                            ],
+                                                                            "is3D": true,
+                                                                            "isPrefab": false,
+                                                                            "name": "omozra_left_hand",
+                                                                            "tag": 0
+                                                                        }
+                                                                    ],
+                                                                    "components": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "type": 23
+                                                                        },
+                                                                        {
+                                                                            "active": true,
+                                                                            "position": [
+                                                                                1.7881393432617188e-07,
+                                                                                1.8918778896331787,
+                                                                                -1.8477439880371094e-06
+                                                                            ],
+                                                                            "rotation": [
+                                                                                0.048343557864427567,
+                                                                                -0.008419576101005077,
+                                                                                0.11547298729419708,
+                                                                                0.992097795009613
+                                                                            ],
+                                                                            "scale": [
+                                                                                1.0,
+                                                                                1.0,
+                                                                                0.9999979138374329
+                                                                            ],
+                                                                            "type": 21
+                                                                        }
+                                                                    ],
+                                                                    "is3D": true,
+                                                                    "isPrefab": false,
+                                                                    "name": "omozra_left_fore_arm",
+                                                                    "tag": 0
+                                                                }
+                                                            ],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        -1.7881393432617188e-06,
+                                                                        2.5223300457000732,
+                                                                        4.172325134277344e-07
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.3794485926628113,
+                                                                        -0.185072660446167,
+                                                                        0.12789234519004822,
+                                                                        0.8974466323852539
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        0.9999999403953552
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "omozra_left_arm",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                1.0766626596450806,
+                                                                1.7583634853363037,
+                                                                0.07504653185606003
+                                                            ],
+                                                            "rotation": [
+                                                                0.6564502120018005,
+                                                                0.3304060697555542,
+                                                                -0.5519038438796997,
+                                                                0.3940901756286621
+                                                            ],
+                                                            "scale": [
+                                                                0.9999975562095642,
+                                                                1.0000001192092896,
+                                                                1.0000001192092896
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "omozra_left_shoulder",
+                                                    "tag": 0
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [
+                                                                {
+                                                                    "active": true,
+                                                                    "children": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "children": [
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "children": [],
+                                                                                    "components": [
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "type": 23
+                                                                                        },
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "position": [
+                                                                                                0.0,
+                                                                                                3.4007961750030518,
+                                                                                                0.0
+                                                                                            ],
+                                                                                            "rotation": [
+                                                                                                0.0,
+                                                                                                0.0,
+                                                                                                0.0,
+                                                                                                1.0
+                                                                                            ],
+                                                                                            "scale": [
+                                                                                                1.0,
+                                                                                                1.0,
+                                                                                                1.0
+                                                                                            ],
+                                                                                            "type": 21
+                                                                                        }
+                                                                                    ],
+                                                                                    "is3D": true,
+                                                                                    "isPrefab": false,
+                                                                                    "name": "omozra_right_hand_end",
+                                                                                    "tag": 0
+                                                                                }
+                                                                            ],
+                                                                            "components": [
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "type": 23
+                                                                                },
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "position": [
+                                                                                        -5.960464477539063e-08,
+                                                                                        3.4007973670959473,
+                                                                                        -2.9802322387695313e-08
+                                                                                    ],
+                                                                                    "rotation": [
+                                                                                        0.0,
+                                                                                        0.0,
+                                                                                        0.0,
+                                                                                        1.0
+                                                                                    ],
+                                                                                    "scale": [
+                                                                                        1.0,
+                                                                                        1.0,
+                                                                                        1.0
+                                                                                    ],
+                                                                                    "type": 21
+                                                                                }
+                                                                            ],
+                                                                            "is3D": true,
+                                                                            "isPrefab": false,
+                                                                            "name": "omozra_right_hand",
+                                                                            "tag": 0
+                                                                        }
+                                                                    ],
+                                                                    "components": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "type": 23
+                                                                        },
+                                                                        {
+                                                                            "active": true,
+                                                                            "position": [
+                                                                                -1.1920928955078125e-07,
+                                                                                1.8740293979644775,
+                                                                                1.4901161193847656e-07
+                                                                            ],
+                                                                            "rotation": [
+                                                                                -0.011394982226192951,
+                                                                                0.007203360553830862,
+                                                                                -0.14570803940296173,
+                                                                                0.9892358183860779
+                                                                            ],
+                                                                            "scale": [
+                                                                                0.9999998211860657,
+                                                                                1.0,
+                                                                                1.0
+                                                                            ],
+                                                                            "type": 21
+                                                                        }
+                                                                    ],
+                                                                    "is3D": true,
+                                                                    "isPrefab": false,
+                                                                    "name": "omozra_right_fore_arm",
+                                                                    "tag": 0
+                                                                }
+                                                            ],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        2.980232238769531e-07,
+                                                                        2.5223312377929688,
+                                                                        0.0
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.3062746822834015,
+                                                                        -0.06612827628850937,
+                                                                        -0.18702282011508942,
+                                                                        0.9310452938079834
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        0.9999998807907104,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "omozra_right_arm",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                -1.076662540435791,
+                                                                1.7497650384902954,
+                                                                -0.026049669831991196
+                                                            ],
+                                                            "rotation": [
+                                                                0.6656723618507385,
+                                                                -0.3099321722984314,
+                                                                0.5605624914169312,
+                                                                0.3828734755516052
+                                                            ],
+                                                            "scale": [
+                                                                1.0000001192092896,
+                                                                1.0000001192092896,
+                                                                1.0000001192092896
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "omozra_right_shoulder",
+                                                    "tag": 0
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [
+                                                                {
+                                                                    "active": true,
+                                                                    "children": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "children": [],
+                                                                            "components": [
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "type": 23
+                                                                                },
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "position": [
+                                                                                        0.0,
+                                                                                        3.1608638763427734,
+                                                                                        0.0
+                                                                                    ],
+                                                                                    "rotation": [
+                                                                                        0.0,
+                                                                                        0.0,
+                                                                                        0.0,
+                                                                                        1.0
+                                                                                    ],
+                                                                                    "scale": [
+                                                                                        1.0,
+                                                                                        1.0,
+                                                                                        1.0
+                                                                                    ],
+                                                                                    "type": 21
+                                                                                }
+                                                                            ],
+                                                                            "is3D": true,
+                                                                            "isPrefab": false,
+                                                                            "name": "omozra_head_top_2_end",
+                                                                            "tag": 0
+                                                                        }
+                                                                    ],
+                                                                    "components": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "type": 23
+                                                                        },
+                                                                        {
+                                                                            "active": true,
+                                                                            "position": [
+                                                                                8.940696716308594e-08,
+                                                                                2.5273325443267822,
+                                                                                1.898322343826294
+                                                                            ],
+                                                                            "rotation": [
+                                                                                0.0,
+                                                                                0.0,
+                                                                                0.0,
+                                                                                1.0
+                                                                            ],
+                                                                            "scale": [
+                                                                                1.0,
+                                                                                1.0,
+                                                                                1.0
+                                                                            ],
+                                                                            "type": 21
+                                                                        }
+                                                                    ],
+                                                                    "is3D": true,
+                                                                    "isPrefab": false,
+                                                                    "name": "omozra_head_top_2",
+                                                                    "tag": 0
+                                                                }
+                                                            ],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        -4.172325134277344e-07,
+                                                                        0.7360104322433472,
+                                                                        0.5528293251991272
+                                                                    ],
+                                                                    "rotation": [
+                                                                        -0.03412359580397606,
+                                                                        0.027444900944828987,
+                                                                        -0.04569602385163307,
+                                                                        0.997995138168335
+                                                                    ],
+                                                                    "scale": [
+                                                                        0.9999998211860657,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "omozra_head",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                -1.1920928955078125e-07,
+                                                                2.04180645942688,
+                                                                1.4603137969970703e-06
+                                                            ],
+                                                            "rotation": [
+                                                                -0.3236183524131775,
+                                                                0.005124403163790703,
+                                                                0.0041142115369439125,
+                                                                0.9461649060249329
+                                                            ],
+                                                            "scale": [
+                                                                0.9999999403953552,
+                                                                0.9999999403953552,
+                                                                0.9999998807907104
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "omozra_neck",
+                                                    "tag": 0
+                                                }
+                                            ],
+                                            "components": [
+                                                {
+                                                    "active": true,
+                                                    "type": 23
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "position": [
+                                                        5.960464477539063e-08,
+                                                        1.814934253692627,
+                                                        -3.8929283618927e-07
+                                                    ],
+                                                    "rotation": [
+                                                        0.07697684317827225,
+                                                        -0.0004306537448428571,
+                                                        0.010577527806162834,
+                                                        0.9969766736030579
+                                                    ],
+                                                    "scale": [
+                                                        0.9999999403953552,
+                                                        0.999998927116394,
+                                                        0.9999997019767761
+                                                    ],
+                                                    "type": 21
+                                                }
+                                            ],
+                                            "is3D": true,
+                                            "isPrefab": false,
+                                            "name": "omozra_spine_2",
+                                            "tag": 0
+                                        }
+                                    ],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "position": [
+                                                0.0,
+                                                1.588071584701538,
+                                                5.066394805908203e-07
+                                            ],
+                                            "rotation": [
+                                                0.31569579243659973,
+                                                -0.0026222923770546913,
+                                                0.010675792582333088,
+                                                0.948796808719635
+                                            ],
+                                            "scale": [
+                                                0.9999999403953552,
+                                                1.0,
+                                                0.9999997615814209
+                                            ],
+                                            "type": 21
+                                        }
+                                    ],
+                                    "is3D": true,
+                                    "isPrefab": false,
+                                    "name": "omozra_spine_1",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "position": [
+                                        1.1734664440155029e-07,
+                                        1.3562976121902466,
+                                        0.11547461152076721
+                                    ],
+                                    "rotation": [
+                                        0.14618341624736786,
+                                        -0.0229046531021595,
+                                        0.012552961707115173,
+                                        0.9889126420021057
+                                    ],
+                                    "scale": [
+                                        0.999997079372406,
+                                        1.0,
+                                        0.9999997019767761
+                                    ],
+                                    "type": 21
+                                }
+                            ],
+                            "is3D": true,
+                            "isPrefab": false,
+                            "name": "omozra_spine",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                -0.05348995327949524,
+                                10.062865257263184,
+                                0.1885240077972412
+                            ],
+                            "rotation": [
+                                -0.02874341607093811,
+                                -0.036743830889463425,
+                                0.004364107735455036,
+                                0.9989017248153687
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "omozra_hips",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 21
+                }
+            ],
+            "is3D": true,
+            "isPrefab": false,
+            "name": "omozra_armature",
+            "tag": 0
+        },
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        -1588.0,
+                        0.0,
+                        800.0
+                    ],
+                    "rotation": [
+                        -4.371138828673793e-08,
+                        1.0,
+                        -4.371138828673793e-08,
+                        -1.910685465164705e-15
+                    ],
+                    "scale": [
+                        0.9999996423721313,
+                        0.9999999403953552,
+                        0.9999998807907104
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "mesh": {
+                        "asset_path": "`:\u0018\u0012`:\u0018\u0012`:\u0018\u0012\u0001\u0001Characters/Omozra/omozra.sugar",
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "is_animated": true,
+                        "shape_type": 0,
+                        "uid": 1453328726
+                    },
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "color": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "shader": {
+                        "asset_path": "Assets/Shaders/default_shader.glsl",
+                        "uniforms": null
+                    },
+                    "texture": {
+                        "asset_path": "Assets/Textures/Characters/Omozra/omozra_base_color.png"
+                    },
+                    "type": 2
+                },
+                {
+                    "active": true,
+                    "body_type": "Dynamic",
+                    "freeze_position_x": false,
+                    "freeze_position_y": true,
+                    "freeze_position_z": false,
+                    "freeze_rotation_x": true,
+                    "freeze_rotation_y": true,
+                    "freeze_rotation_z": true,
+                    "mass": 1.0,
+                    "type": 6,
+                    "use_gravity": false
+                },
+                {
+                    "active": true,
+                    "center": [
+                        0.0,
+                        10.0,
+                        0.0
+                    ],
+                    "filter": "player",
+                    "is_trigger": false,
+                    "scale_factor": [
+                        0.5,
+                        1.0,
+                        0.5
+                    ],
+                    "type": 7
+                },
+                {
+                    "active": true,
+                    "file_name": "Assets/Scripts/Characters/Omozra/Omozra.lua",
+                    "id": 222656538,
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "ambientValue": 0.0,
+                    "constantAttenuationValue": 0.0,
+                    "cutOffAngle": 1.0,
+                    "diffuseValue": 0.5,
+                    "lightColor": [
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "lightDirection": [
+                        1.0,
+                        0.0,
+                        0.0
+                    ],
+                    "lightPosition": [
+                        -1588.0,
+                        0.0,
+                        800.0
+                    ],
+                    "linearAttenuationValue": 0.0,
+                    "quadraticAttenuationValue": 0.0,
+                    "sourceType": 2,
+                    "specularValue": 0.0,
+                    "type": 19
+                },
+                {
+                    "active": true,
+                    "file_name": "Assets/Scripts/Pathfinder.lua",
+                    "id": 1975779695,
+                    "inspector_variables": [
+                        {
+                            "name": "minRetargetingDistance",
+                            "type": "int",
+                            "value": 3
+                        }
+                    ],
+                    "type": 5
+                }
+            ],
+            "is3D": true,
+            "isPrefab": false,
+            "name": "Omozra",
+            "tag": 1
+        },
+        {
+            "active": true,
+            "children": [
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.20000000298023224,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.5,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 6,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "followForward": true,
+                                                    "maxAcceleration": [
+                                                        0.25,
+                                                        0.25,
+                                                        0.25
+                                                    ],
+                                                    "maxDirection": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -1.0
+                                                    ],
+                                                    "maxPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "maxVelocity": 5.0,
+                                                    "minAcceleration": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minDirection": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "minPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minVelocity": 40.0,
+                                                    "randAcceleration": false,
+                                                    "randDirection": false,
+                                                    "randPosition": false,
+                                                    "randVelocity": false,
+                                                    "type": 2
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        5.0,
+                                                        5.0,
+                                                        5.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Emitter",
+                                            "texture_path": "Assets/Textures/Particles/dash_projectile.png"
+                                        }
+                                    ],
+                                    "name": "Swoosh"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Omozra Swoosh Particle",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 1.5,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.5,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        10.0,
+                                                        10.0,
+                                                        10.0
+                                                    ],
+                                                    "type": 4
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.29411765933036804
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                }
+                                            ],
+                                            "name": "Emitter",
+                                            "texture_path": "Assets/Textures/Particles/simple.png"
+                                        }
+                                    ],
+                                    "name": "Footsteps"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Omozra Footstep Particle",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 320,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.5882353186607361
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "followForward": true,
+                                                    "maxAcceleration": [
+                                                        0.25,
+                                                        0.25,
+                                                        0.25
+                                                    ],
+                                                    "maxDirection": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -1.0
+                                                    ],
+                                                    "maxPosition": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "maxVelocity": 5.0,
+                                                    "minAcceleration": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minDirection": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "minPosition": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -5.0
+                                                    ],
+                                                    "minVelocity": 0.0,
+                                                    "randAcceleration": false,
+                                                    "randDirection": false,
+                                                    "randPosition": false,
+                                                    "randVelocity": false,
+                                                    "type": 2
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        20.0,
+                                                        20.0,
+                                                        20.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Blood Splatters",
+                                            "texture_path": "Assets/Textures/Particles/blood.png"
+                                        },
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.5882353186607361
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "followForward": true,
+                                                    "maxAcceleration": [
+                                                        0.25,
+                                                        0.25,
+                                                        0.25
+                                                    ],
+                                                    "maxDirection": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -1.0
+                                                    ],
+                                                    "maxPosition": [
+                                                        0.5,
+                                                        0.5,
+                                                        0.5
+                                                    ],
+                                                    "maxVelocity": 5.0,
+                                                    "minAcceleration": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minDirection": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "minPosition": [
+                                                        -0.5,
+                                                        -0.5,
+                                                        -5.0
+                                                    ],
+                                                    "minVelocity": 0.0,
+                                                    "randAcceleration": false,
+                                                    "randDirection": false,
+                                                    "randPosition": false,
+                                                    "randVelocity": false,
+                                                    "type": 2
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        20.0,
+                                                        20.0,
+                                                        20.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Blood Pools",
+                                            "texture_path": "Assets/Textures/Particles/blood_huge.png"
+                                        }
+                                    ],
+                                    "name": "Blood"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Omozra Blood Particle",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 21
+                }
+            ],
+            "is3D": true,
+            "isPrefab": false,
+            "name": "Omozra Particles",
+            "tag": 0
+        }
+    ],
+    "components": [
+        {
+            "active": true,
+            "type": 23
+        },
+        {
+            "active": true,
+            "position": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": 21
+        },
+        {
+            "active": true,
+            "animation": {
+                "asset_path": "Assets/Models/Characters/Omozra/omozra_armature|omozra_armature|omozra_armature|omozra_reel.cake",
+                "uid": 1447494815
+            },
+            "clips": [
+                {
+                    "clipDuration": 1.0,
+                    "clipDurationInSeconds": 0.0416666679084301,
+                    "clipEndFrame": 616.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Corpse",
+                    "clipStartFrame": 615.0,
+                    "mapString": "Corpse"
+                },
+                {
+                    "clipDuration": 47.0,
+                    "clipDurationInSeconds": 1.9583333730697632,
+                    "clipEndFrame": 367.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Crouch",
+                    "clipStartFrame": 320.0,
+                    "mapString": "Crouch"
+                },
+                {
+                    "clipDuration": 85.0,
+                    "clipDurationInSeconds": 3.5416667461395264,
+                    "clipEndFrame": 616.0,
+                    "clipFinished": false,
+                    "clipLoop": false,
+                    "clipName": "Death",
+                    "clipStartFrame": 531.0,
+                    "mapString": "Death"
+                },
+                {
+                    "clipDuration": 623.0,
+                    "clipDurationInSeconds": 25.95833396911621,
+                    "clipEndFrame": 623.0,
+                    "clipFinished": false,
+                    "clipLoop": false,
+                    "clipName": "Default clip",
+                    "clipStartFrame": 0.0,
+                    "mapString": "Default clip"
+                },
+                {
+                    "clipDuration": 155.0,
+                    "clipDurationInSeconds": 6.458333492279053,
+                    "clipEndFrame": 156.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Idle",
+                    "clipStartFrame": 1.0,
+                    "mapString": "Idle"
+                },
+                {
+                    "clipDuration": 1.0,
+                    "clipDurationInSeconds": 0.0416666679084301,
+                    "clipEndFrame": 321.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "IdleCrouch",
+                    "clipStartFrame": 320.0,
+                    "mapString": "IdleCrouch"
+                },
+                {
+                    "clipDuration": 28.0,
+                    "clipDurationInSeconds": 1.1666666269302368,
+                    "clipEndFrame": 475.0,
+                    "clipFinished": false,
+                    "clipLoop": false,
+                    "clipName": "Point",
+                    "clipStartFrame": 447.0,
+                    "mapString": "Point"
+                },
+                {
+                    "clipDuration": 37.0,
+                    "clipDurationInSeconds": 1.5416666269302368,
+                    "clipEndFrame": 513.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "PointToIdle",
+                    "clipStartFrame": 476.0,
+                    "mapString": "PointToIdle"
+                },
+                {
+                    "clipDuration": 51.0,
+                    "clipDurationInSeconds": 2.125,
+                    "clipEndFrame": 285.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Run",
+                    "clipStartFrame": 234.0,
+                    "mapString": "Run"
+                },
+                {
+                    "clipDuration": 58.0,
+                    "clipDurationInSeconds": 2.4166667461395264,
+                    "clipEndFrame": 226.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Walk",
+                    "clipStartFrame": 168.0,
+                    "mapString": "Walk"
+                }
+            ],
+            "meshes": [
+                {
+                    "asset_path": "`:\u0018\u0012`:\u0018\u0012`:\u0018\u0012\u0001\u0001Characters/Omozra/omozra.sugar",
+                    "uid": 1453328726
+                }
+            ],
+            "selectedClip": "Idle",
+            "type": 12
+        }
+    ],
+    "is3D": true,
+    "isPrefab": true,
+    "name": "Player 3",
+    "tag": 0
+}

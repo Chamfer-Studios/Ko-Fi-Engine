@@ -10,7 +10,7 @@
                         "minParticleLife": 4.0,
                         "particlesPerSpawn": 1,
                         "randomParticleLife": false,
-                        "spawnTime": 1.0,
+                        "spawnTime": 2.0,
                         "type": 1
                     },
                     {
@@ -24,9 +24,9 @@
                     },
                     {
                         "minFinalSize": [
-                            60.0,
-                            60.0,
-                            60.0
+                            225.0,
+                            225.0,
+                            225.0
                         ],
                         "minInitialSize": [
                             15.0,
@@ -83,15 +83,15 @@
                         ],
                         "minDirection": [
                             0.0,
-                            -1.0,
+                            0.0,
                             0.0
                         ],
                         "minPosition": [
                             0.0,
-                            2.0,
+                            0.5,
                             0.0
                         ],
-                        "minVelocity": 1.0,
+                        "minVelocity": 0.0,
                         "randAcceleration": false,
                         "randDirection": false,
                         "randPosition": false,

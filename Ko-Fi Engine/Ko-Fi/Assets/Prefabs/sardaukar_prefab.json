@@ -1,0 +1,1306 @@
+{
+    "active": true,
+    "children": [
+        {
+            "active": true,
+            "children": [
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": true,
+                            "children": [
+                                {
+                                    "active": true,
+                                    "children": [
+                                        {
+                                            "active": true,
+                                            "children": [
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        2.09808349609375e-05,
+                                                                        82.70927429199219,
+                                                                        -6.29425048828125e-05
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "sardaukar_left_toe_end",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                7.43865966796875e-05,
+                                                                223.35760498046875,
+                                                                -9.72747802734375e-05
+                                                            ],
+                                                            "rotation": [
+                                                                0.28202491998672485,
+                                                                -0.031198374927043915,
+                                                                0.0059105101972818375,
+                                                                0.9588814973831177
+                                                            ],
+                                                            "scale": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "sardaukar_left_toe_base",
+                                                    "tag": 0
+                                                }
+                                            ],
+                                            "components": [
+                                                {
+                                                    "active": true,
+                                                    "type": 23
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "position": [
+                                                        7.009506225585938e-05,
+                                                        491.9502868652344,
+                                                        -3.814697265625e-05
+                                                    ],
+                                                    "rotation": [
+                                                        0.5622530579566956,
+                                                        -0.0404847227036953,
+                                                        -0.010859490372240543,
+                                                        0.8259022831916809
+                                                    ],
+                                                    "scale": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "type": 21
+                                                }
+                                            ],
+                                            "is3D": true,
+                                            "isPrefab": false,
+                                            "name": "sardaukar_left_foot",
+                                            "tag": 0
+                                        }
+                                    ],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "position": [
+                                                -1.9073486328125e-06,
+                                                498.7544250488281,
+                                                6.4849853515625e-05
+                                            ],
+                                            "rotation": [
+                                                -0.25373193621635437,
+                                                -0.021014010533690453,
+                                                0.01765228994190693,
+                                                0.9668851494789124
+                                            ],
+                                            "scale": [
+                                                1.0,
+                                                1.0,
+                                                0.9999999403953552
+                                            ],
+                                            "type": 21
+                                        }
+                                    ],
+                                    "is3D": true,
+                                    "isPrefab": false,
+                                    "name": "sardaukar_left_leg",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "position": [
+                                        158.6170654296875,
+                                        -60.24687576293945,
+                                        -3.623741626739502
+                                    ],
+                                    "rotation": [
+                                        0.05948351323604584,
+                                        0.3447629511356354,
+                                        0.9367772936820984,
+                                        -0.006969730835407972
+                                    ],
+                                    "scale": [
+                                        1.0,
+                                        1.0000009536743164,
+                                        0.9999998211860657
+                                    ],
+                                    "type": 21
+                                }
+                            ],
+                            "is3D": true,
+                            "isPrefab": false,
+                            "name": "sardaukar_left_up_leg",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [
+                                {
+                                    "active": true,
+                                    "children": [
+                                        {
+                                            "active": true,
+                                            "children": [
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [
+                                                                {
+                                                                    "active": true,
+                                                                    "children": [],
+                                                                    "components": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "type": 23
+                                                                        },
+                                                                        {
+                                                                            "active": true,
+                                                                            "position": [
+                                                                                -0.00018024444580078125,
+                                                                                272.1943359375,
+                                                                                86.30982208251953
+                                                                            ],
+                                                                            "rotation": [
+                                                                                0.0,
+                                                                                0.0,
+                                                                                0.0,
+                                                                                1.0
+                                                                            ],
+                                                                            "scale": [
+                                                                                1.0,
+                                                                                1.0,
+                                                                                1.0
+                                                                            ],
+                                                                            "type": 21
+                                                                        }
+                                                                    ],
+                                                                    "is3D": true,
+                                                                    "isPrefab": false,
+                                                                    "name": "sardaukar_head_top_end",
+                                                                    "tag": 0
+                                                                }
+                                                            ],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        0.00013446807861328125,
+                                                                        105.64371490478516,
+                                                                        33.49848937988281
+                                                                    ],
+                                                                    "rotation": [
+                                                                        -0.03155411779880524,
+                                                                        0.01518783438950777,
+                                                                        -0.0187672208994627,
+                                                                        0.9992104172706604
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        0.9999997615814209,
+                                                                        0.9999995827674866
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "sardaukar_head",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                -0.00013393163681030273,
+                                                                163.1190185546875,
+                                                                -3.76775860786438e-05
+                                                            ],
+                                                            "rotation": [
+                                                                0.01333394180983305,
+                                                                0.008728082291781902,
+                                                                0.003083675168454647,
+                                                                0.9998682737350464
+                                                            ],
+                                                            "scale": [
+                                                                0.9999999403953552,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "sardaukar_neck",
+                                                    "tag": 0
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [
+                                                                {
+                                                                    "active": true,
+                                                                    "children": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "children": [
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "children": [],
+                                                                                    "components": [
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "type": 23
+                                                                                        },
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "position": [
+                                                                                                25.789642333984375,
+                                                                                                116.65043640136719,
+                                                                                                74.88224792480469
+                                                                                            ],
+                                                                                            "rotation": [
+                                                                                                0.6643967628479004,
+                                                                                                0.5116557478904724,
+                                                                                                -0.2418362945318222,
+                                                                                                0.4881603717803955
+                                                                                            ],
+                                                                                            "scale": [
+                                                                                                1.0,
+                                                                                                1.0,
+                                                                                                0.9999997019767761
+                                                                                            ],
+                                                                                            "type": 21
+                                                                                        }
+                                                                                    ],
+                                                                                    "is3D": true,
+                                                                                    "isPrefab": false,
+                                                                                    "name": "sardaukar_weapon",
+                                                                                    "tag": 0
+                                                                                }
+                                                                            ],
+                                                                            "components": [
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "type": 23
+                                                                                },
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "position": [
+                                                                                        -0.0001068115234375,
+                                                                                        261.64239501953125,
+                                                                                        0.000152587890625
+                                                                                    ],
+                                                                                    "rotation": [
+                                                                                        0.0,
+                                                                                        0.0,
+                                                                                        0.0,
+                                                                                        1.0
+                                                                                    ],
+                                                                                    "scale": [
+                                                                                        1.0,
+                                                                                        1.0,
+                                                                                        1.0
+                                                                                    ],
+                                                                                    "type": 21
+                                                                                }
+                                                                            ],
+                                                                            "is3D": true,
+                                                                            "isPrefab": false,
+                                                                            "name": "sardaukar_right_hand",
+                                                                            "tag": 0
+                                                                        }
+                                                                    ],
+                                                                    "components": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "type": 23
+                                                                        },
+                                                                        {
+                                                                            "active": true,
+                                                                            "position": [
+                                                                                -5.340576171875e-05,
+                                                                                228.1489715576172,
+                                                                                -0.00048828125
+                                                                            ],
+                                                                            "rotation": [
+                                                                                0.009078550152480602,
+                                                                                0.045043010264635086,
+                                                                                -0.27338749170303345,
+                                                                                0.9608058929443359
+                                                                            ],
+                                                                            "scale": [
+                                                                                1.0,
+                                                                                1.0,
+                                                                                1.0
+                                                                            ],
+                                                                            "type": 21
+                                                                        }
+                                                                    ],
+                                                                    "is3D": true,
+                                                                    "isPrefab": false,
+                                                                    "name": "sardaukar_right_fore_arm",
+                                                                    "tag": 0
+                                                                }
+                                                            ],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        -0.00011444091796875,
+                                                                        224.3984832763672,
+                                                                        0.00041866302490234375
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.2346685230731964,
+                                                                        -0.11345060914754868,
+                                                                        -0.25601324439048767,
+                                                                        0.9308688640594482
+                                                                    ],
+                                                                    "scale": [
+                                                                        0.9999998211860657,
+                                                                        0.9999998211860657,
+                                                                        0.9999997615814209
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "sardaukar_right_arm",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                -103.373779296875,
+                                                                148.68284606933594,
+                                                                0.7520828247070313
+                                                            ],
+                                                            "rotation": [
+                                                                0.6100624799728394,
+                                                                -0.3862447440624237,
+                                                                0.547742486000061,
+                                                                0.42263102531433105
+                                                            ],
+                                                            "scale": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.000000238418579
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "sardaukar_right_shoulder",
+                                                    "tag": 0
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [
+                                                                {
+                                                                    "active": true,
+                                                                    "children": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "children": [],
+                                                                            "components": [
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "type": 23
+                                                                                },
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "position": [
+                                                                                        -3.814697265625e-05,
+                                                                                        261.24554443359375,
+                                                                                        0.0002155303955078125
+                                                                                    ],
+                                                                                    "rotation": [
+                                                                                        0.0,
+                                                                                        0.0,
+                                                                                        0.0,
+                                                                                        1.0
+                                                                                    ],
+                                                                                    "scale": [
+                                                                                        1.0,
+                                                                                        1.0,
+                                                                                        1.0
+                                                                                    ],
+                                                                                    "type": 21
+                                                                                }
+                                                                            ],
+                                                                            "is3D": true,
+                                                                            "isPrefab": false,
+                                                                            "name": "sardaukar_left_hand",
+                                                                            "tag": 0
+                                                                        }
+                                                                    ],
+                                                                    "components": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "type": 23
+                                                                        },
+                                                                        {
+                                                                            "active": true,
+                                                                            "position": [
+                                                                                0.00010609626770019531,
+                                                                                227.62193298339844,
+                                                                                -3.409385681152344e-05
+                                                                            ],
+                                                                            "rotation": [
+                                                                                0.0033162273466587067,
+                                                                                -0.015153229236602783,
+                                                                                0.08364475518465042,
+                                                                                0.9963749051094055
+                                                                            ],
+                                                                            "scale": [
+                                                                                0.9999979138374329,
+                                                                                0.9999978542327881,
+                                                                                1.0
+                                                                            ],
+                                                                            "type": 21
+                                                                        }
+                                                                    ],
+                                                                    "is3D": true,
+                                                                    "isPrefab": false,
+                                                                    "name": "sardaukar_left_fore_arm",
+                                                                    "tag": 0
+                                                                }
+                                                            ],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        1.1444091796875e-05,
+                                                                        224.3988494873047,
+                                                                        -0.0006618499755859375
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.4254220724105835,
+                                                                        0.1777757704257965,
+                                                                        0.02371378429234028,
+                                                                        0.8870453834533691
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "sardaukar_left_arm",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                103.37371826171875,
+                                                                148.7752685546875,
+                                                                -1.795600414276123
+                                                            ],
+                                                            "rotation": [
+                                                                0.6045758724212646,
+                                                                0.39341768622398376,
+                                                                -0.5483637452125549,
+                                                                0.42309314012527466
+                                                            ],
+                                                            "scale": [
+                                                                1.0,
+                                                                1.0000008344650269,
+                                                                1.0
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "sardaukar_left_shoulder",
+                                                    "tag": 0
+                                                }
+                                            ],
+                                            "components": [
+                                                {
+                                                    "active": true,
+                                                    "type": 23
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "position": [
+                                                        2.980232238769531e-07,
+                                                        144.99600219726563,
+                                                        1.0594725608825684e-05
+                                                    ],
+                                                    "rotation": [
+                                                        0.017119495198130608,
+                                                        -0.0027153328992426395,
+                                                        -0.006756466347724199,
+                                                        0.999826967716217
+                                                    ],
+                                                    "scale": [
+                                                        1.0,
+                                                        0.9999968409538269,
+                                                        0.9999997019767761
+                                                    ],
+                                                    "type": 21
+                                                }
+                                            ],
+                                            "is3D": true,
+                                            "isPrefab": false,
+                                            "name": "sardaukar_spine_2",
+                                            "tag": 0
+                                        }
+                                    ],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "position": [
+                                                8.857250213623047e-05,
+                                                126.8695297241211,
+                                                0.0002126544713973999
+                                            ],
+                                            "rotation": [
+                                                0.017496854066848755,
+                                                -0.002765129553154111,
+                                                -0.007225497625768185,
+                                                0.9998170137405396
+                                            ],
+                                            "scale": [
+                                                0.9999999403953552,
+                                                0.9999955296516418,
+                                                0.9999982714653015
+                                            ],
+                                            "type": 21
+                                        }
+                                    ],
+                                    "is3D": true,
+                                    "isPrefab": false,
+                                    "name": "sardaukar_spine_1",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "position": [
+                                        0.00011355802416801453,
+                                        108.6740493774414,
+                                        -3.9413599967956543
+                                    ],
+                                    "rotation": [
+                                        0.022543763741850853,
+                                        0.01745925098657608,
+                                        0.016806606203317642,
+                                        0.9994521141052246
+                                    ],
+                                    "scale": [
+                                        0.9999909996986389,
+                                        0.9999950528144836,
+                                        0.9999974370002747
+                                    ],
+                                    "type": 21
+                                }
+                            ],
+                            "is3D": true,
+                            "isPrefab": false,
+                            "name": "sardaukar_spine",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [
+                                {
+                                    "active": true,
+                                    "children": [
+                                        {
+                                            "active": true,
+                                            "children": [
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        0.00015157461166381836,
+                                                                        83.28028106689453,
+                                                                        1.2159347534179688e-05
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "sardaukar_right_toe_end",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                2.6404857635498047e-05,
+                                                                219.7818145751953,
+                                                                0.0001868903636932373
+                                                            ],
+                                                            "rotation": [
+                                                                0.2751132845878601,
+                                                                0.02718084305524826,
+                                                                -0.005437986925244331,
+                                                                0.9610121250152588
+                                                            ],
+                                                            "scale": [
+                                                                0.999997079372406,
+                                                                0.999999463558197,
+                                                                0.999999463558197
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "sardaukar_right_toe_base",
+                                                    "tag": 0
+                                                }
+                                            ],
+                                            "components": [
+                                                {
+                                                    "active": true,
+                                                    "type": 23
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "position": [
+                                                        7.152557373046875e-06,
+                                                        490.7851867675781,
+                                                        0.0002079010009765625
+                                                    ],
+                                                    "rotation": [
+                                                        0.6777206063270569,
+                                                        -0.00954693928360939,
+                                                        0.0009203877998515964,
+                                                        0.7352569699287415
+                                                    ],
+                                                    "scale": [
+                                                        0.9999896883964539,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "type": 21
+                                                }
+                                            ],
+                                            "is3D": true,
+                                            "isPrefab": false,
+                                            "name": "sardaukar_right_foot",
+                                            "tag": 0
+                                        }
+                                    ],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "position": [
+                                                4.6253204345703125e-05,
+                                                498.8194274902344,
+                                                0.00012969970703125
+                                            ],
+                                            "rotation": [
+                                                -0.20817992091178894,
+                                                -0.03913256898522377,
+                                                -0.040046900510787964,
+                                                0.9764865636825562
+                                            ],
+                                            "scale": [
+                                                1.0,
+                                                0.9999998211860657,
+                                                1.0
+                                            ],
+                                            "type": 21
+                                        }
+                                    ],
+                                    "is3D": true,
+                                    "isPrefab": false,
+                                    "name": "sardaukar_right_leg",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "position": [
+                                        -158.61717224121094,
+                                        -60.246971130371094,
+                                        -4.6229248046875
+                                    ],
+                                    "rotation": [
+                                        -0.09814674407243729,
+                                        0.018607383593916893,
+                                        0.9947928190231323,
+                                        -0.020205974578857422
+                                    ],
+                                    "scale": [
+                                        1.000018835067749,
+                                        1.0000139474868774,
+                                        1.0
+                                    ],
+                                    "type": 21
+                                }
+                            ],
+                            "is3D": true,
+                            "isPrefab": false,
+                            "name": "sardaukar_right_up_leg",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                10.261409759521484,
+                                1118.44580078125,
+                                -0.37563133239746094
+                            ],
+                            "rotation": [
+                                0.03154535964131355,
+                                -0.007260342128574848,
+                                -0.01159736979752779,
+                                0.9994086623191833
+                            ],
+                            "scale": [
+                                0.9999896287918091,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "sardaukar_hips",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 21
+                }
+            ],
+            "is3D": true,
+            "isPrefab": false,
+            "name": "sardaukar_armature",
+            "tag": 0
+        },
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        -1526.3253173828125,
+                        -0.00016345977201126516,
+                        107.6223373413086
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        0.019999999552965164,
+                        0.019999999552965164,
+                        0.019999999552965164
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "mesh": {
+                        "asset_path": "Assets/Models/Enemies/sardaukar_low.sugar",
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "is_animated": true,
+                        "shape_type": 0,
+                        "uid": 1806782001
+                    },
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "color": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "shader": {
+                        "asset_path": "Assets/Shaders/default_shader.glsl",
+                        "uniforms": null
+                    },
+                    "texture": {
+                        "asset_path": "Assets/Textures/Characters/Enemies/Sardaukar/sardaukar_base_color.png"
+                    },
+                    "type": 2
+                },
+                {
+                    "active": true,
+                    "body_type": "Static",
+                    "freeze_position_x": false,
+                    "freeze_position_y": false,
+                    "freeze_position_z": false,
+                    "freeze_rotation_x": false,
+                    "freeze_rotation_y": false,
+                    "freeze_rotation_z": false,
+                    "mass": 1.0,
+                    "type": 6,
+                    "use_gravity": true
+                },
+                {
+                    "active": true,
+                    "center": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "filter": "",
+                    "is_trigger": false,
+                    "scale_factor": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 7
+                },
+                {
+                    "active": true,
+                    "file_name": "Assets/Scripts/Enemies/Sardaukar.lua",
+                    "id": 1378507452,
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "file_name": "Assets/Scripts/Enemies/EnemyController.lua",
+                    "id": 2023131262,
+                    "inspector_variables": [
+                        {
+                            "name": "static",
+                            "type": "bool",
+                            "value": true
+                        },
+                        {
+                            "name": "speed",
+                            "type": "int",
+                            "value": 20
+                        },
+                        {
+                            "name": "chaseSpeed",
+                            "type": "int",
+                            "value": 30
+                        },
+                        {
+                            "name": "attackRange",
+                            "type": "int",
+                            "value": 20
+                        },
+                        {
+                            "name": "visionConeAngle",
+                            "type": "int",
+                            "value": 70
+                        },
+                        {
+                            "name": "visionConeRadius",
+                            "type": "int",
+                            "value": 170
+                        },
+                        {
+                            "name": "hearingRange",
+                            "type": "int",
+                            "value": 140
+                        },
+                        {
+                            "name": "awarenessOffset",
+                            "type": "float3",
+                            "value": {
+                                "x": 0.0,
+                                "y": 45.0,
+                                "z": 0.0
+                            }
+                        },
+                        {
+                            "name": "awarenessSize",
+                            "type": "float3",
+                            "value": {
+                                "x": 0.05999999865889549,
+                                "y": 0.11999999731779099,
+                                "z": 0.05999999865889549
+                            }
+                        },
+                        {
+                            "name": "pingpong",
+                            "type": "bool",
+                            "value": true
+                        },
+                        {
+                            "name": "loop",
+                            "type": "bool",
+                            "value": true
+                        },
+                        {
+                            "name": "patrolWaypoints",
+                            "type": "float3_array",
+                            "value": []
+                        }
+                    ],
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "file_name": "Assets/Scripts/Pathfinder.lua",
+                    "id": 1116668619,
+                    "inspector_variables": [
+                        {
+                            "name": "minRetargetingDistance",
+                            "type": "int",
+                            "value": 10
+                        }
+                    ],
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "ambientValue": 0.0,
+                    "constantAttenuationValue": 1.0,
+                    "cutOffAngle": 0.8191520571708679,
+                    "diffuseValue": 0.800000011920929,
+                    "lightColor": [
+                        0.0,
+                        1.0,
+                        0.0
+                    ],
+                    "lightDirection": [
+                        -0.0,
+                        -0.0,
+                        -1.0
+                    ],
+                    "lightPosition": [
+                        -1526.3253173828125,
+                        -0.00016345977201126516,
+                        107.6223373413086
+                    ],
+                    "linearAttenuationValue": 0.0,
+                    "quadraticAttenuationValue": 0.0,
+                    "sourceType": 2,
+                    "specularValue": 0.0,
+                    "type": 19
+                }
+            ],
+            "is3D": true,
+            "isPrefab": false,
+            "name": "sardaukar_low",
+            "tag": 2
+        }
+    ],
+    "components": [
+        {
+            "active": true,
+            "type": 23
+        },
+        {
+            "active": true,
+            "position": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": 21
+        },
+        {
+            "active": true,
+            "animation": {
+                "asset_path": "Assets/Models/Enemies/sardaukar_armature|sardaukar_armature|sardaukar_armature|sardaukar_armature|sardau.cake",
+                "uid": 1115068596
+            },
+            "clips": [
+                {
+                    "clipDuration": 15.0,
+                    "clipDurationInSeconds": 0.625,
+                    "clipEndFrame": 180.0,
+                    "clipFinished": false,
+                    "clipLoop": false,
+                    "clipName": "Attack",
+                    "clipStartFrame": 165.0,
+                    "mapString": "Attack"
+                },
+                {
+                    "clipDuration": 18.0,
+                    "clipDurationInSeconds": 0.75,
+                    "clipEndFrame": 199.0,
+                    "clipFinished": false,
+                    "clipLoop": false,
+                    "clipName": "AttackToIdle",
+                    "clipStartFrame": 181.0,
+                    "mapString": "AttackToIdle"
+                },
+                {
+                    "clipDuration": 1.0,
+                    "clipDurationInSeconds": 0.0416666679084301,
+                    "clipEndFrame": 345.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "Corpse",
+                    "clipStartFrame": 344.0,
+                    "mapString": "Corpse"
+                },
+                {
+                    "clipDuration": 86.0,
+                    "clipDurationInSeconds": 3.5833332538604736,
+                    "clipEndFrame": 345.0,
+                    "clipFinished": false,
+                    "clipLoop": false,
+                    "clipName": "Death",
+                    "clipStartFrame": 259.0,
+                    "mapString": "Death"
+                },
+                {
+                    "clipDuration": 360.0,
+                    "clipDurationInSeconds": 15.0,
+                    "clipEndFrame": 360.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "Default clip",
+                    "clipStartFrame": 0.0,
+                    "mapString": "Default clip"
+                },
+                {
+                    "clipDuration": 124.0,
+                    "clipDurationInSeconds": 5.166666507720947,
+                    "clipEndFrame": 125.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Idle",
+                    "clipStartFrame": 1.0,
+                    "mapString": "Idle"
+                },
+                {
+                    "clipDuration": 21.0,
+                    "clipDurationInSeconds": 0.875,
+                    "clipEndFrame": 224.0,
+                    "clipFinished": false,
+                    "clipLoop": false,
+                    "clipName": "Ranged",
+                    "clipStartFrame": 203.0,
+                    "mapString": "Ranged"
+                },
+                {
+                    "clipDuration": 28.0,
+                    "clipDurationInSeconds": 1.1666666269302368,
+                    "clipEndFrame": 253.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "RangedToIdle",
+                    "clipStartFrame": 225.0,
+                    "mapString": "RangedToIdle"
+                },
+                {
+                    "clipDuration": 15.0,
+                    "clipDurationInSeconds": 0.625,
+                    "clipEndFrame": 361.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Run",
+                    "clipStartFrame": 346.0,
+                    "mapString": "Run"
+                },
+                {
+                    "clipDuration": 22.0,
+                    "clipDurationInSeconds": 0.9166666865348816,
+                    "clipEndFrame": 156.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Walk",
+                    "clipStartFrame": 134.0,
+                    "mapString": "Walk"
+                }
+            ],
+            "meshes": [
+                {
+                    "asset_path": "Assets/Models/Enemies/sardaukar_low.sugar",
+                    "uid": 1806782001
+                }
+            ],
+            "selectedClip": "Corpse",
+            "type": 12
+        }
+    ],
+    "is3D": true,
+    "isPrefab": true,
+    "name": "sardaukar",
+    "tag": 0
+}

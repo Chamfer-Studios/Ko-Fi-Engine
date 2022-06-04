@@ -1,0 +1,295 @@
+{
+    "active": true,
+    "children": [
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 4,
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        0.0,
+                        -27.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        210.0,
+                        192.0
+                    ],
+                    "type": 22
+                },
+                {
+                    "active": true,
+                    "texture": "Assets/New UI/Zhib_Image.png",
+                    "type": 14
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "UnlockFeedbackAvatar",
+            "tag": 0
+        },
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 4,
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        0.0,
+                        -27.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        277.0,
+                        261.0
+                    ],
+                    "type": 22
+                },
+                {
+                    "active": true,
+                    "texture": "Assets/New UI/square_frame_a.png",
+                    "type": 14
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "Image",
+            "tag": 0
+        },
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 4,
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        -2.0,
+                        -183.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        63.0,
+                        46.0
+                    ],
+                    "type": 22
+                },
+                {
+                    "active": true,
+                    "color": [
+                        255,
+                        255,
+                        255,
+                        255
+                    ],
+                    "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                    "type": 16,
+                    "value": "Ok"
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "okText",
+            "tag": 0
+        },
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 4,
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        5.0,
+                        121.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        587.0,
+                        66.0
+                    ],
+                    "type": 22
+                },
+                {
+                    "active": true,
+                    "color": [
+                        255,
+                        255,
+                        255,
+                        255
+                    ],
+                    "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                    "type": 16,
+                    "value": ""
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "UnlockText",
+            "tag": 0
+        },
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 4,
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        -2.0,
+                        -184.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        113.0,
+                        72.0
+                    ],
+                    "type": 22
+                },
+                {
+                    "active": true,
+                    "hoverTexture": "Assets/New UI/button_a_hover.png",
+                    "idleTexture": "Assets/New UI/button_a_default.png",
+                    "pressedTexture": "Assets/New UI/button_a_pressed.png",
+                    "type": 15
+                },
+                {
+                    "active": true,
+                    "file_name": "Assets/Scripts/HUD/UI_DestroyPopUp.lua",
+                    "id": 356252860,
+                    "inspector_variables": [
+                        {
+                            "name": "name",
+                            "type": "string",
+                            "value": "UI_DestroyPopUp.lua"
+                        }
+                    ],
+                    "type": 5
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "UnlockCloseButton",
+            "tag": 0
+        }
+    ],
+    "components": [
+        {
+            "active": true,
+            "type": 23
+        },
+        {
+            "active": true,
+            "position": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": 21
+        },
+        {
+            "active": true,
+            "anchor": 4,
+            "logicalSize": [
+                1920.0,
+                1080.0
+            ],
+            "pivot": [
+                0.5,
+                0.5
+            ],
+            "position": [
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "size": [
+                200.0,
+                200.0
+            ],
+            "type": 13
+        }
+    ],
+    "is3D": false,
+    "isPrefab": true,
+    "name": "UnlockPrefab",
+    "tag": 0
+}

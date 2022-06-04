@@ -14,54 +14,60 @@ function Start()
 
     maxTetherRange = GetVariable("Nerala.lua", "ultimateMaxDistance", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
     destination = GetVariable("Nerala.lua", "target", INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT3) -- float 3
-    local player = GetVariable("Nerala.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT) -- player = Find("Nerala")
-    neralaPosition = player:GetTransform():GetPosition()
-    local targetPos2D = {destination.x, destination.z}
-    local pos2D = {neralaPosition.x, neralaPosition.z}
-    local d = Distance(pos2D, targetPos2D)
-    local vec2 = {targetPos2D[1], targetPos2D[2]}
-    -- vec2 = Normalize(vec2, d)
-    if (componentRigidBody ~= nil) then
-        componentRigidBody:SetRigidBodyPos(float3.new(vec2[1], 10, vec2[2]))
+    if (destination ~= nil) then
+        player = GetVariable("Nerala.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT) -- player = Find("Nerala")
+        neralaPosition = player:GetTransform():GetPosition()
+        local targetPos2D = {destination.x, destination.z}
+        local pos2D = {neralaPosition.x, neralaPosition.z}
+        local d = Distance(pos2D, targetPos2D)
+        local vec2 = {targetPos2D[1], targetPos2D[2]}
+        -- vec2 = Normalize(vec2, d)
+        if (componentRigidBody ~= nil) then
+            componentRigidBody:SetRigidBodyPos(float3.new(vec2[1], 0, vec2[2]))
+        end
+
+        componentSwitch = gameObject:GetAudioSwitch()
+        trackList = {0}
+        ChangeTrack(trackList)
+
+        trailParticle = Find("Nerala Trail Particle")
+        mouseParticles = Find("Mouse Particle")
+        if (mouseParticles ~= nil) then
+            mouseParticles:GetComponentParticle():StopParticleSpawn()
+        end
+
+        poisonCount = 2 -- Number of kills left
+
+        DispatchGlobalEvent("Mosquito_Spawn", {gameObject}) -- fields[1] -> gameObject
+    else
+        DispatchGlobalEvent("Nerala_Ultimate_Bugged", {})
+        DeleteGameObject()
     end
-
-    componentSwitch = gameObject:GetAudioSwitch()
-    currentTrackID = -1
-    if (componentSwitch ~= nil) then
-        currentTrackID = 0
-        componentSwitch:PlayTrack(currentTrackID)
-    end
-
-    mouseParticles = Find("Mouse Particles")
-    if (mouseParticles ~= nil) then
-        mouseParticles:GetComponentParticle():StopParticleSpawn()
-    end
-
-    poisonCount = 2 -- Number of kills left
-
-    DispatchGlobalEvent("Mosquito_Spawn", {gameObject}) -- fields[1] -> gameObject
 end
 
 -- Called each loop iteration
 function Update(dt)
 
-    if (componentSwitch ~= nil) then
-        if (currentTrackID ~= 1) then
-            componentSwitch:StopTrack(currentTrackID)
-            currentTrackID = 1
-            componentSwitch:PlayTrack(currentTrackID)
+    if (lifeTimer >= lifeTime) then
+        Die()
+        do
+            return
+        end
+    elseif (Distance3D(componentTransform:GetPosition(), neralaPosition) > maxTetherRange) then
+        Die()
+        do
+            return
         end
     end
 
-    if (lifeTimer >= lifeTime) then
-        Die()
-        return
-    elseif (Distance3D(componentTransform:GetPosition(), neralaPosition) > maxTetherRange) then
-        Die()
-        return
+    if (poisonTimer ~= nil) then
+        poisonTimer = poisonTimer + dt
+        if (poisonTimer >= 1) then
+            poisonTimer = nil
+        end
     end
 
-    DispatchGlobalEvent("Auditory_Trigger", {componentTransform:GetPosition(), 100, "repeated", gameObject}) -- TODO: Check range
+    DispatchGlobalEvent("Auditory_Trigger", {componentTransform:GetPosition(), 100, "repeated", player}) -- TODO: Check range
 
     lifeTimer = lifeTimer + dt
 
@@ -82,10 +88,14 @@ function Update(dt)
 
         -- Right Click
         if (GetInput(3) == KEY_STATE.KEY_DOWN) then -- Right Click
+
             goHit = GetGameObjectHovered()
             if (goHit ~= gameObject) then
                 if (goHit.tag == Tag.ENEMY) then
                     target = goHit
+                    if (trailParticle ~= nil) then
+                        trailParticle:GetComponentParticle():ResumeParticleSpawn()
+                    end
                     destination = goHit:GetTransform():GetPosition()
                     DispatchEvent("Pathfinder_UpdatePath", {{destination}, false, componentTransform:GetPosition()})
                     if (mouseParticles ~= nil) then
@@ -94,6 +104,9 @@ function Update(dt)
                         mouseParticles:GetTransform():SetPosition(destination)
                     end
                 else
+                    if (trailParticle ~= nil) then
+                        trailParticle:GetComponentParticle():ResumeParticleSpawn()
+                    end
                     destination = GetLastMouseClick()
                     DispatchEvent("Pathfinder_UpdatePath", {{destination}, false, componentTransform:GetPosition()})
                     target = nil
@@ -108,6 +121,20 @@ function Update(dt)
             lifeTimer = lifeTime + 1
         end
     end
+
+    if (componentSwitch:IsAnyTrackPlaying() == false) then
+        currentTrackID = -1
+    end
+
+    while (currentTrackID == 0 or currentTrackID == 2 or currentTrackID == 3) do
+        return
+    end
+
+    if (currentTrackID ~= 1) then
+        trackList = {1}
+        ChangeTrack(trackList)
+    end
+
 end
 
 -- Move to destination
@@ -118,8 +145,14 @@ function MoveToDestination(dt)
     if (d > 5.0) then
 
         -- Adapt speed on arrive
+        local s = speed
         if (d < 2.0) then
-            speed = speed * 0.5
+            s = s * 0.5
+        end
+
+        if (trailParticle ~= nil) then
+            trailParticle:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x,
+                componentTransform:GetPosition().y + 1, componentTransform:GetPosition().z))
         end
 
         -- Movement
@@ -129,7 +162,7 @@ function MoveToDestination(dt)
         vec.z = vec.z / d
         if (componentRigidBody ~= nil) then
             -- componentRigidBody:SetLinearVelocity(float3.new(vec.x * speed * dt, 0, vec.z * speed * dt))
-            DispatchEvent("Pathfinder_FollowPath", {speed, dt, false})
+            DispatchEvent("Pathfinder_FollowPath", {s, dt, false})
         end
 
         -- Rotation
@@ -158,6 +191,9 @@ function StopMovement()
     if (componentRigidBody ~= nil) then
         componentRigidBody:SetLinearVelocity(float3.new(0, 0, 0))
     end
+    if (trailParticle ~= nil) then
+        trailParticle:GetComponentParticle():StopParticleSpawn()
+    end
 end
 
 function Die()
@@ -172,12 +208,15 @@ function EventHandler(key, fields)
 end
 
 function OnTriggerEnter(go)
-    if (go.tag == Tag.ENEMY and go == target) then
+    if (go.tag == Tag.ENEMY and go == target and poisonTimer == nil) then
         DispatchGlobalEvent("Mosquito_Hit", {go})
+        trackList = {2, 3}
+        ChangeTrack(trackList)
         if (poisonCount == 1) then
             Die()
         end
         poisonCount = poisonCount - 1
+        poisonTimer = 0
     end
 end
 
@@ -207,6 +246,23 @@ function Distance(a, b)
 end
 
 --------------------------------------------------
+
+function ChangeTrack(_trackList)
+    size = 0
+    for i in pairs(_trackList) do
+        size = size + 1
+    end
+
+    index = math.random(size)
+
+    if (componentSwitch ~= nil) then
+        if (currentTrackID ~= -1) then
+            componentSwitch:StopTrack(currentTrackID)
+        end
+        currentTrackID = _trackList[index]
+        componentSwitch:PlayTrack(currentTrackID)
+    end
+end
 
 print("HunterSeeker.lua compiled succesfully")
 Log("HunterSeeker.lua compiled succesfully\n")

@@ -1,7 +1,7 @@
 {
     "CutsceneNeralasDeath": {
         "active": true,
-        "game_objects_amount": 51,
+        "game_objects_amount": 33,
         "game_objects_list": [
             {
                 "UID": 1588352491,
@@ -285,8 +285,8 @@
                             0.5
                         ],
                         "position": [
-                            692.0,
-                            231.0
+                            850.0,
+                            250.0
                         ],
                         "rotation": [
                             0.0,
@@ -294,7 +294,7 @@
                             0.0
                         ],
                         "size": [
-                            1537.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -309,7 +309,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "The characters enter the final room silently looking for Rabaan, "
+                        "value": "Rabaan has his back turned, perfect for a surprise attack. With the"
                     }
                 ],
                 "is3D": false,
@@ -376,8 +376,8 @@
                             0.5
                         ],
                         "position": [
-                            840.0,
-                            187.0
+                            850.0,
+                            190.0
                         ],
                         "rotation": [
                             0.0,
@@ -385,7 +385,7 @@
                             0.0
                         ],
                         "size": [
-                            1828.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -400,111 +400,13 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "they see him working on a table, back to them perfect for a surprise attack,"
+                        "value": "weight of every loved one that perished when their home was destroyed,"
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Text5",
                 "parent_UID": 935936089,
-                "tag": 0
-            },
-            {
-                "UID": 1966139658,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5049999952316284,
-                            0.5
-                        ],
-                        "position": [
-                            734.0,
-                            46.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1613.0,
-                            60.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
-                        "type": 16,
-                        "value": "She sees in horror what Rabaan is doing to it, Rabban is desecrating "
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text6",
-                "parent_UID": 350829967,
-                "tag": 0
-            },
-            {
-                "UID": 1853986191,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            697.0,
-                            -1.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1551.0,
-                            60.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
-                        "type": 16,
-                        "value": "and profaning his body to turn it into one of his “art pieces”. "
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text7",
-                "parent_UID": 350829967,
                 "tag": 0
             },
             {
@@ -565,8 +467,8 @@
                             0.5
                         ],
                         "position": [
-                            846.0,
-                            65.0
+                            850.0,
+                            20.0
                         ],
                         "rotation": [
                             0.0,
@@ -574,7 +476,7 @@
                             0.0
                         ],
                         "size": [
-                            1843.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -589,61 +491,12 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "In a furious rage Nerala lunges forward attacking, ignoring Zhib’s signs "
+                        "value": "In a furious rage Nerala lunges forward, ignoring Zhib’s advice. "
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Text8",
-                "parent_UID": 707661581,
-                "tag": 0
-            },
-            {
-                "UID": 2146979042,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            725.0,
-                            19.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1601.0,
-                            60.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
-                        "type": 16,
-                        "value": "tellign her to calm down and think before they execute on a plan."
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text9",
                 "parent_UID": 707661581,
                 "tag": 0
             },
@@ -686,48 +539,6 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Text1Part1",
-                "parent_UID": 282872236,
-                "tag": 0
-            },
-            {
-                "UID": 350829967,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            2.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            200.0,
-                            200.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text1Part2",
                 "parent_UID": 282872236,
                 "tag": 0
             },
@@ -915,8 +726,8 @@
                             0.5
                         ],
                         "position": [
-                            861.0,
-                            22.0
+                            850.0,
+                            20.0
                         ],
                         "rotation": [
                             0.0,
@@ -924,7 +735,7 @@
                             0.0
                         ],
                         "size": [
-                            1870.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -965,7 +776,7 @@
                         ],
                         "position": [
                             675.0,
-                            48.0
+                            100.0
                         ],
                         "rotation": [
                             0.0,
@@ -1013,8 +824,8 @@
                             0.5
                         ],
                         "position": [
-                            578.0,
-                            6.0
+                            842.0,
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -1037,7 +848,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "place, toy with my facility and expect me to not know,"
+                        "value": "place and toy with my facility. You will die for this,"
                     }
                 ],
                 "is3D": false,
@@ -1089,335 +900,6 @@
                 "tag": 0
             },
             {
-                "UID": 1138804679,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            200.0,
-                            200.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text4Part6",
-                "parent_UID": 1235969954,
-                "tag": 0
-            },
-            {
-                "UID": 396880659,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            200.0,
-                            200.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text4Part8",
-                "parent_UID": 1235969954,
-                "tag": 0
-            },
-            {
-                "UID": 1072089832,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            717.0,
-                            65.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1577.0,
-                            60.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
-                        "type": 16,
-                        "value": "Rabban, terrorized after being poisoned by Nerala's blade,"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text20",
-                "parent_UID": 1138804679,
-                "tag": 0
-            },
-            {
-                "UID": 2024558540,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            612.0,
-                            20.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1367.0,
-                            60.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
-                        "type": 16,
-                        "value": "surprised everyone when he panicked. He screamed"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text21",
-                "parent_UID": 1138804679,
-                "tag": 0
-            },
-            {
-                "UID": 1700942495,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            527.0,
-                            -24.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1190.0,
-                            60.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
-                        "type": 16,
-                        "value": "in horror as he realized his imminent death."
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text22",
-                "parent_UID": 1138804679,
-                "tag": 0
-            },
-            {
-                "UID": 479214227,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            698.0,
-                            47.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1546.0,
-                            60.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
-                        "type": 16,
-                        "value": "Rabban - no…. is not possible…. No! What have you done to me!"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text23",
-                "parent_UID": 396880659,
-                "tag": 0
-            },
-            {
-                "UID": 67758175,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            563.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1271.0,
-                            60.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
-                        "type": 16,
-                        "value": "You are nothing more than insects! Ahhhhhhhhhhhh!"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text24",
-                "parent_UID": 396880659,
-                "tag": 0
-            },
-            {
                 "UID": 236053647,
                 "active": false,
                 "components": [
@@ -1433,8 +915,8 @@
                             0.5
                         ],
                         "position": [
-                            813.0,
-                            140.0
+                            850.0,
+                            130.0
                         ],
                         "rotation": [
                             0.0,
@@ -1442,7 +924,7 @@
                             0.0
                         ],
                         "size": [
-                            1774.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1457,61 +939,12 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "but Nerala takes a look on what he’s working on and realizes is one of the"
+                        "value": "Nerala feels the anger and the guilt building up inside her."
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Text25",
-                "parent_UID": 935936089,
-                "tag": 0
-            },
-            {
-                "UID": 1990736874,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            487.0,
-                            95.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1120.0,
-                            60.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
-                        "type": 16,
-                        "value": "fremen that went with her to the first mission."
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text26",
                 "parent_UID": 935936089,
                 "tag": 0
             },
@@ -1531,8 +964,8 @@
                             0.5
                         ],
                         "position": [
-                            571.0,
-                            -38.0
+                            583.0,
+                            -20.0
                         ],
                         "rotation": [
                             0.0,
@@ -1540,7 +973,7 @@
                             0.0
                         ],
                         "size": [
-                            1292.0,
+                            800.0,
                             60.0
                         ],
                         "type": 22
@@ -1555,7 +988,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "i don't need a shield to deal with vermin like you all\""
+                        "value": "just like your beloved Sannara!\""
                     }
                 ],
                 "is3D": false,
@@ -1691,48 +1124,6 @@
                 "tag": 0
             },
             {
-                "UID": 302329714,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            200.0,
-                            60.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text4Part5",
-                "parent_UID": 1235969954,
-                "tag": 0
-            },
-            {
                 "UID": 706156448,
                 "active": false,
                 "components": [
@@ -1775,48 +1166,6 @@
                 "tag": 0
             },
             {
-                "UID": 464428648,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            200.0,
-                            200.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text4Part7",
-                "parent_UID": 1235969954,
-                "tag": 0
-            },
-            {
                 "UID": 88412870,
                 "active": false,
                 "components": [
@@ -1832,8 +1181,8 @@
                             0.5
                         ],
                         "position": [
-                            852.0,
-                            47.0
+                            850.0,
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -1841,7 +1190,7 @@
                             0.0
                         ],
                         "size": [
-                            1841.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1856,7 +1205,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "Nerala hears that and it helps clear her mind, taking the opportunity to "
+                        "value": "Finally, Nerala snaps back and clears her mind, taking the opportunity to slash"
                     }
                 ],
                 "is3D": false,
@@ -1881,8 +1230,8 @@
                             0.5
                         ],
                         "position": [
-                            809.0,
-                            0.0
+                            850.0,
+                            -20.0
                         ],
                         "rotation": [
                             0.0,
@@ -1890,7 +1239,7 @@
                             0.0
                         ],
                         "size": [
-                            1757.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1905,7 +1254,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "cut Rabaan in the forearm with the poisonous blade, he laughs again."
+                        "value": "Rabaan on the forearm with a poisonous blade. Rabaan, unknowingly, laughs again."
                     }
                 ],
                 "is3D": false,
@@ -1930,8 +1279,8 @@
                             0.5
                         ],
                         "position": [
-                            709.0,
-                            46.0
+                            850.0,
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -1939,7 +1288,7 @@
                             0.0
                         ],
                         "size": [
-                            1564.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1954,7 +1303,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "Rabban - \"ha, your attacks are useless against me, now die"
+                        "value": "Rabban - \"Your attacks are useless against me you fool. now die"
                     }
                 ],
                 "is3D": false,
@@ -1979,8 +1328,8 @@
                             0.5
                         ],
                         "position": [
-                            803.0,
-                            0.0
+                            850.0,
+                            -20.0
                         ],
                         "rotation": [
                             0.0,
@@ -1988,7 +1337,7 @@
                             0.0
                         ],
                         "size": [
-                            1752.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -2003,111 +1352,13 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "you waste of flesh” killing Nerala and throwing her body aside."
+                        "value": "you waste of flesh\"  killing Nerala and throwing her body aside."
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Text14",
                 "parent_UID": 1838784075,
-                "tag": 0
-            },
-            {
-                "UID": 441107870,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            736.0,
-                            45.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1619.0,
-                            60.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
-                        "type": 16,
-                        "value": "Rabaan starts coughing and notices that he's poisoned,"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text16",
-                "parent_UID": 302329714,
-                "tag": 0
-            },
-            {
-                "UID": 1354865170,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            590.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1327.0,
-                            60.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
-                        "type": 16,
-                        "value": "fearing now for his life turns tail and flees."
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text17",
-                "parent_UID": 302329714,
                 "tag": 0
             },
             {
@@ -2126,8 +1377,8 @@
                             0.5
                         ],
                         "position": [
-                            732.0,
-                            46.0
+                            850.0,
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -2135,7 +1386,7 @@
                             0.0
                         ],
                         "size": [
-                            1609.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -2150,7 +1401,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "Rabban-  “After I'm finished here, I will have three "
+                        "value": "Rabban - No... is not possible... No! What have you done to me!"
                     }
                 ],
                 "is3D": false,
@@ -2175,8 +1426,8 @@
                             0.5
                         ],
                         "position": [
-                            603.0,
-                            0.0
+                            706.0,
+                            -20.0
                         ],
                         "rotation": [
                             0.0,
@@ -2184,7 +1435,7 @@
                             0.0
                         ],
                         "size": [
-                            1344.0,
+                            1000.0,
                             60.0
                         ],
                         "type": 22
@@ -2199,7 +1450,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "more art pieces in my collectio- *cough cough*\""
+                        "value": "You are nothing more than insects!!!"
                     }
                 ],
                 "is3D": false,
@@ -2224,8 +1475,8 @@
                             0.5
                         ],
                         "position": [
-                            830.0,
-                            22.0
+                            850.0,
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -2233,7 +1484,7 @@
                             0.0
                         ],
                         "size": [
-                            1802.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -2248,7 +1499,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "Rabban turns to look at the 2 fremen staring at Nerala's corpse in disbelief."
+                        "value": "At the same time, he starts coughing and falls to his knees.His eyes open widely,"
                     }
                 ],
                 "is3D": false,
@@ -2258,8 +1509,8 @@
                 "tag": 0
             },
             {
-                "UID": 1863554488,
-                "active": true,
+                "UID": 864091045,
+                "active": false,
                 "components": [
                     {
                         "active": true,
@@ -2273,8 +1524,8 @@
                             0.5
                         ],
                         "position": [
-                            729.0,
-                            65.0
+                            725.0,
+                            -20.0
                         ],
                         "rotation": [
                             0.0,
@@ -2297,111 +1548,13 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "When he could regain some senses, he recalled that there"
+                        "value": " fear flashing through them for the first time in his life."
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "Text30",
-                "parent_UID": 464428648,
-                "tag": 0
-            },
-            {
-                "UID": 154991896,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            746.0,
-                            21.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1633.0,
-                            60.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
-                        "type": 16,
-                        "value": "was a thopter waiting not far from here and maybe he could"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text31",
-                "parent_UID": 464428648,
-                "tag": 0
-            },
-            {
-                "UID": 1732948888,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            629.0,
-                            -25.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1402.0,
-                            60.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
-                        "type": 16,
-                        "value": "survive if he arrived there. So he started running."
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text32",
-                "parent_UID": 464428648,
+                "name": "Text (1)",
+                "parent_UID": 467895668,
                 "tag": 0
             }
         ],

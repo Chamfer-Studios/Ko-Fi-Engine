@@ -1,7 +1,7 @@
 ------------------- Variables --------------------
 speed = 10000
 destination = nil
-
+healAmmount = 1
 -------------------- Methods ---------------------
 
 function Start()
@@ -10,16 +10,22 @@ function Start()
     componentSwitch = gameObject:GetAudioSwitch()
     currentTrackID = -1
     target = GetVariable("Worm.lua", "target", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
-    worm = GetVariable("Worm.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
-    wormPos = worm:GetTransform():GetPosition()
-    destination = target:GetTransform():GetPosition()
-    local targetPos2D = {destination.x, destination.z}
-    local pos2D = {wormPos.x, wormPos.z}
-    local d = Distance(pos2D, targetPos2D)
-    local vec2 = {targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2]}
-    vec2 = Normalize(vec2, d)
-    if (componentRigidBody ~= nil) then
-        componentRigidBody:SetRigidBodyPos(float3.new(wormPos.x + vec2[1] * 3, wormPos.y + 10, wormPos.z + vec2[2] * 3))
+    if (target ~= nil) then
+        worm = GetVariable("Worm.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
+        wormPos = worm:GetTransform():GetPosition()
+        destination = target:GetTransform():GetPosition()
+        local targetPos2D = {destination.x, destination.z}
+        local pos2D = {wormPos.x, wormPos.z}
+        local d = Distance(pos2D, targetPos2D)
+        local vec2 = {targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2]}
+        vec2 = Normalize(vec2, d)
+        if (componentRigidBody ~= nil) then
+            componentRigidBody:SetRigidBodyPos(float3.new(wormPos.x + vec2[1] * 3, wormPos.y + 10,
+                wormPos.z + vec2[2] * 3))
+        end
+    else
+        DispatchGlobalEvent("Omozra_Primary_Bugged", {})
+        DeleteGameObject()
     end
 end
 
@@ -42,15 +48,15 @@ function MoveToDestination(dt)
     if (d > 2.0) then
 
         -- Adapt speed on arrive
-        if (d < 15.0 and once == false) then
-            speed = speed * 0.5
-            once = true
+        local s = speed
+        if (d < 15.0) then
+            s = s * 0.5
         end
 
         -- Movement
         vec2 = Normalize(vec2, d)
         if (componentRigidBody ~= nil) then
-            componentRigidBody:SetLinearVelocity(float3.new(vec2[1] * speed * dt, 0, vec2[2] * speed * dt))
+            componentRigidBody:SetLinearVelocity(float3.new(vec2[1] * s * dt, 0, vec2[2] * s * dt))
         end
 
         -- Rotation
@@ -61,7 +67,7 @@ function MoveToDestination(dt)
         componentTransform:SetRotation(float3.new(componentTransform:GetRotation().x,
             componentTransform:GetRotation().y, rad))
     else
-        DispatchGlobalEvent("Spit_Heal_Hit", {target})
+        DispatchGlobalEvent("Spit_Heal_Hit", {target, healAmmount})
         destination = nil
         if (componentRigidBody ~= nil) then
             componentRigidBody:SetLinearVelocity(float3.new(0, 0, 0))

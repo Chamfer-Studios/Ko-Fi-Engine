@@ -22,7 +22,7 @@ end
 ------------------ Collisions ---------------------------
 function OnTriggerEnter(go)
     if (go.tag == Tag.PLAYER) then
-        DispatchGlobalEvent("Spice_Reward", {spiceSpot})
+        DispatchGlobalEvent("Spice_Reward", {spiceSpot, gameObject:GetUID()})
         DeleteGameObject()
     end
 end

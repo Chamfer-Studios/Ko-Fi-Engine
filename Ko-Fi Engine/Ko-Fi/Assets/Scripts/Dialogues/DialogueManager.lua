@@ -7,8 +7,13 @@ local targetID = -1
 
 local path = "Assets/Dialogues/dialogues.json"
 local prefabPath = "Dialogue"
+local characterUnlockPrefab = "UnlockPrefab"
+
+local isUnlocking = false;
+local unlockedCharId = -1;
 
 openDialogue = false
+openFeedback = false
 
 ------------ Dialogue Manager ------------
 function Start()
@@ -24,6 +29,12 @@ function Update(dt)
             OpenDialogue()
         end
     end
+    if (openFeedback == true) then
+        if(Find("UnlockFeedbackAvatar"))then
+            OpenFeedback()
+        end
+        
+    end
 
     CheckIfSkipped()
 
@@ -34,6 +45,15 @@ function EventHandler(key, fields)
         id = fields[1]
         InstantiatePrefab(prefabPath) -- Create Dialogue Prefab
         openDialogue = true
+        else if (key == "CharacterUnlocked") then 
+        isUnlocking = true
+        charStr = fields[1]
+        if(charStr =="Omozra") then
+            unlockedCharId = 3
+        elseif(charStr =="Nerala")  then
+            unlockedCharId = 2
+        end
+    end
     end
 end
 ------------ END Dialogue Manager ------------
@@ -47,16 +67,29 @@ function OpenDialogue()
     DispatchGlobalEvent("Dialogue_Opened", {})
 end
 
+function OpenFeedback()
+    -- print("open dialogue")
+    SetUnlockFeedbackValues()
+    openFeedback = false
+end
+
 function CloseDialogue()
 
     DeleteGameObjectByUID(Find("Dialogue"):GetUID())
-    src = ""
-    char = ""
-    line1 = ""
-    line2 = ""
-    targetID = -1
-    id = -1
-
+    if (isUnlocking) then
+        Log("Unlocking!!")
+        InstantiatePrefab(characterUnlockPrefab) -- Create Char Unlock Feedback Prefab
+        openFeedback = true;
+        DispatchGlobalEvent("Enable_Character", {unlockedCharId}) 
+        isUnlocking = false;
+    else
+        src = ""
+        char = ""
+        line1 = ""
+        line2 = ""
+        targetID = -1
+        id = -1
+    end
 end
 
 function SetDialogueValues()
@@ -73,6 +106,29 @@ function SetDialogueValues()
     Find("DialogueName"):GetText():SetTextValue(char)
     Find("DialogueLine1"):GetText():SetTextValue(line1)
     Find("DialogueLine2"):GetText():SetTextValue(line2)
+
+end
+
+function SetUnlockFeedbackValues()
+    -- Get Dialogue Values From JSON
+    -- print("settin Values")
+    str = "Actual id:" .. id .. "\n" 
+    Log(str)
+
+    char = GetDialogueString("char", id)
+    srcUnlock = GetDialogueString("srcUnlock", id)
+    Log(src)
+    -- Set Values To The Prefab
+    
+    Find("UnlockFeedbackAvatar"):GetImage():SetTexture(srcUnlock)
+    Find("UnlockText"):GetText():SetTextValue(char .. " Unlocked")
+
+    src = ""
+    char = ""
+    line1 = ""
+    line2 = ""
+    targetID = -1
+    id = -1
 
 end
 

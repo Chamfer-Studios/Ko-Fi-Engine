@@ -3,10 +3,10 @@
     "asset_path": "Assets/Models/Enemies/sardaukar.fbx",
     "contained_resources": [
         {
-            "asset_file": "sardaukar_sword.sugar",
-            "library_path": "Library/Meshes/1489865018.sugar",
+            "asset_file": "sardaukar_low.sugar",
+            "library_path": "Library/Meshes/1806782001.sugar",
             "type": 0,
-            "uid": 1489865018
+            "uid": 1806782001
         },
         {
             "asset_file": "sardaukar_base_color.png",
@@ -16,21 +16,15 @@
             "uid": 1407841547
         },
         {
-            "asset_file": "sardaukar_low.sugar",
-            "library_path": "Library/Meshes/303733453.sugar",
-            "type": 0,
-            "uid": 303733453
-        },
-        {
-            "asset_file": "sardaukar_armature|sardaukar_reel.cake",
-            "library_path": "Library/Animations/284784431.cake",
+            "asset_file": "sardaukar_armature|sardaukar_armature|sardaukar_armature|sardaukar_armature|sardau.cake",
+            "library_path": "Library/Animations/1115068596.cake",
             "type": 5,
-            "uid": 284784431
+            "uid": 1115068596
         }
     ],
-    "hash": "7620896e82545b10bf61863001903ba3",
-    "library_file": "284477615.tea",
-    "library_path": "Library/Models/284477615.tea",
+    "hash": "615dd4d4e27604d12f7a5d6bec816196",
+    "library_file": "446202816.tea",
+    "library_path": "Library/Models/446202816.tea",
     "type": 3,
-    "uid": 284477615
+    "uid": 446202816
 }

@@ -4,37 +4,45 @@ destination = nil
 lifeTime = 10.0 -- secs --iv required
 lifeTimer = 0
 effectRadius = 100.0
-effectTime = 2.0
+effectTime = 0.0
 isGrabbable = false
 --------------------------------------------------
 
 -------------------- Methods ---------------------
 function Start()
     destination = GetVariable("Zhib.lua", "target", INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT3) -- float 3
-    destination.y = 0.0
-    player = GetVariable("Zhib.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
-    componentSwitch = gameObject:GetAudioSwitch()
-    currentTrackID = -1
-    local playerPos = player:GetTransform():GetPosition()
-    local targetPos2D = {destination.x, destination.z}
-    local pos2D = {playerPos.x, playerPos.z}
-    local d = Distance(pos2D, targetPos2D)
-    local vec2 = {targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2]}
-    vec2 = Normalize(vec2, d)
-    componentTransform:SetPosition(float3.new(playerPos.x + vec2[1] * 5, playerPos.y + 10, playerPos.z + vec2[2] * 5))
-    effectParticles = gameObject:GetChildren()[1]:GetComponentParticle()
-    if (effectParticles ~= nil) then
-        effectParticles:StopParticleSpawn()
-    end
-    pickupParticles = gameObject:GetComponentParticle()
-    if (pickupParticles ~= nil) then
-        pickupParticles:StopParticleSpawn()
-    end
-    componentLight = gameObject:GetLight()
-    if (componentLight ~= nil) then
-        componentLight:SetRange(effectRadius)
+    if (destination ~= nil) then
+        destination.y = 0.0
+        player = GetVariable("Zhib.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
+        componentSwitch = gameObject:GetAudioSwitch()
+        currentTrackID = -1
+        local playerPos = player:GetTransform():GetPosition()
+        local targetPos2D = {destination.x, destination.z}
+        local pos2D = {playerPos.x, playerPos.z}
+        local d = Distance(pos2D, targetPos2D)
+        local vec2 = {targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2]}
+        vec2 = Normalize(vec2, d)
+        componentTransform:SetPosition(
+            float3.new(playerPos.x + vec2[1] * 5, playerPos.y + 10, playerPos.z + vec2[2] * 5))
+        waveParticle = Find("Zhib Wave Particle")
+        if (waveParticle ~= nil) then
+            waveParticle:GetComponentParticle():StopParticleSpawn()
+        end
+        pickupParticles = gameObject:GetComponentParticle()
+        if (pickupParticles ~= nil) then
+            pickupParticles:StopParticleSpawn()
+        end
+        componentLight = gameObject:GetLight()
+        if (componentLight ~= nil) then
+            componentLight:SetRange(effectRadius)
+        end
+    else
+        DispatchGlobalEvent("Zhib_Secondary_Bugged", {})
+        DeleteGameObject()
     end
 end
+
+a = false
 
 -- Called each loop iteration
 function Update(dt)
@@ -50,16 +58,15 @@ function Update(dt)
         lifeTimer = lifeTimer + dt
 
         if (effectTimer == nil) then
-            if (effectParticles ~= nil) then
-                effectParticles:ResumeParticleSpawn()
+            if (waveParticle ~= nil) then
+                waveParticle:GetComponentParticle():ResumeParticleSpawn()
+                waveParticle:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x,
+                    componentTransform:GetPosition().y + 1, componentTransform:GetPosition().z))
             end
-            if (currentTrackID ~= -1) then
-                componentSwitch:StopTrack(currentTrackID)
-            end
-            currentTrackID = 0
-            componentSwitch:PlayTrack(currentTrackID)
+            trackList = {0}
+            ChangeTrack(trackList)
             DispatchGlobalEvent("Auditory_Trigger",
-                {componentTransform:GetPosition(), effectRadius, "single", gameObject})
+                {componentTransform:GetPosition(), effectRadius, "decoy", gameObject})
             effectTimer = 0.0
         else
             effectTimer = effectTimer + dt
@@ -74,13 +81,20 @@ function Update(dt)
         if (currentTrackID ~= -1) then
             componentSwitch:StopTrack(currentTrackID)
         end
-        if (effectParticles ~= nil) then
-            effectParticles:StopParticleSpawn()
+        if (waveParticle ~= nil) then
+            waveParticle:GetComponentParticle():StopParticleSpawn()
         end
         if (pickupParticles ~= nil) then
             pickupParticles:ResumeParticleSpawn()
         end
         -- Log("Decoy is grabbable! \n")
+
+        if a == false then
+            DispatchGlobalEvent("Decoy_Grabbable", {})
+            gameObject.tag = Tag.PICKUP
+            a = true
+        end
+
         isGrabbable = true
     end
 end
@@ -138,6 +152,23 @@ function Distance(a, b)
 
 end
 --------------------------------------------------
+
+function ChangeTrack(_trackList)
+    size = 0
+    for i in pairs(_trackList) do
+        size = size + 1
+    end
+
+    index = math.random(size)
+
+    if (componentSwitch ~= nil) then
+        if (currentTrackID ~= -1) then
+            componentSwitch:StopTrack(currentTrackID)
+        end
+        currentTrackID = _trackList[index]
+        componentSwitch:PlayTrack(currentTrackID)
+    end
+end
 
 print("Decoy.lua compiled succesfully")
 Log("Decoy.lua compiled succesfully")

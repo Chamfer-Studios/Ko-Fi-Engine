@@ -1,0 +1,2378 @@
+{
+    "active": true,
+    "children": [
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        -1491.6207275390625,
+                        9.5367431640625e-07,
+                        798.4801635742188
+                    ],
+                    "rotation": [
+                        -1.9470718370939721e-07,
+                        1.0,
+                        -3.1391647326017846e-07,
+                        -6.112178905365306e-14
+                    ],
+                    "scale": [
+                        0.010000564157962799,
+                        0.009999999776482582,
+                        0.010000284761190414
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "mesh": {
+                        "asset_path": "Assets/Models/Characters/Zhib/zhib_low.sugar",
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "is_animated": true,
+                        "shape_type": 0,
+                        "uid": 2018873560
+                    },
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "color": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "shader": {
+                        "asset_path": "Assets/Shaders/default_shader.glsl",
+                        "uniforms": null
+                    },
+                    "texture": {
+                        "asset_path": "Assets/Textures/Characters/Zhib/zhib_base_color.png"
+                    },
+                    "type": 2
+                },
+                {
+                    "active": true,
+                    "body_type": "Dynamic",
+                    "freeze_position_x": false,
+                    "freeze_position_y": true,
+                    "freeze_position_z": false,
+                    "freeze_rotation_x": true,
+                    "freeze_rotation_y": true,
+                    "freeze_rotation_z": true,
+                    "mass": 1.0,
+                    "type": 6,
+                    "use_gravity": false
+                },
+                {
+                    "active": true,
+                    "center": [
+                        0.0,
+                        12.0,
+                        0.0
+                    ],
+                    "filter": "player",
+                    "is_trigger": true,
+                    "scale_factor": [
+                        0.5,
+                        1.0,
+                        0.550000011920929
+                    ],
+                    "type": 7
+                },
+                {
+                    "active": true,
+                    "file_name": "Assets/Scripts/Characters/Zhib/Zhib.lua",
+                    "id": 1978369992,
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "ambientValue": 0.0,
+                    "constantAttenuationValue": 0.0,
+                    "cutOffAngle": 1.0,
+                    "diffuseValue": 0.10000000149011612,
+                    "lightColor": [
+                        1.0,
+                        0.0,
+                        0.0
+                    ],
+                    "lightDirection": [
+                        1.0,
+                        0.0,
+                        0.0
+                    ],
+                    "lightPosition": [
+                        -1491.6207275390625,
+                        9.5367431640625e-07,
+                        798.4801635742188
+                    ],
+                    "linearAttenuationValue": 0.0,
+                    "quadraticAttenuationValue": 0.0,
+                    "sourceType": 2,
+                    "specularValue": 0.0,
+                    "type": 19
+                },
+                {
+                    "active": true,
+                    "file_name": "Assets/Scripts/Pathfinder.lua",
+                    "id": 50309009,
+                    "inspector_variables": [
+                        {
+                            "name": "minRetargetingDistance",
+                            "type": "int",
+                            "value": 3
+                        }
+                    ],
+                    "type": 5
+                }
+            ],
+            "is3D": true,
+            "isPrefab": false,
+            "name": "Zhib",
+            "tag": 1
+        },
+        {
+            "active": true,
+            "children": [
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": true,
+                            "children": [
+                                {
+                                    "active": true,
+                                    "children": [
+                                        {
+                                            "active": true,
+                                            "children": [
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        -0.00015430152416229248,
+                                                                        100.87206268310547,
+                                                                        9.5367431640625e-07
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "zhib_left_toe_end",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                -8.046627044677734e-06,
+                                                                251.9848175048828,
+                                                                0.00022935867309570313
+                                                            ],
+                                                            "rotation": [
+                                                                0.2556237578392029,
+                                                                -0.03709077462553978,
+                                                                0.009653349407017231,
+                                                                0.9660163521766663
+                                                            ],
+                                                            "scale": [
+                                                                1.0,
+                                                                1.0,
+                                                                0.9999997615814209
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "zhib_left_toe_base",
+                                                    "tag": 0
+                                                }
+                                            ],
+                                            "components": [
+                                                {
+                                                    "active": true,
+                                                    "type": 23
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "position": [
+                                                        -9.5367431640625e-06,
+                                                        597.9545288085938,
+                                                        -5.7220458984375e-06
+                                                    ],
+                                                    "rotation": [
+                                                        0.6123608350753784,
+                                                        -0.15974581241607666,
+                                                        0.041696786880493164,
+                                                        0.7731474041938782
+                                                    ],
+                                                    "scale": [
+                                                        1.0,
+                                                        1.000000238418579,
+                                                        1.0000001192092896
+                                                    ],
+                                                    "type": 21
+                                                }
+                                            ],
+                                            "is3D": true,
+                                            "isPrefab": false,
+                                            "name": "zhib_left_foot",
+                                            "tag": 0
+                                        }
+                                    ],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "position": [
+                                                3.528594970703125e-05,
+                                                612.2068481445313,
+                                                2.002716064453125e-05
+                                            ],
+                                            "rotation": [
+                                                -0.2851860523223877,
+                                                -0.07849915325641632,
+                                                0.05010831728577614,
+                                                0.9539371132850647
+                                            ],
+                                            "scale": [
+                                                1.0,
+                                                0.9999998211860657,
+                                                1.0
+                                            ],
+                                            "type": 21
+                                        }
+                                    ],
+                                    "is3D": true,
+                                    "isPrefab": false,
+                                    "name": "zhib_left_leg",
+                                    "tag": 0
+                                },
+                                {
+                                    "active": true,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "position": [
+                                                -45.400474548339844,
+                                                58.068885803222656,
+                                                -59.86368179321289
+                                            ],
+                                            "rotation": [
+                                                0.04279787093400955,
+                                                0.12192421406507492,
+                                                0.9911295175552368,
+                                                0.031066864728927612
+                                            ],
+                                            "scale": [
+                                                1.0000022649765015,
+                                                1.0000016689300537,
+                                                1.0
+                                            ],
+                                            "type": 21
+                                        }
+                                    ],
+                                    "is3D": true,
+                                    "isPrefab": false,
+                                    "name": "zhib_karambit",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "position": [
+                                        165.72604370117188,
+                                        -68.20991516113281,
+                                        12.830461502075195
+                                    ],
+                                    "rotation": [
+                                        0.038679514080286026,
+                                        0.09233023226261139,
+                                        0.9946197867393494,
+                                        -0.026655716821551323
+                                    ],
+                                    "scale": [
+                                        1.0000085830688477,
+                                        0.9999992251396179,
+                                        0.9999997019767761
+                                    ],
+                                    "type": 21
+                                }
+                            ],
+                            "is3D": true,
+                            "isPrefab": false,
+                            "name": "zhib_left_up_leg",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [
+                                {
+                                    "active": true,
+                                    "children": [
+                                        {
+                                            "active": true,
+                                            "children": [
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        0.0001087188720703125,
+                                                                        99.30005645751953,
+                                                                        -5.7220458984375e-06
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "zhib_right_toe_end",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                2.5033950805664063e-05,
+                                                                249.2943115234375,
+                                                                1.239776611328125e-05
+                                                            ],
+                                                            "rotation": [
+                                                                0.25332510471343994,
+                                                                0.036499813199043274,
+                                                                -0.009565611369907856,
+                                                                0.9666450619697571
+                                                            ],
+                                                            "scale": [
+                                                                0.9999901056289673,
+                                                                0.9999998211860657,
+                                                                0.9999997615814209
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "zhib_right_toe_base",
+                                                    "tag": 0
+                                                }
+                                            ],
+                                            "components": [
+                                                {
+                                                    "active": true,
+                                                    "type": 23
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "position": [
+                                                        -0.0001087188720703125,
+                                                        597.99755859375,
+                                                        6.723403930664063e-05
+                                                    ],
+                                                    "rotation": [
+                                                        0.5916668176651001,
+                                                        0.14411823451519012,
+                                                        -0.028042862191796303,
+                                                        0.7927004098892212
+                                                    ],
+                                                    "scale": [
+                                                        0.9999997615814209,
+                                                        1.0,
+                                                        1.0000001192092896
+                                                    ],
+                                                    "type": 21
+                                                }
+                                            ],
+                                            "is3D": true,
+                                            "isPrefab": false,
+                                            "name": "zhib_right_foot",
+                                            "tag": 0
+                                        }
+                                    ],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "position": [
+                                                -3.0517578125e-05,
+                                                611.6712646484375,
+                                                5.7220458984375e-05
+                                            ],
+                                            "rotation": [
+                                                -0.2582128345966339,
+                                                0.028271425515413284,
+                                                -0.04398965835571289,
+                                                0.9646718502044678
+                                            ],
+                                            "scale": [
+                                                1.0,
+                                                0.9999998211860657,
+                                                0.9999997615814209
+                                            ],
+                                            "type": 21
+                                        }
+                                    ],
+                                    "is3D": true,
+                                    "isPrefab": false,
+                                    "name": "zhib_right_leg",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "position": [
+                                        -165.7259979248047,
+                                        -68.20992279052734,
+                                        16.40123748779297
+                                    ],
+                                    "rotation": [
+                                        -0.09195269644260406,
+                                        0.09134127199649811,
+                                        0.991137683391571,
+                                        0.02911282517015934
+                                    ],
+                                    "scale": [
+                                        1.0000004768371582,
+                                        0.9999983310699463,
+                                        0.9999991059303284
+                                    ],
+                                    "type": 21
+                                }
+                            ],
+                            "is3D": true,
+                            "isPrefab": false,
+                            "name": "zhib_right_up_leg",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [
+                                {
+                                    "active": true,
+                                    "children": [
+                                        {
+                                            "active": true,
+                                            "children": [
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [
+                                                                {
+                                                                    "active": true,
+                                                                    "children": [],
+                                                                    "components": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "type": 23
+                                                                        },
+                                                                        {
+                                                                            "active": true,
+                                                                            "position": [
+                                                                                -0.00010728836059570313,
+                                                                                181.50894165039063,
+                                                                                -45.38058090209961
+                                                                            ],
+                                                                            "rotation": [
+                                                                                0.0,
+                                                                                0.0,
+                                                                                0.0,
+                                                                                1.0
+                                                                            ],
+                                                                            "scale": [
+                                                                                1.0,
+                                                                                1.0,
+                                                                                1.0
+                                                                            ],
+                                                                            "type": 21
+                                                                        }
+                                                                    ],
+                                                                    "is3D": true,
+                                                                    "isPrefab": false,
+                                                                    "name": "zhib_head_top_end",
+                                                                    "tag": 0
+                                                                }
+                                                            ],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        2.09808349609375e-05,
+                                                                        109.42828369140625,
+                                                                        -27.35910415649414
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.04599396511912346,
+                                                                        0.0006777532398700714,
+                                                                        0.03394584730267525,
+                                                                        0.9983645677566528
+                                                                    ],
+                                                                    "scale": [
+                                                                        0.999997079372406,
+                                                                        1.0,
+                                                                        0.9999995827674866
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "zhib_head",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                -2.2172927856445313e-05,
+                                                                183.93418884277344,
+                                                                8.106231689453125e-06
+                                                            ],
+                                                            "rotation": [
+                                                                0.0134546784684062,
+                                                                0.015270051546394825,
+                                                                -0.010028878226876259,
+                                                                0.9997425675392151
+                                                            ],
+                                                            "scale": [
+                                                                0.9999987483024597,
+                                                                0.9999906420707703,
+                                                                1.0
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "zhib_neck",
+                                                    "tag": 0
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [
+                                                                {
+                                                                    "active": true,
+                                                                    "children": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "children": [
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "children": [],
+                                                                                    "components": [
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "type": 23
+                                                                                        },
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "position": [
+                                                                                                -10.300537109375,
+                                                                                                136.09007263183594,
+                                                                                                55.84028625488281
+                                                                                            ],
+                                                                                            "rotation": [
+                                                                                                0.801729142665863,
+                                                                                                -0.04553167149424553,
+                                                                                                0.5770319104194641,
+                                                                                                -0.14896802604198456
+                                                                                            ],
+                                                                                            "scale": [
+                                                                                                1.0000001192092896,
+                                                                                                1.0000004768371582,
+                                                                                                1.0000005960464478
+                                                                                            ],
+                                                                                            "type": 21
+                                                                                        }
+                                                                                    ],
+                                                                                    "is3D": true,
+                                                                                    "isPrefab": false,
+                                                                                    "name": "zhib_khopesh_hand",
+                                                                                    "tag": 0
+                                                                                },
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "children": [
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "children": [
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "children": [
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "children": [],
+                                                                                                            "components": [
+                                                                                                                {
+                                                                                                                    "active": true,
+                                                                                                                    "type": 23
+                                                                                                                },
+                                                                                                                {
+                                                                                                                    "active": true,
+                                                                                                                    "position": [
+                                                                                                                        17.20464324951172,
+                                                                                                                        48.05348205566406,
+                                                                                                                        6.3444976806640625
+                                                                                                                    ],
+                                                                                                                    "rotation": [
+                                                                                                                        0.0,
+                                                                                                                        0.0,
+                                                                                                                        0.0,
+                                                                                                                        1.0
+                                                                                                                    ],
+                                                                                                                    "scale": [
+                                                                                                                        1.0,
+                                                                                                                        1.0,
+                                                                                                                        1.0
+                                                                                                                    ],
+                                                                                                                    "type": 21
+                                                                                                                }
+                                                                                                            ],
+                                                                                                            "is3D": true,
+                                                                                                            "isPrefab": false,
+                                                                                                            "name": "zhib_right_hand_index_4",
+                                                                                                            "tag": 0
+                                                                                                        }
+                                                                                                    ],
+                                                                                                    "components": [
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "type": 23
+                                                                                                        },
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "position": [
+                                                                                                                17.188720703125,
+                                                                                                                72.07658386230469,
+                                                                                                                14.651302337646484
+                                                                                                            ],
+                                                                                                            "rotation": [
+                                                                                                                0.09968216717243195,
+                                                                                                                -0.04009233042597771,
+                                                                                                                0.06203902140259743,
+                                                                                                                0.99227374792099
+                                                                                                            ],
+                                                                                                            "scale": [
+                                                                                                                0.9999972581863403,
+                                                                                                                0.9999988675117493,
+                                                                                                                0.9999994039535522
+                                                                                                            ],
+                                                                                                            "type": 21
+                                                                                                        }
+                                                                                                    ],
+                                                                                                    "is3D": true,
+                                                                                                    "isPrefab": false,
+                                                                                                    "name": "zhib_right_hand_index_3",
+                                                                                                    "tag": 0
+                                                                                                }
+                                                                                            ],
+                                                                                            "components": [
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "type": 23
+                                                                                                },
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "position": [
+                                                                                                        -3.0517578125e-05,
+                                                                                                        41.977455139160156,
+                                                                                                        5.245208740234375e-06
+                                                                                                    ],
+                                                                                                    "rotation": [
+                                                                                                        0.23164930939674377,
+                                                                                                        -0.04287091642618179,
+                                                                                                        0.16016072034835815,
+                                                                                                        0.9585662484169006
+                                                                                                    ],
+                                                                                                    "scale": [
+                                                                                                        0.9999997019767761,
+                                                                                                        0.9999999403953552,
+                                                                                                        0.9999998211860657
+                                                                                                    ],
+                                                                                                    "type": 21
+                                                                                                }
+                                                                                            ],
+                                                                                            "is3D": true,
+                                                                                            "isPrefab": false,
+                                                                                            "name": "zhib_right_hand_index_2",
+                                                                                            "tag": 0
+                                                                                        }
+                                                                                    ],
+                                                                                    "components": [
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "type": 23
+                                                                                        },
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "position": [
+                                                                                                6.866455078125e-05,
+                                                                                                104.93096923828125,
+                                                                                                -0.0008106231689453125
+                                                                                            ],
+                                                                                            "rotation": [
+                                                                                                0.14897367358207703,
+                                                                                                0.00812781136482954,
+                                                                                                -0.007138106040656567,
+                                                                                                0.9887821078300476
+                                                                                            ],
+                                                                                            "scale": [
+                                                                                                0.9999999403953552,
+                                                                                                0.9999992847442627,
+                                                                                                0.9999993443489075
+                                                                                            ],
+                                                                                            "type": 21
+                                                                                        }
+                                                                                    ],
+                                                                                    "is3D": true,
+                                                                                    "isPrefab": false,
+                                                                                    "name": "zhib_right_hand_index_1",
+                                                                                    "tag": 0
+                                                                                }
+                                                                            ],
+                                                                            "components": [
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "type": 23
+                                                                                },
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "position": [
+                                                                                        -3.814697265625e-05,
+                                                                                        272.7557678222656,
+                                                                                        -3.814697265625e-05
+                                                                                    ],
+                                                                                    "rotation": [
+                                                                                        -0.017888909205794334,
+                                                                                        0.038526810705661774,
+                                                                                        0.17569249868392944,
+                                                                                        0.9835282564163208
+                                                                                    ],
+                                                                                    "scale": [
+                                                                                        0.9999994039535522,
+                                                                                        1.0,
+                                                                                        1.0
+                                                                                    ],
+                                                                                    "type": 21
+                                                                                }
+                                                                            ],
+                                                                            "is3D": true,
+                                                                            "isPrefab": false,
+                                                                            "name": "zhib_right_hand",
+                                                                            "tag": 0
+                                                                        }
+                                                                    ],
+                                                                    "components": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "type": 23
+                                                                        },
+                                                                        {
+                                                                            "active": true,
+                                                                            "position": [
+                                                                                2.288818359375e-05,
+                                                                                276.7567443847656,
+                                                                                2.86102294921875e-05
+                                                                            ],
+                                                                            "rotation": [
+                                                                                0.014922238886356354,
+                                                                                0.006744782906025648,
+                                                                                -0.26260003447532654,
+                                                                                0.9647659063339233
+                                                                            ],
+                                                                            "scale": [
+                                                                                0.9999997615814209,
+                                                                                0.9999997615814209,
+                                                                                1.0
+                                                                            ],
+                                                                            "type": 21
+                                                                        }
+                                                                    ],
+                                                                    "is3D": true,
+                                                                    "isPrefab": false,
+                                                                    "name": "zhib_right_forearm",
+                                                                    "tag": 0
+                                                                }
+                                                            ],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        4.00543212890625e-05,
+                                                                        224.897705078125,
+                                                                        0.00011807680130004883
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.4113539159297943,
+                                                                        -0.16824351251125336,
+                                                                        -0.1159408837556839,
+                                                                        0.888279139995575
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "zhib_right_arm",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                -108.89476013183594,
+                                                                145.56246948242188,
+                                                                -0.47567224502563477
+                                                            ],
+                                                            "rotation": [
+                                                                0.614894688129425,
+                                                                -0.3867248594760895,
+                                                                0.5503819584846497,
+                                                                0.4116165041923523
+                                                            ],
+                                                            "scale": [
+                                                                1.0000001192092896,
+                                                                1.000000238418579,
+                                                                1.0000004768371582
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "zhib_right_shoulder",
+                                                    "tag": 0
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [
+                                                                {
+                                                                    "active": true,
+                                                                    "children": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "children": [
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "children": [
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "children": [
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "children": [
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "children": [],
+                                                                                                            "components": [
+                                                                                                                {
+                                                                                                                    "active": true,
+                                                                                                                    "type": 23
+                                                                                                                },
+                                                                                                                {
+                                                                                                                    "active": true,
+                                                                                                                    "position": [
+                                                                                                                        -15.36407470703125,
+                                                                                                                        49.350181579589844,
+                                                                                                                        -28.89697265625
+                                                                                                                    ],
+                                                                                                                    "rotation": [
+                                                                                                                        0.0,
+                                                                                                                        0.0,
+                                                                                                                        0.0,
+                                                                                                                        1.0
+                                                                                                                    ],
+                                                                                                                    "scale": [
+                                                                                                                        1.0,
+                                                                                                                        1.0,
+                                                                                                                        1.0
+                                                                                                                    ],
+                                                                                                                    "type": 21
+                                                                                                                }
+                                                                                                            ],
+                                                                                                            "is3D": true,
+                                                                                                            "isPrefab": false,
+                                                                                                            "name": "zhib_left_hand_index_4",
+                                                                                                            "tag": 0
+                                                                                                        }
+                                                                                                    ],
+                                                                                                    "components": [
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "type": 23
+                                                                                                        },
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "position": [
+                                                                                                                -22.47480010986328,
+                                                                                                                70.2238540649414,
+                                                                                                                -33.40724182128906
+                                                                                                            ],
+                                                                                                            "rotation": [
+                                                                                                                0.05140804499387741,
+                                                                                                                0.0644584521651268,
+                                                                                                                0.09107018262147903,
+                                                                                                                0.9924256205558777
+                                                                                                            ],
+                                                                                                            "scale": [
+                                                                                                                1.0,
+                                                                                                                0.9999989867210388,
+                                                                                                                1.0
+                                                                                                            ],
+                                                                                                            "type": 21
+                                                                                                        }
+                                                                                                    ],
+                                                                                                    "is3D": true,
+                                                                                                    "isPrefab": false,
+                                                                                                    "name": "zhib_left_hand_index_3",
+                                                                                                    "tag": 0
+                                                                                                }
+                                                                                            ],
+                                                                                            "components": [
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "type": 23
+                                                                                                },
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "position": [
+                                                                                                        0.000125885009765625,
+                                                                                                        47.327117919921875,
+                                                                                                        9.918212890625e-05
+                                                                                                    ],
+                                                                                                    "rotation": [
+                                                                                                        0.26312705874443054,
+                                                                                                        0.07652918994426727,
+                                                                                                        0.1692734807729721,
+                                                                                                        0.9467068910598755
+                                                                                                    ],
+                                                                                                    "scale": [
+                                                                                                        1.0,
+                                                                                                        0.9999998211860657,
+                                                                                                        1.0
+                                                                                                    ],
+                                                                                                    "type": 21
+                                                                                                }
+                                                                                            ],
+                                                                                            "is3D": true,
+                                                                                            "isPrefab": false,
+                                                                                            "name": "zhib_left_hand_index_2",
+                                                                                            "tag": 0
+                                                                                        }
+                                                                                    ],
+                                                                                    "components": [
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "type": 23
+                                                                                        },
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "position": [
+                                                                                                0.000102996826171875,
+                                                                                                107.46892547607422,
+                                                                                                9.1552734375e-05
+                                                                                            ],
+                                                                                            "rotation": [
+                                                                                                -0.24347810447216034,
+                                                                                                0.05587846785783768,
+                                                                                                0.15345585346221924,
+                                                                                                0.9560582637786865
+                                                                                            ],
+                                                                                            "scale": [
+                                                                                                0.9999994039535522,
+                                                                                                0.9999997615814209,
+                                                                                                0.9999996423721313
+                                                                                            ],
+                                                                                            "type": 21
+                                                                                        }
+                                                                                    ],
+                                                                                    "is3D": true,
+                                                                                    "isPrefab": false,
+                                                                                    "name": "zhib_left_hand_index_1",
+                                                                                    "tag": 0
+                                                                                }
+                                                                            ],
+                                                                            "components": [
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "type": 23
+                                                                                },
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "position": [
+                                                                                        -2.288818359375e-05,
+                                                                                        272.79248046875,
+                                                                                        -4.1961669921875e-05
+                                                                                    ],
+                                                                                    "rotation": [
+                                                                                        0.08883091807365417,
+                                                                                        0.007327508181333542,
+                                                                                        -0.2205013930797577,
+                                                                                        0.9713056087493896
+                                                                                    ],
+                                                                                    "scale": [
+                                                                                        0.9999999403953552,
+                                                                                        0.9999998807907104,
+                                                                                        1.0
+                                                                                    ],
+                                                                                    "type": 21
+                                                                                }
+                                                                            ],
+                                                                            "is3D": true,
+                                                                            "isPrefab": false,
+                                                                            "name": "zhib_left_hand",
+                                                                            "tag": 0
+                                                                        }
+                                                                    ],
+                                                                    "components": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "type": 23
+                                                                        },
+                                                                        {
+                                                                            "active": true,
+                                                                            "position": [
+                                                                                -2.205371856689453e-05,
+                                                                                276.7834777832031,
+                                                                                -0.0001291036605834961
+                                                                            ],
+                                                                            "rotation": [
+                                                                                0.015570697374641895,
+                                                                                -0.006470123305916786,
+                                                                                0.26554375886917114,
+                                                                                0.9639513492584229
+                                                                            ],
+                                                                            "scale": [
+                                                                                1.0,
+                                                                                0.9999997615814209,
+                                                                                0.9999960660934448
+                                                                            ],
+                                                                            "type": 21
+                                                                        }
+                                                                    ],
+                                                                    "is3D": true,
+                                                                    "isPrefab": false,
+                                                                    "name": "zhib_left_forearm",
+                                                                    "tag": 0
+                                                                }
+                                                            ],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        -2.288818359375e-05,
+                                                                        224.2659454345703,
+                                                                        7.493793964385986e-05
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.41668975353240967,
+                                                                        0.20686346292495728,
+                                                                        0.1055656224489212,
+                                                                        0.8788816928863525
+                                                                    ],
+                                                                    "scale": [
+                                                                        0.9999997019767761,
+                                                                        1.0,
+                                                                        0.9999998807907104
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "zhib_left_arm",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                108.89476776123047,
+                                                                145.57403564453125,
+                                                                -1.0300397872924805
+                                                            ],
+                                                            "rotation": [
+                                                                -0.5556986927986145,
+                                                                -0.4171663820743561,
+                                                                0.6119043231010437,
+                                                                -0.3778151571750641
+                                                            ],
+                                                            "scale": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "zhib_left_shoulder",
+                                                    "tag": 0
+                                                }
+                                            ],
+                                            "components": [
+                                                {
+                                                    "active": true,
+                                                    "type": 23
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "position": [
+                                                        3.170967102050781e-05,
+                                                        163.4952392578125,
+                                                        7.62939453125e-06
+                                                    ],
+                                                    "rotation": [
+                                                        0.01454379502683878,
+                                                        -0.02604457177221775,
+                                                        0.0029034907929599285,
+                                                        0.9995507597923279
+                                                    ],
+                                                    "scale": [
+                                                        0.9999926090240479,
+                                                        1.0,
+                                                        0.9999991059303284
+                                                    ],
+                                                    "type": 21
+                                                }
+                                            ],
+                                            "is3D": true,
+                                            "isPrefab": false,
+                                            "name": "zhib_spine_2",
+                                            "tag": 0
+                                        },
+                                        {
+                                            "active": true,
+                                            "children": [],
+                                            "components": [
+                                                {
+                                                    "active": true,
+                                                    "type": 23
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "position": [
+                                                        -5.866420745849609,
+                                                        -51.068504333496094,
+                                                        -212.80902099609375
+                                                    ],
+                                                    "rotation": [
+                                                        0.009828039444983006,
+                                                        0.03849184140563011,
+                                                        0.011558699421584606,
+                                                        0.9991438388824463
+                                                    ],
+                                                    "scale": [
+                                                        0.9999961256980896,
+                                                        1.0,
+                                                        0.999998927116394
+                                                    ],
+                                                    "type": 21
+                                                }
+                                            ],
+                                            "is3D": true,
+                                            "isPrefab": false,
+                                            "name": "zhib_khopesh_back",
+                                            "tag": 0
+                                        }
+                                    ],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "position": [
+                                                -2.562999725341797e-06,
+                                                147.31072998046875,
+                                                -1.1920928955078125e-06
+                                            ],
+                                            "rotation": [
+                                                0.014676700346171856,
+                                                -0.02611522190272808,
+                                                0.0022169107105582952,
+                                                0.9995487332344055
+                                            ],
+                                            "scale": [
+                                                0.9999991655349731,
+                                                0.9999901652336121,
+                                                0.9999994039535522
+                                            ],
+                                            "type": 21
+                                        }
+                                    ],
+                                    "is3D": true,
+                                    "isPrefab": false,
+                                    "name": "zhib_spine_1",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "position": [
+                                        1.5556812286376953e-05,
+                                        122.59841918945313,
+                                        -2.4058048725128174
+                                    ],
+                                    "rotation": [
+                                        0.0019189902814105153,
+                                        -0.002420386066660285,
+                                        0.0022836634889245033,
+                                        0.9999926090240479
+                                    ],
+                                    "scale": [
+                                        1.0,
+                                        0.9999901652336121,
+                                        1.0
+                                    ],
+                                    "type": 21
+                                }
+                            ],
+                            "is3D": true,
+                            "isPrefab": false,
+                            "name": "zhib_spine",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                42.77995681762695,
+                                1363.247802734375,
+                                -8.304634094238281
+                            ],
+                            "rotation": [
+                                -0.026441503316164017,
+                                -0.01179907750338316,
+                                -0.013387384824454784,
+                                0.9994910955429077
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                0.9999940991401672
+                            ],
+                            "type": 21
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "zhib_hips",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 21
+                }
+            ],
+            "is3D": true,
+            "isPrefab": false,
+            "name": "zhib_armature",
+            "tag": 0
+        },
+        {
+            "active": true,
+            "children": [
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                -8.560174942016602,
+                                15.211343765258789,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.20000000298023224,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 1.2000000476837158,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": false,
+                                                    "maxDegrees": 180,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": true,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "followForward": false,
+                                                    "maxAcceleration": [
+                                                        0.25,
+                                                        0.25,
+                                                        0.25
+                                                    ],
+                                                    "maxDirection": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "maxPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "maxVelocity": 5.0,
+                                                    "minAcceleration": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minDirection": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "minPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minVelocity": 0.0,
+                                                    "randAcceleration": false,
+                                                    "randDirection": true,
+                                                    "randPosition": false,
+                                                    "randVelocity": false,
+                                                    "type": 2
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                0.7843137383460999
+                                                            ],
+                                                            "position": 0.5
+                                                        },
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                0.0
+                                                            ],
+                                                            "position": 1.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        15.0,
+                                                        15.0,
+                                                        15.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Hit",
+                                            "texture_path": "Assets/Textures/Particles/light_2.png"
+                                        }
+                                    ],
+                                    "name": "Impact Feedback"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Zhib Impact Particle",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.20000000298023224,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.5,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 6,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "followForward": true,
+                                                    "maxAcceleration": [
+                                                        0.25,
+                                                        0.25,
+                                                        0.25
+                                                    ],
+                                                    "maxDirection": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -1.0
+                                                    ],
+                                                    "maxPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "maxVelocity": 5.0,
+                                                    "minAcceleration": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minDirection": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "minPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minVelocity": 40.0,
+                                                    "randAcceleration": false,
+                                                    "randDirection": false,
+                                                    "randPosition": false,
+                                                    "randVelocity": false,
+                                                    "type": 2
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        5.0,
+                                                        5.0,
+                                                        5.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Emitter",
+                                            "texture_path": "Assets/Textures/Particles/dash_projectile.png"
+                                        }
+                                    ],
+                                    "name": "Swoosh"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Zhib Swoosh Particle",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 1.5,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.5,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        10.0,
+                                                        10.0,
+                                                        10.0
+                                                    ],
+                                                    "type": 4
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.29411765933036804
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                }
+                                            ],
+                                            "name": "Emitter",
+                                            "texture_path": "Assets/Textures/Particles/simple.png"
+                                        }
+                                    ],
+                                    "name": "Footsteps"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Zhib Footstep Particle",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                5.640728950500488,
+                                -65.35445404052734
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 4.0,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 1.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 6,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "minFinalSize": [
+                                                        60.0,
+                                                        60.0,
+                                                        60.0
+                                                    ],
+                                                    "minInitialSize": [
+                                                        15.0,
+                                                        15.0,
+                                                        15.0
+                                                    ],
+                                                    "type": 4
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "position": 0.0
+                                                        },
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                0.0
+                                                            ],
+                                                            "position": 1.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "followForward": false,
+                                                    "maxAcceleration": [
+                                                        0.25,
+                                                        0.25,
+                                                        0.25
+                                                    ],
+                                                    "maxDirection": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -1.0
+                                                    ],
+                                                    "maxPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "maxVelocity": 5.0,
+                                                    "minAcceleration": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minDirection": [
+                                                        0.0,
+                                                        -1.0,
+                                                        0.0
+                                                    ],
+                                                    "minPosition": [
+                                                        0.0,
+                                                        2.0,
+                                                        0.0
+                                                    ],
+                                                    "minVelocity": 1.0,
+                                                    "randAcceleration": false,
+                                                    "randDirection": false,
+                                                    "randPosition": false,
+                                                    "randVelocity": false,
+                                                    "type": 2
+                                                }
+                                            ],
+                                            "name": "Wave Emitter",
+                                            "texture_path": "Assets/Textures/Particles/wave.png"
+                                        }
+                                    ],
+                                    "name": "Wave"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Zhib Wave Particle",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 320,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.5882353186607361
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "followForward": true,
+                                                    "maxAcceleration": [
+                                                        0.25,
+                                                        0.25,
+                                                        0.25
+                                                    ],
+                                                    "maxDirection": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -1.0
+                                                    ],
+                                                    "maxPosition": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "maxVelocity": 5.0,
+                                                    "minAcceleration": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minDirection": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "minPosition": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -5.0
+                                                    ],
+                                                    "minVelocity": 0.0,
+                                                    "randAcceleration": false,
+                                                    "randDirection": false,
+                                                    "randPosition": false,
+                                                    "randVelocity": false,
+                                                    "type": 2
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        20.0,
+                                                        20.0,
+                                                        20.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Blood Splatters",
+                                            "texture_path": "Assets/Textures/Particles/blood.png"
+                                        },
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.5882353186607361
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "followForward": true,
+                                                    "maxAcceleration": [
+                                                        0.25,
+                                                        0.25,
+                                                        0.25
+                                                    ],
+                                                    "maxDirection": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -1.0
+                                                    ],
+                                                    "maxPosition": [
+                                                        0.5,
+                                                        0.5,
+                                                        0.5
+                                                    ],
+                                                    "maxVelocity": 5.0,
+                                                    "minAcceleration": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minDirection": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "minPosition": [
+                                                        -0.5,
+                                                        -0.5,
+                                                        -5.0
+                                                    ],
+                                                    "minVelocity": 0.0,
+                                                    "randAcceleration": false,
+                                                    "randDirection": false,
+                                                    "randPosition": false,
+                                                    "randVelocity": false,
+                                                    "type": 2
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        20.0,
+                                                        20.0,
+                                                        20.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Blood Pools",
+                                            "texture_path": "Assets/Textures/Particles/blood_huge.png"
+                                        }
+                                    ],
+                                    "name": "Blood"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Zhib Blood Particle",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 21
+                }
+            ],
+            "is3D": true,
+            "isPrefab": false,
+            "name": "Zhib Particles",
+            "tag": 0
+        }
+    ],
+    "components": [
+        {
+            "active": true,
+            "type": 23
+        },
+        {
+            "active": true,
+            "position": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": 21
+        },
+        {
+            "active": true,
+            "animation": {
+                "asset_path": "Assets/Models/Characters/Zhib/zhib_armature|zhib_armature|zhib_armature|zhib_armature|zhib_armature|zhib_re.cake",
+                "uid": 945053004
+            },
+            "clips": [
+                {
+                    "clipDuration": 10.0,
+                    "clipDurationInSeconds": 0.4166666567325592,
+                    "clipEndFrame": 195.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "Attack",
+                    "clipStartFrame": 185.0,
+                    "mapString": "Attack"
+                },
+                {
+                    "clipDuration": 12.0,
+                    "clipDurationInSeconds": 0.5,
+                    "clipEndFrame": 208.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "AttackToIdle",
+                    "clipStartFrame": 196.0,
+                    "mapString": "AttackToIdle"
+                },
+                {
+                    "clipDuration": 39.0,
+                    "clipDurationInSeconds": 1.625,
+                    "clipEndFrame": 180.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Crouch",
+                    "clipStartFrame": 141.0,
+                    "mapString": "Crouch"
+                },
+                {
+                    "clipDuration": 103.0,
+                    "clipDurationInSeconds": 4.291666507720947,
+                    "clipEndFrame": 433.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "Death",
+                    "clipStartFrame": 330.0,
+                    "mapString": "Death"
+                },
+                {
+                    "clipDuration": 24.0,
+                    "clipDurationInSeconds": 1.0,
+                    "clipEndFrame": 232.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "Decoy",
+                    "clipStartFrame": 208.0,
+                    "mapString": "Decoy"
+                },
+                {
+                    "clipDuration": 33.0,
+                    "clipDurationInSeconds": 1.375,
+                    "clipEndFrame": 266.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "DecoyToIdle",
+                    "clipStartFrame": 233.0,
+                    "mapString": "DecoyToIdle"
+                },
+                {
+                    "clipDuration": 591.0,
+                    "clipDurationInSeconds": 24.625,
+                    "clipEndFrame": 591.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Default clip",
+                    "clipStartFrame": 0.0,
+                    "mapString": "Default clip"
+                },
+                {
+                    "clipDuration": 99.0,
+                    "clipDurationInSeconds": 4.125,
+                    "clipEndFrame": 100.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Idle",
+                    "clipStartFrame": 1.0,
+                    "mapString": "Idle"
+                },
+                {
+                    "clipDuration": 1.0,
+                    "clipDurationInSeconds": 0.0416666679084301,
+                    "clipEndFrame": 141.0,
+                    "clipFinished": false,
+                    "clipLoop": false,
+                    "clipName": "IdleCrouch",
+                    "clipStartFrame": 140.0,
+                    "mapString": "IdleCrouch"
+                },
+                {
+                    "clipDuration": 20.0,
+                    "clipDurationInSeconds": 0.8333333134651184,
+                    "clipEndFrame": 460.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "Knife",
+                    "clipStartFrame": 440.0,
+                    "mapString": "Knife"
+                },
+                {
+                    "clipDuration": 34.0,
+                    "clipDurationInSeconds": 1.4166666269302368,
+                    "clipEndFrame": 495.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "KnifeToIdle",
+                    "clipStartFrame": 461.0,
+                    "mapString": "KnifeToIdle"
+                },
+                {
+                    "clipDuration": 16.0,
+                    "clipDurationInSeconds": 0.6666666865348816,
+                    "clipEndFrame": 320.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Run",
+                    "clipStartFrame": 304.0,
+                    "mapString": "Run"
+                },
+                {
+                    "clipDuration": 35.0,
+                    "clipDurationInSeconds": 1.4583333730697632,
+                    "clipEndFrame": 558.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "UltimateEnd",
+                    "clipStartFrame": 523.0,
+                    "mapString": "UltimateEnd"
+                },
+                {
+                    "clipDuration": 21.0,
+                    "clipDurationInSeconds": 0.875,
+                    "clipEndFrame": 517.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "UltimateStart",
+                    "clipStartFrame": 496.0,
+                    "mapString": "UltimateStart"
+                },
+                {
+                    "clipDuration": 23.0,
+                    "clipDurationInSeconds": 0.9583333134651184,
+                    "clipEndFrame": 126.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Walk",
+                    "clipStartFrame": 103.0,
+                    "mapString": "Walk"
+                }
+            ],
+            "meshes": [
+                {
+                    "asset_path": "Assets/Models/Characters/Zhib/zhib_low.sugar",
+                    "uid": 2018873560
+                }
+            ],
+            "selectedClip": "Idle",
+            "type": 12
+        }
+    ],
+    "is3D": true,
+    "isPrefab": true,
+    "name": "Player1",
+    "tag": 0
+}

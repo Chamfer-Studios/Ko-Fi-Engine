@@ -35,6 +35,14 @@
                             }
                         ],
                         "type": 3
+                    },
+                    {
+                        "minInitialSize": [
+                            20.0,
+                            20.0,
+                            20.0
+                        ],
+                        "type": 4
                     }
                 ],
                 "name": "Emitter",

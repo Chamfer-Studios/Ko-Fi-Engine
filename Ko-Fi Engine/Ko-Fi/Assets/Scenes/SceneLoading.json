@@ -1,7 +1,7 @@
 {
     "SceneLoading": {
         "active": true,
-        "game_objects_amount": 6,
+        "game_objects_amount": 12,
         "game_objects_list": [
             {
                 "UID": 1475716659,
@@ -264,7 +264,7 @@
                         ],
                         "position": [
                             -184.0,
-                            114.0
+                            104.0
                         ],
                         "rotation": [
                             0.0,
@@ -272,8 +272,8 @@
                             0.0
                         ],
                         "size": [
-                            223.05999755859375,
-                            132.6199951171875
+                            223.0,
+                            132.0
                         ],
                         "type": 22
                     },
@@ -286,7 +286,265 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Image1",
+                "parent_UID": 1971030143,
+                "tag": 0
+            },
+            {
+                "UID": 1971030143,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 8,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -60.0,
+                            101.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            200.0,
+                            200.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "type": 14
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/New HUD Scripts/loadingAnim.lua",
+                        "id": 470905625,
+                        "type": 5
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "LoadingParent",
                 "parent_UID": 833363227,
+                "tag": 0
+            },
+            {
+                "UID": 1492539991,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 8,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -184.0,
+                            104.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            223.0,
+                            132.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/loading_icon_2.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Image (1)",
+                "parent_UID": 1971030143,
+                "tag": 0
+            },
+            {
+                "UID": 210439280,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 8,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -184.0,
+                            104.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            223.0,
+                            132.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/loading_icon_3.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Image (2)",
+                "parent_UID": 1971030143,
+                "tag": 0
+            },
+            {
+                "UID": 927893676,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 8,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -184.0,
+                            104.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            223.0,
+                            132.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/loading_icon_4.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Image (3)",
+                "parent_UID": 1971030143,
+                "tag": 0
+            },
+            {
+                "UID": 306139262,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 8,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -184.0,
+                            104.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            223.0,
+                            132.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/loading_icon_5.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Image (4)",
+                "parent_UID": 1971030143,
+                "tag": 0
+            },
+            {
+                "UID": 228289100,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 8,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -184.0,
+                            104.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            223.0,
+                            132.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/loading_icon_6.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Image (5)",
+                "parent_UID": 1971030143,
                 "tag": 0
             }
         ],

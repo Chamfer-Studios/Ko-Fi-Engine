@@ -98,10 +98,71 @@
                 {
                     "name": "minRetargetingDistance",
                     "type": "int",
-                    "value": 10
+                    "value": 3
                 }
             ],
             "type": 5
+        },
+        {
+            "active": true,
+            "fade_time": 2.0,
+            "offset_sync": false,
+            "total_tracks": 4,
+            "tracks": [
+                {
+                    "bypass": false,
+                    "custom_loop": false,
+                    "loop": false,
+                    "loop_offset": 0.0,
+                    "mute": false,
+                    "offset": 0.0,
+                    "pan": 0.0,
+                    "play_on_start": false,
+                    "track_path": "Assets/Audio/SFX/Nerala/nerala_mosquito_startup_fx.wav",
+                    "transpose": 1.0,
+                    "volume": 100.0
+                },
+                {
+                    "bypass": false,
+                    "custom_loop": false,
+                    "loop": true,
+                    "loop_offset": 0.0,
+                    "mute": false,
+                    "offset": 0.0,
+                    "pan": 0.0,
+                    "play_on_start": false,
+                    "track_path": "Assets/Audio/SFX/Nerala/temp_mosquito_move.wav",
+                    "transpose": 1.0,
+                    "volume": 10.616439819335938
+                },
+                {
+                    "bypass": false,
+                    "custom_loop": false,
+                    "loop": false,
+                    "loop_offset": 0.0,
+                    "mute": false,
+                    "offset": 0.0,
+                    "pan": 0.0,
+                    "play_on_start": false,
+                    "track_path": "Assets/Audio/SFX/Nerala/nerala_mosquito_stab_1_fx.wav",
+                    "transpose": 1.0,
+                    "volume": 100.0
+                },
+                {
+                    "bypass": false,
+                    "custom_loop": false,
+                    "loop": false,
+                    "loop_offset": 0.0,
+                    "mute": false,
+                    "offset": 0.0,
+                    "pan": 0.0,
+                    "play_on_start": false,
+                    "track_path": "Assets/Audio/SFX/Nerala/nerala_mosquito_stab_2_fx.wav",
+                    "transpose": 1.0,
+                    "volume": 100.0
+                }
+            ],
+            "type": 11
         }
     ],
     "is3D": true,

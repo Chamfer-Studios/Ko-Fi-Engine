@@ -31,420 +31,6 @@
                                                                     "active": true,
                                                                     "position": [
                                                                         0.0,
-                                                                        12.808300018310547,
-                                                                        0.0
-                                                                    ],
-                                                                    "rotation": [
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        1.0
-                                                                    ],
-                                                                    "scale": [
-                                                                        1.0,
-                                                                        1.0,
-                                                                        1.0
-                                                                    ],
-                                                                    "type": 21
-                                                                }
-                                                            ],
-                                                            "is3D": true,
-                                                            "isPrefab": false,
-                                                            "name": "worm_tooth_4_end",
-                                                            "tag": 0
-                                                        }
-                                                    ],
-                                                    "components": [
-                                                        {
-                                                            "active": true,
-                                                            "type": 23
-                                                        },
-                                                        {
-                                                            "active": true,
-                                                            "position": [
-                                                                4.649878025054932,
-                                                                9.84891414642334,
-                                                                -6.827268600463867
-                                                            ],
-                                                            "rotation": [
-                                                                -0.01674341969192028,
-                                                                0.08460301905870438,
-                                                                -0.013166346587240696,
-                                                                0.9961870312690735
-                                                            ],
-                                                            "scale": [
-                                                                1.0,
-                                                                1.0,
-                                                                1.0
-                                                            ],
-                                                            "type": 21
-                                                        }
-                                                    ],
-                                                    "is3D": true,
-                                                    "isPrefab": false,
-                                                    "name": "worm_tooth_4",
-                                                    "tag": 0
-                                                },
-                                                {
-                                                    "active": true,
-                                                    "children": [
-                                                        {
-                                                            "active": true,
-                                                            "children": [],
-                                                            "components": [
-                                                                {
-                                                                    "active": true,
-                                                                    "type": 23
-                                                                },
-                                                                {
-                                                                    "active": true,
-                                                                    "position": [
-                                                                        0.0,
-                                                                        12.808298110961914,
-                                                                        0.0
-                                                                    ],
-                                                                    "rotation": [
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        1.0
-                                                                    ],
-                                                                    "scale": [
-                                                                        1.0,
-                                                                        1.0,
-                                                                        1.0
-                                                                    ],
-                                                                    "type": 21
-                                                                }
-                                                            ],
-                                                            "is3D": true,
-                                                            "isPrefab": false,
-                                                            "name": "worm_tooth_1_end",
-                                                            "tag": 0
-                                                        }
-                                                    ],
-                                                    "components": [
-                                                        {
-                                                            "active": true,
-                                                            "type": 23
-                                                        },
-                                                        {
-                                                            "active": true,
-                                                            "position": [
-                                                                7.256019115447998,
-                                                                9.839273452758789,
-                                                                4.190646648406982
-                                                            ],
-                                                            "rotation": [
-                                                                0.05101289227604866,
-                                                                0.2562026381492615,
-                                                                -0.13712874054908752,
-                                                                0.9554860591888428
-                                                            ],
-                                                            "scale": [
-                                                                1.0,
-                                                                1.0,
-                                                                1.0
-                                                            ],
-                                                            "type": 21
-                                                        }
-                                                    ],
-                                                    "is3D": true,
-                                                    "isPrefab": false,
-                                                    "name": "worm_tooth_1",
-                                                    "tag": 0
-                                                },
-                                                {
-                                                    "active": true,
-                                                    "children": [
-                                                        {
-                                                            "active": true,
-                                                            "children": [],
-                                                            "components": [
-                                                                {
-                                                                    "active": true,
-                                                                    "type": 23
-                                                                },
-                                                                {
-                                                                    "active": true,
-                                                                    "position": [
-                                                                        0.0,
-                                                                        12.808298110961914,
-                                                                        0.0
-                                                                    ],
-                                                                    "rotation": [
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        1.0
-                                                                    ],
-                                                                    "scale": [
-                                                                        1.0,
-                                                                        1.0,
-                                                                        1.0
-                                                                    ],
-                                                                    "type": 21
-                                                                }
-                                                            ],
-                                                            "is3D": true,
-                                                            "isPrefab": false,
-                                                            "name": "worm_tooth_2_end",
-                                                            "tag": 0
-                                                        }
-                                                    ],
-                                                    "components": [
-                                                        {
-                                                            "active": true,
-                                                            "type": 23
-                                                        },
-                                                        {
-                                                            "active": true,
-                                                            "position": [
-                                                                8.593993186950684,
-                                                                9.839280128479004,
-                                                                0.1800231635570526
-                                                            ],
-                                                            "rotation": [
-                                                                -0.0072577157989144325,
-                                                                0.22233296930789948,
-                                                                -0.08245587348937988,
-                                                                0.971450686454773
-                                                            ],
-                                                            "scale": [
-                                                                1.0,
-                                                                0.9999977946281433,
-                                                                1.0
-                                                            ],
-                                                            "type": 21
-                                                        }
-                                                    ],
-                                                    "is3D": true,
-                                                    "isPrefab": false,
-                                                    "name": "worm_tooth_2",
-                                                    "tag": 0
-                                                },
-                                                {
-                                                    "active": true,
-                                                    "children": [
-                                                        {
-                                                            "active": true,
-                                                            "children": [],
-                                                            "components": [
-                                                                {
-                                                                    "active": true,
-                                                                    "type": 23
-                                                                },
-                                                                {
-                                                                    "active": true,
-                                                                    "position": [
-                                                                        0.0,
-                                                                        12.808294296264648,
-                                                                        0.0
-                                                                    ],
-                                                                    "rotation": [
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        1.0
-                                                                    ],
-                                                                    "scale": [
-                                                                        1.0,
-                                                                        1.0,
-                                                                        1.0
-                                                                    ],
-                                                                    "type": 21
-                                                                }
-                                                            ],
-                                                            "is3D": true,
-                                                            "isPrefab": false,
-                                                            "name": "worm_tooth_0_end",
-                                                            "tag": 0
-                                                        }
-                                                    ],
-                                                    "components": [
-                                                        {
-                                                            "active": true,
-                                                            "type": 23
-                                                        },
-                                                        {
-                                                            "active": true,
-                                                            "position": [
-                                                                4.532104015350342,
-                                                                9.839273452758789,
-                                                                7.2700958251953125
-                                                            ],
-                                                            "rotation": [
-                                                                0.16773320734500885,
-                                                                -0.22065694630146027,
-                                                                0.2243638038635254,
-                                                                0.934257447719574
-                                                            ],
-                                                            "scale": [
-                                                                1.0,
-                                                                1.0,
-                                                                1.0
-                                                            ],
-                                                            "type": 21
-                                                        }
-                                                    ],
-                                                    "is3D": true,
-                                                    "isPrefab": false,
-                                                    "name": "worm_tooth_0",
-                                                    "tag": 0
-                                                },
-                                                {
-                                                    "active": true,
-                                                    "children": [
-                                                        {
-                                                            "active": true,
-                                                            "children": [],
-                                                            "components": [
-                                                                {
-                                                                    "active": true,
-                                                                    "type": 23
-                                                                },
-                                                                {
-                                                                    "active": true,
-                                                                    "position": [
-                                                                        0.0,
-                                                                        12.808294296264648,
-                                                                        0.0
-                                                                    ],
-                                                                    "rotation": [
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        1.0
-                                                                    ],
-                                                                    "scale": [
-                                                                        1.0,
-                                                                        1.0,
-                                                                        1.0
-                                                                    ],
-                                                                    "type": 21
-                                                                }
-                                                            ],
-                                                            "is3D": true,
-                                                            "isPrefab": false,
-                                                            "name": "worm_tooth_11_end",
-                                                            "tag": 0
-                                                        }
-                                                    ],
-                                                    "components": [
-                                                        {
-                                                            "active": true,
-                                                            "type": 23
-                                                        },
-                                                        {
-                                                            "active": true,
-                                                            "position": [
-                                                                0.4150731563568115,
-                                                                9.830087661743164,
-                                                                8.412137985229492
-                                                            ],
-                                                            "rotation": [
-                                                                0.2721167504787445,
-                                                                0.019353171810507774,
-                                                                -0.006201552227139473,
-                                                                0.9620497226715088
-                                                            ],
-                                                            "scale": [
-                                                                1.0,
-                                                                0.9999997615814209,
-                                                                0.9999997615814209
-                                                            ],
-                                                            "type": 21
-                                                        }
-                                                    ],
-                                                    "is3D": true,
-                                                    "isPrefab": false,
-                                                    "name": "worm_tooth_11",
-                                                    "tag": 0
-                                                },
-                                                {
-                                                    "active": true,
-                                                    "children": [
-                                                        {
-                                                            "active": true,
-                                                            "children": [],
-                                                            "components": [
-                                                                {
-                                                                    "active": true,
-                                                                    "type": 23
-                                                                },
-                                                                {
-                                                                    "active": true,
-                                                                    "position": [
-                                                                        0.0,
-                                                                        12.80830192565918,
-                                                                        0.0
-                                                                    ],
-                                                                    "rotation": [
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        1.0
-                                                                    ],
-                                                                    "scale": [
-                                                                        1.0,
-                                                                        1.0,
-                                                                        1.0
-                                                                    ],
-                                                                    "type": 21
-                                                                }
-                                                            ],
-                                                            "is3D": true,
-                                                            "isPrefab": false,
-                                                            "name": "worm_tooth_9_end",
-                                                            "tag": 0
-                                                        }
-                                                    ],
-                                                    "components": [
-                                                        {
-                                                            "active": true,
-                                                            "type": 23
-                                                        },
-                                                        {
-                                                            "active": true,
-                                                            "position": [
-                                                                -6.579236030578613,
-                                                                10.038036346435547,
-                                                                3.4988059997558594
-                                                            ],
-                                                            "rotation": [
-                                                                0.03874349594116211,
-                                                                -0.26563048362731934,
-                                                                0.143844872713089,
-                                                                0.9524956941604614
-                                                            ],
-                                                            "scale": [
-                                                                1.0,
-                                                                0.9999998807907104,
-                                                                1.0
-                                                            ],
-                                                            "type": 21
-                                                        }
-                                                    ],
-                                                    "is3D": true,
-                                                    "isPrefab": false,
-                                                    "name": "worm_tooth_9",
-                                                    "tag": 0
-                                                },
-                                                {
-                                                    "active": true,
-                                                    "children": [
-                                                        {
-                                                            "active": true,
-                                                            "children": [],
-                                                            "components": [
-                                                                {
-                                                                    "active": true,
-                                                                    "type": 23
-                                                                },
-                                                                {
-                                                                    "active": true,
-                                                                    "position": [
-                                                                        0.0,
                                                                         12.808292388916016,
                                                                         0.0
                                                                     ],
@@ -464,7 +50,7 @@
                                                             ],
                                                             "is3D": true,
                                                             "isPrefab": false,
-                                                            "name": "worm_tooth_7_end",
+                                                            "name": "worm_tooth_8_end",
                                                             "tag": 0
                                                         }
                                                     ],
@@ -476,96 +62,27 @@
                                                         {
                                                             "active": true,
                                                             "position": [
-                                                                -6.180437088012695,
+                                                                -7.656244277954102,
                                                                 10.038040161132813,
-                                                                -4.149487495422363
+                                                                -0.42529112100601196
                                                             ],
                                                             "rotation": [
-                                                                -0.024417320266366005,
-                                                                -0.16866202652454376,
-                                                                0.03681963309645653,
-                                                                0.9846833348274231
+                                                                -0.014857146888971329,
+                                                                -0.2268049120903015,
+                                                                0.08376026898622513,
+                                                                0.9702180624008179
                                                             ],
                                                             "scale": [
-                                                                0.9999998807907104,
                                                                 1.0,
-                                                                0.999999463558197
+                                                                1.0,
+                                                                0.9999999403953552
                                                             ],
                                                             "type": 21
                                                         }
                                                     ],
                                                     "is3D": true,
                                                     "isPrefab": false,
-                                                    "name": "worm_tooth_7",
-                                                    "tag": 0
-                                                },
-                                                {
-                                                    "active": true,
-                                                    "children": [
-                                                        {
-                                                            "active": true,
-                                                            "children": [],
-                                                            "components": [
-                                                                {
-                                                                    "active": true,
-                                                                    "type": 23
-                                                                },
-                                                                {
-                                                                    "active": true,
-                                                                    "position": [
-                                                                        0.0,
-                                                                        12.808296203613281,
-                                                                        0.0
-                                                                    ],
-                                                                    "rotation": [
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        1.0
-                                                                    ],
-                                                                    "scale": [
-                                                                        1.0,
-                                                                        1.0,
-                                                                        1.0
-                                                                    ],
-                                                                    "type": 21
-                                                                }
-                                                            ],
-                                                            "is3D": true,
-                                                            "isPrefab": false,
-                                                            "name": "worm_tooth_3_end",
-                                                            "tag": 0
-                                                        }
-                                                    ],
-                                                    "components": [
-                                                        {
-                                                            "active": true,
-                                                            "type": 23
-                                                        },
-                                                        {
-                                                            "active": true,
-                                                            "position": [
-                                                                7.411062240600586,
-                                                                9.839285850524902,
-                                                                -3.7364773750305176
-                                                            ],
-                                                            "rotation": [
-                                                                -0.019774341955780983,
-                                                                0.1650574952363968,
-                                                                -0.037646934390068054,
-                                                                0.9853668212890625
-                                                            ],
-                                                            "scale": [
-                                                                0.999999463558197,
-                                                                1.0,
-                                                                1.0
-                                                            ],
-                                                            "type": 21
-                                                        }
-                                                    ],
-                                                    "is3D": true,
-                                                    "isPrefab": false,
-                                                    "name": "worm_tooth_3",
+                                                    "name": "worm_tooth_8",
                                                     "tag": 0
                                                 },
                                                 {
@@ -619,15 +136,15 @@
                                                                 -8.08376693725586
                                                             ],
                                                             "rotation": [
-                                                                -0.014398840256035328,
-                                                                -0.002675374038517475,
-                                                                -0.0006793886423110962,
+                                                                -0.01439841091632843,
+                                                                -0.002675354015082121,
+                                                                -0.0006793668144382536,
                                                                 0.99989253282547
                                                             ],
                                                             "scale": [
                                                                 1.0,
                                                                 1.0,
-                                                                0.9999857544898987
+                                                                0.9999999403953552
                                                             ],
                                                             "type": 21
                                                         }
@@ -635,6 +152,213 @@
                                                     "is3D": true,
                                                     "isPrefab": false,
                                                     "name": "worm_tooth_5",
+                                                    "tag": 0
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        0.0,
+                                                                        12.808292388916016,
+                                                                        0.0
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "worm_tooth_7_end",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                -6.180437088012695,
+                                                                10.038040161132813,
+                                                                -4.149487495422363
+                                                            ],
+                                                            "rotation": [
+                                                                -0.024417316541075706,
+                                                                -0.16866199672222137,
+                                                                0.03681963309645653,
+                                                                0.9846833348274231
+                                                            ],
+                                                            "scale": [
+                                                                0.9999998807907104,
+                                                                1.0,
+                                                                0.9999997615814209
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "worm_tooth_7",
+                                                    "tag": 0
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        0.0,
+                                                                        12.808298110961914,
+                                                                        0.0
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "worm_tooth_2_end",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                8.593993186950684,
+                                                                9.839280128479004,
+                                                                0.1800231635570526
+                                                            ],
+                                                            "rotation": [
+                                                                -0.007257422432303429,
+                                                                0.22233296930789948,
+                                                                -0.08245580643415451,
+                                                                0.971450686454773
+                                                            ],
+                                                            "scale": [
+                                                                1.0,
+                                                                0.9999998211860657,
+                                                                1.0
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "worm_tooth_2",
+                                                    "tag": 0
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        0.0,
+                                                                        12.808294296264648,
+                                                                        0.0
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "worm_tooth_11_end",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                0.4150731563568115,
+                                                                9.830087661743164,
+                                                                8.412137985229492
+                                                            ],
+                                                            "rotation": [
+                                                                0.2721167802810669,
+                                                                0.01935313642024994,
+                                                                -0.0062013911083340645,
+                                                                0.9620496034622192
+                                                            ],
+                                                            "scale": [
+                                                                1.0,
+                                                                0.9999998211860657,
+                                                                0.9999998807907104
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "worm_tooth_11",
                                                     "tag": 0
                                                 },
                                                 {
@@ -688,15 +412,15 @@
                                                                 -7.263060092926025
                                                             ],
                                                             "rotation": [
-                                                                -0.021602798253297806,
-                                                                -0.08305618911981583,
-                                                                0.012442333623766899,
+                                                                -0.021602636203169823,
+                                                                -0.08305614441633224,
+                                                                0.012442432343959808,
                                                                 0.9962329864501953
                                                             ],
                                                             "scale": [
                                                                 0.9999998807907104,
-                                                                0.9999861717224121,
-                                                                0.9999994039535522
+                                                                0.9999997615814209,
+                                                                1.0
                                                             ],
                                                             "type": 21
                                                         }
@@ -704,6 +428,75 @@
                                                     "is3D": true,
                                                     "isPrefab": false,
                                                     "name": "worm_tooth_6",
+                                                    "tag": 0
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        0.0,
+                                                                        12.808300018310547,
+                                                                        0.0
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "worm_tooth_4_end",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                4.649878025054932,
+                                                                9.84891414642334,
+                                                                -6.827268600463867
+                                                            ],
+                                                            "rotation": [
+                                                                -0.01674341969192028,
+                                                                0.08460301905870438,
+                                                                -0.013166346587240696,
+                                                                0.9961870312690735
+                                                            ],
+                                                            "scale": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "worm_tooth_4",
                                                     "tag": 0
                                                 },
                                                 {
@@ -790,7 +583,7 @@
                                                                     "active": true,
                                                                     "position": [
                                                                         0.0,
-                                                                        12.808292388916016,
+                                                                        12.80830192565918,
                                                                         0.0
                                                                     ],
                                                                     "rotation": [
@@ -809,7 +602,7 @@
                                                             ],
                                                             "is3D": true,
                                                             "isPrefab": false,
-                                                            "name": "worm_tooth_8_end",
+                                                            "name": "worm_tooth_9_end",
                                                             "tag": 0
                                                         }
                                                     ],
@@ -821,27 +614,234 @@
                                                         {
                                                             "active": true,
                                                             "position": [
-                                                                -7.656244277954102,
-                                                                10.038040161132813,
-                                                                -0.42529112100601196
+                                                                -6.579236030578613,
+                                                                10.038036346435547,
+                                                                3.4988059997558594
                                                             ],
                                                             "rotation": [
-                                                                -0.014857146888971329,
-                                                                -0.2268049120903015,
-                                                                0.08376026898622513,
-                                                                0.9702180624008179
+                                                                0.03874349594116211,
+                                                                -0.26563048362731934,
+                                                                0.143844872713089,
+                                                                0.952495813369751
                                                             ],
                                                             "scale": [
                                                                 1.0,
-                                                                1.0,
-                                                                0.9999999403953552
+                                                                0.9999998807907104,
+                                                                1.0
                                                             ],
                                                             "type": 21
                                                         }
                                                     ],
                                                     "is3D": true,
                                                     "isPrefab": false,
-                                                    "name": "worm_tooth_8",
+                                                    "name": "worm_tooth_9",
+                                                    "tag": 0
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        0.0,
+                                                                        12.808298110961914,
+                                                                        0.0
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "worm_tooth_1_end",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                7.256019115447998,
+                                                                9.839273452758789,
+                                                                4.190646648406982
+                                                            ],
+                                                            "rotation": [
+                                                                0.05101289227604866,
+                                                                0.2562026381492615,
+                                                                -0.13712874054908752,
+                                                                0.9554860591888428
+                                                            ],
+                                                            "scale": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "worm_tooth_1",
+                                                    "tag": 0
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        0.0,
+                                                                        12.808296203613281,
+                                                                        0.0
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "worm_tooth_3_end",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                7.411062240600586,
+                                                                9.839285850524902,
+                                                                -3.7364773750305176
+                                                            ],
+                                                            "rotation": [
+                                                                -0.019774341955780983,
+                                                                0.16505753993988037,
+                                                                -0.037646930664777756,
+                                                                0.9853668212890625
+                                                            ],
+                                                            "scale": [
+                                                                0.9999999403953552,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "worm_tooth_3",
+                                                    "tag": 0
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        0.0,
+                                                                        12.808294296264648,
+                                                                        0.0
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "worm_tooth_0_end",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                4.532104015350342,
+                                                                9.839273452758789,
+                                                                7.2700958251953125
+                                                            ],
+                                                            "rotation": [
+                                                                0.16773320734500885,
+                                                                -0.22065694630146027,
+                                                                0.2243638038635254,
+                                                                0.934257447719574
+                                                            ],
+                                                            "scale": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "worm_tooth_0",
                                                     "tag": 0
                                                 }
                                             ],
@@ -1035,13 +1035,10 @@
                 {
                     "active": true,
                     "mesh": {
-                        "anim_path": "Assets/Models/Characters/Worm/worm_armature|worm_armature|worm_armature|worm_reel.cake",
-                        "anim_uid": 1851529775,
                         "asset_path": "Assets/Models/Characters/Worm/Worm.002.sugar",
                         "draw_face_normals": false,
                         "draw_vertex_normals": false,
                         "is_animated": true,
-                        "root_node_UID": 827300317,
                         "shape_type": 0,
                         "uid": 1026652156
                     },
@@ -1067,14 +1064,14 @@
                 {
                     "active": true,
                     "file_name": "Assets/Scripts/Characters/Omozra/Worm.lua",
-                    "id": 1718492619,
+                    "id": 244968381,
                     "type": 5
                 },
                 {
                     "active": true,
                     "fade_time": 2.0,
                     "offset_sync": false,
-                    "total_tracks": 4,
+                    "total_tracks": 5,
                     "tracks": [
                         {
                             "bypass": false,
@@ -1085,8 +1082,8 @@
                             "offset": 0.0,
                             "pan": 0.0,
                             "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Sadiq/sadiq_ground_burrow_fx.wav",
-                            "transpose": 0.0,
+                            "track_path": "Assets/Audio/SFX/Sadiq/sadiq_ground_unburrow_1_fx.wav",
+                            "transpose": 1.0,
                             "volume": 100.0
                         },
                         {
@@ -1098,8 +1095,8 @@
                             "offset": 0.0,
                             "pan": 0.0,
                             "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Sadiq/sadiq_electric_waves_1_fx.wav",
-                            "transpose": 0.0,
+                            "track_path": "Assets/Audio/SFX/Sadiq/sadiq_ground_burrow_fx.wav",
+                            "transpose": 1.0,
                             "volume": 100.0
                         },
                         {
@@ -1112,7 +1109,7 @@
                             "pan": 0.0,
                             "play_on_start": false,
                             "track_path": "Assets/Audio/SFX/Sadiq/sadiq_devour_fx.wav",
-                            "transpose": 0.0,
+                            "transpose": 1.0,
                             "volume": 100.0
                         },
                         {
@@ -1125,7 +1122,20 @@
                             "pan": 0.0,
                             "play_on_start": false,
                             "track_path": "Assets/Audio/SFX/Sadiq/sadiq_spit_fx.wav",
-                            "transpose": 0.0,
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Sadiq/sadiq_ground_unburrow_2_fx.wav",
+                            "transpose": 1.0,
                             "volume": 100.0
                         }
                     ],
@@ -1249,6 +1259,12 @@
                     "clipName": "SpitToIdle",
                     "clipStartFrame": 187.0,
                     "mapString": "SpitToIdle"
+                }
+            ],
+            "meshes": [
+                {
+                    "asset_path": "Assets/Models/Characters/Worm/Worm.002.sugar",
+                    "uid": 1026652156
                 }
             ],
             "selectedClip": "Default clip",

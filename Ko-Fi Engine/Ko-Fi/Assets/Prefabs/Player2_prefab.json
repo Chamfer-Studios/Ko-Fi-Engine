@@ -1,0 +1,2740 @@
+{
+    "active": true,
+    "children": [
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        -1537.3292236328125,
+                        -9.5367431640625e-07,
+                        811.97998046875
+                    ],
+                    "rotation": [
+                        4.371138828673793e-08,
+                        1.0,
+                        1.9470718370939721e-07,
+                        -8.510920985441324e-15
+                    ],
+                    "scale": [
+                        0.010000092908740044,
+                        0.009999999776482582,
+                        0.010000092908740044
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "mesh": {
+                        "asset_path": "Assets/Models/Characters/Nerala/nerala_low.sugar",
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "is_animated": true,
+                        "shape_type": 0,
+                        "uid": 273555772
+                    },
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "color": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "shader": {
+                        "asset_path": "Assets/Shaders/default_shader.glsl",
+                        "uniforms": null
+                    },
+                    "texture": {
+                        "asset_path": "Assets/Textures/Characters/Nerala/nerala_base_color.png"
+                    },
+                    "type": 2
+                },
+                {
+                    "active": true,
+                    "body_type": "Dynamic",
+                    "freeze_position_x": false,
+                    "freeze_position_y": true,
+                    "freeze_position_z": false,
+                    "freeze_rotation_x": true,
+                    "freeze_rotation_y": true,
+                    "freeze_rotation_z": true,
+                    "mass": 1.0,
+                    "type": 6,
+                    "use_gravity": false
+                },
+                {
+                    "active": true,
+                    "center": [
+                        0.0,
+                        10.0,
+                        0.0
+                    ],
+                    "filter": "player",
+                    "is_trigger": true,
+                    "scale_factor": [
+                        0.5,
+                        1.0,
+                        0.5
+                    ],
+                    "type": 7
+                },
+                {
+                    "active": true,
+                    "file_name": "Assets/Scripts/Characters/Nerala/Nerala.lua",
+                    "id": 1196853938,
+                    "inspector_variables": [
+                        {
+                            "name": "maxHP",
+                            "type": "int",
+                            "value": 3
+                        },
+                        {
+                            "name": "speed",
+                            "type": "int",
+                            "value": 2500
+                        },
+                        {
+                            "name": "crouchMultiplierPercentage",
+                            "type": "int",
+                            "value": 66
+                        },
+                        {
+                            "name": "runMultiplierPercentage",
+                            "type": "int",
+                            "value": 150
+                        },
+                        {
+                            "name": "staminaSeconds",
+                            "type": "int",
+                            "value": 5
+                        },
+                        {
+                            "name": "recoveryTime",
+                            "type": "int",
+                            "value": 3
+                        },
+                        {
+                            "name": "primaryCastRange",
+                            "type": "int",
+                            "value": 100
+                        },
+                        {
+                            "name": "primaryCooldown",
+                            "type": "int",
+                            "value": 5
+                        },
+                        {
+                            "name": "dartSpeed",
+                            "type": "int",
+                            "value": 3000
+                        },
+                        {
+                            "name": "secondaryCastRange",
+                            "type": "int",
+                            "value": 75
+                        },
+                        {
+                            "name": "ultimateCastRange",
+                            "type": "int",
+                            "value": 50
+                        },
+                        {
+                            "name": "ultimateSpiceCost",
+                            "type": "int",
+                            "value": 1500
+                        }
+                    ],
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "ambientValue": 0.0,
+                    "constantAttenuationValue": 0.0,
+                    "cutOffAngle": 1.0,
+                    "diffuseValue": 0.5,
+                    "lightColor": [
+                        0.0,
+                        1.0,
+                        0.0
+                    ],
+                    "lightDirection": [
+                        1.0,
+                        0.0,
+                        0.0
+                    ],
+                    "lightPosition": [
+                        -1537.3292236328125,
+                        -9.5367431640625e-07,
+                        811.97998046875
+                    ],
+                    "linearAttenuationValue": 0.0,
+                    "quadraticAttenuationValue": 0.0,
+                    "sourceType": 2,
+                    "specularValue": 0.0,
+                    "type": 19
+                },
+                {
+                    "active": true,
+                    "file_name": "Assets/Scripts/Pathfinder.lua",
+                    "id": 17687332,
+                    "inspector_variables": [
+                        {
+                            "name": "minRetargetingDistance",
+                            "type": "int",
+                            "value": 3
+                        }
+                    ],
+                    "type": 5
+                }
+            ],
+            "is3D": true,
+            "isPrefab": false,
+            "name": "Nerala",
+            "tag": 1
+        },
+        {
+            "active": true,
+            "children": [
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": true,
+                            "children": [
+                                {
+                                    "active": true,
+                                    "children": [
+                                        {
+                                            "active": true,
+                                            "children": [
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        -7.199496030807495e-05,
+                                                                        73.90187072753906,
+                                                                        2.130866050720215e-06
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "nerala_left_toe_end",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                5.43445348739624e-05,
+                                                                178.30792236328125,
+                                                                -4.7206878662109375e-05
+                                                            ],
+                                                            "rotation": [
+                                                                0.3039965331554413,
+                                                                0.007428490556776524,
+                                                                -0.002348504727706313,
+                                                                0.9526413083076477
+                                                            ],
+                                                            "scale": [
+                                                                0.9999903440475464,
+                                                                0.9999999403953552,
+                                                                1.0
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "nerala_left_toe_base",
+                                                    "tag": 0
+                                                }
+                                            ],
+                                            "components": [
+                                                {
+                                                    "active": true,
+                                                    "type": 23
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "position": [
+                                                        -1.9073486328125e-06,
+                                                        469.64776611328125,
+                                                        5.14984130859375e-05
+                                                    ],
+                                                    "rotation": [
+                                                        0.5209031701087952,
+                                                        -0.09198553115129471,
+                                                        -0.0801268219947815,
+                                                        0.8448539972305298
+                                                    ],
+                                                    "scale": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "type": 21
+                                                }
+                                            ],
+                                            "is3D": true,
+                                            "isPrefab": false,
+                                            "name": "nerala_left_foot",
+                                            "tag": 0
+                                        }
+                                    ],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "position": [
+                                                -3.814697265625e-06,
+                                                533.19873046875,
+                                                3.814697265625e-06
+                                            ],
+                                            "rotation": [
+                                                -0.251421183347702,
+                                                -0.07486476749181747,
+                                                0.06817645579576492,
+                                                0.9625666737556458
+                                            ],
+                                            "scale": [
+                                                0.9999998807907104,
+                                                1.0,
+                                                1.0
+                                            ],
+                                            "type": 21
+                                        }
+                                    ],
+                                    "is3D": true,
+                                    "isPrefab": false,
+                                    "name": "nerala_left_leg",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "position": [
+                                        110.12200927734375,
+                                        -53.76454162597656,
+                                        -5.769361972808838
+                                    ],
+                                    "rotation": [
+                                        0.1122414767742157,
+                                        0.16094115376472473,
+                                        0.9748186469078064,
+                                        -0.10596442967653275
+                                    ],
+                                    "scale": [
+                                        1.0,
+                                        1.0000004768371582,
+                                        1.0
+                                    ],
+                                    "type": 21
+                                }
+                            ],
+                            "is3D": true,
+                            "isPrefab": false,
+                            "name": "nerala_left_up_leg",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [
+                                {
+                                    "active": true,
+                                    "children": [
+                                        {
+                                            "active": true,
+                                            "children": [
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [
+                                                                {
+                                                                    "active": true,
+                                                                    "children": [],
+                                                                    "components": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "type": 23
+                                                                        },
+                                                                        {
+                                                                            "active": true,
+                                                                            "position": [
+                                                                                -2.2897031158208847e-05,
+                                                                                265.19268798828125,
+                                                                                -22.29367446899414
+                                                                            ],
+                                                                            "rotation": [
+                                                                                0.0,
+                                                                                0.0,
+                                                                                0.0,
+                                                                                1.0
+                                                                            ],
+                                                                            "scale": [
+                                                                                1.0,
+                                                                                1.0,
+                                                                                1.0
+                                                                            ],
+                                                                            "type": 21
+                                                                        }
+                                                                    ],
+                                                                    "is3D": true,
+                                                                    "isPrefab": false,
+                                                                    "name": "nerala_head_top_end",
+                                                                    "tag": 0
+                                                                }
+                                                            ],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        -5.5905431509017944e-05,
+                                                                        123.9250717163086,
+                                                                        -10.417943954467773
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.013312279246747494,
+                                                                        0.006829557474702597,
+                                                                        -0.07146187126636505,
+                                                                        0.9973311424255371
+                                                                    ],
+                                                                    "scale": [
+                                                                        0.9999993443489075,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "nerala_head",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                0.0002934187650680542,
+                                                                145.40390014648438,
+                                                                -4.544854164123535e-06
+                                                            ],
+                                                            "rotation": [
+                                                                0.011357075534760952,
+                                                                -0.002245308831334114,
+                                                                -0.018950579687952995,
+                                                                0.9997534155845642
+                                                            ],
+                                                            "scale": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "nerala_neck",
+                                                    "tag": 0
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [
+                                                                {
+                                                                    "active": true,
+                                                                    "children": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "children": [
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "children": [
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "children": [
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "children": [
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "children": [],
+                                                                                                            "components": [
+                                                                                                                {
+                                                                                                                    "active": true,
+                                                                                                                    "type": 23
+                                                                                                                },
+                                                                                                                {
+                                                                                                                    "active": true,
+                                                                                                                    "position": [
+                                                                                                                        -8.897926330566406,
+                                                                                                                        36.231685638427734,
+                                                                                                                        0.000125885009765625
+                                                                                                                    ],
+                                                                                                                    "rotation": [
+                                                                                                                        0.0,
+                                                                                                                        0.0,
+                                                                                                                        0.0,
+                                                                                                                        1.0
+                                                                                                                    ],
+                                                                                                                    "scale": [
+                                                                                                                        1.0,
+                                                                                                                        1.0,
+                                                                                                                        1.0
+                                                                                                                    ],
+                                                                                                                    "type": 21
+                                                                                                                }
+                                                                                                            ],
+                                                                                                            "is3D": true,
+                                                                                                            "isPrefab": false,
+                                                                                                            "name": "nerala_right_hand_thumb_4",
+                                                                                                            "tag": 0
+                                                                                                        }
+                                                                                                    ],
+                                                                                                    "components": [
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "type": 23
+                                                                                                        },
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "position": [
+                                                                                                                17.08551788330078,
+                                                                                                                36.25400924682617,
+                                                                                                                8.20159912109375e-05
+                                                                                                            ],
+                                                                                                            "rotation": [
+                                                                                                                0.0330599807202816,
+                                                                                                                0.009320965968072414,
+                                                                                                                -0.26851585507392883,
+                                                                                                                0.9626626968383789
+                                                                                                            ],
+                                                                                                            "scale": [
+                                                                                                                0.9999993443489075,
+                                                                                                                1.0,
+                                                                                                                0.999998927116394
+                                                                                                            ],
+                                                                                                            "type": 21
+                                                                                                        }
+                                                                                                    ],
+                                                                                                    "is3D": true,
+                                                                                                    "isPrefab": false,
+                                                                                                    "name": "nerala_right_hand_thumb_3",
+                                                                                                    "tag": 0
+                                                                                                }
+                                                                                            ],
+                                                                                            "components": [
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "type": 23
+                                                                                                },
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "position": [
+                                                                                                        -8.18695068359375,
+                                                                                                        31.55152130126953,
+                                                                                                        -0.000171661376953125
+                                                                                                    ],
+                                                                                                    "rotation": [
+                                                                                                        0.07528627663850784,
+                                                                                                        0.12390093505382538,
+                                                                                                        0.5581603050231934,
+                                                                                                        0.816968560218811
+                                                                                                    ],
+                                                                                                    "scale": [
+                                                                                                        1.0,
+                                                                                                        1.0,
+                                                                                                        0.9999995231628418
+                                                                                                    ],
+                                                                                                    "type": 21
+                                                                                                }
+                                                                                            ],
+                                                                                            "is3D": true,
+                                                                                            "isPrefab": false,
+                                                                                            "name": "nerala_right_hand_thumb_2",
+                                                                                            "tag": 0
+                                                                                        }
+                                                                                    ],
+                                                                                    "components": [
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "type": 23
+                                                                                        },
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "position": [
+                                                                                                23.710590362548828,
+                                                                                                33.13619613647461,
+                                                                                                2.384185791015625e-05
+                                                                                            ],
+                                                                                            "rotation": [
+                                                                                                0.1653074473142624,
+                                                                                                -0.22118477523326874,
+                                                                                                -0.3767954111099243,
+                                                                                                0.8841809630393982
+                                                                                            ],
+                                                                                            "scale": [
+                                                                                                0.9999999403953552,
+                                                                                                1.0,
+                                                                                                1.0
+                                                                                            ],
+                                                                                            "type": 21
+                                                                                        }
+                                                                                    ],
+                                                                                    "is3D": true,
+                                                                                    "isPrefab": false,
+                                                                                    "name": "nerala_right_hand_thumb_1",
+                                                                                    "tag": 0
+                                                                                },
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "children": [
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "children": [
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "children": [
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "children": [],
+                                                                                                            "components": [
+                                                                                                                {
+                                                                                                                    "active": true,
+                                                                                                                    "type": 23
+                                                                                                                },
+                                                                                                                {
+                                                                                                                    "active": true,
+                                                                                                                    "position": [
+                                                                                                                        0.18143868446350098,
+                                                                                                                        46.36982345581055,
+                                                                                                                        0.0002613067626953125
+                                                                                                                    ],
+                                                                                                                    "rotation": [
+                                                                                                                        0.0,
+                                                                                                                        0.0,
+                                                                                                                        0.0,
+                                                                                                                        1.0
+                                                                                                                    ],
+                                                                                                                    "scale": [
+                                                                                                                        1.0,
+                                                                                                                        1.0,
+                                                                                                                        1.0
+                                                                                                                    ],
+                                                                                                                    "type": 21
+                                                                                                                }
+                                                                                                            ],
+                                                                                                            "is3D": true,
+                                                                                                            "isPrefab": false,
+                                                                                                            "name": "nerala_right_hand_index_4",
+                                                                                                            "tag": 0
+                                                                                                        }
+                                                                                                    ],
+                                                                                                    "components": [
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "type": 23
+                                                                                                        },
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "position": [
+                                                                                                                0.46449947357177734,
+                                                                                                                47.6673469543457,
+                                                                                                                -2.8133392333984375e-05
+                                                                                                            ],
+                                                                                                            "rotation": [
+                                                                                                                0.11979060620069504,
+                                                                                                                0.0009141105692833662,
+                                                                                                                -0.01680331863462925,
+                                                                                                                0.9926565289497375
+                                                                                                            ],
+                                                                                                            "scale": [
+                                                                                                                1.0,
+                                                                                                                0.9999994039535522,
+                                                                                                                0.9999996423721313
+                                                                                                            ],
+                                                                                                            "type": 21
+                                                                                                        }
+                                                                                                    ],
+                                                                                                    "is3D": true,
+                                                                                                    "isPrefab": false,
+                                                                                                    "name": "nerala_right_hand_index_3",
+                                                                                                    "tag": 0
+                                                                                                }
+                                                                                            ],
+                                                                                            "components": [
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "type": 23
+                                                                                                },
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "position": [
+                                                                                                        -0.6459407806396484,
+                                                                                                        58.07381820678711,
+                                                                                                        -3.266334533691406e-05
+                                                                                                    ],
+                                                                                                    "rotation": [
+                                                                                                        0.18014506995677948,
+                                                                                                        0.0011407517595216632,
+                                                                                                        0.011903761886060238,
+                                                                                                        0.9835673570632935
+                                                                                                    ],
+                                                                                                    "scale": [
+                                                                                                        1.0,
+                                                                                                        1.0,
+                                                                                                        1.0
+                                                                                                    ],
+                                                                                                    "type": 21
+                                                                                                }
+                                                                                            ],
+                                                                                            "is3D": true,
+                                                                                            "isPrefab": false,
+                                                                                            "name": "nerala_right_hand_index_2",
+                                                                                            "tag": 0
+                                                                                        }
+                                                                                    ],
+                                                                                    "components": [
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "type": 23
+                                                                                        },
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "position": [
+                                                                                                7.343292236328125e-05,
+                                                                                                71.3985366821289,
+                                                                                                0.00026416778564453125
+                                                                                            ],
+                                                                                            "rotation": [
+                                                                                                0.07308505475521088,
+                                                                                                0.006756281945854425,
+                                                                                                0.02558889240026474,
+                                                                                                0.996974527835846
+                                                                                            ],
+                                                                                            "scale": [
+                                                                                                0.9999948143959045,
+                                                                                                0.9999992251396179,
+                                                                                                1.0
+                                                                                            ],
+                                                                                            "type": 21
+                                                                                        }
+                                                                                    ],
+                                                                                    "is3D": true,
+                                                                                    "isPrefab": false,
+                                                                                    "name": "nerala_right_hand_index_1",
+                                                                                    "tag": 0
+                                                                                }
+                                                                            ],
+                                                                            "components": [
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "type": 23
+                                                                                },
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "position": [
+                                                                                        -1.9073486328125e-06,
+                                                                                        306.7512512207031,
+                                                                                        -0.00023031234741210938
+                                                                                    ],
+                                                                                    "rotation": [
+                                                                                        0.10006125271320343,
+                                                                                        0.01485225185751915,
+                                                                                        0.06813786923885345,
+                                                                                        0.992534339427948
+                                                                                    ],
+                                                                                    "scale": [
+                                                                                        0.9999992847442627,
+                                                                                        0.999998927116394,
+                                                                                        0.9999992847442627
+                                                                                    ],
+                                                                                    "type": 21
+                                                                                }
+                                                                            ],
+                                                                            "is3D": true,
+                                                                            "isPrefab": false,
+                                                                            "name": "nerala_right_hand",
+                                                                            "tag": 0
+                                                                        }
+                                                                    ],
+                                                                    "components": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "type": 23
+                                                                        },
+                                                                        {
+                                                                            "active": true,
+                                                                            "position": [
+                                                                                -4.5299530029296875e-05,
+                                                                                247.92889404296875,
+                                                                                -0.00032833218574523926
+                                                                            ],
+                                                                            "rotation": [
+                                                                                0.0013168449513614178,
+                                                                                0.023668890818953514,
+                                                                                -0.153534933924675,
+                                                                                0.9878588318824768
+                                                                            ],
+                                                                            "scale": [
+                                                                                0.9999993443489075,
+                                                                                0.9999998807907104,
+                                                                                1.0
+                                                                            ],
+                                                                            "type": 21
+                                                                        }
+                                                                    ],
+                                                                    "is3D": true,
+                                                                    "isPrefab": false,
+                                                                    "name": "nerala_right_fore_arm",
+                                                                    "tag": 0
+                                                                }
+                                                            ],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        8.96453857421875e-05,
+                                                                        100.00875854492188,
+                                                                        0.00029534101486206055
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.42402714490890503,
+                                                                        0.004557129926979542,
+                                                                        -0.007613976951688528,
+                                                                        0.9056060314178467
+                                                                    ],
+                                                                    "scale": [
+                                                                        0.9999999403953552,
+                                                                        1.0,
+                                                                        0.9999999403953552
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "nerala_right_arm",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                -48.7185173034668,
+                                                                133.9741973876953,
+                                                                0.22235286235809326
+                                                            ],
+                                                            "rotation": [
+                                                                0.6046551465988159,
+                                                                -0.4257190525531769,
+                                                                0.536086916923523,
+                                                                0.40714406967163086
+                                                            ],
+                                                            "scale": [
+                                                                1.000000238418579,
+                                                                1.000000238418579,
+                                                                1.000000238418579
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "nerala_right_shoulder",
+                                                    "tag": 0
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [
+                                                                {
+                                                                    "active": true,
+                                                                    "children": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "children": [
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "children": [],
+                                                                                    "components": [
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "type": 23
+                                                                                        },
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "position": [
+                                                                                                159.35630798339844,
+                                                                                                17.1522216796875,
+                                                                                                -155.73602294921875
+                                                                                            ],
+                                                                                            "rotation": [
+                                                                                                0.00018883790471591055,
+                                                                                                0.43944862484931946,
+                                                                                                0.002526664873585105,
+                                                                                                0.8982641696929932
+                                                                                            ],
+                                                                                            "scale": [
+                                                                                                1.0,
+                                                                                                0.9999999403953552,
+                                                                                                1.0
+                                                                                            ],
+                                                                                            "type": 21
+                                                                                        }
+                                                                                    ],
+                                                                                    "is3D": true,
+                                                                                    "isPrefab": false,
+                                                                                    "name": "crossbow_end",
+                                                                                    "tag": 0
+                                                                                }
+                                                                            ],
+                                                                            "components": [
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "type": 23
+                                                                                },
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "position": [
+                                                                                        -2.412447929382324,
+                                                                                        71.78724670410156,
+                                                                                        -67.84391784667969
+                                                                                    ],
+                                                                                    "rotation": [
+                                                                                        -0.22842644155025482,
+                                                                                        -0.6535142064094543,
+                                                                                        0.6550358533859253,
+                                                                                        0.3027682304382324
+                                                                                    ],
+                                                                                    "scale": [
+                                                                                        1.0,
+                                                                                        0.9999945759773254,
+                                                                                        1.0
+                                                                                    ],
+                                                                                    "type": 21
+                                                                                }
+                                                                            ],
+                                                                            "is3D": true,
+                                                                            "isPrefab": false,
+                                                                            "name": "crossbow_base",
+                                                                            "tag": 0
+                                                                        },
+                                                                        {
+                                                                            "active": true,
+                                                                            "children": [
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "children": [
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "children": [
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "children": [
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "children": [],
+                                                                                                            "components": [
+                                                                                                                {
+                                                                                                                    "active": true,
+                                                                                                                    "type": 23
+                                                                                                                },
+                                                                                                                {
+                                                                                                                    "active": true,
+                                                                                                                    "position": [
+                                                                                                                        5.89068603515625,
+                                                                                                                        35.07244873046875,
+                                                                                                                        -3.814697265625e-05
+                                                                                                                    ],
+                                                                                                                    "rotation": [
+                                                                                                                        0.0,
+                                                                                                                        0.0,
+                                                                                                                        0.0,
+                                                                                                                        1.0
+                                                                                                                    ],
+                                                                                                                    "scale": [
+                                                                                                                        1.0,
+                                                                                                                        1.0,
+                                                                                                                        1.0
+                                                                                                                    ],
+                                                                                                                    "type": 21
+                                                                                                                }
+                                                                                                            ],
+                                                                                                            "is3D": true,
+                                                                                                            "isPrefab": false,
+                                                                                                            "name": "nerala_left_hand_thumb_4",
+                                                                                                            "tag": 0
+                                                                                                        }
+                                                                                                    ],
+                                                                                                    "components": [
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "type": 23
+                                                                                                        },
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "position": [
+                                                                                                                -10.274032592773438,
+                                                                                                                36.99840545654297,
+                                                                                                                0.0001544952392578125
+                                                                                                            ],
+                                                                                                            "rotation": [
+                                                                                                                0.03218428045511246,
+                                                                                                                -0.010268674232065678,
+                                                                                                                0.14159990847110748,
+                                                                                                                0.9893473982810974
+                                                                                                            ],
+                                                                                                            "scale": [
+                                                                                                                0.9999999403953552,
+                                                                                                                1.0,
+                                                                                                                0.9999988079071045
+                                                                                                            ],
+                                                                                                            "type": 21
+                                                                                                        }
+                                                                                                    ],
+                                                                                                    "is3D": true,
+                                                                                                    "isPrefab": false,
+                                                                                                    "name": "nerala_left_hand_thumb_3",
+                                                                                                    "tag": 0
+                                                                                                }
+                                                                                            ],
+                                                                                            "components": [
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "type": 23
+                                                                                                },
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "position": [
+                                                                                                        4.383022308349609,
+                                                                                                        32.29372787475586,
+                                                                                                        -3.4332275390625e-05
+                                                                                                    ],
+                                                                                                    "rotation": [
+                                                                                                        0.08318398147821426,
+                                                                                                        -0.12155426293611526,
+                                                                                                        -0.431884765625,
+                                                                                                        0.8898205161094666
+                                                                                                    ],
+                                                                                                    "scale": [
+                                                                                                        0.9999998807907104,
+                                                                                                        1.0,
+                                                                                                        0.9999998807907104
+                                                                                                    ],
+                                                                                                    "type": 21
+                                                                                                }
+                                                                                            ],
+                                                                                            "is3D": true,
+                                                                                            "isPrefab": false,
+                                                                                            "name": "nerala_left_hand_thumb_2",
+                                                                                            "tag": 0
+                                                                                        }
+                                                                                    ],
+                                                                                    "components": [
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "type": 23
+                                                                                        },
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "position": [
+                                                                                                -26.853670120239258,
+                                                                                                30.634492874145508,
+                                                                                                0.00024127960205078125
+                                                                                            ],
+                                                                                            "rotation": [
+                                                                                                0.14286896586418152,
+                                                                                                0.23752664029598236,
+                                                                                                0.3281196057796478,
+                                                                                                0.9030542969703674
+                                                                                            ],
+                                                                                            "scale": [
+                                                                                                1.0,
+                                                                                                1.0,
+                                                                                                1.0
+                                                                                            ],
+                                                                                            "type": 21
+                                                                                        }
+                                                                                    ],
+                                                                                    "is3D": true,
+                                                                                    "isPrefab": false,
+                                                                                    "name": "nerala_left_hand_thumb_1",
+                                                                                    "tag": 0
+                                                                                },
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "children": [
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "children": [
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "children": [
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "children": [],
+                                                                                                            "components": [
+                                                                                                                {
+                                                                                                                    "active": true,
+                                                                                                                    "type": 23
+                                                                                                                },
+                                                                                                                {
+                                                                                                                    "active": true,
+                                                                                                                    "position": [
+                                                                                                                        0.2527790069580078,
+                                                                                                                        45.00389099121094,
+                                                                                                                        0.0002186298370361328
+                                                                                                                    ],
+                                                                                                                    "rotation": [
+                                                                                                                        0.0,
+                                                                                                                        0.0,
+                                                                                                                        0.0,
+                                                                                                                        1.0
+                                                                                                                    ],
+                                                                                                                    "scale": [
+                                                                                                                        1.0,
+                                                                                                                        1.0,
+                                                                                                                        1.0
+                                                                                                                    ],
+                                                                                                                    "type": 21
+                                                                                                                }
+                                                                                                            ],
+                                                                                                            "is3D": true,
+                                                                                                            "isPrefab": false,
+                                                                                                            "name": "nerala_left_hand_index_4",
+                                                                                                            "tag": 0
+                                                                                                        }
+                                                                                                    ],
+                                                                                                    "components": [
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "type": 23
+                                                                                                        },
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "position": [
+                                                                                                                -0.39122581481933594,
+                                                                                                                47.86385726928711,
+                                                                                                                0.0001304149627685547
+                                                                                                            ],
+                                                                                                            "rotation": [
+                                                                                                                0.08865565061569214,
+                                                                                                                -0.00015063793398439884,
+                                                                                                                0.014322399161756039,
+                                                                                                                0.9959593415260315
+                                                                                                            ],
+                                                                                                            "scale": [
+                                                                                                                0.9999903440475464,
+                                                                                                                1.0,
+                                                                                                                1.0
+                                                                                                            ],
+                                                                                                            "type": 21
+                                                                                                        }
+                                                                                                    ],
+                                                                                                    "is3D": true,
+                                                                                                    "isPrefab": false,
+                                                                                                    "name": "nerala_left_hand_index_3",
+                                                                                                    "tag": 0
+                                                                                                }
+                                                                                            ],
+                                                                                            "components": [
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "type": 23
+                                                                                                },
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "position": [
+                                                                                                        0.1383371353149414,
+                                                                                                        57.15394973754883,
+                                                                                                        0.00010752677917480469
+                                                                                                    ],
+                                                                                                    "rotation": [
+                                                                                                        0.1800972819328308,
+                                                                                                        -0.0006505939527414739,
+                                                                                                        -0.0005635183770209551,
+                                                                                                        0.983648419380188
+                                                                                                    ],
+                                                                                                    "scale": [
+                                                                                                        0.9999903440475464,
+                                                                                                        1.0,
+                                                                                                        0.9999999403953552
+                                                                                                    ],
+                                                                                                    "type": 21
+                                                                                                }
+                                                                                            ],
+                                                                                            "is3D": true,
+                                                                                            "isPrefab": false,
+                                                                                            "name": "nerala_left_hand_index_2",
+                                                                                            "tag": 0
+                                                                                        }
+                                                                                    ],
+                                                                                    "components": [
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "type": 23
+                                                                                        },
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "position": [
+                                                                                                5.14984130859375e-05,
+                                                                                                70.73623657226563,
+                                                                                                -0.000125885009765625
+                                                                                            ],
+                                                                                            "rotation": [
+                                                                                                0.07406888902187347,
+                                                                                                -0.0033767002169042826,
+                                                                                                -0.027572358027100563,
+                                                                                                0.9968661665916443
+                                                                                            ],
+                                                                                            "scale": [
+                                                                                                0.9999995827674866,
+                                                                                                0.9999998807907104,
+                                                                                                0.9999993443489075
+                                                                                            ],
+                                                                                            "type": 21
+                                                                                        }
+                                                                                    ],
+                                                                                    "is3D": true,
+                                                                                    "isPrefab": false,
+                                                                                    "name": "nerala_left_hand_index_1",
+                                                                                    "tag": 0
+                                                                                }
+                                                                            ],
+                                                                            "components": [
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "type": 23
+                                                                                },
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "position": [
+                                                                                        5.7220458984375e-06,
+                                                                                        306.9715576171875,
+                                                                                        -0.00017499923706054688
+                                                                                    ],
+                                                                                    "rotation": [
+                                                                                        0.08908535540103912,
+                                                                                        -0.14070099592208862,
+                                                                                        -0.021200967952609062,
+                                                                                        0.9858080744743347
+                                                                                    ],
+                                                                                    "scale": [
+                                                                                        1.0,
+                                                                                        0.9999992251396179,
+                                                                                        0.9999999403953552
+                                                                                    ],
+                                                                                    "type": 21
+                                                                                }
+                                                                            ],
+                                                                            "is3D": true,
+                                                                            "isPrefab": false,
+                                                                            "name": "nerala_left_hand",
+                                                                            "tag": 0
+                                                                        }
+                                                                    ],
+                                                                    "components": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "type": 23
+                                                                        },
+                                                                        {
+                                                                            "active": true,
+                                                                            "position": [
+                                                                                4.3392181396484375e-05,
+                                                                                247.9024658203125,
+                                                                                0.00027501583099365234
+                                                                            ],
+                                                                            "rotation": [
+                                                                                0.0014857851201668382,
+                                                                                -0.021482404321432114,
+                                                                                0.12561172246932983,
+                                                                                0.9918457269668579
+                                                                            ],
+                                                                            "scale": [
+                                                                                1.0,
+                                                                                1.0,
+                                                                                1.0
+                                                                            ],
+                                                                            "type": 21
+                                                                        }
+                                                                    ],
+                                                                    "is3D": true,
+                                                                    "isPrefab": false,
+                                                                    "name": "nerala_left_fore_arm",
+                                                                    "tag": 0
+                                                                }
+                                                            ],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        4.9591064453125e-05,
+                                                                        100.00871276855469,
+                                                                        3.24249267578125e-05
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.5473887324333191,
+                                                                        0.005596168804913759,
+                                                                        -0.04627358540892601,
+                                                                        0.8355794548988342
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "nerala_left_arm",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                48.71893310546875,
+                                                                133.976318359375,
+                                                                -0.31718018651008606
+                                                            ],
+                                                            "rotation": [
+                                                                0.645042359828949,
+                                                                0.3844652771949768,
+                                                                -0.4872405230998993,
+                                                                0.4457617700099945
+                                                            ],
+                                                            "scale": [
+                                                                1.0,
+                                                                1.0000001192092896,
+                                                                1.0000001192092896
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "nerala_left_shoulder",
+                                                    "tag": 0
+                                                }
+                                            ],
+                                            "components": [
+                                                {
+                                                    "active": true,
+                                                    "type": 23
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "position": [
+                                                        -3.5762786865234375e-07,
+                                                        129.24514770507813,
+                                                        2.4437904357910156e-06
+                                                    ],
+                                                    "rotation": [
+                                                        0.0063771759159862995,
+                                                        0.006312807090580463,
+                                                        0.05112669616937637,
+                                                        0.9986518621444702
+                                                    ],
+                                                    "scale": [
+                                                        1.0,
+                                                        0.9999998807907104,
+                                                        0.9999903440475464
+                                                    ],
+                                                    "type": 21
+                                                }
+                                            ],
+                                            "is3D": true,
+                                            "isPrefab": false,
+                                            "name": "nerala_spine_2",
+                                            "tag": 0
+                                        }
+                                    ],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "position": [
+                                                -2.9355287551879883e-06,
+                                                113.09245300292969,
+                                                -5.960464477539063e-08
+                                            ],
+                                            "rotation": [
+                                                0.006305606570094824,
+                                                0.0017805410316213965,
+                                                0.05189014971256256,
+                                                0.9986314177513123
+                                            ],
+                                            "scale": [
+                                                0.9999944567680359,
+                                                0.9999991655349731,
+                                                0.9999975562095642
+                                            ],
+                                            "type": 21
+                                        }
+                                    ],
+                                    "is3D": true,
+                                    "isPrefab": false,
+                                    "name": "nerala_spine_1",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "position": [
+                                        8.307024836540222e-05,
+                                        96.9345474243164,
+                                        -0.40215185284614563
+                                    ],
+                                    "rotation": [
+                                        0.008820082992315292,
+                                        -0.010713580064475536,
+                                        0.02480318956077099,
+                                        0.9995960593223572
+                                    ],
+                                    "scale": [
+                                        0.9999961256980896,
+                                        0.999994158744812,
+                                        0.9999991059303284
+                                    ],
+                                    "type": 21
+                                }
+                            ],
+                            "is3D": true,
+                            "isPrefab": false,
+                            "name": "nerala_spine",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [
+                                {
+                                    "active": true,
+                                    "children": [
+                                        {
+                                            "active": true,
+                                            "children": [
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        1.5558674931526184e-05,
+                                                                        74.23453521728516,
+                                                                        -3.4570693969726563e-06
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "nerala_right_toe_end",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                6.094574928283691e-06,
+                                                                180.32858276367188,
+                                                                -6.878376007080078e-05
+                                                            ],
+                                                            "rotation": [
+                                                                0.30158162117004395,
+                                                                -0.00703558512032032,
+                                                                0.002195359207689762,
+                                                                0.953411877155304
+                                                            ],
+                                                            "scale": [
+                                                                0.9999903440475464,
+                                                                1.0,
+                                                                0.9999998211860657
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "nerala_right_toe_base",
+                                                    "tag": 0
+                                                }
+                                            ],
+                                            "components": [
+                                                {
+                                                    "active": true,
+                                                    "type": 23
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "position": [
+                                                        2.193450927734375e-05,
+                                                        469.674072265625,
+                                                        -3.5762786865234375e-05
+                                                    ],
+                                                    "rotation": [
+                                                        0.5667576789855957,
+                                                        -0.012267641723155975,
+                                                        -0.057223960757255554,
+                                                        0.8218033313751221
+                                                    ],
+                                                    "scale": [
+                                                        0.9999980926513672,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "type": 21
+                                                }
+                                            ],
+                                            "is3D": true,
+                                            "isPrefab": false,
+                                            "name": "nerala_right_foot",
+                                            "tag": 0
+                                        }
+                                    ],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "position": [
+                                                -7.62939453125e-06,
+                                                533.0411987304688,
+                                                -1.6689300537109375e-06
+                                            ],
+                                            "rotation": [
+                                                -0.12935206294059753,
+                                                0.05116653069853783,
+                                                -0.008223221637308598,
+                                                0.9902436137199402
+                                            ],
+                                            "scale": [
+                                                0.9999999403953552,
+                                                1.0,
+                                                1.0
+                                            ],
+                                            "type": 21
+                                        }
+                                    ],
+                                    "is3D": true,
+                                    "isPrefab": false,
+                                    "name": "nerala_right_leg",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "position": [
+                                        -110.12189483642578,
+                                        -53.76408386230469,
+                                        -3.2959094047546387
+                                    ],
+                                    "rotation": [
+                                        -0.03922900930047035,
+                                        0.007093948777765036,
+                                        0.9931061863899231,
+                                        -0.11023113131523132
+                                    ],
+                                    "scale": [
+                                        0.9999993443489075,
+                                        1.0,
+                                        0.9999999403953552
+                                    ],
+                                    "type": 21
+                                }
+                            ],
+                            "is3D": true,
+                            "isPrefab": false,
+                            "name": "nerala_right_up_leg",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                7.129044532775879,
+                                1128.487060546875,
+                                5.019874572753906
+                            ],
+                            "rotation": [
+                                -0.008320626802742481,
+                                -0.0025444491766393185,
+                                -0.0458330400288105,
+                                0.9989112615585327
+                            ],
+                            "scale": [
+                                0.9999929070472717,
+                                1.0,
+                                0.9999999403953552
+                            ],
+                            "type": 21
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "nerala_hips",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 21
+                }
+            ],
+            "is3D": true,
+            "isPrefab": false,
+            "name": "nerala_armature",
+            "tag": 0
+        },
+        {
+            "active": true,
+            "children": [
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": false,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 6.0,
+                                                    "minParticleLife": 5.0,
+                                                    "particlesPerSpawn": 12,
+                                                    "randomParticleLife": true,
+                                                    "spawnTime": 5.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "position": 0.0
+                                                        },
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                0.0
+                                                            ],
+                                                            "position": 1.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "followForward": false,
+                                                    "maxAcceleration": [
+                                                        0.004999999888241291,
+                                                        0.004999999888241291,
+                                                        0.004999999888241291
+                                                    ],
+                                                    "maxDirection": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -1.0
+                                                    ],
+                                                    "maxPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "maxVelocity": 2.0,
+                                                    "minAcceleration": [
+                                                        -0.004999999888241291,
+                                                        -0.004999999888241291,
+                                                        -0.004999999888241291
+                                                    ],
+                                                    "minDirection": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "minPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minVelocity": 1.0,
+                                                    "randAcceleration": true,
+                                                    "randDirection": true,
+                                                    "randPosition": false,
+                                                    "randVelocity": true,
+                                                    "type": 2
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        10.0,
+                                                        10.0,
+                                                        10.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Smoke Emitter",
+                                            "texture_path": "Assets/Textures/Particles/smoke_2.png"
+                                        }
+                                    ],
+                                    "name": "Smoke"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Nerala Smoke Particle",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.20000000298023224,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.5,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 6,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "followForward": true,
+                                                    "maxAcceleration": [
+                                                        0.25,
+                                                        0.25,
+                                                        0.25
+                                                    ],
+                                                    "maxDirection": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -1.0
+                                                    ],
+                                                    "maxPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "maxVelocity": 5.0,
+                                                    "minAcceleration": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minDirection": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "minPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minVelocity": 40.0,
+                                                    "randAcceleration": false,
+                                                    "randDirection": false,
+                                                    "randPosition": false,
+                                                    "randVelocity": false,
+                                                    "type": 2
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        5.0,
+                                                        5.0,
+                                                        5.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Emitter",
+                                            "texture_path": "Assets/Textures/Particles/dash_projectile.png"
+                                        }
+                                    ],
+                                    "name": "Swoosh"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Nerala Swoosh Particle",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 3.0,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.5,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 1,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                }
+                                            ],
+                                            "name": "Emitter",
+                                            "texture_path": "Assets/Textures/Particles/simple.png"
+                                        }
+                                    ],
+                                    "name": "Trail"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Nerala Trail Particle",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 1.5,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.5,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        10.0,
+                                                        10.0,
+                                                        10.0
+                                                    ],
+                                                    "type": 4
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.29411765933036804
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                }
+                                            ],
+                                            "name": "Emitter",
+                                            "texture_path": "Assets/Textures/Particles/simple.png"
+                                        }
+                                    ],
+                                    "name": "Footsteps"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Nerala Footstep Particle",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 320,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.5882353186607361
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "followForward": true,
+                                                    "maxAcceleration": [
+                                                        0.25,
+                                                        0.25,
+                                                        0.25
+                                                    ],
+                                                    "maxDirection": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -1.0
+                                                    ],
+                                                    "maxPosition": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "maxVelocity": 5.0,
+                                                    "minAcceleration": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minDirection": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "minPosition": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -5.0
+                                                    ],
+                                                    "minVelocity": 0.0,
+                                                    "randAcceleration": false,
+                                                    "randDirection": false,
+                                                    "randPosition": false,
+                                                    "randVelocity": false,
+                                                    "type": 2
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        20.0,
+                                                        20.0,
+                                                        20.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Blood Splatters",
+                                            "texture_path": "Assets/Textures/Particles/blood.png"
+                                        },
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.5882353186607361
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "followForward": true,
+                                                    "maxAcceleration": [
+                                                        0.25,
+                                                        0.25,
+                                                        0.25
+                                                    ],
+                                                    "maxDirection": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -1.0
+                                                    ],
+                                                    "maxPosition": [
+                                                        0.5,
+                                                        0.5,
+                                                        0.5
+                                                    ],
+                                                    "maxVelocity": 5.0,
+                                                    "minAcceleration": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minDirection": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "minPosition": [
+                                                        -0.5,
+                                                        -0.5,
+                                                        -5.0
+                                                    ],
+                                                    "minVelocity": 0.0,
+                                                    "randAcceleration": false,
+                                                    "randDirection": false,
+                                                    "randPosition": false,
+                                                    "randVelocity": false,
+                                                    "type": 2
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        20.0,
+                                                        20.0,
+                                                        20.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Blood Pools",
+                                            "texture_path": "Assets/Textures/Particles/blood_huge.png"
+                                        }
+                                    ],
+                                    "name": "Blood"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Nerala Blood Particle",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.20000000298023224,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 1.2000000476837158,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": false,
+                                                    "maxDegrees": 180,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": true,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "followForward": false,
+                                                    "maxAcceleration": [
+                                                        0.25,
+                                                        0.25,
+                                                        0.25
+                                                    ],
+                                                    "maxDirection": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "maxPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "maxVelocity": 5.0,
+                                                    "minAcceleration": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minDirection": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "minPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minVelocity": 0.0,
+                                                    "randAcceleration": false,
+                                                    "randDirection": true,
+                                                    "randPosition": false,
+                                                    "randVelocity": false,
+                                                    "type": 2
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                0.7843137383460999
+                                                            ],
+                                                            "position": 0.5
+                                                        },
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                0.0
+                                                            ],
+                                                            "position": 1.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        15.0,
+                                                        15.0,
+                                                        15.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Hit",
+                                            "texture_path": "Assets/Textures/Particles/light_2.png"
+                                        }
+                                    ],
+                                    "name": "Impact Feedback"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Nerala Impact Particle",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 21
+                }
+            ],
+            "is3D": true,
+            "isPrefab": false,
+            "name": "Nerala Particles",
+            "tag": 0
+        }
+    ],
+    "components": [
+        {
+            "active": true,
+            "type": 23
+        },
+        {
+            "active": true,
+            "position": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": 21
+        },
+        {
+            "active": true,
+            "animation": {
+                "asset_path": "Assets/Models/Characters/Nerala/nerala_armature|nerala_armature|nerala_armature|nerala_reel.cake",
+                "uid": 1341420816
+            },
+            "clips": [
+                {
+                    "clipDuration": 29.0,
+                    "clipDurationInSeconds": 1.2083333730697632,
+                    "clipEndFrame": 233.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "Attack",
+                    "clipStartFrame": 204.0,
+                    "mapString": "Attack"
+                },
+                {
+                    "clipDuration": 36.0,
+                    "clipDurationInSeconds": 1.5,
+                    "clipEndFrame": 270.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "AttackToIdle",
+                    "clipStartFrame": 234.0,
+                    "mapString": "AttackToIdle"
+                },
+                {
+                    "clipDuration": 24.0,
+                    "clipDurationInSeconds": 1.0,
+                    "clipEndFrame": 169.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Crouch",
+                    "clipStartFrame": 145.0,
+                    "mapString": "Crouch"
+                },
+                {
+                    "clipDuration": 21.0,
+                    "clipDurationInSeconds": 0.875,
+                    "clipEndFrame": 593.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "Dart",
+                    "clipStartFrame": 572.0,
+                    "mapString": "Dart"
+                },
+                {
+                    "clipDuration": 17.0,
+                    "clipDurationInSeconds": 0.7083333134651184,
+                    "clipEndFrame": 611.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "DartToIdle",
+                    "clipStartFrame": 594.0,
+                    "mapString": "DartToIdle"
+                },
+                {
+                    "clipDuration": 69.0,
+                    "clipDurationInSeconds": 2.875,
+                    "clipEndFrame": 565.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "Death",
+                    "clipStartFrame": 496.0,
+                    "mapString": "Death"
+                },
+                {
+                    "clipDuration": 742.0,
+                    "clipDurationInSeconds": 30.91666603088379,
+                    "clipEndFrame": 742.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Default clip",
+                    "clipStartFrame": 0.0,
+                    "mapString": "Default clip"
+                },
+                {
+                    "clipDuration": 96.0,
+                    "clipDurationInSeconds": 4.0,
+                    "clipEndFrame": 97.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Idle",
+                    "clipStartFrame": 1.0,
+                    "mapString": "Idle"
+                },
+                {
+                    "clipDuration": 1.0,
+                    "clipDurationInSeconds": 0.0416666679084301,
+                    "clipEndFrame": 146.0,
+                    "clipFinished": false,
+                    "clipLoop": false,
+                    "clipName": "IdleCrouch",
+                    "clipStartFrame": 145.0,
+                    "mapString": "IdleCrouch"
+                },
+                {
+                    "clipDuration": 21.0,
+                    "clipDurationInSeconds": 0.875,
+                    "clipEndFrame": 636.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "Mosquito",
+                    "clipStartFrame": 615.0,
+                    "mapString": "Mosquito"
+                },
+                {
+                    "clipDuration": 16.0,
+                    "clipDurationInSeconds": 0.6666666865348816,
+                    "clipEndFrame": 481.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Run",
+                    "clipStartFrame": 465.0,
+                    "mapString": "Run"
+                },
+                {
+                    "clipDuration": 22.0,
+                    "clipDurationInSeconds": 0.9166666865348816,
+                    "clipEndFrame": 364.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "Smokebomb",
+                    "clipStartFrame": 342.0,
+                    "mapString": "Smokebomb"
+                },
+                {
+                    "clipDuration": 38.0,
+                    "clipDurationInSeconds": 1.5833333730697632,
+                    "clipEndFrame": 403.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "SmokebombToIdle",
+                    "clipStartFrame": 365.0,
+                    "mapString": "SmokebombToIdle"
+                },
+                {
+                    "clipDuration": 22.0,
+                    "clipDurationInSeconds": 0.9166666865348816,
+                    "clipEndFrame": 125.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Walk",
+                    "clipStartFrame": 103.0,
+                    "mapString": "Walk"
+                }
+            ],
+            "meshes": [
+                {
+                    "asset_path": "Assets/Models/Characters/Nerala/nerala_low.sugar",
+                    "uid": 273555772
+                }
+            ],
+            "selectedClip": "Idle",
+            "type": 12
+        }
+    ],
+    "is3D": true,
+    "isPrefab": true,
+    "name": "Player2",
+    "tag": 0
+}

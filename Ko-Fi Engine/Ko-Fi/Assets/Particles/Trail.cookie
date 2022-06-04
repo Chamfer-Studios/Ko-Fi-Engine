@@ -14,13 +14,44 @@
                         "type": 1
                     },
                     {
-                        "billboardingType": 1,
+                        "billboardingType": 2,
                         "frontAxis": true,
                         "maxDegrees": 360,
                         "minDegrees": 0,
                         "sideAxis": false,
                         "topAxis": false,
                         "type": 5
+                    },
+                    {
+                        "minInitialSize": [
+                            15.0,
+                            15.0,
+                            15.0
+                        ],
+                        "type": 4
+                    },
+                    {
+                        "colors": [
+                            {
+                                "color": [
+                                    1.0,
+                                    1.0,
+                                    1.0,
+                                    0.4901960790157318
+                                ],
+                                "position": 0.0
+                            },
+                            {
+                                "color": [
+                                    1.0,
+                                    1.0,
+                                    1.0,
+                                    0.0
+                                ],
+                                "position": 1.0
+                            }
+                        ],
+                        "type": 3
                     }
                 ],
                 "name": "Emitter",

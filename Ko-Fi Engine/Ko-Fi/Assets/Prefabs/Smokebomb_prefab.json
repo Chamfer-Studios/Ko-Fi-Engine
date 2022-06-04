@@ -20,7 +20,7 @@
                 1.0
             ],
             "scale": [
-                15.0,
+                14.999999046325684,
                 15.0,
                 15.0
             ],
@@ -48,18 +48,7 @@
             ],
             "shader": {
                 "asset_path": "Assets/Shaders/default_shader.glsl",
-                "uniforms": [
-                    {
-                        "name": "albedoTint",
-                        "type": 35666,
-                        "value": {
-                            "w": 1.0,
-                            "x": 1.0,
-                            "y": 1.0,
-                            "z": 1.0
-                        }
-                    }
-                ]
+                "uniforms": null
             },
             "texture": {
                 "asset_path": "Assets/Textures/Characters/Nerala/nerala_base_color.png"
@@ -76,21 +65,63 @@
             "active": true,
             "fade_time": 2.0,
             "offset_sync": false,
-            "total_tracks": 1,
+            "total_tracks": 2,
             "tracks": [
                 {
                     "bypass": false,
-                    "loop": true,
+                    "custom_loop": false,
+                    "loop": false,
+                    "loop_offset": 0.0,
                     "mute": false,
                     "offset": 0.0,
                     "pan": 0.0,
                     "play_on_start": false,
-                    "track_path": "Assets/Audio/SFX/Nerala/nerala_smoke_active_fx.wav",
-                    "transpose": 0.0,
+                    "track_path": "Assets/Audio/SFX/Nerala/temp_smoke_detonation_fx.wav",
+                    "transpose": 1.0,
                     "volume": 100.0
+                },
+                {
+                    "bypass": false,
+                    "custom_loop": false,
+                    "loop": true,
+                    "loop_offset": 0.0,
+                    "mute": false,
+                    "offset": 0.0,
+                    "pan": 0.0,
+                    "play_on_start": false,
+                    "track_path": "Assets/Audio/SFX/Nerala/temp_smoke_active_fx.wav",
+                    "transpose": 1.0,
+                    "volume": 23.0
                 }
             ],
             "type": 11
+        },
+        {
+            "active": true,
+            "ambientValue": 0.0,
+            "constantAttenuationValue": 0.0,
+            "cutOffAngle": 1.0,
+            "diffuseValue": 0.20000000298023224,
+            "lightColor": [
+                0.0,
+                1.0,
+                0.0
+            ],
+            "lightDirection": [
+                1.0,
+                0.0,
+                0.0
+            ],
+            "lightPosition": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "linearAttenuationValue": 0.0,
+            "quadraticAttenuationValue": 0.0,
+            "sourceType": 2,
+            "specularValue": 0.0,
+            "type": 19
         }
     ],
     "is3D": true,

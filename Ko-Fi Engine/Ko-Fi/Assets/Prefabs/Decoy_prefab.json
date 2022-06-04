@@ -1,153 +1,6 @@
 {
     "active": true,
-    "children": [
-        {
-            "active": true,
-            "children": [],
-            "components": [
-                {
-                    "active": true,
-                    "type": 23
-                },
-                {
-                    "active": true,
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 21
-                },
-                {
-                    "active": true,
-                    "resource": [
-                        {
-                            "emitters": [
-                                {
-                                    "loop": true,
-                                    "maxParticles": 500,
-                                    "modules": [
-                                        {
-                                            "maxParticleLife": 3.0,
-                                            "minParticleLife": 4.0,
-                                            "particlesPerSpawn": 1,
-                                            "randomParticleLife": false,
-                                            "spawnTime": 2.0,
-                                            "type": 1
-                                        },
-                                        {
-                                            "billboardingType": 6,
-                                            "frontAxis": true,
-                                            "maxDegrees": 360,
-                                            "minDegrees": 0,
-                                            "sideAxis": false,
-                                            "topAxis": false,
-                                            "type": 5
-                                        },
-                                        {
-                                            "minFinalSize": [
-                                                225.0,
-                                                225.0,
-                                                225.0
-                                            ],
-                                            "minInitialSize": [
-                                                15.0,
-                                                15.0,
-                                                15.0
-                                            ],
-                                            "type": 4
-                                        },
-                                        {
-                                            "colors": [
-                                                {
-                                                    "color": [
-                                                        1.0,
-                                                        1.0,
-                                                        1.0,
-                                                        1.0
-                                                    ],
-                                                    "position": 0.0
-                                                },
-                                                {
-                                                    "color": [
-                                                        1.0,
-                                                        1.0,
-                                                        1.0,
-                                                        1.0
-                                                    ],
-                                                    "position": 1.0
-                                                }
-                                            ],
-                                            "type": 3
-                                        },
-                                        {
-                                            "followForward": false,
-                                            "maxAcceleration": [
-                                                0.25,
-                                                0.25,
-                                                0.25
-                                            ],
-                                            "maxDirection": [
-                                                -1.0,
-                                                -1.0,
-                                                -1.0
-                                            ],
-                                            "maxPosition": [
-                                                0.0,
-                                                0.0,
-                                                0.0
-                                            ],
-                                            "maxVelocity": 5.0,
-                                            "minAcceleration": [
-                                                0.0,
-                                                0.0,
-                                                0.0
-                                            ],
-                                            "minDirection": [
-                                                0.0,
-                                                0.0,
-                                                0.0
-                                            ],
-                                            "minPosition": [
-                                                0.0,
-                                                0.5,
-                                                0.0
-                                            ],
-                                            "minVelocity": 0.699999988079071,
-                                            "randAcceleration": false,
-                                            "randDirection": false,
-                                            "randPosition": false,
-                                            "randVelocity": false,
-                                            "type": 2
-                                        }
-                                    ],
-                                    "name": "Wave Emitter",
-                                    "texture_path": "Assets/Textures/Particles/wave.png"
-                                }
-                            ],
-                            "name": "Wave"
-                        }
-                    ],
-                    "type": 3
-                }
-            ],
-            "is3D": true,
-            "isPrefab": false,
-            "name": "Decoy Particles",
-            "tag": 0
-        }
-    ],
+    "children": [],
     "components": [
         {
             "active": true,
@@ -156,9 +9,9 @@
         {
             "active": true,
             "position": [
-                -1496.4962158203125,
                 0.0,
-                527.1190185546875
+                0.0,
+                0.0
             ],
             "rotation": [
                 8.42937097900176e-08,
@@ -232,7 +85,7 @@
             "is_trigger": true,
             "scale_factor": [
                 2.0,
-                2.0,
+                5.0,
                 2.0
             ],
             "type": 7
@@ -252,8 +105,8 @@
                     "offset": 0.0,
                     "pan": 0.0,
                     "play_on_start": false,
-                    "track_path": "Assets/Audio/SFX/Zhib/zhib_decoy_active_fx.wav",
-                    "transpose": 0.0,
+                    "track_path": "Assets/Audio/SFX/Zhib/test_decoy_fx.wav",
+                    "transpose": 1.0,
                     "volume": 100.0
                 }
             ],
@@ -276,9 +129,9 @@
                 0.0
             ],
             "lightPosition": [
-                -1496.4962158203125,
                 0.0,
-                527.1190185546875
+                0.0,
+                0.0
             ],
             "linearAttenuationValue": 0.0,
             "quadraticAttenuationValue": 0.0,
@@ -402,5 +255,5 @@
     "is3D": true,
     "isPrefab": true,
     "name": "Decoy",
-    "tag": 4
+    "tag": 5
 }

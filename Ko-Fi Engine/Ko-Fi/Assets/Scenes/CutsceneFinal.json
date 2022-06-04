@@ -1,7 +1,7 @@
 {
     "CutsceneFinal": {
         "active": true,
-        "game_objects_amount": 38,
+        "game_objects_amount": 39,
         "game_objects_list": [
             {
                 "UID": 1588352491,
@@ -210,7 +210,7 @@
                     },
                     {
                         "active": true,
-                        "texture": "Assets/UI/Cutscenes/cutscene_2.png",
+                        "texture": "Assets/UI/Cutscenes/cutscene_23.png",
                         "type": 14
                     }
                 ],
@@ -369,8 +369,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            65.0
+                            50.0,
+                            100.0
                         ],
                         "rotation": [
                             0.0,
@@ -393,7 +393,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "The city of Arrakeen was besieged after the shields were taken down."
+                        "value": "The city of Arrakeen was conquered after the shields were taken down."
                     }
                 ],
                 "is3D": false,
@@ -418,8 +418,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            20.0
+                            50.0,
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -495,7 +495,7 @@
             },
             {
                 "UID": 1104294419,
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "active": true,
@@ -593,8 +593,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            94.0
+                            50.0,
+                            140.0
                         ],
                         "rotation": [
                             0.0,
@@ -642,8 +642,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            48.0
+                            50.0,
+                            80.0
                         ],
                         "rotation": [
                             0.0,
@@ -677,7 +677,7 @@
             },
             {
                 "UID": 1235969954,
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "active": true,
@@ -775,8 +775,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            94.0
+                            50.0,
+                            180.0
                         ],
                         "rotation": [
                             0.0,
@@ -784,7 +784,7 @@
                             0.0
                         ],
                         "size": [
-                            1520.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -824,8 +824,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            48.0
+                            50.0,
+                            120.0
                         ],
                         "rotation": [
                             0.0,
@@ -833,7 +833,7 @@
                             0.0
                         ],
                         "size": [
-                            1585.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -873,8 +873,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            0.0
+                            50.0,
+                            60.0
                         ],
                         "rotation": [
                             0.0,
@@ -882,7 +882,7 @@
                             0.0
                         ],
                         "size": [
-                            1596.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -964,8 +964,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            65.0
+                            50.0,
+                            100.0
                         ],
                         "rotation": [
                             0.0,
@@ -1013,8 +1013,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            21.0
+                            50.0,
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -1062,8 +1062,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            -25.0
+                            50.0,
+                            -20.0
                         ],
                         "rotation": [
                             0.0,
@@ -1111,8 +1111,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            -47.0
+                            50.0,
+                            0.0
                         ],
                         "rotation": [
                             0.0,
@@ -1120,7 +1120,7 @@
                             0.0
                         ],
                         "size": [
-                            1580.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1160,8 +1160,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            -24.0
+                            50.0,
+                            -20.0
                         ],
                         "rotation": [
                             0.0,
@@ -1209,8 +1209,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            0.0
+                            50.0,
+                            20.0
                         ],
                         "rotation": [
                             0.0,
@@ -1258,8 +1258,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            -47.0
+                            50.0,
+                            -40.0
                         ],
                         "rotation": [
                             0.0,
@@ -1307,8 +1307,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            -94.0
+                            50.0,
+                            -60.0
                         ],
                         "rotation": [
                             0.0,
@@ -1316,7 +1316,7 @@
                             0.0
                         ],
                         "size": [
-                            1608.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1331,7 +1331,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "in the whole war and became a singular team, the Special Spice Ops."
+                        "value": "in the whole war and were given a commemorative title, the Special Spice Ops."
                     }
                 ],
                 "is3D": false,
@@ -1342,7 +1342,7 @@
             },
             {
                 "UID": 1394970199,
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "active": true,
@@ -1524,8 +1524,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            48.0
+                            50.0,
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -1573,8 +1573,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            0.0
+                            50.0,
+                            -20.0
                         ],
                         "rotation": [
                             0.0,
@@ -1622,8 +1622,8 @@
                             0.44999998807907104
                         ],
                         "position": [
-                            25.0,
-                            65.0
+                            50.0,
+                            100.0
                         ],
                         "rotation": [
                             0.0,
@@ -1671,8 +1671,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            21.0
+                            50.0,
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -1720,8 +1720,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            -25.0
+                            50.0,
+                            -20.0
                         ],
                         "rotation": [
                             0.0,
@@ -1769,8 +1769,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            19.0
+                            50.0,
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -1778,7 +1778,7 @@
                             0.0
                         ],
                         "size": [
-                            1875.0,
+                            1500.0,
                             60.0
                         ],
                         "type": 22
@@ -1793,12 +1793,61 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "The dunes still shone under the sunlight, and the wind still carried the rhythm of war."
+                        "value": "The dunes still shone under the sunlight,"
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Text17",
+                "parent_UID": 602623279,
+                "tag": 0
+            },
+            {
+                "UID": 805333864,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 3,
+                        "pivot": [
+                            0.0,
+                            0.5
+                        ],
+                        "position": [
+                            50.0,
+                            -20.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            1800.0,
+                            60.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "type": 16,
+                        "value": "and the winds still carried the rhythms of war."
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Text (1)",
                 "parent_UID": 602623279,
                 "tag": 0
             }
