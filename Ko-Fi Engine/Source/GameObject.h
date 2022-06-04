@@ -65,7 +65,7 @@ public:
 
 		T* component = nullptr;
 
-		std::type_index id = typeid(component);
+		std::type_index id = typeid(T);
 
 		for (Component* c : components)
 		{

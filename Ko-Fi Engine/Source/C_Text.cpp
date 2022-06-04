@@ -16,7 +16,7 @@
 C_Text::C_Text(GameObject* parent) : C_RenderedUI(parent)
 {
 	type = ComponentType::TEXT;
-	typeIndex = typeid(this);
+	typeIndex = typeid(C_RenderedUI);
 
 	size = 1;
 	fontPath = "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf";

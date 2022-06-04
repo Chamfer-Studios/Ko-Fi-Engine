@@ -36,7 +36,7 @@
 C_Material::C_Material(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::MATERIAL;
-	typeIndex = typeid(this);
+	typeIndex = typeid(*this);
 
 	material = nullptr;
 	texture = nullptr;

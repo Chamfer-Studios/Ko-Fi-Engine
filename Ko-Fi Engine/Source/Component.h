@@ -80,7 +80,7 @@ public:
 	GameObject *owner = nullptr;
 	ComponentType type = ComponentType::NONE;
 
-	std::type_index typeIndex = typeid(this);
+	std::type_index typeIndex = typeid(*this);
 };
 
 #endif //__COMPONENT_H__

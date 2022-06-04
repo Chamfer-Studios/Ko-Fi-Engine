@@ -23,7 +23,7 @@
 C_Button::C_Button(GameObject* parent) : C_RenderedUI(parent)
 {
 	type = ComponentType::BUTTON;
-	typeIndex = typeid(this);
+	typeIndex = typeid(C_RenderedUI);
 
 	idleOpenGLTexture.SetTextureId(TEXTUREID_DEFAULT);
 	hoverOpenGLTexture.SetTextureId(TEXTUREID_DEFAULT);

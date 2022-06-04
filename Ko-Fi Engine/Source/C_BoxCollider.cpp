@@ -9,7 +9,7 @@
 C_BoxCollider::C_BoxCollider(GameObject *parent) : Component(parent)
 {
 	type = ComponentType::BOX_COLLIDER;
-	typeIndex = typeid(this);
+	typeIndex = typeid(*this);
 }
 
 C_BoxCollider::~C_BoxCollider()

@@ -10,7 +10,7 @@
 C_Canvas::C_Canvas(GameObject* parent) : C_Transform2D(parent)
 {
 	type = ComponentType::CANVAS;
-	typeIndex = typeid(this);
+	typeIndex = typeid(*this);
 
 	logicalSize = { 1920, 1080 };
 }

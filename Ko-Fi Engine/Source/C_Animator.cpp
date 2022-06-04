@@ -34,7 +34,7 @@
 C_Animator::C_Animator(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::ANIMATOR;
-	typeIndex = typeid(this);
+	typeIndex = typeid(*this);
 
 	animation = nullptr;
 

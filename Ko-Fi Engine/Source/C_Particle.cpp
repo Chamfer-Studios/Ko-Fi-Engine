@@ -29,7 +29,7 @@
 C_Particle::C_Particle(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::PARTICLE;
-	typeIndex = typeid(this);
+	typeIndex = typeid(*this);
 
 	//resource = new R_Particle();
 	resource = nullptr;

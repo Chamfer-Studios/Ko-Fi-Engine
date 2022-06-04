@@ -4,7 +4,7 @@
 Component::Component(GameObject* parent) : owner(parent)
 {
 	type = ComponentType::NONE;
-	typeIndex = typeid(this);
+	typeIndex = typeid(*this);
 
 	if (parent)
 		parent->PushBackComponent(this);

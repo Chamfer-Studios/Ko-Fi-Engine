@@ -19,7 +19,7 @@
 C_LightSource::C_LightSource(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::LIGHT_SOURCE;
-	typeIndex = typeid(this);
+	typeIndex = typeid(*this);
 
 	sourceType = SourceType::DIRECTIONAL;
 	DirectionalLight* dLight = new DirectionalLight();

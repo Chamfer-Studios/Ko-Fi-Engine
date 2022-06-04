@@ -31,7 +31,7 @@
 C_Camera::C_Camera(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::CAMERA;
-	typeIndex = typeid(this);
+	typeIndex = typeid(*this);
 
 	cameraType = KOFI_PERSPECTIVE;
 

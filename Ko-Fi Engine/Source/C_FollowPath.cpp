@@ -8,7 +8,7 @@
 C_FollowPath::C_FollowPath(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::FOLLOW_PATH;
-	typeIndex = typeid(this);
+	typeIndex = typeid(*this);
 
 	waypoints = (float3*)malloc(sizeof(float3) * nWaypoints);
 	memset(waypoints, 0, sizeof(float3) * nWaypoints);

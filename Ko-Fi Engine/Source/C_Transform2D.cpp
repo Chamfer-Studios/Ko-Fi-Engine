@@ -16,7 +16,7 @@
 C_Transform2D::C_Transform2D(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::TRANSFORM2D;
-	typeIndex = typeid(this);
+	typeIndex = typeid(*this);
 
 	// Set default position, size, pivot, rotation & anchor
 	position = { 0 , 0};
@@ -183,6 +183,10 @@ void C_Transform2D::SetMask(const float2& newMask)
 float2 C_Transform2D::GetNormalizedPosition()
 {
 	C_Transform2D* parentTransform = owner->GetParent()->GetComponent<C_Transform2D>();
+	C_Canvas* parentCanvas = owner->GetParent()->GetComponent<C_Canvas>();
+	if (parentCanvas != nullptr) {
+		parentTransform = (C_Transform2D*)parentCanvas;
+	}
 	if (parentTransform == nullptr) return float2(position.x, position.y);
 
 	float2 normalizedPosition = GetCanvas()->LogicalToViewport(position);
@@ -195,6 +199,10 @@ float2 C_Transform2D::GetNormalizedPosition()
 float2 C_Transform2D::GetNormalizedSize()
 {
 	C_Transform2D* parentTransform = owner->GetParent()->GetComponent<C_Transform2D>();
+	C_Canvas* parentCanvas = owner->GetParent()->GetComponent<C_Canvas>();
+	if (parentCanvas != nullptr) {
+		parentTransform = (C_Transform2D*)parentCanvas;
+	}
 	if (parentTransform == nullptr) return size;
 
 	float2 normalizedSize = GetCanvas()->LogicalToViewport(size);

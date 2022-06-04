@@ -9,7 +9,7 @@
 C_CapsuleCollider::C_CapsuleCollider(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::CAPSULE_COLLIDER;
-	typeIndex = typeid(this);
+	typeIndex = typeid(*this);
 }
 
 C_CapsuleCollider::~C_CapsuleCollider()

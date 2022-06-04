@@ -9,7 +9,7 @@
 C_SphereCollider::C_SphereCollider(GameObject* parent) : Component(parent)
 {
 	this->type = ComponentType::SPHERE_COLLIDER;
-	typeIndex = typeid(this);
+	typeIndex = typeid(*this);
 }
 
 C_SphereCollider::~C_SphereCollider()

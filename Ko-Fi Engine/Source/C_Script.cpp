@@ -32,7 +32,7 @@
 C_Script::C_Script(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::SCRIPT;
-	typeIndex = typeid(this);
+	typeIndex = typeid(*this);
 
 	SetId(RNG::GetRandomUint());
 }
