@@ -6,9 +6,10 @@
 
 #include <unordered_map>
 #include <typeindex>
-#include <typeinfo>
 
 #include "Component.h"
+
+#include <string.h>
 
 #include <optick.h>
 
@@ -64,17 +65,15 @@ public:
 
 		T* component = nullptr;
 
-		//std::type_index id = typeid(T);
-		//if (componentCache.find(id) != componentCache.end()) {
-		//	return dynamic_cast<T*>(componentCache.at(id));
-		///}
+		std::type_index id = typeid(component);
 
 		for (Component* c : components)
 		{
-			component = dynamic_cast<T*>(c);
-			if (component) {
-				//componentCache[id] = c;
-				break;
+			if (c != nullptr && c->typeIndex == id) {
+				component = dynamic_cast<T*>(c);
+				if (component) {
+					break;
+				}
 			}
 		}
 		return component;
@@ -164,7 +163,6 @@ public:
 private:
 	std::string name;
 	std::vector<Component*> components;
-	std::unordered_map<std::type_index, Component*> componentCache;
 
 	std::vector<Component*> componentsToBeDeleted;
 

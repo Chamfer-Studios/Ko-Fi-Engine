@@ -24,6 +24,7 @@
 C_AudioSwitch::C_AudioSwitch(GameObject* parent) : C_Audio(parent)
 {
 	type = ComponentType::AUDIO_SWITCH;
+    typeIndex = typeid(this);
 
     totalTracks = 0;
 

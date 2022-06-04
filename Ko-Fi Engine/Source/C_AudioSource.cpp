@@ -21,6 +21,7 @@
 C_AudioSource::C_AudioSource(GameObject* parent) : C_Audio(parent)
 {
     type = ComponentType::AUDIO_SOURCE;
+    typeIndex = typeid(this);
 
     track = nullptr;
 

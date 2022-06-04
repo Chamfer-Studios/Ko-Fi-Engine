@@ -8,6 +8,7 @@
 C_RigidBody::C_RigidBody(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::RIGID_BODY;
+	typeIndex = typeid(this);
 }
 
 C_RigidBody::~C_RigidBody()

@@ -16,6 +16,7 @@
 C_Transform2D::C_Transform2D(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::TRANSFORM2D;
+	typeIndex = typeid(this);
 
 	// Set default position, size, pivot, rotation & anchor
 	position = { 0 , 0};

@@ -39,6 +39,8 @@
 C_Mesh::C_Mesh(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::MESH;
+	typeIndex = typeid(this);
+
 	radius = 0.0f;
 	mesh = nullptr;
 	time = 0.0f;

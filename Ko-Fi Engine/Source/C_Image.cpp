@@ -31,6 +31,7 @@
 C_Image::C_Image(GameObject* parent) : C_RenderedUI(parent)
 {
 	type = ComponentType::IMAGE;
+	typeIndex = typeid(this);
 }
 
 C_Image::~C_Image()

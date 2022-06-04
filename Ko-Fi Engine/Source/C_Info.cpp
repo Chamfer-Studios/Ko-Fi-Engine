@@ -13,6 +13,8 @@
 C_Info::C_Info(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::INFO;
+	typeIndex = typeid(this);
+
 	showPopup = false;
 }
 
