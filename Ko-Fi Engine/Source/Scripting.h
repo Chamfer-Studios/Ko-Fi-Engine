@@ -20,6 +20,7 @@
 #include "MathGeoLib/Math/float3.h"
 #include "MathGeoLib/Math/float4.h"
 #include "MathGeoLib/Math/Quat.h"
+#include "EngineConfig.h"
 #include "GameObject.h"
 #include "C_Transform.h"
 #include "C_Mesh.h"
@@ -133,13 +134,16 @@ public:
 
 		// Tags
 		lua.new_enum("Tag",
-			"UNTAGGED", Tag::TAG_UNTAGGED,
-			"PLAYER", Tag::TAG_PLAYER,
-			"ENEMY", Tag::TAG_ENEMY,
-			"FLOOR", Tag::TAG_FLOOR,
-			"DECORATIONFLOOR", Tag::TAG_DECORATION_FLOOR,
-			"PICKUP", Tag::TAG_PICKUP,
-			"CORPSE", Tag::TAG_CORPSE);
+			"UNTAGGED", TAG::TAG_UNTAGGED,
+			"PLAYER", TAG::TAG_PLAYER,
+			"ENEMY", TAG::TAG_ENEMY,
+			"FLOOR", TAG::TAG_FLOOR,
+			"DECORATIONFLOOR", TAG::TAG_DECORATION_FLOOR,
+			"PICKUP", TAG::TAG_PICKUP,
+			"CORPSE", TAG::TAG_CORPSE,
+			"WALL", TAG::TAG_WALL,
+			"DIALOGUE", TAG::TAG_DIALOGUE
+			);
 
 		/// Classes:
 		// float3 structure
@@ -285,6 +289,7 @@ public:
 
 		lua.new_usertype<C_Button>("C_Button",
 			sol::constructors<void(GameObject*)>(),
+			"SetIdleTexture", &C_Button::SetIdleTexture,
 			"IsPressed", &C_Button::IsPressed,
 			"IsIdle", &C_Button::IsIdle,
 			"IsHovered", &C_Button::IsHovered);
@@ -342,6 +347,7 @@ public:
 			"SetDynamic", &C_RigidBody::SetBodyDynamic,
 			"FreezePositionY", &C_RigidBody::FreezePositionY,
 			"SetLinearVelocity", &C_RigidBody::SetLinearVelocity,
+			"GetLinearVelocity", &C_RigidBody::GetLinearVelocity,
 			"SetRigidBodyPos", &C_RigidBody::SetRigidBodyPos,
 			"SetUseGravity", &C_RigidBody::SetUseGravity,
 			"UpdateEnableGravity", &C_RigidBody::UpdateEnableGravity);
@@ -388,8 +394,16 @@ public:
 		lua.set_function("GetInput", &Scripting::LuaGetInput, this);
 		lua.set_function("GetVsync", &Scripting::LuaGetVsync, this);
 		lua.set_function("SetVsync", &Scripting::LuaSetVsync, this);
+		lua.set_function("SetBrightness", &Scripting::LuaSetBrightness, this);
 		lua.set_function("GetFullscreen", &Scripting::LuaGetFullscreen, this);
 		lua.set_function("SetFullscreen", &Scripting::LuaSetFullscreen, this);
+		lua.set_function("GetFullscreenDesktop", &Scripting::LuaGetFullscreenDesktop, this);
+		lua.set_function("SetFullscreenDesktop", &Scripting::LuaSetFullscreenDesktop, this);
+		lua.set_function("GetBorderless", &Scripting::LuaGetBorderless, this);
+		lua.set_function("SetFPS", &Scripting::LuaSetFullscreen, this);
+		lua.set_function("SetBorderless", &Scripting::LuaSetBorderless, this);
+		lua.set_function("GetResizable", &Scripting::LuaGetResizable, this);
+		lua.set_function("SetResizable", &Scripting::LuaSetResizable, this);
 		lua.set_function("InstantiatePrefab", &Scripting::LuaInstantiatePrefab, this);
 		lua.set_function("InstantiateNamedPrefab", &Scripting::LuaInstantiateNamedPrefab, this);
 		lua.set_function("DeleteGameObject", &Scripting::DeleteGameObject, this);
@@ -412,7 +426,9 @@ public:
 		lua.set_function("DispatchGlobalEvent", &Scripting::DispatchGlobalEvent, this);
 		lua.set_function("RayCast", &Scripting::RayCast, this);
 		lua.set_function("RayCastLambda", &Scripting::RayCastLambda, this);
+		lua.set_function("CustomRayCast", &Scripting::CustomRayCastQuery, this);
 		lua.set_function("GetDialogueString", &Scripting::GetDialogueString, this);
+		lua.set_function("GetTransString", &Scripting::GetTransString, this);
 		lua.set_function("GetDialogueTargetID", &Scripting::GetDialogueTargetID, this);
 		lua.set_function("LoadJsonFile", &Scripting::LoadJsonFile, this);
 		lua.set_function("DrawCone", &Scripting::DrawCone, this);
@@ -423,6 +439,10 @@ public:
 		lua.set_function("LoadGameState", &Scripting::LoadGameState, this);
 		lua.set_function("SetGameJsonInt", &Scripting::SetGameJsonInt, this);
 		lua.set_function("GetGameJsonInt", &Scripting::GetGameJsonInt, this);
+		lua.set_function("SetGameJsonBool", &Scripting::SetGameJsonBool, this);
+		lua.set_function("GetGameJsonBool", &Scripting::GetGameJsonBool, this);
+		lua.set_function("SetGameJsonFloat3", &Scripting::SetGameJsonFloat3, this);
+		lua.set_function("GetGameJsonFloat3", &Scripting::GetGameJsonFloat3, this);
 		lua.set_function("ClearGameJsonArray", &Scripting::ClearGameJsonArray, this);
 		lua.set_function("GetGameJsonArraySize", &Scripting::GetGameJsonArraySize, this);
 		lua.set_function("ChangeMouseTexture", &Scripting::LuaChangeMouseTexture, this);
@@ -459,6 +479,47 @@ public:
 	void LuaSetFullscreen(bool fullscreen)
 	{
 		gameObject->GetEngine()->GetWindow()->SetFullscreen(fullscreen);
+	}
+
+	bool LuaGetFullscreenDesktop()
+	{
+		return gameObject->GetEngine()->GetWindow()->GetFullscreenDesktop();
+	}
+
+	void LuaSetFullscreenDesktop(bool fullscreen)
+	{
+		gameObject->GetEngine()->GetWindow()->SetFullscreenDesktop(fullscreen);
+	}
+
+	bool LuaGetBorderless()
+	{
+		return gameObject->GetEngine()->GetWindow()->GetBorderless();
+	}
+
+	void LuaSetBorderless(bool borderless)
+	{
+		gameObject->GetEngine()->GetWindow()->SetBorderless(borderless);
+	}
+
+	bool LuaGetResizable()
+	{
+		return gameObject->GetEngine()->GetWindow()->GetResizable();
+	}
+
+	void LuaSetResizable(bool resizable)
+	{
+		gameObject->GetEngine()->GetWindow()->SetResizable(resizable);
+	}
+
+	void LuaSetFPS(int maxFPS)
+	{
+		gameObject->GetEngine()->GetEngineConfig()->maxFps = maxFPS;
+		gameObject->GetEngine()->GetEngineConfig()->cappedMs = 1000 / gameObject->GetEngine()->GetEngineConfig()->maxFps;
+	}
+
+	void LuaSetBrightness(float brightness)
+	{
+		gameObject->GetEngine()->GetWindow()->AdjustBrightness(brightness);
 	}
 
 	KEY_STATE LuaGetInput(int button)
@@ -524,8 +585,6 @@ public:
 		{
 			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_E);
 		}
-
-
 		case 21:
 		{
 			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_1);
@@ -583,6 +642,10 @@ public:
 		return gameObject->GetEngine()->GetPhysics()->RayCastHits(startPoint, endPoint, filterName, senderGo, uid, &callback);
 	}
 
+	bool CustomRayCastQuery(float3 startPoint, float3 endPoint, TAG tag) {
+		return gameObject->GetEngine()->GetPhysics()->CustomRayCastQuery(startPoint, endPoint, tag);
+	}
+
 	M_Navigation* GetNavigation()
 	{
 		return gameObject->GetEngine()->GetNavigation();
@@ -631,7 +694,7 @@ public:
 		return nullptr;
 	}
 
-	std::vector<GameObject*> LuaGetObjectsByTag(Tag tag)
+	std::vector<GameObject*> LuaGetObjectsByTag(TAG tag)
 	{
 		std::vector<GameObject*> ret;
 		for (GameObject* go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
@@ -698,8 +761,9 @@ public:
 	{
 		for (GameObject* go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
 		{
-			C_Script* script = go->GetComponent<C_Script>();
-			if (script)
+			// C_Script* script = go->GetComponent<C_Script>();
+			std::vector<C_Script*> scripts = go->GetAllScripts();
+			for (const auto& script : scripts)
 			{
 				if (path == script->s->path.substr(script->s->path.find_last_of('/') + 1))
 				{
@@ -885,6 +949,7 @@ public:
 	bool LoadJsonFile(const char* path);
 
 	std::string GetDialogueString(const char* key, int id);
+	std::string GetTransString(const char* key, int id);
 
 	int GetDialogueTargetID(const char* key, int id);
 
@@ -919,6 +984,28 @@ public:
 	void SetGameJsonInt(const char* key, int value)
 	{
 		gameJson[key] = value;
+	}
+
+	bool GetGameJsonBool(const char* key)
+	{
+		return gameJson.at(key);
+	}
+
+	void SetGameJsonBool(const char* key, bool value)
+	{
+		gameJson[key] = value;
+	}
+
+	void SetGameJsonFloat3(const char* key, float3 value)
+	{
+		gameJson[key] = { value.x, value.y, value.z };
+	}
+
+	float3 GetGameJsonFloat3(const char* key)
+	{
+		std::vector<float> values = gameJson.at(key).get<std::vector<float>>();
+		float3 ret = float3(values[0], values[1], values[2]);
+		return ret;
 	}
 
 public:

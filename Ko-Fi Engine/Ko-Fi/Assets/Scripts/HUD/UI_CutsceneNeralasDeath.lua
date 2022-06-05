@@ -31,45 +31,30 @@ function Update(dt)
             gameObject:GetChild("Text3"):Active(false)
             gameObject:GetChild("Text4"):Active(false)
         elseif (isActive == 2) then
-            gameObject:GetChild("Text1"):GetChild("Text1Part1"):Active(false)
-            gameObject:GetChild("Text1"):GetChild("Text1Part2"):Active(true)
-        elseif (isActive == 3) then
             gameObject:GetChild("Image"):GetImage():SetTexture("Assets/UI/Cutscenes/cutscene_12.png")
             gameObject:GetChild("Text1"):Active(false)
             gameObject:GetChild("Text2"):GetChild("Text2Part1"):Active(true)
-        elseif (isActive == 4) then
+        elseif (isActive == 3) then
             gameObject:GetChild("Image"):GetImage():SetTexture("Assets/UI/Cutscenes/cutscene_13.png")
             gameObject:GetChild("Text2"):Active(false)
             gameObject:GetChild("Text3"):GetChild("Text3Part1"):Active(true)
-        elseif (isActive == 5) then
+        elseif (isActive == 4) then
             gameObject:GetChild("Text3"):GetChild("Text3Part1"):Active(false)
             gameObject:GetChild("Text3"):GetChild("Text3Part2"):Active(true)
-        elseif (isActive == 6) then
+        elseif (isActive == 5) then
             gameObject:GetChild("Image"):GetImage():SetTexture("Assets/UI/Cutscenes/cutscene_14.png")
             gameObject:GetChild("Text3"):Active(false)
             gameObject:GetChild("Text4"):GetChild("Text4Part1"):Active(true)
-        elseif (isActive == 7) then
+        elseif (isActive == 6) then
             gameObject:GetChild("Text4"):GetChild("Text4Part1"):Active(false)
             gameObject:GetChild("Text4"):GetChild("Text4Part2"):Active(true)
-        elseif (isActive == 8) then
+        elseif (isActive == 7) then
             gameObject:GetChild("Text4"):GetChild("Text4Part2"):Active(false)
             gameObject:GetChild("Text4"):GetChild("Text4Part3"):Active(true)
-        elseif (isActive == 9) then
+        elseif (isActive == 8) then
             gameObject:GetChild("Text4"):GetChild("Text4Part3"):Active(false)
             gameObject:GetChild("Text4"):GetChild("Text4Part4"):Active(true)
-        elseif (isActive == 10) then
-            gameObject:GetChild("Text4"):GetChild("Text4Part4"):Active(false)
-            gameObject:GetChild("Text4"):GetChild("Text4Part5"):Active(true)
-        elseif (isActive == 11) then
-            gameObject:GetChild("Text4"):GetChild("Text4Part5"):Active(false)
-            gameObject:GetChild("Text4"):GetChild("Text4Part6"):Active(true)
-        elseif (isActive == 12) then
-            gameObject:GetChild("Text4"):GetChild("Text4Part6"):Active(false)
-            gameObject:GetChild("Text4"):GetChild("Text4Part7"):Active(true)
-        elseif (isActive == 13) then
-            gameObject:GetChild("Text4"):GetChild("Text4Part7"):Active(false)
-            gameObject:GetChild("Text4"):GetChild("Text4Part8"):Active(true)
-        elseif (isActive >= 14) then
+        elseif (isActive == 9) then
             gameObject:ChangeScene(true, "SceneTutorial")
         end
         change = false

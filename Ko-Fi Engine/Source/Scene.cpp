@@ -61,6 +61,74 @@ void Scene::OnAnyButtonHovered(const std::function<void()>& onAnyButtonHovered, 
 	}
 	onNoButtonHovered();
 }
+
+void Scene::OnAnyEnemyHovered(const std::function<void()>& onAnyEnemyHovered, const std::function<void()>& onNoEnemyHovered)
+{
+	GameObject* hit = engine->GetCamera3D()->MousePicking();
+	if (hit != nullptr)
+	{
+		if (hit->tag == TAG::TAG_ENEMY)
+		{
+			onAnyEnemyHovered();
+			return;
+		}
+	}
+	
+	onNoEnemyHovered();
+}
+
+void Scene::OnAnySpiceSpotHovered(const std::function<void()>& onAnySpiceSpotHovered, const std::function<void()>& onNoSpiceSpotHovered)
+{
+	GameObject* hit = engine->GetCamera3D()->MousePicking();
+	if (hit != nullptr)
+	{
+		if (hit->tag == TAG::TAG_PICKUP)
+		{
+			onAnySpiceSpotHovered();
+			return;
+		}
+	}
+	onNoSpiceSpotHovered();
+}
+
+void Scene::SwitchCursor(const std::function<void(std::string)>& onChange, const std::function<void()>& onNothingHovered)
+{
+	//UI HAS PREFERENCE OVER ALL
+	for (GameObject* go : gameObjectList)
+	{
+		C_Button* cBtn = go->GetComponent<C_Button>();
+		if (cBtn)
+		{
+			if (cBtn->GetState() == C_Button::BUTTON_STATE::HOVER)
+			{
+				std::string path = "Assets/New UI/MouseUI.bmp";
+				onChange(path);
+				return;
+			}
+		}
+	}
+
+	//then pick up and then enemy
+	GameObject* hit = engine->GetCamera3D()->MousePicking();
+	if (hit != nullptr)
+	{
+		if (hit->tag == TAG::TAG_PICKUP)
+		{
+			std::string path = "Assets/New UI/mousePick.bmp";
+			onChange(path);
+			return;
+		}
+		else if (hit->tag == TAG::TAG_ENEMY)
+		{
+			std::string path = "Assets/New UI/mouseAttack.bmp";
+			onChange(path);
+			return;
+		}
+	}
+
+	onNothingHovered();
+}
+
 GameObject* Scene::CreateEmptyGameObject(const char* name, GameObject* parent, bool is3D)
 {
 	GameObject* go = new GameObject(RNG::GetRandomUint(), engine, name, is3D);
@@ -187,14 +255,14 @@ void Scene::ComputeQuadTree()
 void Scene::AddLight(GameObject* newLight)
 {
 	if (newLight != nullptr)
-		lights.push_back(newLight);
+		lights.push_back(newLight->GetComponent<C_LightSource>());
 }
 
 void Scene::RemoveLight(GameObject* lightToDelete)
 {
-	for (std::vector<GameObject*>::iterator light = lights.begin(); light != lights.end();)
+	for (std::vector<C_LightSource*>::iterator light = lights.begin(); light != lights.end();)
 	{
-		if (lightToDelete == *light)
+		if (lightToDelete == (* light)->owner)
 		{
 			light = lights.erase(light);
 		}
@@ -206,19 +274,14 @@ void Scene::RemoveLight(GameObject* lightToDelete)
 
 std::vector<GameObject*> Scene::GetLights(SourceType type)
 {
+	OPTICK_EVENT();
+
 	std::vector<GameObject*> ret;
 
-	for (int i = 0; i < lights.size(); i++)
-	{
-		C_LightSource* light = lights[i]->GetComponent<C_LightSource>();
-		if (light == nullptr)
+	for (auto light : lights) {
+		if (light->GetSourceType() == type && !light->owner->isCulled)
 		{
-			RemoveLight(lights[i]);
-			continue;
-		}
-		else if(light->GetSourceType() == type)
-		{
-			ret.push_back(lights[i]);
+			ret.push_back(light->owner);
 		}
 	}
 

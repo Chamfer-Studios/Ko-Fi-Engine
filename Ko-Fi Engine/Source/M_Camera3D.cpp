@@ -423,7 +423,7 @@ GameObject* M_Camera3D::MousePicking(const bool& isRightButton)
 
 		if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING)
 		{
-			if (gameObject->tag == Tag::TAG_DECORATION_FLOOR)
+			if (gameObject->tag == TAG::TAG_DECORATION_FLOOR)
 				continue;
 		}
 

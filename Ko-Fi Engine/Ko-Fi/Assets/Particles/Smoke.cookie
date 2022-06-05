@@ -2,15 +2,15 @@
     "Smoke": {
         "emitters": [
             {
-                "loop": false,
+                "loop": true,
                 "maxParticles": 500,
                 "modules": [
                     {
-                        "maxParticleLife": 6.0,
-                        "minParticleLife": 5.0,
-                        "particlesPerSpawn": 12,
+                        "maxParticleLife": 8.0,
+                        "minParticleLife": 6.0,
+                        "particlesPerSpawn": 50,
                         "randomParticleLife": true,
-                        "spawnTime": 5.0,
+                        "spawnTime": 3.0,
                         "type": 1
                     },
                     {
@@ -29,7 +29,7 @@
                                     1.0,
                                     1.0,
                                     1.0,
-                                    1.0
+                                    0.4901960790157318
                                 ],
                                 "position": 0.0
                             },
@@ -62,7 +62,7 @@
                             0.0,
                             0.0
                         ],
-                        "maxVelocity": 2.0,
+                        "maxVelocity": 13.0,
                         "minAcceleration": [
                             -0.004999999888241291,
                             -0.004999999888241291,
@@ -78,7 +78,7 @@
                             0.0,
                             0.0
                         ],
-                        "minVelocity": 1.0,
+                        "minVelocity": 11.0,
                         "randAcceleration": true,
                         "randDirection": true,
                         "randPosition": false,
@@ -87,9 +87,9 @@
                     },
                     {
                         "minInitialSize": [
-                            10.0,
-                            10.0,
-                            10.0
+                            60.0,
+                            60.0,
+                            60.0
                         ],
                         "type": 4
                     }

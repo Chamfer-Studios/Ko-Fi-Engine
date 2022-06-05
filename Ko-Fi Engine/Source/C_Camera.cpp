@@ -31,6 +31,8 @@
 C_Camera::C_Camera(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::CAMERA;
+	typeIndex = typeid(*this);
+
 	cameraType = KOFI_PERSPECTIVE;
 
 	//Create the frustum
@@ -335,10 +337,12 @@ void C_Camera::SphereCulling()
 		if (distance > (sCullingRadius * sCullingRadius))
 		{
 			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.erase(gameObject);
+			gameObject->isCulled = true;
 			//owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.erase(gameObject);
 		}
 		else {
 			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.insert(gameObject);
+			gameObject->isCulled = false;
 			//owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.insert(gameObject);
 		}
 
@@ -380,6 +384,7 @@ void C_Camera::FrustumCulling()
 					owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.erase(go);
 				}
 				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.erase(go);
+				go->isCulled = true;
 			}
 		}
 		else {
@@ -389,6 +394,7 @@ void C_Camera::FrustumCulling()
 					owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.insert(go);
 				}
 				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistance.insert(go);
+				go->isCulled = false;
 			}
 		}
 	}
@@ -427,6 +433,7 @@ void C_Camera::ApplyCullings()
 		{
 			GameObject* gameObject = (*go);
 			owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.insert(gameObject);
+			gameObject->isCulled = false;
 		}
 	}
 	if (isFrustumCullingActive)
@@ -440,6 +447,7 @@ void C_Camera::ApplyCullings()
 			if (owner->GetEngine()->GetRenderer()->enableOcclusionCulling) {
 				owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceOrdered.insert(*it);
 			}
+			(*it)->isCulled = false;
 		}
 	}
 }

@@ -16,13 +16,13 @@
             "uid": 1431981454
         },
         {
-            "asset_file": "zhib_armature|zhib_armature|zhib_armature|zhib_reel.cake",
-            "library_path": "Library/Animations/1153593440.cake",
+            "asset_file": "zhib_armature|zhib_armature|zhib_armature|zhib_armature|zhib_armature|zhib_re.cake",
+            "library_path": "Library/Animations/945053004.cake",
             "type": 5,
-            "uid": 1153593440
+            "uid": 945053004
         }
     ],
-    "hash": "9a0a2b52fd8446753d6f71bf195ec189",
+    "hash": "fb4bcd4fe71b55d72756e2da94bb6fd6",
     "library_file": "1969207073.tea",
     "library_path": "Library/Models/1969207073.tea",
     "type": 3,

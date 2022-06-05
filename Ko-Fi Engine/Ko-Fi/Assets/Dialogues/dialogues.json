@@ -5,16 +5,16 @@
       "targetID": -1,
       "src": "Assets/UI/HUD/blank_asset_v1.0.png",
       "char": " ",
-      "line1": "You can move by right clicking where you want to go.",
-      "line2": "To take a better look around with Q and E."
+      "line1": "You can move by right clicking where you want to go.              ",
+      "line2": "To take a better look around with Q and E.                        "
     },
     {
       "id": 1,
       "targetID": 11,
       "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
       "char": " ",
-      "line1": "I hope it is not too late. I need to find Nerala as soon as possible,",
-      "line2": "I don't want to waste any time on this excuse of a camp.             "
+      "line1": "I hope it is not too late. I need to find Nerala as soon as possible ",
+      "line2": "and reunite with Omozrra.                                            "
     },
     {
       "id": 2,
@@ -231,6 +231,24 @@
       "char": " ",
       "line1": "They just needed directions and few indications. They tortured our brothers,",
       "line2": "and they plan to do the same thing to our families. To the thopter, now!  "
+    },
+    {
+      "id": 31,
+      "targetID": -1,
+      "src": "Assets/UI/HUD/Portraits/omozra_v1.0.png",
+      "srcUnlock": "Assets/New UI/Omozra_Image.png",
+      "char": "Omozra",
+      "line1": "I find you a good dude",
+      "line2": "I can help you..."
+    },
+    {
+      "id": 32,
+      "targetID": -1,
+      "src": "Assets/UI/HUD/Portraits/nebala_v1.0.png",
+      "srcUnlock": "Assets/New UI/Nerala_Image.png",
+      "char": "Nerala",
+      "line1": "I find you a good dude",
+      "line2": "I can help you..."
     }
   ]
 }

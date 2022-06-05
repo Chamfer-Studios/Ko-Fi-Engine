@@ -335,7 +335,12 @@ bool ParticleBillboarding::Update(float dt, EmitterInstance* emitter)
 Quat ParticleBillboarding::GetAlignmentRotation(const float3& position,const int degrees, EmitterInstance* emitter, const float4x4& cameraTransform)
 {
 	float3 N, U, _U, R;
-	float3 direction = float3(cameraTransform.TranslatePart() - position).Normalized(); //normalized vector between the camera and gameobject position
+	float3 translate = cameraTransform.TranslatePart();
+	float3 direction = float3(translate - position);
+	if (direction.x == 0.f && direction.y == 0.f && direction.z == 0.f)
+		direction = float3(1.f, 0.f, 0.f);
+	else
+		direction = direction.Normalized(); //normalized vector between the camera and gameobject position
 
 	switch (billboardingType)
 	{

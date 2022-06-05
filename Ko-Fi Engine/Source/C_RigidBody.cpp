@@ -8,6 +8,7 @@
 C_RigidBody::C_RigidBody(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::RIGID_BODY;
+	typeIndex = typeid(*this);
 }
 
 C_RigidBody::~C_RigidBody()
@@ -171,6 +172,13 @@ bool C_RigidBody::InspectorDraw(PanelChooser* chooser)
 					UpdateConstrains();
 				}
 
+				ImGui::TreePop();
+			}
+
+			if (ImGui::TreeNodeEx("Velocity"))
+			{
+				float a[3] = { GetLinearVelocity().x, GetLinearVelocity().y, GetLinearVelocity().z };
+				ImGui::SliderFloat3("##vel", a, -1000, 1000, "%.3f", ImGuiSliderFlags_ReadOnly);
 				ImGui::TreePop();
 			}
 		}

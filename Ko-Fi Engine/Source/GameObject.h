@@ -1,9 +1,17 @@
-#pragma once
+#ifndef __GAMEOBJECT_H__
+#define __GAMEOBJECT_H__
 
 #include "R_Mesh.h"
 #include <vector>
 
+#include <unordered_map>
+#include <typeindex>
+
 #include "Component.h"
+
+#include <string.h>
+
+#include <optick.h>
 
 class KoFiEngine;
 class C_Transform;
@@ -14,7 +22,7 @@ class C_Collider2;
 class C_Animator;
 class C_LightSource;
 
-enum class Tag
+enum class TAG
 {
 	TAG_UNTAGGED,
 	TAG_PLAYER,
@@ -24,6 +32,7 @@ enum class Tag
 	TAG_PICKUP,
 	TAG_CORPSE,
 	TAG_DIALOGUE,
+	TAG_WALL,
 };
 
 class GameObject
@@ -51,17 +60,25 @@ public:
 	void Disable();
 
 	template <class T>
-	T *GetComponent() const
-	{
-		T *component = nullptr;
-		for (Component *c : components)
+	T* GetComponent() const {
+		OPTICK_EVENT();
+
+		T* component = nullptr;
+
+		std::type_index id = typeid(T);
+
+		for (Component* c : components)
 		{
-			component = dynamic_cast<T *>(c);
-			if (component)
-				break;
+			if (c != nullptr /* && c->typeIndex == id*/) {
+				component = dynamic_cast<T*>(c);
+				if (component) {
+					break;
+				}
+			}
 		}
 		return component;
 	}
+	
 	std::vector<C_Script*> GetAllScripts();
 
 	// New way
@@ -137,9 +154,11 @@ public:
 	bool isQuitting = false;
 	std::string sceneName;
 	std::string prefabPath;
-	Tag tag;
+	TAG tag;
 
 	std::vector<GameObject *> children;
+
+	bool isCulled = false;
 
 private:
 	std::string name;
@@ -154,4 +173,7 @@ private:
 
 	KoFiEngine *engine = nullptr;
 	C_Transform *transform = nullptr;
+	
 };
+
+#endif // !__GAMEOBJECT_H__

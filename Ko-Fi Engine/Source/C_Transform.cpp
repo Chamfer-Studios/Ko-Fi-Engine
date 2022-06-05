@@ -21,6 +21,7 @@
 C_Transform::C_Transform(GameObject *parent) : Component(parent)
 {
 	type = ComponentType::TRANSFORM;
+	typeIndex = typeid(*this);
 
 	transformMatrixLocal.SetIdentity();
 	transformMatrix = float4x4::FromTRS(float3::zero, Quat::identity, float3::one);

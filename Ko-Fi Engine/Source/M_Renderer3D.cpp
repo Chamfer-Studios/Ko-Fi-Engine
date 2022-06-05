@@ -750,6 +750,8 @@ void M_Renderer3D::RenderSkyBox(C_Camera* camera, SkyBox& skybox)
 
 void M_Renderer3D::LightUniforms(uint shader)
 {
+	OPTICK_EVENT();
+
 	if (engine->GetSceneManager()->GetCurrentScene()->lights.size() > 0)
 	{
 		// ---- directional lights ----
@@ -763,7 +765,13 @@ void M_Renderer3D::LightUniforms(uint shader)
 				//current iteration to string
 				std::string number = std::to_string(i);
 				//get corresponding directional light
-				DirectionalLight* lightSource = (DirectionalLight*)light->GetComponent<C_LightSource>()->GetLightSource();
+				C_LightSource* c_light = light->GetComponent<C_LightSource>();
+
+				if (c_light == nullptr)
+					continue;
+
+				auto lightSource = (DirectionalLight*)c_light->GetLightSource();
+
 				//fill the first variable of the DirLight struct: vec3 color
 				GLint lightColor = glGetUniformLocation(shader, ("dirLights[" + number + "].color").c_str());
 				glUniform3f(lightColor, lightSource->color.x, lightSource->color.y, lightSource->color.z);
@@ -800,9 +808,12 @@ void M_Renderer3D::LightUniforms(uint shader)
 				std::string number = std::to_string(i);
 
 				//get corresponding point light
-				PointLight* lightSource = (PointLight*)light->GetComponent<C_LightSource>()->GetLightSource();
+				C_LightSource* c_light = light->GetComponent<C_LightSource>();
 
+				if (c_light == nullptr)
+					continue;
 				// --- basic light parameters ---
+				auto lightSource = (PointLight*)c_light->GetLightSource();
 
 				//fill the first variable of the PointLight struct: vec3 color
 				GLint lightColor = glGetUniformLocation(shader, ("pointLights[" + number + "].color").c_str());
@@ -843,52 +854,82 @@ void M_Renderer3D::LightUniforms(uint shader)
 		std::vector<GameObject*> focalLights = engine->GetSceneManager()->GetCurrentScene()->GetLights(SourceType::FOCAL);
 		if (focalLights.size() > 0)
 		{
+			char* location = (char*)malloc(sizeof(char) * 128);
+			memset(location, 0, 128);
+
 			int i = 0;
 			for (auto light : focalLights)
 			{
 				//current iteration to string
 				std::string number = std::to_string(i);
 
+				std::string prefix = "focalLights[" + number + "].\0";
+				strcpy(location, prefix.c_str());
+				char* n = location;
+				while (*n != '\0') {
+					n++;
+				}
+
+				n--;
+
 				//get corresponding point light
-				FocalLight* lightSource = (FocalLight*)light->GetComponent<C_LightSource>()->GetLightSource();
+				C_LightSource* c_light = light->GetComponent<C_LightSource>();
+
+				if (c_light == nullptr)
+					continue;
+				// --- basic light parameters ---
+				auto lightSource = (FocalLight*)c_light->GetLightSource();
 
 				// -- basic light parameters --
 				//fill the first variable of the focalLights struct: vec3 color
-				GLint lightColor = glGetUniformLocation(shader, ("focalLights[" + number + "].color").c_str());
+
+				strcpy(n, ".color\0");
+				GLint lightColor = glGetUniformLocation(shader, location);
 				glUniform3f(lightColor, lightSource->color.x, lightSource->color.y, lightSource->color.z);
 				//vec3 position
-				GLint lightPos = glGetUniformLocation(shader, ("focalLights[" + number + "].position").c_str());
+				strcpy(n, ".position\0");
+				GLint lightPos = glGetUniformLocation(shader, location);
 				glUniform3f(lightPos, lightSource->position.x, lightSource->position.y, lightSource->position.z);
 				//float ambient always 0
-				GLint ambientValue = glGetUniformLocation(shader, ("focalLights[" + number + "].ambient").c_str());
+				strcpy(n, ".ambient\0");
+				GLint ambientValue = glGetUniformLocation(shader, location);
 				glUniform1f(ambientValue, 0.0f);
 				//float diffuse
-				GLint diffuseValue = glGetUniformLocation(shader, ("focalLights[" + number + "].diffuse").c_str());
+				strcpy(n, ".diffuse\0");
+				GLint diffuseValue = glGetUniformLocation(shader, location);
 				glUniform1f(diffuseValue, lightSource->diffuse);
 
 				// -- light cone parameters --
 				//float cutOffAngle
-				GLint cutOffValue = glGetUniformLocation(shader, ("focalLights[" + number + "].cutOffAngle").c_str());
+				strcpy(n, ".cutOffAngle\0");
+				GLint cutOffValue = glGetUniformLocation(shader, location);
 				glUniform1f(cutOffValue, lightSource->cutOffAngle);
 				//float cutOffAngle
-				GLint range = glGetUniformLocation(shader, ("focalLights[" + number + "].range").c_str());
+				strcpy(n, ".range\0");
+				GLint range = glGetUniformLocation(shader, location);
 				glUniform1f(range, lightSource->range);
 				//float3 lightDirection
-				GLint lightDirection = glGetUniformLocation(shader, ("focalLights[" + number + "].direction").c_str());
+				strcpy(n, ".direction\0");
+				GLint lightDirection = glGetUniformLocation(shader, location);
 				glUniform3f(lightDirection, lightSource->lightDirection.x, lightSource->lightDirection.y, lightSource->lightDirection.z);
 
 				// -- light attenuation paramenters --
 				//fifth variable: float constant
-				GLint constantValue = glGetUniformLocation(shader, ("focalLights[" + number + "].constant").c_str());
+				strcpy(n, ".constant\0");
+				GLint constantValue = glGetUniformLocation(shader, location);
 				glUniform1f(constantValue, lightSource->constant);
 				//sixth variable: float linear
-				GLint linearValue = glGetUniformLocation(shader, ("focalLights[" + number + "].linear").c_str());
+				strcpy(n, ".linear\0");
+				GLint linearValue = glGetUniformLocation(shader, location);
 				glUniform1f(linearValue, lightSource->linear);
 				//seventh variable: float quadratic
-				GLint quadraticValue = glGetUniformLocation(shader, ("focalLights[" + number + "].quadratic").c_str());
+				strcpy(n, ".quadratic\0");
+				GLint quadraticValue = glGetUniformLocation(shader, location);
 				glUniform1f(quadraticValue, lightSource->quadratic);
 				i++;
 			}
+
+			free(location);
 
 			GLint numFocalLights = glGetUniformLocation(shader, "numOfFocalLights");
 			glUniform1i(numFocalLights, i);
@@ -920,6 +961,8 @@ void M_Renderer3D::RenderUI(GameObject* go)
 
 void M_Renderer3D::StepAnimatedMesh(GameObject* go, R_Mesh* mesh, uint shader)
 {
+	OPTICK_EVENT();
+
 	C_Animator* cAnimator = go->GetParent()->GetComponent<C_Animator>();
 	if (cAnimator != nullptr && cAnimator->GetMeshesInfo().size() > 0)
 	{
@@ -937,12 +980,17 @@ void M_Renderer3D::StepAnimatedMesh(GameObject* go, R_Mesh* mesh, uint shader)
 			}
 			else
 			{
-				transformsAnim.resize(mesh->boneInfo.size());
-				for (int i = 0; i < transformsAnim.size(); ++i)
-				{
-					transformsAnim[i] = float4x4::identity;
-				}
+				if (cAnimator->GetLastBoneTransforms(mesh).size() > 0)
+					transformsAnim = cAnimator->GetLastBoneTransforms(mesh);
+				else
+					cAnimator->GetBoneTransforms(0, transformsAnim, go);
+					/*transformsAnim.resize(mesh->boneInfo.size());
+					for (int i = 0; i < transformsAnim.size(); ++i)
+					{
+						transformsAnim[i] = float4x4::identity;
+					}*/
 			}
+
 			GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
 			glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
 			GLint isAnimated = glGetUniformLocation(shader, "isAnimated");

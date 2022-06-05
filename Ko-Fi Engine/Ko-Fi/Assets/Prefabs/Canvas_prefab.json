@@ -3,7 +3,56 @@
     "children": [
         {
             "active": true,
-            "children": [],
+            "children": [
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 1,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                25.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                40.0,
+                                40.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "color": [
+                                255,
+                                255,
+                                255,
+                                255
+                            ],
+                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
+                            "type": 16,
+                            "value": "Z"
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Zhib Key",
+                    "tag": 0
+                }
+            ],
             "components": [
                 {
                     "active": true,
@@ -44,7 +93,56 @@
         },
         {
             "active": true,
-            "children": [],
+            "children": [
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 1,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                25.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                40.0,
+                                40.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "color": [
+                                255,
+                                255,
+                                255,
+                                255
+                            ],
+                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
+                            "type": 16,
+                            "value": "X"
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Nerala Key",
+                    "tag": 0
+                }
+            ],
             "components": [
                 {
                     "active": true,
@@ -85,7 +183,56 @@
         },
         {
             "active": true,
-            "children": [],
+            "children": [
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 1,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                25.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                40.0,
+                                40.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "color": [
+                                255,
+                                255,
+                                255,
+                                255
+                            ],
+                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
+                            "type": 16,
+                            "value": "C"
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Omozra Key",
+                    "tag": 0
+                }
+            ],
             "components": [
                 {
                     "active": true,
@@ -125,98 +272,10 @@
             "tag": 0
         },
         {
-            "active": true,
-            "children": [],
-            "components": [
-                {
-                    "active": true,
-                    "type": 23
-                },
-                {
-                    "active": true,
-                    "anchor": 7,
-                    "pivot": [
-                        0.5,
-                        0.5
-                    ],
-                    "position": [
-                        0.0,
-                        50.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "size": [
-                        491.6000061035156,
-                        35.93000030517578
-                    ],
-                    "type": 22
-                },
-                {
-                    "active": true,
-                    "texture": "Assets/New UI/spice_bar_fill.png",
-                    "type": 14
-                },
-                {
-                    "active": true,
-                    "file_name": "Assets/Scripts/New HUD Scripts/spice_bar.lua",
-                    "id": 2040907340,
-                    "type": 5
-                }
-            ],
-            "is3D": false,
-            "isPrefab": false,
-            "name": "Spice bar fill",
-            "tag": 0
-        },
-        {
-            "active": true,
-            "children": [],
-            "components": [
-                {
-                    "active": true,
-                    "type": 23
-                },
-                {
-                    "active": true,
-                    "anchor": 7,
-                    "pivot": [
-                        0.5,
-                        0.5
-                    ],
-                    "position": [
-                        0.0,
-                        50.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "size": [
-                        551.7100219726563,
-                        37.7599983215332
-                    ],
-                    "type": 22
-                },
-                {
-                    "active": true,
-                    "texture": "Assets/New UI/spice_bar.png",
-                    "type": 14
-                }
-            ],
-            "is3D": false,
-            "isPrefab": false,
-            "name": "Spice Bar Frame",
-            "tag": 0
-        },
-        {
-            "active": true,
+            "active": false,
             "children": [
                 {
-                    "active": true,
+                    "active": false,
                     "children": [],
                     "components": [
                         {
@@ -232,7 +291,7 @@
                             ],
                             "position": [
                                 -150.0,
-                                119.0
+                                139.0
                             ],
                             "rotation": [
                                 0.0,
@@ -257,7 +316,7 @@
                     "tag": 0
                 },
                 {
-                    "active": true,
+                    "active": false,
                     "children": [],
                     "components": [
                         {
@@ -273,7 +332,7 @@
                             ],
                             "position": [
                                 0.0,
-                                119.0
+                                139.0
                             ],
                             "rotation": [
                                 0.0,
@@ -298,7 +357,7 @@
                     "tag": 0
                 },
                 {
-                    "active": true,
+                    "active": false,
                     "children": [],
                     "components": [
                         {
@@ -314,7 +373,7 @@
                             ],
                             "position": [
                                 150.0,
-                                119.0
+                                139.0
                             ],
                             "rotation": [
                                 0.0,
@@ -335,7 +394,7 @@
                     ],
                     "is3D": false,
                     "isPrefab": false,
-                    "name": "Skill Neala E",
+                    "name": "Skill Nerala E",
                     "tag": 0
                 }
             ],
@@ -396,7 +455,7 @@
                             ],
                             "position": [
                                 -150.0,
-                                119.0
+                                139.0
                             ],
                             "rotation": [
                                 0.0,
@@ -437,7 +496,7 @@
                             ],
                             "position": [
                                 0.0,
-                                119.0
+                                139.0
                             ],
                             "rotation": [
                                 0.0,
@@ -478,7 +537,7 @@
                             ],
                             "position": [
                                 150.0,
-                                119.0
+                                139.0
                             ],
                             "rotation": [
                                 0.0,
@@ -560,7 +619,7 @@
                             ],
                             "position": [
                                 -150.0,
-                                119.0
+                                139.0
                             ],
                             "rotation": [
                                 0.0,
@@ -601,7 +660,7 @@
                             ],
                             "position": [
                                 0.0,
-                                119.0
+                                139.0
                             ],
                             "rotation": [
                                 0.0,
@@ -642,7 +701,7 @@
                             ],
                             "position": [
                                 150.0,
-                                119.0
+                                139.0
                             ],
                             "rotation": [
                                 0.0,
@@ -724,7 +783,7 @@
                             ],
                             "position": [
                                 -150.0,
-                                119.0
+                                140.0
                             ],
                             "rotation": [
                                 0.0,
@@ -765,7 +824,7 @@
                             ],
                             "position": [
                                 0.0,
-                                119.0
+                                140.0
                             ],
                             "rotation": [
                                 0.0,
@@ -806,7 +865,7 @@
                             ],
                             "position": [
                                 150.0,
-                                119.0
+                                140.0
                             ],
                             "rotation": [
                                 0.0,
@@ -888,7 +947,7 @@
                             ],
                             "position": [
                                 -150.0,
-                                129.0
+                                150.0
                             ],
                             "rotation": [
                                 0.0,
@@ -937,7 +996,7 @@
                             ],
                             "position": [
                                 0.0,
-                                129.0
+                                150.0
                             ],
                             "rotation": [
                                 0.0,
@@ -986,7 +1045,7 @@
                             ],
                             "position": [
                                 150.0,
-                                130.0
+                                150.0
                             ],
                             "rotation": [
                                 0.0,
@@ -1088,8 +1147,10 @@
                 },
                 {
                     "active": true,
-                    "texture": "Assets/New UI/square_frame_a.png",
-                    "type": 14
+                    "hoverTexture": "Assets/New UI/square_frame_a.png",
+                    "idleTexture": "Assets/New UI/square_frame_a.png",
+                    "pressedTexture": "Assets/New UI/square_frame_a.png",
+                    "type": 15
                 }
             ],
             "is3D": false,
@@ -1129,8 +1190,10 @@
                 },
                 {
                     "active": true,
-                    "texture": "Assets/New UI/square_frame_c.png",
-                    "type": 14
+                    "hoverTexture": "Assets/New UI/square_frame_c.png",
+                    "idleTexture": "Assets/New UI/square_frame_c.png",
+                    "pressedTexture": "Assets/New UI/square_frame_c.png",
+                    "type": 15
                 }
             ],
             "is3D": false,
@@ -1170,8 +1233,10 @@
                 },
                 {
                     "active": true,
-                    "texture": "Assets/New UI/square_frame_c.png",
-                    "type": 14
+                    "hoverTexture": "Assets/New UI/square_frame_c.png",
+                    "idleTexture": "Assets/New UI/square_frame_c.png",
+                    "pressedTexture": "Assets/New UI/square_frame_c.png",
+                    "type": 15
                 }
             ],
             "is3D": false,
@@ -1199,7 +1264,7 @@
                             ],
                             "position": [
                                 -150.0,
-                                119.0
+                                140.0
                             ],
                             "rotation": [
                                 0.0,
@@ -1240,7 +1305,7 @@
                             ],
                             "position": [
                                 0.0,
-                                119.0
+                                140.0
                             ],
                             "rotation": [
                                 0.0,
@@ -1281,7 +1346,7 @@
                             ],
                             "position": [
                                 150.0,
-                                119.0
+                                140.0
                             ],
                             "rotation": [
                                 0.0,
@@ -1371,8 +1436,8 @@
                                 0.0
                             ],
                             "size": [
-                                57.86000061035156,
-                                22.860000610351563
+                                57.0,
+                                22.0
                             ],
                             "type": 22
                         },
@@ -1401,7 +1466,7 @@
                         0.5
                     ],
                     "position": [
-                        130.0,
+                        85.0,
                         42.0
                     ],
                     "rotation": [
@@ -1410,8 +1475,8 @@
                         0.0
                     ],
                     "size": [
-                        57.86000061035156,
-                        25.860000610351563
+                        70.0,
+                        30.0
                     ],
                     "type": 22
                 },
@@ -1454,8 +1519,8 @@
                                 0.0
                             ],
                             "size": [
-                                57.86000061035156,
-                                22.860000610351563
+                                57.0,
+                                22.0
                             ],
                             "type": 22
                         },
@@ -1484,7 +1549,7 @@
                         0.5
                     ],
                     "position": [
-                        210.0,
+                        170.0,
                         42.0
                     ],
                     "rotation": [
@@ -1493,8 +1558,8 @@
                         0.0
                     ],
                     "size": [
-                        57.86000061035156,
-                        22.860000610351563
+                        70.0,
+                        30.0
                     ],
                     "type": 22
                 },
@@ -1537,8 +1602,8 @@
                                 0.0
                             ],
                             "size": [
-                                57.86000061035156,
-                                22.860000610351563
+                                57.0,
+                                22.0
                             ],
                             "type": 22
                         },
@@ -1567,7 +1632,7 @@
                         0.5
                     ],
                     "position": [
-                        290.0,
+                        255.0,
                         42.0
                     ],
                     "rotation": [
@@ -1576,8 +1641,8 @@
                         0.0
                     ],
                     "size": [
-                        57.86000061035156,
-                        22.860000610351563
+                        70.0,
+                        30.0
                     ],
                     "type": 22
                 },
@@ -1639,6 +1704,1360 @@
             "is3D": false,
             "isPrefab": false,
             "name": "Quest Frame",
+            "tag": 0
+        },
+        {
+            "active": false,
+            "children": [
+                {
+                    "active": false,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 7,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -150.0,
+                                140.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                70.1500015258789,
+                                70.1500015258789
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/ability_pickable_mask.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Skill Mask Pickable Q",
+                    "tag": 0
+                },
+                {
+                    "active": false,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 7,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                140.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                70.1500015258789,
+                                70.1500015258789
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/ability_pickable_mask.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Skill Mask Pickable W",
+                    "tag": 0
+                },
+                {
+                    "active": false,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 7,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                150.0,
+                                140.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                70.1500015258789,
+                                70.1500015258789
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/ability_pickable_mask.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Skill Mask Pickable E",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 4,
+                    "logicalSize": [
+                        1920.0,
+                        1080.0
+                    ],
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        200.0,
+                        200.0
+                    ],
+                    "type": 13
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "Skill Masks Pickable",
+            "tag": 0
+        },
+        {
+            "active": false,
+            "children": [
+                {
+                    "active": false,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 7,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -150.0,
+                                140.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                70.1500015258789,
+                                70.1500015258789
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/ability_disabled_mask.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Skill Mask Disabled Q",
+                    "tag": 0
+                },
+                {
+                    "active": false,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 7,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                140.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                70.1500015258789,
+                                70.1500015258789
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/ability_disabled_mask.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Skill Mask Disabled W",
+                    "tag": 0
+                },
+                {
+                    "active": false,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 7,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                150.0,
+                                140.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                70.1500015258789,
+                                70.1500015258789
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/ability_disabled_mask.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Skill Mask Disabled E",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 4,
+                    "logicalSize": [
+                        1920.0,
+                        1080.0
+                    ],
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        200.0,
+                        200.0
+                    ],
+                    "type": 13
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "Skill Masks Disabled",
+            "tag": 0
+        },
+        {
+            "active": false,
+            "children": [
+                {
+                    "active": false,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 7,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -150.0,
+                                140.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                70.1500015258789,
+                                70.1500015258789
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/ability_using_mask.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Skill Mask Using Q",
+                    "tag": 0
+                },
+                {
+                    "active": false,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 7,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                140.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                70.1500015258789,
+                                70.1500015258789
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/ability_using_mask.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Skill Mask Using W",
+                    "tag": 0
+                },
+                {
+                    "active": false,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 7,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                150.0,
+                                140.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                70.1500015258789,
+                                70.1500015258789
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/ability_using_mask.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Skill Mask Using E",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 4,
+                    "logicalSize": [
+                        1920.0,
+                        1080.0
+                    ],
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        200.0,
+                        200.0
+                    ],
+                    "type": 13
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "Skill Masks Using",
+            "tag": 0
+        },
+        {
+            "active": true,
+            "children": [
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 7,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -150.0,
+                                90.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                30.0,
+                                30.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "color": [
+                                255,
+                                255,
+                                255,
+                                255
+                            ],
+                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
+                            "type": 16,
+                            "value": "1"
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Key Q",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 7,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                90.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                30.0,
+                                30.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "color": [
+                                255,
+                                255,
+                                255,
+                                255
+                            ],
+                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
+                            "type": 16,
+                            "value": "2"
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Key W",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 7,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                150.0,
+                                90.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                30.0,
+                                30.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "color": [
+                                255,
+                                255,
+                                255,
+                                255
+                            ],
+                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
+                            "type": 16,
+                            "value": "3"
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Key E",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 4,
+                    "logicalSize": [
+                        1920.0,
+                        1080.0
+                    ],
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        200.0,
+                        200.0
+                    ],
+                    "type": 13
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "Skill Keyframes",
+            "tag": 0
+        },
+        {
+            "active": true,
+            "children": [
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 7,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                50.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                491.6000061035156,
+                                35.93000030517578
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/spice_bar_fill_default.png",
+                            "type": 14
+                        },
+                        {
+                            "active": true,
+                            "file_name": "Assets/Scripts/New HUD Scripts/spice_bar.lua",
+                            "id": 2040907340,
+                            "type": 5
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Spice bar fill",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 7,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                50.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                551.7100219726563,
+                                37.7599983215332
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/spice_bar.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Spice Bar Frame",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 7,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                50.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                60.0,
+                                30.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "color": [
+                                255,
+                                255,
+                                255,
+                                255
+                            ],
+                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
+                            "type": 16,
+                            "value": "0"
+                        },
+                        {
+                            "active": true,
+                            "file_name": "Assets/Scripts/New HUD Scripts/spice_text.lua",
+                            "id": 1443486017,
+                            "type": 5
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Spice Text",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 4,
+                    "logicalSize": [
+                        1920.0,
+                        1080.0
+                    ],
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        200.0,
+                        200.0
+                    ],
+                    "type": 13
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "Spice",
+            "tag": 0
+        },
+        {
+            "active": false,
+            "children": [
+                {
+                    "active": false,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 7,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                302.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                620.0,
+                                168.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/abilities_text_background.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "BackGround",
+                    "tag": 0
+                },
+                {
+                    "active": false,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 7,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -1.0,
+                                302.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                607.0,
+                                155.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/abilities_text_background_frame.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Mark",
+                    "tag": 0
+                },
+                {
+                    "active": false,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                -185.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                586.0,
+                                32.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "color": [
+                                255,
+                                255,
+                                255,
+                                255
+                            ],
+                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
+                            "type": 16,
+                            "value": "Line 1 description"
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "line1",
+                    "tag": 0
+                },
+                {
+                    "active": false,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                -205.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                586.0,
+                                30.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "color": [
+                                255,
+                                255,
+                                255,
+                                255
+                            ],
+                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
+                            "type": 16,
+                            "value": "Line 2 description"
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "line2",
+                    "tag": 0
+                },
+                {
+                    "active": false,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                -225.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                586.0,
+                                30.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "color": [
+                                255,
+                                255,
+                                255,
+                                255
+                            ],
+                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
+                            "type": 16,
+                            "value": "Line 3 description"
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "line3",
+                    "tag": 0
+                },
+                {
+                    "active": false,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                -245.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                586.0,
+                                30.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "color": [
+                                255,
+                                255,
+                                255,
+                                255
+                            ],
+                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
+                            "type": 16,
+                            "value": "Line 4 description"
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "line4",
+                    "tag": 0
+                },
+                {
+                    "active": false,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                -266.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                586.0,
+                                30.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "color": [
+                                255,
+                                255,
+                                255,
+                                255
+                            ],
+                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
+                            "type": 16,
+                            "value": "Line 5 description"
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "line5",
+                    "tag": 0
+                },
+                {
+                    "active": false,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                -289.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                586.0,
+                                30.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "color": [
+                                255,
+                                255,
+                                255,
+                                255
+                            ],
+                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
+                            "type": 16,
+                            "value": "Line 6 description"
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "line6",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 4,
+                    "logicalSize": [
+                        1920.0,
+                        1080.0
+                    ],
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        200.0,
+                        200.0
+                    ],
+                    "type": 13
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "SkillDescription",
+            "tag": 0
+        },
+        {
+            "active": true,
+            "children": [
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                57.0,
+                                22.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/hp_diamond_filled.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "HP Fill 4",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 6,
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        340.0,
+                        42.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        70.0,
+                        30.0
+                    ],
+                    "type": 22
+                },
+                {
+                    "active": true,
+                    "texture": "Assets/New UI/hp_diamond.png",
+                    "type": 14
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "HP Frame 4",
             "tag": 0
         }
     ],

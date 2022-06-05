@@ -3,4 +3,7 @@ function Update(dt)
     if gameObject:GetButton():IsPressed() == true then
         DispatchGlobalEvent("Active_Ultimate", {currentCharacterId})
     end
+    if gameObject:GetButton():IsIdle() == false and gameObject:GetButton():IsPressed() == false then
+        DispatchGlobalEvent("Display_Description", {3, currentCharacterId})
+    end
 end

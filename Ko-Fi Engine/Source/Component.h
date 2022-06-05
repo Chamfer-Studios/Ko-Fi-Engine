@@ -3,6 +3,8 @@
 #include "imgui.h"
 #include "json.hpp"
 
+#include <typeindex>
+
 using nlohmann::json;
 class PanelChooser;
 class GameObject;
@@ -77,6 +79,8 @@ public:
 	bool active = true;
 	GameObject *owner = nullptr;
 	ComponentType type = ComponentType::NONE;
+
+	std::type_index typeIndex = typeid(*this);
 };
 
 #endif //__COMPONENT_H__

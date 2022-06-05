@@ -9,9 +9,9 @@
         {
             "active": true,
             "position": [
-                -1525.5400390625,
-                17.416894912719727,
-                846.5625
+                0.0,
+                0.0,
+                0.0
             ],
             "rotation": [
                 0.0,
@@ -94,17 +94,32 @@
             "active": true,
             "fade_time": 2.0,
             "offset_sync": false,
-            "total_tracks": 1,
+            "total_tracks": 2,
             "tracks": [
                 {
                     "bypass": false,
+                    "custom_loop": false,
                     "loop": false,
+                    "loop_offset": 0.0,
                     "mute": false,
                     "offset": 0.0,
                     "pan": 0.0,
                     "play_on_start": false,
                     "track_path": "Assets/Audio/SFX/Zhib/zhib_knife_hit_1_fx.wav",
-                    "transpose": 0.0,
+                    "transpose": 1.0,
+                    "volume": 100.0
+                },
+                {
+                    "bypass": false,
+                    "custom_loop": false,
+                    "loop": false,
+                    "loop_offset": 0.0,
+                    "mute": false,
+                    "offset": 0.0,
+                    "pan": 0.0,
+                    "play_on_start": false,
+                    "track_path": "Assets/Audio/SFX/Zhib/zhib_knife_hit_2_fx.wav",
+                    "transpose": 1.0,
                     "volume": 100.0
                 }
             ],
@@ -226,5 +241,5 @@
     "is3D": true,
     "isPrefab": true,
     "name": "Knife",
-    "tag": 4
+    "tag": 5
 }

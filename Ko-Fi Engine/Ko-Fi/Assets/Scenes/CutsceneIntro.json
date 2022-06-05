@@ -1,7 +1,7 @@
 {
     "CutsceneIntro": {
         "active": true,
-        "game_objects_amount": 41,
+        "game_objects_amount": 38,
         "game_objects_list": [
             {
                 "UID": 1588352491,
@@ -285,8 +285,8 @@
                             0.5
                         ],
                         "position": [
-                            516.0,
-                            140.0
+                            850.0,
+                            100.0
                         ],
                         "rotation": [
                             0.0,
@@ -294,7 +294,7 @@
                             0.0
                         ],
                         "size": [
-                            1187.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -309,7 +309,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "Arrakis, The Source of the Spice on the known universe,"
+                        "value": "It is the year 10193 in Arrakis.  This deserted planet is the only source of spice,  the key"
                     }
                 ],
                 "is3D": false,
@@ -376,8 +376,8 @@
                             0.5
                         ],
                         "position": [
-                            391.0,
-                            94.0
+                            850.0,
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -385,7 +385,7 @@
                             0.0
                         ],
                         "size": [
-                            942.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -400,7 +400,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "the material that allows the user to travel. "
+                        "value": "to space travel, that has been found. War between the Atreides, who took on the"
                     }
                 ],
                 "is3D": false,
@@ -425,8 +425,8 @@
                             0.5
                         ],
                         "position": [
-                            514.0,
-                            46.0
+                            850.0,
+                            100.0
                         ],
                         "rotation": [
                             0.0,
@@ -434,7 +434,7 @@
                             0.0
                         ],
                         "size": [
-                            1173.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -449,7 +449,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "Situation: War between the Harkonnen, after they defeated"
+                        "value": "This war has shaken the infinite dunes of the planet, and has resulted in the near"
                     }
                 ],
                 "is3D": false,
@@ -474,8 +474,8 @@
                             0.5
                         ],
                         "position": [
-                            460.0,
-                            -1.0
+                            850.0,
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -483,7 +483,7 @@
                             0.0
                         ],
                         "size": [
-                            1081.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -498,7 +498,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "the Atreides and are on the move to conquer the planet. "
+                        "value": "annihilation of the Atreides and reinstated the tyranny of the Harkonnen."
                     }
                 ],
                 "is3D": false,
@@ -565,8 +565,8 @@
                             0.5
                         ],
                         "position": [
-                            774.0,
-                            65.0
+                            850.0,
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -574,7 +574,7 @@
                             0.0
                         ],
                         "size": [
-                            1710.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -589,7 +589,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "News of a possible location of Sannara, the legendary moving city"
+                        "value": "On of the only Fremen cities that escaped the Harkonnen control is Sannara,"
                     }
                 ],
                 "is3D": false,
@@ -614,8 +614,8 @@
                             0.5
                         ],
                         "position": [
-                            623.0,
-                            19.0
+                            850.0,
+                            -20.0
                         ],
                         "rotation": [
                             0.0,
@@ -623,7 +623,7 @@
                             0.0
                         ],
                         "size": [
-                            1404.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -638,258 +638,13 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "in the deep desert, arose in Arrakeen. These rumors reached"
+                        "value": "which location remains hidden by mirages, something that was about to change..."
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Text9",
                 "parent_UID": 707661581,
-                "tag": 0
-            },
-            {
-                "UID": 1376117294,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            828.0,
-                            65.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1809.0,
-                            60.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
-                        "type": 16,
-                        "value": "The stories around Sannara were enough to divert a part of the harkonnen’s"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text10",
-                "parent_UID": 1546225503,
-                "tag": 0
-            },
-            {
-                "UID": 974181963,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            710.0,
-                            20.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1571.0,
-                            60.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
-                        "type": 16,
-                        "value": "military assets in order to suppress a potential enemy while establishing"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text11",
-                "parent_UID": 1546225503,
-                "tag": 0
-            },
-            {
-                "UID": 1693906469,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            700.0,
-                            59.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1610.0,
-                            60.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
-                        "type": 16,
-                        "value": " In Sannara, Zhib, Naib of Sietch Sannara, the legendary"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text12",
-                "parent_UID": 1650019150,
-                "tag": 0
-            },
-            {
-                "UID": 250319597,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            754.0,
-                            15.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1664.0,
-                            60.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
-                        "type": 16,
-                        "value": "moving city in the deep desert, received a message from one of the"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text13",
-                "parent_UID": 1650019150,
-                "tag": 0
-            },
-            {
-                "UID": 670867332,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            853.0,
-                            -29.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1862.0,
-                            60.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
-                        "type": 16,
-                        "value": "Sietch's scouts that his home had been discovered by the enemy..."
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text14",
-                "parent_UID": 1650019150,
                 "tag": 0
             },
             {
@@ -909,7 +664,7 @@
                         ],
                         "position": [
                             0.0,
-                            -94.0
+                            0.0
                         ],
                         "rotation": [
                             0.0,
@@ -977,55 +732,6 @@
                 "tag": 0
             },
             {
-                "UID": 170950110,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            828.0,
-                            -24.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1814.0,
-                            60.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
-                        "type": 16,
-                        "value": "Glossu Rabaan Harkonnen’s ears, who planned an attack on the region right away."
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "vaentreel9yel10",
-                "parent_UID": 707661581,
-                "tag": 0
-            },
-            {
                 "UID": 707661581,
                 "active": false,
                 "components": [
@@ -1065,139 +771,6 @@
                 "isPrefab": false,
                 "name": "Text2Part1",
                 "parent_UID": 752630075,
-                "tag": 0
-            },
-            {
-                "UID": 1546225503,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            200.0,
-                            200.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text2Part2",
-                "parent_UID": 752630075,
-                "tag": 0
-            },
-            {
-                "UID": 1650019150,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            8.0,
-                            5.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            200.0,
-                            200.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Text2Part3",
-                "parent_UID": 752630075,
-                "tag": 0
-            },
-            {
-                "UID": 1706448873,
-                "active": false,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            585.0,
-                            -25.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1318.0,
-                            60.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
-                        "type": 16,
-                        "value": "a settlement of their own to fight back Muad’dib’s troops."
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "vaentreel11yel12",
-                "parent_UID": 1546225503,
                 "tag": 0
             },
             {
@@ -1342,8 +915,8 @@
                             0.5
                         ],
                         "position": [
-                            686.0,
-                            65.0
+                            850.0,
+                            100.0
                         ],
                         "rotation": [
                             0.0,
@@ -1351,7 +924,7 @@
                             0.0
                         ],
                         "size": [
-                            1523.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1366,7 +939,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "And by none other than the tyrant that had occupied the planet,"
+                        "value": "The current ruler of Arrakis, the tyrant Glossu Rabaan Harkonnen, the Beast,"
                     }
                 ],
                 "is3D": false,
@@ -1391,8 +964,8 @@
                             0.5
                         ],
                         "position": [
-                            719.0,
-                            20.0
+                            850.0,
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -1400,7 +973,7 @@
                             0.0
                         ],
                         "size": [
-                            1586.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1415,7 +988,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "Glossu Rabaan harkonnen. The information about the Sietch had arrived"
+                        "value": "was made aware of the possible loation of Sannara. Immediately establishing a camp"
                     }
                 ],
                 "is3D": false,
@@ -1440,8 +1013,8 @@
                             0.5
                         ],
                         "position": [
-                            689.0,
-                            -25.0
+                            850.0,
+                            -20.0
                         ],
                         "rotation": [
                             0.0,
@@ -1449,7 +1022,7 @@
                             0.0
                         ],
                         "size": [
-                            1528.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1464,7 +1037,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "straight to the ruler's doorstep and entered rampant like a sandworm."
+                        "value": "near the locaton he was ready to sieze the opportunity, the beast was ready for a bloodbth."
                     }
                 ],
                 "is3D": false,
@@ -1615,7 +1188,7 @@
             },
             {
                 "UID": 1138804679,
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "active": true,
@@ -1699,7 +1272,7 @@
             },
             {
                 "UID": 1072089832,
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "active": true,
@@ -1713,8 +1286,8 @@
                             0.5
                         ],
                         "position": [
-                            818.0,
-                            65.0
+                            850.0,
+                            100.0
                         ],
                         "rotation": [
                             0.0,
@@ -1722,7 +1295,7 @@
                             0.0
                         ],
                         "size": [
-                            1787.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1748,7 +1321,7 @@
             },
             {
                 "UID": 2024558540,
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "active": true,
@@ -1762,8 +1335,8 @@
                             0.5
                         ],
                         "position": [
-                            832.0,
-                            20.0
+                            850.0,
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -1771,7 +1344,7 @@
                             0.0
                         ],
                         "size": [
-                            1817.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1786,7 +1359,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "form the spearhead from Sannara, the ones in charge of maintaining the secret"
+                        "value": "form the spearhead from Sannara: Nerala, fiercest hunter in Arrakis, Omozra, "
                     }
                 ],
                 "is3D": false,
@@ -1797,7 +1370,7 @@
             },
             {
                 "UID": 1700942495,
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "active": true,
@@ -1811,8 +1384,8 @@
                             0.5
                         ],
                         "position": [
-                            798.0,
-                            -24.0
+                            850.0,
+                            -20.0
                         ],
                         "rotation": [
                             0.0,
@@ -1820,7 +1393,7 @@
                             0.0
                         ],
                         "size": [
-                            1744.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1835,7 +1408,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "of their Sietch and that have made the oath to protect their home or die trying:"
+                        "value": "master of worms, and their head, Zhib, son of Zhiffat, blade of the desert."
                     }
                 ],
                 "is3D": false,
@@ -1860,8 +1433,8 @@
                             0.5
                         ],
                         "position": [
-                            845.0,
-                            47.0
+                            850.0,
+                            100.0
                         ],
                         "rotation": [
                             0.0,
@@ -1869,7 +1442,7 @@
                             0.0
                         ],
                         "size": [
-                            1832.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1884,7 +1457,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "Nerala, the Black Hawk, fiercest hunter in the Arrakis, and Omozrra, master of worms,"
+                        "value": "Nerala was sent on a reconnaissance mission and reported that Rabban had made a mistake.  He was"
                     }
                 ],
                 "is3D": false,
@@ -1909,8 +1482,8 @@
                             0.5
                         ],
                         "position": [
-                            758.0,
-                            0.0
+                            850.0,
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -1918,7 +1491,7 @@
                             0.0
                         ],
                         "size": [
-                            1660.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1933,13 +1506,300 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "shadow of the desert, and their head, Zhib, son of Zhiffat, blade of the desert."
+                        "value": "there, in the camp, at her reach, and she was going to end the bloodshed right then and there."
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Text24",
                 "parent_UID": 396880659,
+                "tag": 0
+            },
+            {
+                "UID": 1224080218,
+                "active": false,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            850.0,
+                            -20.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            1800.0,
+                            60.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "type": 16,
+                        "value": "planetary fief by order of the emperor, and the Harkonnen,previous rulers of Arrakis."
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Text (1)",
+                "parent_UID": 935936089,
+                "tag": 0
+            },
+            {
+                "UID": 1264543367,
+                "active": false,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            850.0,
+                            -20.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            1800.0,
+                            60.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "type": 16,
+                        "value": "The Fremen, the true inhabitants of the planet, now face the Harkonnen alone."
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Text (2)",
+                "parent_UID": 350829967,
+                "tag": 0
+            },
+            {
+                "UID": 348256291,
+                "active": false,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            850.0,
+                            -20.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            600.0,
+                            60.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "type": 16,
+                        "value": "She was going to kill him."
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Text (3)",
+                "parent_UID": 396880659,
+                "tag": 0
+            },
+            {
+                "UID": 860861081,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            200.0,
+                            200.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Text4Part3",
+                "parent_UID": 1235969954,
+                "tag": 0
+            },
+            {
+                "UID": 2126748913,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            850.0,
+                            40.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            1800.0,
+                            60.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "type": 16,
+                        "value": "Fearing the dangers of this improvised mission, Zhib and Omozra decided to go after her"
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Text (4)",
+                "parent_UID": 860861081,
+                "tag": 0
+            },
+            {
+                "UID": 1683578617,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            80.0,
+                            -20.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            250.0,
+                            60.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "type": 16,
+                        "value": "to stop her."
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Text (5)",
+                "parent_UID": 860861081,
                 "tag": 0
             }
         ],

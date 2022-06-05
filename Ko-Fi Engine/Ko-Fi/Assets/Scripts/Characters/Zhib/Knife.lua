@@ -1,5 +1,5 @@
 ------------------- Variables --------------------
-speed = 7000
+speed = 10000
 destination = nil
 isGrabbable = false
 once = false
@@ -14,26 +14,35 @@ function Start()
     player = GetVariable("Zhib.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
     speed = GetVariable("Zhib.lua", "knifeSpeed", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
     playerPos = player:GetTransform():GetPosition()
-    destination = target:GetTransform():GetPosition()
-    local targetPos2D = {destination.x, destination.z}
-    local pos2D = {playerPos.x, playerPos.z}
-    local d = Distance(pos2D, targetPos2D)
-    local vec2 = {targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2]}
-    vec2 = Normalize(vec2, d)
-    if (componentRigidBody ~= nil) then
-        componentRigidBody:SetRigidBodyPos(float3.new(playerPos.x + vec2[1] * 3, playerPos.y + 10,
-            playerPos.z + vec2[2] * 3))
-    end
+    if (target ~= nil) then
+        destination = target:GetTransform():GetPosition()
+        local targetPos2D = {destination.x, destination.z}
+        local pos2D = {playerPos.x, playerPos.z}
+        local d = Distance(pos2D, targetPos2D)
+        local vec2 = {targetPos2D[1] - pos2D[1], targetPos2D[2] - pos2D[2]}
+        vec2 = Normalize(vec2, d)
+        if (componentRigidBody ~= nil) then
+            componentRigidBody:SetRigidBodyPos(float3.new(playerPos.x + vec2[1] * 3, playerPos.y + 10,
+                playerPos.z + vec2[2] * 3))
+        end
+        destination = float3.new(destination.x + vec2[1] * 5, destination.y, destination.z + vec2[2] * 5)
 
-    componentParticle = gameObject:GetComponentParticle()
-    if (componentParticle ~= nil) then
-        componentParticle:StopParticleSpawn()
+        componentParticle = gameObject:GetComponentParticle()
+        if (componentParticle ~= nil) then
+            componentParticle:StopParticleSpawn()
+        end
+    else
+        DispatchGlobalEvent("Zhib_Primary_Bugged", {})
+        DeleteGameObject()
     end
 end
 
 -- Called each loop iteration
 function Update(dt)
 
+    if (lastRotation ~= nil) then
+        componentTransform:LookAt(lastRotation, float3.new(0, 1, 0))
+    end
     if (destination ~= nil) then
         MoveToDestination(dt)
     end
@@ -45,13 +54,12 @@ function OnTriggerEnter(go)
         if (once == false) then
             once = true
             DispatchGlobalEvent("Knife_Hit", {go}) -- Events better than OnTriggerEnter() for the enemies (cause more than one different type of projectile can hit an enemy)
-            DispatchGlobalEvent("Auditory_Trigger", {componentTransform:GetPosition(), 100, "single", gameObject})
-            if (currentTrackID ~= -1) then
+            DispatchGlobalEvent("Auditory_Trigger", {componentTransform:GetPosition(), 100, "single", player})
+            if (currentTrackID ~= -1 and componentSwitch ~= nil) then
                 componentSwitch:StopTrack(currentTrackID)
             end
-            currentTrackID = 0
-            componentSwitch:PlayTrack(currentTrackID)
-            StopMovement()
+            trackList = {0, 1}
+            ChangeTrack(trackList)
         end
     elseif (go:GetName() == "Zhib" and isGrabbable == true) then -- Using direct name instead of tags so other players can't pick it up
         DispatchGlobalEvent("Knife_Grabbed", {})
@@ -70,24 +78,29 @@ function MoveToDestination(dt)
     if (d > 2.0) then
 
         -- Adapt speed on arrive
+        local s = speed
         if (d < 15.0) then
-            speed = speed * 0.5
+            s = s * 0.5
         end
 
         -- Movement
         vec2 = Normalize(vec2, d)
+
+        if (target ~= nil) then
+            local newDestination = target:GetTransform():GetPosition()
+            if (Distance3D(destination, newDestination) >= 5) then
+                destination = float3.new(newDestination.x + vec2[1] * 5, newDestination.y,
+                    newDestination.z + vec2[2] * 5)
+            end
+        end
+
         if (componentRigidBody ~= nil) then
-            componentRigidBody:SetLinearVelocity(float3.new(vec2[1] * speed * dt, 0, vec2[2] * speed * dt))
+            componentRigidBody:SetLinearVelocity(float3.new(vec2[1] * s * dt, 0, vec2[2] * s * dt))
         end
 
         -- Rotation
-        local rad = math.acos(vec2[2])
-        if (vec2[1] < 0) then
-            rad = rad * (-1)
-        end
-        rotateKnife = componentTransform:GetRotation().x + 10
-        rot = float3.new(rotateKnife, componentTransform:GetRotation().y, rad)
-        componentTransform:SetRotation(rot)
+        lastRotation = float3.new(vec2[1], 0, vec2[2])
+        componentTransform:LookAt(lastRotation, float3.new(0, 1, 0))
     else
         StopMovement()
     end
@@ -96,14 +109,20 @@ end
 function StopMovement()
     destination = nil
     isGrabbable = true -- Has arrived to the destination
+
     if (componentRigidBody ~= nil) then
-        componentRigidBody:SetLinearVelocity(float3.new(0, 0, 0))
-        componentRigidBody:SetRigidBodyPos(float3.new(componentTransform:GetPosition().x, playerPos.y + 5,
+        componentRigidBody:SetStatic()
+        -- componentRigidBody:SetLinearVelocity(float3.new(0, 0, 0))
+        componentTransform:SetPosition(float3.new(componentTransform:GetPosition().x, 3,
             componentTransform:GetPosition().z))
     end
     if (componentParticle ~= nil) then
         componentParticle:ResumeParticleSpawn()
     end
+
+    gameObject.tag = Tag.PICKUP
+
+    DispatchGlobalEvent("Knife_Grabbable", {})
 end
 ----------------- Math Functions -----------------
 
@@ -120,6 +139,32 @@ function Distance(a, b)
     local dx, dy = a[1] - b[1], a[2] - b[2]
     return math.sqrt(dx * dx + dy * dy)
 
+end
+
+function ChangeTrack(_trackList)
+    size = 0
+    for i in pairs(_trackList) do
+        size = size + 1
+    end
+
+    index = math.random(size)
+
+    if (componentSwitch ~= nil) then
+        if (currentTrackID ~= -1) then
+            componentSwitch:StopTrack(currentTrackID)
+        end
+        currentTrackID = _trackList[index]
+        componentSwitch:PlayTrack(currentTrackID)
+    end
+end
+
+function Distance3D(a, b)
+    diff = {
+        x = b.x - a.x,
+        y = b.y - a.y,
+        z = b.z - a.z
+    }
+    return math.sqrt(diff.x * diff.x + diff.y * diff.y + diff.z * diff.z)
 end
 
 print("Knife.lua compiled succesfully\n")

@@ -1,0 +1,134 @@
+{
+  "sceneTransition": [
+    {
+      "id": 1,
+      "src": "Assets/New UI/ability_zhib1.png",
+      "description1": "Zhib aims at an enemy and throws a knife. If the knife hits, the",
+      "description2": "target is executed but it can be dodged. Zhib only has one knife,",
+      "description3": "but he can pick it up after throwing them.",
+      "description4": "The dodge chances are",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 2,
+      "src": "Assets/New UI/ability_zhib2.png",
+      "description1": "Zhib throws a device that alerts and attracts nearby enemies for",
+      "description2": "… seconds. After this time has passed, Zhib can pick up the",
+      "description3": "device and use it again when it recharges.",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 3,
+      "src": "Assets/New UI/ability_zhib3.png",
+      "description1": "Zhib targets an enemy and executes him. If there is another enemy",
+      "description2": "inside a close range, he will slash through the first one onto",
+      "description3": "the second one, executing him as well. This chain kill extends to",
+      "description4": "a maximum of … enemies.",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 4,
+      "src": "Assets/New UI/ability_nerala1.png",
+      "description1": "Nerala aims at an enemy and fires a dart from her wrist that",
+      "description2": "makes enemies drowsy for … seconds. Drowsy enemies detect players slower.",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 5,
+      "src": "Assets/New UI/ability_nerala2.png",
+      "description1": "Nerala deploys a device that releases smoke in a given area",
+      "description2": "during … seconds, making her invisible to the eyes of enemies",
+      "description3": "while inside it. The smoke bomb only has … charges.",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 6,
+      "src": "Assets/New UI/ability_nerala3.png",
+      "description1": "Nerala deploys a minuscule machine that she can control from afar",
+      "description2": "during … seconds. This machine can execute enemies and is",
+      "description3": "invisible to their eyes, but can still be heard. The machine will",
+      "description4": "be destroyed if it’s detected by an enemy, it flies out of a",
+      "description5": "given range, it kills … enemies or the batteries run out.",
+      "description6": " "
+    },
+    {
+      "id": 7,
+      "src": "Assets/New UI/ability_omozra1.png",
+      "description1": "Omozra points at an ally or himself, prompting Sadiq to emerge",
+      "description2": "from the sand and spit on them, healing … hp points.",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 8,
+      "src": "Assets/New UI/ability_omozra2.png",
+      "description1": "Omozra targets an enemy, commanding Sadiq to emerge from the sand and",
+      "description2": "eat them. Sadly, Sadiq will also eat any spice that the enemy might carry.",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 9,
+      "src": "Assets/New UI/omozra_ability3.png",
+      "description1": "Omozra points at an ally, prompting Sadiq to emerge from the sand",
+      "description2": "and partly swallow them. While the ally is inside Sadiq, Omozra",
+      "description3": "can move, but not cast any other abilities. Then, Omozra points",
+      "description4": "at a desired spot inside a given range and Sadiq pops up and",
+      "description5": "regurgitates the ally before disappearing under the sand again",
+      "description6": "This ability can’t be casted on Omozra himself."
+    },
+    {
+      "id": 101,
+      "src": "Assets/New UI/zhib_passive_icon.png",
+      "description1": "Omozra points at an ally, prompting Sadiq to emerge from the sand",
+      "description2": "and partly swallow them. While the ally is inside Sadiq, Omozra",
+      "description3": "can move, but not cast any other abilities. Then, Omozra points",
+      "description4": "at a desired spot inside a given range and Sadiq pops up and",
+      "description5": "regurgitates the ally before disappearing under the sand again",
+      "description6": "This ability can’t be casted on Omozra himself."
+    },
+    {
+      "id": 102,
+      "src": "Assets/New UI/nerala_passive_icon.png",
+      "description1": "Omozra points at an ally, prompting Sadiq to emerge from the sand",
+      "description2": "and partly swallow them. While the ally is inside Sadiq, Omozra",
+      "description3": "can move, but not cast any other abilities. Then, Omozra points",
+      "description4": "at a desired spot inside a given range and Sadiq pops up and",
+      "description5": "regurgitates the ally before disappearing under the sand again",
+      "description6": "This ability can’t be casted on Omozra himself."
+    },
+    {
+      "id": 103,
+      "src": "Assets/New UI/omozra_passive_icon.png",
+      "description1": "Omozra points at an ally, prompting Sadiq to emerge from the sand",
+      "description2": "and partly swallow them. While the ally is inside Sadiq, Omozra",
+      "description3": "can move, but not cast any other abilities. Then, Omozra points",
+      "description4": "at a desired spot inside a given range and Sadiq pops up and",
+      "description5": "regurgitates the ally before disappearing under the sand again",
+      "description6": "This ability can’t be casted on Omozra himself."
+    },
+    {
+      "id": 1000,
+      "src": "",
+      "description1": "Level: 1",
+      "description2": "",
+      "description3": "",
+      "description4": "",
+      "description5": "",
+      "description6": ""
+    }
+  ]
+}

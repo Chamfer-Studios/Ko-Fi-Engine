@@ -3,6 +3,7 @@
 C_Walkable::C_Walkable(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::WALKABLE;
+	typeIndex = typeid(*this);
 }
 
 void C_Walkable::Save(Json& json) const

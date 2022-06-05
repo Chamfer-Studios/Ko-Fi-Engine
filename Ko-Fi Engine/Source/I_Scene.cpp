@@ -387,7 +387,7 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 			if (jsonGo.find("is3D") != jsonGo.end())
 				is3D = jsonGo.at("is3D");
 
-			Tag tag = Tag::TAG_UNTAGGED;
+			TAG tag = TAG::TAG_UNTAGGED;
 			if (jsonGo.contains("tag"))
 				tag = jsonGo.at("tag");
 
@@ -770,7 +770,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			if (jsonGo.find("is3D") != jsonGo.end()) {
 				is3D = jsonGo.at("is3D");
 			}
-			Tag tag = Tag::TAG_UNTAGGED;
+			TAG tag = TAG::TAG_UNTAGGED;
 			if (jsonGo.contains("tag"))
 				tag = jsonGo.at("tag");
 			

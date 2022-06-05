@@ -4,6 +4,11 @@ minRetargetingDistanceIV = InspectorVariable.new("minRetargetingDistance", minRe
     minRetargetingDistance)
 NewVariable(minRetargetingDistanceIV)
 
+standByTime = 0
+local standByTimeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
+standByTimeIV = InspectorVariable.new("standByTime", standByTimeIVT, standByTime)
+NewVariable(standByTimeIV)
+
 navigation = GetNavigation()
 
 _G.finalPath = {}
@@ -55,7 +60,7 @@ function FollowPath(speed, dt, loop, useRB)
     if #_G.finalPath == 0 or currentPathIndex > #_G.finalPath then
         do
             DispatchEvent("IsWalking", {false})
-            if (componentRigidBody ~= nil) then
+            if (componentRigidBody ~= nil and useRB == true) then
                 componentRigidBody:SetLinearVelocity(float3.new(0.0, 0.0, 0.0))
             end
             do
@@ -68,7 +73,12 @@ function FollowPath(speed, dt, loop, useRB)
     currentPosition = componentTransform:GetPosition()
     if Float3Distance(currentTarget, currentPosition) <= minRetargetingDistance then
         currentPathIndex = currentPathIndex + 1
+        DispatchEvent("Patrol_Point", {true})
+        standByTimer = 0
+
         if currentPathIndex > #_G.finalPath and loop then
+            standByTimer = nil
+            DispatchEvent("Patrol_Point", {nil})
             currentPathIndex = 2
             currentTarget = _G.finalPath[currentPathIndex]
         end
@@ -90,6 +100,11 @@ function FollowPath(speed, dt, loop, useRB)
         if (componentRigidBody ~= nil and useRB == true) then
             componentRigidBody:SetLinearVelocity(float3.new(delta.x, delta.y, delta.z))
         else
+            delta = {
+                x = componentTransform:GetFront().x * speed * _dt,
+                y = componentTransform:GetFront().y * speed * _dt,
+                z = componentTransform:GetFront().z * speed * _dt
+            }
             nextPosition = {
                 x = currentPosition.x + delta.x,
                 y = currentPosition.y + delta.y,
@@ -182,4 +197,12 @@ end
 
 function Update(dt)
     _dt = dt
+    if (standByTimer ~= nil) then
+
+        standByTimer = standByTimer + dt
+        if (standByTimer >= standByTime) then
+            standByTimer = nil
+            DispatchEvent("Patrol_Point", {nil})
+        end
+    end
 end

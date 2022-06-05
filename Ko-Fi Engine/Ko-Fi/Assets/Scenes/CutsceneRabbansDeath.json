@@ -286,7 +286,7 @@
                         ],
                         "position": [
                             25.0,
-                            115.0
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -294,7 +294,7 @@
                             0.0
                         ],
                         "size": [
-                            1804.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -377,7 +377,7 @@
                         ],
                         "position": [
                             25.0,
-                            46.0
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -385,7 +385,7 @@
                             0.0
                         ],
                         "size": [
-                            1406.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -400,7 +400,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "Omozra - Your water has no value, you are a dishonor to"
+                        "value": "Omozra - Your water has no value, you are a dishonor to your people."
                     }
                 ],
                 "is3D": false,
@@ -425,8 +425,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            -1.0
+                            267.0,
+                            -20.0
                         ],
                         "rotation": [
                             0.0,
@@ -434,7 +434,7 @@
                             0.0
                         ],
                         "size": [
-                            1159.0,
+                            900.0,
                             60.0
                         ],
                         "type": 22
@@ -449,7 +449,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "your people. A grain of sand in the great dune."
+                        "value": "A grain of sand in the great dune."
                     }
                 ],
                 "is3D": false,
@@ -516,8 +516,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            46.0
+                            50.0,
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -525,7 +525,7 @@
                             0.0
                         ],
                         "size": [
-                            1868.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -565,8 +565,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            -1.0
+                            50.0,
+                            -20.0
                         ],
                         "rotation": [
                             0.0,
@@ -574,7 +574,7 @@
                             0.0
                         ],
                         "size": [
-                            826.0,
+                            900.0,
                             60.0
                         ],
                         "type": 22
@@ -614,8 +614,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            46.0
+                            50.0,
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -623,7 +623,7 @@
                             0.0
                         ],
                         "size": [
-                            1465.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -663,8 +663,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            -2.0
+                            50.0,
+                            -20.0
                         ],
                         "rotation": [
                             0.0,
@@ -672,7 +672,7 @@
                             0.0
                         ],
                         "size": [
-                            1287.0,
+                            1600.0,
                             60.0
                         ],
                         "type": 22
@@ -713,7 +713,7 @@
                         ],
                         "position": [
                             0.0,
-                            -94.0
+                            0.0
                         ],
                         "rotation": [
                             0.0,
@@ -866,7 +866,7 @@
             },
             {
                 "UID": 1104294419,
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "active": true,
@@ -1006,8 +1006,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            22.0
+                            50.0,
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -1015,7 +1015,7 @@
                             0.0
                         ],
                         "size": [
-                            1845.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1030,7 +1030,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "Rabban - I knew you would understand, but you will still be executed for your sins..."
+                        "value": "Rabban - I knew you would understand, but still, you will be executed for your sins..."
                     }
                 ],
                 "is3D": false,
@@ -1055,8 +1055,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            48.0
+                            50.0,
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -1064,7 +1064,7 @@
                             0.0
                         ],
                         "size": [
-                            1423.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1104,8 +1104,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            0.0
+                            50.0,
+                            -20.0
                         ],
                         "rotation": [
                             0.0,
@@ -1113,7 +1113,7 @@
                             0.0
                         ],
                         "size": [
-                            1460.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1139,7 +1139,7 @@
             },
             {
                 "UID": 1235969954,
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "active": true,
@@ -1237,8 +1237,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            94.0
+                            50.0,
+                            140.0
                         ],
                         "rotation": [
                             0.0,
@@ -1246,7 +1246,7 @@
                             0.0
                         ],
                         "size": [
-                            1649.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1286,8 +1286,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            48.0
+                            50.0,
+                            80.0
                         ],
                         "rotation": [
                             0.0,
@@ -1295,7 +1295,7 @@
                             0.0
                         ],
                         "size": [
-                            1491.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1335,8 +1335,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            0.0
+                            50.0,
+                            20.0
                         ],
                         "rotation": [
                             0.0,
@@ -1344,7 +1344,7 @@
                             0.0
                         ],
                         "size": [
-                            1475.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1426,8 +1426,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            65.0
+                            50.0,
+                            100.0
                         ],
                         "rotation": [
                             0.0,
@@ -1435,7 +1435,7 @@
                             0.0
                         ],
                         "size": [
-                            1486.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1475,8 +1475,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            21.0
+                            50.0,
+                            40.0
                         ],
                         "rotation": [
                             0.0,
@@ -1484,7 +1484,7 @@
                             0.0
                         ],
                         "size": [
-                            1509.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1499,7 +1499,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "Harkonnen, the beast! You should be kneeling down before"
+                        "value": "Harkonnen, the beast! You should be kneeling down before me"
                     }
                 ],
                 "is3D": false,
@@ -1524,8 +1524,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            -25.0
+                            50.0,
+                            -20.0
                         ],
                         "rotation": [
                             0.0,
@@ -1533,7 +1533,7 @@
                             0.0
                         ],
                         "size": [
-                            1504.0,
+                            1800.0,
                             60.0
                         ],
                         "type": 22
@@ -1573,8 +1573,8 @@
                             0.5
                         ],
                         "position": [
-                            25.0,
-                            -47.0
+                            50.0,
+                            -40.0
                         ],
                         "rotation": [
                             0.0,
@@ -1582,7 +1582,7 @@
                             0.0
                         ],
                         "size": [
-                            1373.0,
+                            1600.0,
                             60.0
                         ],
                         "type": 22

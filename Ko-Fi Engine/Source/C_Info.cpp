@@ -13,6 +13,8 @@
 C_Info::C_Info(GameObject* parent) : Component(parent)
 {
 	type = ComponentType::INFO;
+	typeIndex = typeid(*this);
+
 	showPopup = false;
 }
 
@@ -52,10 +54,10 @@ bool C_Info::InspectorDraw(PanelChooser* chooser)
 		tag = (int)owner->tag;
 
 		// Take care with the order in the combo, it has to follow the Tag enum class order
-		if (ImGui::Combo("##tagcombo", &tag, "Untagged\0Player\0Enemy\0Floor\0DecorationFloor\0PickUp\0Corpse\0Dialogue")) // TODO: Change to BeginCombo()
+		if (ImGui::Combo("##tagcombo", &tag, "Untagged\0Player\0Enemy\0Floor\0DecorationFloor\0PickUp\0Corpse\0Dialogue\0Wall\0")) // TODO: Change to BeginCombo()
 		{
-			if (owner->tag != (Tag)tag)
-				owner->tag = (Tag)tag;
+			if (owner->tag != (TAG)tag)
+				owner->tag = (TAG)tag;
 		}
 
 		// ImGui button

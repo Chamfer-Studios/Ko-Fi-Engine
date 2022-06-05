@@ -1,0 +1,48 @@
+{
+    "active": true,
+    "children": [],
+    "components": [
+        {
+            "active": true,
+            "type": 23
+        },
+        {
+            "active": true,
+            "anchor": 4,
+            "pivot": [
+                0.5,
+                0.4350000023841858
+            ],
+            "position": [
+                0.0,
+                -281.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "size": [
+                772.0,
+                31.0
+            ],
+            "type": 22
+        },
+        {
+            "active": true,
+            "color": [
+                255,
+                255,
+                255,
+                255
+            ],
+            "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+            "type": 16,
+            "value": "Omozra points at an ally or himself, prompting sadiq to emerge"
+        }
+    ],
+    "is3D": false,
+    "isPrefab": true,
+    "name": "Text",
+    "tag": 0
+}

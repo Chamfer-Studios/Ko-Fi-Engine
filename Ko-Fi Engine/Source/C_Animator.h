@@ -34,6 +34,7 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
+
 	bool InspectorDraw(PanelChooser* chooser);
 
 	void Save(Json& json) const override;
@@ -58,8 +59,8 @@ public:
 	//----------------------------------------------------------------------------------------------------
 	void GetBoneTransforms(float timeInSeconds, std::vector<float4x4>& transforms, GameObject* gameObject);
 	void ReadNodeHeirarchy(float animationTimeTicks, const GameObject* rootNode, const float4x4& parentTransform);
-
 	const Channel* FindNodeAnim(std::string nodeName);
+
 	const std::vector<float4x4> GetLastBoneTransforms(R_Mesh* mesh) const;
 	const inline std::map<R_Mesh*, MeshInfo> GetMeshesInfo() { return meshesInfo; }
 
