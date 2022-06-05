@@ -30,7 +30,7 @@ jobs:
         mkdir build
         cd build
         mkdir ${{env.RELEASE_NAME}}
-        cd "../../Ko-Fi-Engine"
+        cd "../../Ko-Fi-Engine/Ko-Fi Engine"
         dir
         
     #Step 4: Set up the microsoft msbuild tools in the path environment variables of the action so that we can use msbuild
@@ -38,18 +38,9 @@ jobs:
       uses: microsoft/setup-msbuild@v1.1
     #Step 5: Build our solution
     - name: Build Solution (MSVC16)
-      run: |
-        dir
-        msbuild.exe "Ko-Fi Engine.sln" /property:Configuration=Release
-        dir
-        copy /Y "Release\Ko-Fi Engine.exe" "build\${{env.RELEASE_NAME}}\Ko-Fi_Engine\Ko-Fi Engine.exe"
-        dir
-      shell: cmd
-      
-    - name: Generate Artifacts
     #We are copying from our output folder to our build/release_name/output folder all subdirectories
       run: |
-        robocopy ".\Ko-Fi Engine\Ko-Fi" .\build\${{ env.RELEASE_NAME }}\Ko-Fi_Engine /S
+        robocopy .\Ko-Fi Engine\Ko-Fi .\build\${{ env.RELEASE_NAME }}\Ko-Fi_Engine /S
         dir
         robocopy .\build\${{ env.RELEASE_NAME }} .\build\${{ env.RELEASE_NAME }}\Ko-Fi_Engine Ko-Fi_Engine.exe /MOVE
         dir
@@ -63,7 +54,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: ${{ env.RELEASE_NAME }}
-        path: ./build/${{ env.RELEASE_NAME }}
+        path: ./build/${{ env.RELEASE_NAME }}.zip
         
     - name: Upload Artifact to Release
       uses: actions/upload-release-asset@v1.0.1
@@ -71,7 +62,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./build/${{ env.RELEASE_NAME }}
+          asset_path: ./build/${{ env.RELEASE_NAME }}.zip
           asset_name: ${{ env.RELEASE_NAME }}
           asset_content_type: application/zip
       if: github.event_name == 'release' && github.event.action == 'published'
