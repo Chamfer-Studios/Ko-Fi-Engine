@@ -428,6 +428,7 @@ public:
 		lua.set_function("RayCast", &Scripting::RayCast, this);
 		lua.set_function("RayCastLambda", &Scripting::RayCastLambda, this);
 		lua.set_function("CustomRayCast", &Scripting::CustomRayCastQuery, this);
+		lua.set_function("CustomRayCastList", &Scripting::CustomRayCastQueryList, this);
 		lua.set_function("GetDialogueString", &Scripting::GetDialogueString, this);
 		lua.set_function("GetTransString", &Scripting::GetTransString, this);
 		lua.set_function("GetDialogueTargetID", &Scripting::GetDialogueTargetID, this);
@@ -1027,6 +1028,10 @@ public:
 		std::vector<float> values = gameJson.at(key).get<std::vector<float>>();
 		float3 ret = float3(values[0], values[1], values[2]);
 		return ret;
+	}
+
+	std::vector<GameObject*> CustomRayCastQueryList(float3 startPoint, float3 endPoint, std::vector<TAG> tagList) {
+		return gameObject->GetEngine()->GetPhysics()->CustomRayCastQueryList(startPoint, endPoint, tagList);
 	}
 
 public:
