@@ -666,15 +666,11 @@ function UpdateStaminaBar()
     if IsSelected() == true then
         local proportion = staminaTimer / staminaSeconds
         local recoveryProportion = staminaTimer / recoveryTime
-        if (isTired == false) then
-            if (proportion >= 0.5) then -- from G to Y
-                characterSelectedParticle:GetComponentParticle():SetColor((2 - (proportion * 2)) * 255, 255, 0, 255)
-            else -- from Y to R
-                characterSelectedParticle:GetComponentParticle():SetColor(255, (proportion * 2) * 255, 0, 255)
-            end
-        else -- from B to G
-            characterSelectedParticle:GetComponentParticle():SetColor(0, recoveryProportion * 255,
-                (1 - recoveryProportion) * 255, 255)
+
+        if (proportion >= 0.5) then -- from G to Y
+            characterSelectedParticle:GetComponentParticle():SetColor((2 - (proportion * 2)) * 255, 255, 0, 255)
+        else -- from Y to R
+            characterSelectedParticle:GetComponentParticle():SetColor(255, (proportion * 2) * 255, 0, 255)
         end
 
         staminaBarGreen:GetTransform():SetPosition(float3.new(pos.x, pos.y + 30, pos.z))
