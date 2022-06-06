@@ -769,7 +769,7 @@ void C_Particle::SetLoop(bool v)
 	}
 }
 
-void C_Particle::SetColor(float r, float g, float b, float a)
+void C_Particle::SetColor(double r, double g, double b, double a)
 {
 	for (auto e : resource->emitters)
 	{
@@ -778,7 +778,18 @@ void C_Particle::SetColor(float r, float g, float b, float a)
 			if (m->type == ParticleModuleType::COLOR)
 			{
 				EmitterColor* eColor = (EmitterColor*)m;
-				eColor->colorOverTime[0].color = Color(r, g, b, a);
+				float fr = (float)r / 255.0f;
+				float fg = (float)g / 255.0f;
+				float fb = (float)b / 255.0f;
+				float fa = (float)a / 255.0f;
+				if(fr <= 1.0f && fg <= 1.0f && fb <= 1.0f && fa <= 1.0f)
+				{
+					eColor->colorOverTime[0].color = Color(fr, fg, fb, fa);
+				}
+				else
+				{
+					eColor->colorOverTime[0].color = Color(1.0f, 1.0f, 1.0f, 1.0f);
+				}
 			}
 		}
 	}
