@@ -222,7 +222,8 @@ float3 C_Transform::GetRotationEuler() const
 	float3 scale = float3::zero;
 	Quat rotation = Quat::identity;
 	transformMatrixLocal.Decompose(position, rotation, scale);
-	return rotation.ToEulerXYZ();
+	float3 ret = rotation.ToEulerXYZ();
+	return ret;
 }
 
 Quat C_Transform::GetRotationQuat() const
