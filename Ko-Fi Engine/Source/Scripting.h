@@ -311,7 +311,8 @@ public:
 			"ResumeParticleSpawn", &C_Particle::ResumeParticleSpawn,
 			"ResetTimers", &C_Particle::ResetTimers,
 			"SetLoop",&C_Particle::SetLoop,
-			"SetColor",&C_Particle::SetColor);
+			"SetColor",&C_Particle::SetColor,
+			"SetAngle",&C_Particle::SetAngle);
 
 		// Component Audio Source
 		lua.new_usertype<C_AudioSource>("C_AudioSource",

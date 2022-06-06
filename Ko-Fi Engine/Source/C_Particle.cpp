@@ -795,6 +795,27 @@ void C_Particle::SetColor(double r, double g, double b, double a)
 	}
 }
 
+void C_Particle::SetAngle(double angle)
+{
+	for (auto e : resource->emitters)
+	{
+		for (auto m : e->modules)
+		{
+			if (m->type == ParticleModuleType::BILLBOARDING)
+			{
+				ParticleBillboarding* eBill = (ParticleBillboarding*)m;
+				if (angle >= 360)
+				{
+					eBill->minDegrees = 0;
+				}
+				else
+				{
+					eBill->minDegrees = angle;
+				}
+			}
+		}
+	}
+}
 void C_Particle::NewEmitterName(std::string& name, int n)
 {
 	for (auto emitter : resource->emitters)

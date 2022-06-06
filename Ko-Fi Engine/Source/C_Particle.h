@@ -36,6 +36,7 @@ public:
 	void ResetTimers();
 	void SetLoop(bool v);
 	void SetColor(double r, double g, double b, double a);
+	void SetAngle(double angle);
 	void DeleteModule(Emitter* e,ParticleModuleType t);
 
 private:
