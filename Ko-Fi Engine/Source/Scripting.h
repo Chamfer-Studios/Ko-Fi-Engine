@@ -590,6 +590,22 @@ public:
 		{
 			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_E);
 		}
+		case 16:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_W);
+		}
+		case 17:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_A);
+		}
+		case 18:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_S);
+		}
+		case 19:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_D);
+		}
 		case 21:
 		{
 			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_1);
