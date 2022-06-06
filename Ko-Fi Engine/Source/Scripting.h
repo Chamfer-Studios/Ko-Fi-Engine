@@ -391,6 +391,7 @@ public:
 
 		/// Functions
 		lua.set_function("GetMouseZ", &Scripting::LuaGetMouseZ, this);
+		lua.set_function("GetMouseMotionX", &Scripting::LuaGetMouseMotionX, this);
 		lua.set_function("GetInput", &Scripting::LuaGetInput, this);
 		lua.set_function("GetVsync", &Scripting::LuaGetVsync, this);
 		lua.set_function("SetVsync", &Scripting::LuaSetVsync, this);
@@ -459,6 +460,10 @@ public:
 
 	int LuaGetMouseZ() {
 		return gameObject->GetEngine()->GetInput()->GetMouseZ();
+	}
+
+	int LuaGetMouseMotionX() {
+		return gameObject->GetEngine()->GetInput()->GetMouseXMotion();
 	}
 
 	bool LuaGetVsync()
