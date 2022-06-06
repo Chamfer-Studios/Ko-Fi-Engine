@@ -184,6 +184,8 @@ private:
 
 	bool stopRenderingShadows = false;
 
+	std::vector<float4x4> transformsAnim;
+
 public:
 	struct GOComp
 	{

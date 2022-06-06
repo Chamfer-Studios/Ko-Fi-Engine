@@ -704,11 +704,11 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				//Draw Mesh
 				mesh->Draw();
 				
-				if (mesh->renderOutline && std::string(go->GetName()) == std::string("Zhib"))
-					RenderOutline(mesh, camera, go);
+				
 
 				glUseProgram(0);
-
+				if (mesh->renderOutline && std::string(go->GetName()) == std::string("Zhib"))
+					RenderOutline(mesh, camera, go);
 				glActiveTexture(GL_TEXTURE1);
 				glBindTexture(GL_TEXTURE_2D, 0);
 				glActiveTexture(GL_TEXTURE3);
@@ -978,7 +978,8 @@ void M_Renderer3D::StepAnimatedMesh(GameObject* go, R_Mesh* mesh, uint shader)
 			if (animatorClip->GetFinishedBool() && animatorClip->GetLoopBool())
 				animatorClip->SetFinishedBool(false);
 
-			std::vector<float4x4> transformsAnim;
+			transformsAnim.clear();
+			transformsAnim.shrink_to_fit();
 			if (!animatorClip->GetFinishedBool())
 			{
 				float animationTimeSec = cAnimator->GetAnimTime();
@@ -990,11 +991,6 @@ void M_Renderer3D::StepAnimatedMesh(GameObject* go, R_Mesh* mesh, uint shader)
 					transformsAnim = cAnimator->GetLastBoneTransforms(mesh);
 				else
 					cAnimator->GetBoneTransforms(0, transformsAnim, go);
-					/*transformsAnim.resize(mesh->boneInfo.size());
-					for (int i = 0; i < transformsAnim.size(); ++i)
-					{
-						transformsAnim[i] = float4x4::identity;
-					}*/
 			}
 
 			GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
@@ -1533,11 +1529,8 @@ void M_Renderer3D::RenderOutline(R_Mesh* rMesh, C_Camera* camera, GameObject* go
 			
 				if ((boneTransforms != nullptr) && !boneTransforms->empty())
 				{
-					//shader->SetUniformMatrix4("finalBonesMatrices", (GLfloat*)(boneTransforms->begin()->ptr()), boneTransforms->size());
-					GLint bonesLocation = glGetUniformLocation(shader, "finalBonesMatrices");
-					
-					CONSOLE_LOG(std::to_string(bonesLocation).c_str());
-					glUniformMatrix4fv(bonesLocation, boneTransforms->size(), GL_FALSE, (GLfloat*)((*boneTransforms->begin()).finalTransformation.ptr()));
+					GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
+					glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
 				}
 			}
 		}
@@ -1554,6 +1547,7 @@ void M_Renderer3D::RenderOutline(R_Mesh* rMesh, C_Camera* camera, GameObject* go
 		glDrawElements(GL_TRIANGLES, rMesh->indicesSizeBytes / sizeof(uint), GL_UNSIGNED_INT, NULL);
 	//}
 
+		glUseProgram(0);
 		glBindVertexArray(0);
 
 		// Unbind Texture
