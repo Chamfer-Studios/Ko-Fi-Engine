@@ -406,7 +406,7 @@ public:
 		lua.set_function("GetFullscreenDesktop", &Scripting::LuaGetFullscreenDesktop, this);
 		lua.set_function("SetFullscreenDesktop", &Scripting::LuaSetFullscreenDesktop, this);
 		lua.set_function("GetBorderless", &Scripting::LuaGetBorderless, this);
-		lua.set_function("SetFPS", &Scripting::LuaSetFullscreen, this);
+		lua.set_function("SetFPS", &Scripting::LuaSetFPS, this);
 		lua.set_function("SetBorderless", &Scripting::LuaSetBorderless, this);
 		lua.set_function("GetResizable", &Scripting::LuaGetResizable, this);
 		lua.set_function("SetResizable", &Scripting::LuaSetResizable, this);
