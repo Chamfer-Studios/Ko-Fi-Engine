@@ -90,6 +90,10 @@ bool M_Renderer3D::Awake(Json configModule)
 	occlusionMat->SetAssetPath("EngineConfig/Shaders/BasicShader.glsl");
 	Importer::GetInstance()->materialImporter->LoadAndCreateShader("EngineConfig/Shaders/BasicShader.glsl", occlusionMat);
 
+	outlineShader = new R_Material();
+	outlineShader->SetAssetPath("Assets/Shaders/outline_shader.glsl");
+	Importer::GetInstance()->materialImporter->LoadAndCreateShader("Assets/Shaders/outline_shader.glsl", outlineShader);
+
 	ret = LoadConfiguration(configModule);
 
 	return ret;
@@ -700,6 +704,8 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				//Draw Mesh
 				mesh->Draw();
 				
+				if (mesh->renderOutline && std::string(go->GetName()) == std::string("Zhib"))
+					RenderOutline(mesh, camera, go);
 
 				glUseProgram(0);
 
@@ -1488,4 +1494,73 @@ bool M_Renderer3D::GOComp::operator()(const GameObject* lhs, const GameObject* r
 {
 	float3 cameraPosition = lhs->GetEngine()->GetCamera3D()->gameCamera->owner->GetTransform()->GetPosition();
 	return cameraPosition.DistanceSq(lhs->GetTransform()->GetPosition()) < cameraPosition.DistanceSq(rhs->GetTransform()->GetPosition());
+}
+
+void M_Renderer3D::RenderOutline(R_Mesh* rMesh, C_Camera* camera, GameObject* go)
+{
+	glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+	glStencilMask(0x00);
+
+	if (outlineShader != nullptr)
+	{
+		uint shader = outlineShader->shaderProgramID;
+		if (shader != 0)
+		{
+			glUseProgram(shader);
+
+			// Passing Shader Uniforms
+			GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
+			glUniformMatrix4fv(model_matrix, 1, GL_FALSE, go->GetTransform()->GetGlobalTransform().Transposed().ptr());
+			GLint view_location = glGetUniformLocation(shader, "view");
+			glUniformMatrix4fv(view_location, 1, GL_FALSE, camera->GetViewMatrix().Transposed().ptr());
+			GLint projection_location = glGetUniformLocation(shader, "projection");
+			glUniformMatrix4fv(projection_location, 1, GL_FALSE, camera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
+			GLuint uinformLoc = glGetUniformLocation(shader, "outlineThickness");
+			glUniform1f(uinformLoc, rMesh->outlineThickness);
+			
+			GLint color = glGetUniformLocation(shader, "outlineColor");
+			glUniform4f(color, rMesh->outlineColor.x, rMesh->outlineColor.y, rMesh->outlineColor.z, rMesh->outlineColor.w);
+
+			//glUseProgram(0);
+
+			//Animations
+			GLuint isAnimated = glGetUniformLocation(shader, "activeAnimation");
+			glUniform1f(isAnimated, rMesh->IsAnimated());
+						
+			if (rMesh->IsAnimated())
+			{
+				std::vector<BoneInfo>* boneTransforms = &(rMesh->boneInfo);
+			
+				if ((boneTransforms != nullptr) && !boneTransforms->empty())
+				{
+					//shader->SetUniformMatrix4("finalBonesMatrices", (GLfloat*)(boneTransforms->begin()->ptr()), boneTransforms->size());
+					GLint bonesLocation = glGetUniformLocation(shader, "finalBonesMatrices");
+					
+					CONSOLE_LOG(std::to_string(bonesLocation).c_str());
+					glUniformMatrix4fv(bonesLocation, boneTransforms->size(), GL_FALSE, (GLfloat*)((*boneTransforms->begin()).finalTransformation.ptr()));
+				}
+			}
+		}
+	}
+
+	//if (cMesh->GetSkinnedMesh() == nullptr)
+	//{
+	//	glBindVertexArray(rMesh->VAO);
+	//	glDrawElements(GL_TRIANGLES, rMesh->indices.size(), GL_UNSIGNED_INT, nullptr);
+	//}
+	//else
+	//{
+		glBindVertexArray(rMesh->VAO);
+		glDrawElements(GL_TRIANGLES, rMesh->indicesSizeBytes / sizeof(uint), GL_UNSIGNED_INT, NULL);
+	//}
+
+		glBindVertexArray(0);
+
+		// Unbind Texture
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+	glStencilMask(0xFF);
+	glStencilFunc(GL_ALWAYS, 1, 0xFF);
+	glEnable(GL_DEPTH_TEST);
+	glDisable(GL_STENCIL_TEST);
 }

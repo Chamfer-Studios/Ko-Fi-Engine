@@ -133,6 +133,7 @@ public:
 	// Particles methods
 	void AddParticle(R_Texture &tex, Color color, const float4x4 transform, float distanceToCamera);
 	void RenderParticle(ParticleRenderer *particle);
+	void RenderOutline(R_Mesh* rMesh, C_Camera* camera, GameObject* go);
 	void RenderAllParticles();
 
 	void InitDepthMapFramebufferAndTexture();
@@ -179,6 +180,7 @@ private:
 	// Occlusion Culling things
 	OcclusionQuery *query = nullptr;
 	R_Material *occlusionMat = nullptr;
+	R_Material* outlineShader = nullptr;
 
 	bool stopRenderingShadows = false;
 
