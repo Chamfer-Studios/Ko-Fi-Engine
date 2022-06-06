@@ -9,6 +9,7 @@
 #include "M_SceneManager.h"
 #include "M_Physics.h"
 #include "M_Audio.h"
+#include "M_Editor.h"
 #include "SceneIntro.h"
 #include "M_Camera3D.h"
 #include "M_Window.h"
@@ -35,6 +36,7 @@
 #include "C_AudioSwitch.h"
 #include "C_Script.h"
 #include "C_RigidBody.h"
+#include "C_Canvas.h"
 #include "C_BoxCollider.h"
 #include "C_LightSource.h"
 #include "RNG.h"
@@ -392,6 +394,8 @@ public:
 		/// Functions
 		lua.set_function("GetMouseZ", &Scripting::LuaGetMouseZ, this);
 		lua.set_function("GetMouseMotionX", &Scripting::LuaGetMouseMotionX, this);
+		lua.set_function("GetMouseScreenPos", &Scripting::LuaGetMouseScreenPos, this);
+		lua.set_function("GetLastViewportSize", &Scripting::LuaGetLastViewportSize, this);
 		lua.set_function("GetInput", &Scripting::LuaGetInput, this);
 		lua.set_function("GetVsync", &Scripting::LuaGetVsync, this);
 		lua.set_function("SetVsync", &Scripting::LuaSetVsync, this);
@@ -472,6 +476,15 @@ public:
 		return gameObject->GetEngine()->GetRenderer()->GetVsync();
 	}
 
+	float2 LuaGetLastViewportSize()
+	{
+		return { (float)gameObject->GetEngine()->GetEditor()->lastViewportSize.x, (float)gameObject->GetEngine()->GetEditor()->lastViewportSize.y };
+	}
+
+	float2 LuaGetMouseScreenPos()
+	{
+		return C_Canvas::ScreenToViewport(float2((float)gameObject->GetEngine()->GetInput()->GetMouseX(), (float)gameObject->GetEngine()->GetInput()->GetMouseY()));
+	}
 	void LuaSetVsync(bool vSync)
 	{
 		gameObject->GetEngine()->GetRenderer()->SetVsync(vSync);

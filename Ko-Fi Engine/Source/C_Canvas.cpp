@@ -12,6 +12,8 @@ C_Canvas::C_Canvas(GameObject* parent) : C_Transform2D(parent)
 	type = ComponentType::CANVAS;
 	typeIndex = typeid(*this);
 
+	ownerSingleton = parent;
+
 	logicalSize = { 1920, 1080 };
 }
 
@@ -141,7 +143,7 @@ float2 C_Canvas::ViewportToLogical(float2 vec) // GOOD
 
 float2 C_Canvas::ScreenToViewport(float2 vec)
 {
-	return { vec.x - owner->GetEngine()->GetEditor()->scenePanelOrigin.x, owner->GetEngine()->GetEditor()->lastViewportSize.y - (vec.y - owner->GetEngine()->GetEditor()->scenePanelOrigin.y) };
+	return { vec.x - ownerSingleton->GetEngine()->GetEditor()->scenePanelOrigin.x, ownerSingleton->GetEngine()->GetEditor()->lastViewportSize.y - (vec.y - ownerSingleton->GetEngine()->GetEditor()->scenePanelOrigin.y) };
 }
 
 float2 C_Canvas::ScreenToLogical(float2 vec)
