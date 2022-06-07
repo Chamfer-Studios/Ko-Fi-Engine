@@ -41,6 +41,9 @@ public:
 
 	void Draw() override;
 
+	inline float GetOpacity() const { return (float)col.a; }
+	inline void SetOpacity(const float opacity) { col.a = opacity; }
+
 	GLuint openGLTexture = 0;
 
 private:

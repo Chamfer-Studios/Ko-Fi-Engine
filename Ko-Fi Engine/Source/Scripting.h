@@ -282,7 +282,9 @@ public:
 		lua.new_usertype<C_Text>("C_Text",
 			sol::constructors<void(GameObject*)>(),
 			"GetTextValue", &C_Text::GetTextValue,
-			"SetTextValue", &C_Text::SetTextValue);
+			"SetTextValue", &C_Text::SetTextValue,
+			"GetTextOpacity", &C_Text::GetOpacity,
+			"SetTextOpacity", &C_Text::SetOpacity);
 
 		// Component Image
 		lua.new_usertype<C_Image>("C_Image",
