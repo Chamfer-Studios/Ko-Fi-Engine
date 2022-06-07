@@ -251,6 +251,7 @@ public:
 			sol::constructors<void(GameObject*)>(),
 			"GetPosition", &C_Transform2D::GetPosition,
 			"SetPosition", &C_Transform2D::SetPosition,
+			"SetPositionX", &C_Transform2D::SetPositionX,
 			"GetSize", &C_Transform2D::GetSize,
 			"SetSize", &C_Transform2D::SetSize,
 			"GetPivot", &C_Transform2D::GetPivot,
@@ -292,6 +293,7 @@ public:
 		lua.new_usertype<C_Button>("C_Button",
 			sol::constructors<void(GameObject*)>(),
 			"SetIdleTexture", &C_Button::SetIdleTexture,
+			"GetMouseX", &C_Button::GetMouseXPos,
 			"IsPressed", &C_Button::IsPressed,
 			"IsIdle", &C_Button::IsIdle,
 			"IsHovered", &C_Button::IsHovered);

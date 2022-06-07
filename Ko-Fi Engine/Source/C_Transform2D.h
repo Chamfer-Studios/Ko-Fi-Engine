@@ -34,6 +34,7 @@ public:
 
 	// Setters
 	void SetPosition(const float2& newPosition);
+	void SetPositionX(const float& newPositionX);
 	void SetPivot(const float2& newPivot);
 	void SetRotation(const float3& newRotation);
 	void SetSize(const float2& newSize);
