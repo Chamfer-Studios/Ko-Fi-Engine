@@ -428,6 +428,7 @@ public:
 		lua.set_function("Log", &Scripting::LuaLog, this);
 		lua.set_function("GetCamera", &Scripting::GetCamera, this);
 		lua.set_function("GetNavigation", &Scripting::GetNavigation, this);
+		lua.set_function("GetAudio", &Scripting::GetAudio, this);
 		lua.set_function("GetPhysics", &Scripting::GetPhysics, this);
 		lua.set_function("SetLuaVariableFromGameObject", &Scripting::LuaSetLuaVariableFromGameObject, this);
 		lua.set_function("MulQuat", &Scripting::LuaMulQuat, this);
@@ -693,6 +694,11 @@ public:
 	M_Camera3D* GetCamera()
 	{
 		return gameObject->GetEngine()->GetCamera3D();
+	}
+
+	M_Audio* GetAudio()
+	{
+		return gameObject->GetEngine()->GetAudio();
 	}
 
 	M_Physics* GetPhysics()
