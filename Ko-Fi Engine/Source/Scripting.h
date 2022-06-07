@@ -404,6 +404,7 @@ public:
 		lua.set_function("GetVsync", &Scripting::LuaGetVsync, this);
 		lua.set_function("SetVsync", &Scripting::LuaSetVsync, this);
 		lua.set_function("SetBrightness", &Scripting::LuaSetBrightness, this);
+		lua.set_function("GetBrightness", &Scripting::LuaGetBrightness, this);
 		lua.set_function("GetFullscreen", &Scripting::LuaGetFullscreen, this);
 		lua.set_function("SetFullscreen", &Scripting::LuaSetFullscreen, this);
 		lua.set_function("GetFullscreenDesktop", &Scripting::LuaGetFullscreenDesktop, this);
@@ -544,6 +545,11 @@ public:
 	void LuaSetBrightness(float brightness)
 	{
 		gameObject->GetEngine()->GetWindow()->AdjustBrightness(brightness);
+	}
+
+	float LuaGetBrightness()
+	{
+		return gameObject->GetEngine()->GetWindow()->GetBrightness();
 	}
 
 	KEY_STATE LuaGetInput(int button)
