@@ -267,7 +267,8 @@ public:
 			"LookAt", &C_Camera::LookAt,
 			"right", &C_Camera::GetRight,
 			"GetFront", &C_Camera::GetFront,
-			"up", &C_Camera::GetUp
+			"up", &C_Camera::GetUp,
+			"SetFrontAndUp", &C_Camera::SetFrontAndUp
 			);
 
 		// Component Mesh
