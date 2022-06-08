@@ -38,5 +38,5 @@ public:
 
 private:
 	float2 logicalSize;
-	inline static GameObject* ownerSingleton = nullptr;
+	inline static KoFiEngine* engine = nullptr;
 };
