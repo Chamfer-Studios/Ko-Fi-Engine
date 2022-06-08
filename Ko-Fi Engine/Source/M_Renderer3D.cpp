@@ -614,7 +614,7 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				glBindTexture(GL_TEXTURE_2D, depthMapTexture);
 			}
 
-			//Set Shaders
+			// Set Shaders
 			uint shader = cMat->GetMaterial()->shaderProgramID;
 			if (shader != 0)
 			{
@@ -640,7 +640,7 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				this->timeWaterShader += 0.02f;
 				glUniform1f(glGetUniformLocation(shader, "time"), this->timeWaterShader);
 
-				// Pass all varibale uniforms from the material to the shader
+				// Pass all varibale uniforms from the material to the shaderProgram
 				for (Uniform* uniform : cMat->GetMaterial()->uniforms)
 				{
 					switch (uniform->type)
@@ -703,16 +703,16 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				
 				//Draw Mesh
 				mesh->Draw();
-				
-				
 
 				glUseProgram(0);
-				if (mesh->renderOutline && std::string(go->GetName()) == std::string("Zhib"))
-					RenderOutline(mesh, camera, go);
+
 				glActiveTexture(GL_TEXTURE1);
 				glBindTexture(GL_TEXTURE_2D, 0);
 				glActiveTexture(GL_TEXTURE3);
 				glBindTexture(GL_TEXTURE_2D, 0);
+
+				if (mesh->renderOutline && std::string(go->GetName()) == std::string("Zhib"))
+					RenderOutline(mesh, camera, go);
 			}
 		}
 	}
@@ -1499,62 +1499,59 @@ void M_Renderer3D::RenderOutline(R_Mesh* rMesh, C_Camera* camera, GameObject* go
 
 	if (outlineShader != nullptr)
 	{
-		uint shader = outlineShader->shaderProgramID;
-		if (shader != 0)
+		uint32 shaderProgram = outlineShader->shaderProgramID;
+		if (shaderProgram != 0)
 		{
-			glUseProgram(shader);
+			glUseProgram(shaderProgram);
 
 			// Passing Shader Uniforms
-			GLint model_matrix = glGetUniformLocation(shader, "model_matrix");
+			GLint model_matrix = glGetUniformLocation(shaderProgram, "model_matrix");
 			glUniformMatrix4fv(model_matrix, 1, GL_FALSE, go->GetTransform()->GetGlobalTransform().Transposed().ptr());
-			GLint view_location = glGetUniformLocation(shader, "view");
+			GLint view_location = glGetUniformLocation(shaderProgram, "view");
 			glUniformMatrix4fv(view_location, 1, GL_FALSE, camera->GetViewMatrix().Transposed().ptr());
-			GLint projection_location = glGetUniformLocation(shader, "projection");
+			GLint projection_location = glGetUniformLocation(shaderProgram, "projection");
 			glUniformMatrix4fv(projection_location, 1, GL_FALSE, camera->GetCameraFrustum().ProjectionMatrix().Transposed().ptr());
-			GLuint uinformLoc = glGetUniformLocation(shader, "outlineThickness");
+
+			// Shader outline
+			GLuint uinformLoc = glGetUniformLocation(shaderProgram, "outlineThickness");
 			glUniform1f(uinformLoc, rMesh->outlineThickness);
-			
-			GLint color = glGetUniformLocation(shader, "outlineColor");
+			GLint color = glGetUniformLocation(shaderProgram, "outlineColor");
 			glUniform4f(color, rMesh->outlineColor.x, rMesh->outlineColor.y, rMesh->outlineColor.z, rMesh->outlineColor.w);
 
-			//glUseProgram(0);
-
-			//Animations
-			GLuint isAnimated = glGetUniformLocation(shader, "activeAnimation");
+			// Animations
+			GLuint isAnimated = glGetUniformLocation(shaderProgram, "activeAnimation");
 			glUniform1f(isAnimated, rMesh->IsAnimated());
-						
 			if (rMesh->IsAnimated())
 			{
-				std::vector<BoneInfo>* boneTransforms = &(rMesh->boneInfo);
-			
-				if ((boneTransforms != nullptr) && !boneTransforms->empty())
+				if (!transformsAnim.empty())
 				{
-					GLint finalBonesMatrices = glGetUniformLocation(shader, "finalBonesMatrices");
+					GLint finalBonesMatrices = glGetUniformLocation(shaderProgram, "finalBonesMatrices");
 					glUniformMatrix4fv(finalBonesMatrices, transformsAnim.size(), GL_FALSE, transformsAnim.begin()->ptr());
+					GLint isAnimated = glGetUniformLocation(shaderProgram, "isAnimated");
+					glUniform1i(isAnimated, true);
 				}
 			}
 		}
 	}
 
-	//if (cMesh->GetSkinnedMesh() == nullptr)
+	//if (rMesh->IsAnimated() == false)
 	//{
-	//	glBindVertexArray(rMesh->VAO);
-	//	glDrawElements(GL_TRIANGLES, rMesh->indices.size(), GL_UNSIGNED_INT, nullptr);
+		glBindVertexArray(rMesh->VAO);
+		glDrawElements(GL_TRIANGLES, rMesh->indicesSizeBytes / sizeof(uint), GL_UNSIGNED_INT, nullptr);
 	//}
 	//else
 	//{
-		glBindVertexArray(rMesh->VAO);
-		glDrawElements(GL_TRIANGLES, rMesh->indicesSizeBytes / sizeof(uint), GL_UNSIGNED_INT, NULL);
+	//	glBindVertexArray(rMesh->VAO);
+	//	glDrawElements(GL_TRIANGLES, rMesh->indicesSizeBytes / sizeof(uint), GL_UNSIGNED_INT, nullptr);
 	//}
-
-		glUseProgram(0);
-		glBindVertexArray(0);
-
-		// Unbind Texture
-		glBindTexture(GL_TEXTURE_2D, 0);
 
 	glStencilMask(0xFF);
 	glStencilFunc(GL_ALWAYS, 1, 0xFF);
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_STENCIL_TEST);
+
+	glBindVertexArray(0);				// Unbind Vertex Array
+	glBindTexture(GL_TEXTURE_2D, 0);	// Unbind Texture
+
+	glUseProgram(0);
 }
