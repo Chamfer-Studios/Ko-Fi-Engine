@@ -259,7 +259,6 @@ public:
 			"SetPivot", &C_Transform2D::SetPivot,
 			"GetMask", &C_Transform2D::GetMask,
 			"SetMask", &C_Transform2D::SetMask
-			
 			);
 
 		// Component Camera
@@ -463,6 +462,7 @@ public:
 		lua.set_function("ChangeMouseTexture", &Scripting::LuaChangeMouseTexture, this);
 		lua.set_function("AddGameJsonElement", &Scripting::AddGameJsonElement, this);
 		lua.set_function("GetGameJsonElement", &Scripting::GetGameJsonElement, this);
+		lua.set_function("ToggleRuntime", &Scripting::LuaToggleRuntime, this);
 	}
 
 	bool CleanUp()
@@ -1064,6 +1064,11 @@ public:
 
 	std::vector<GameObject*> CustomRayCastQueryList(float3 startPoint, float3 endPoint, std::vector<TAG> tagList) {
 		return gameObject->GetEngine()->GetPhysics()->CustomRayCastQueryList(startPoint, endPoint, tagList);
+	}
+
+	void LuaToggleRuntime()
+	{
+		gameObject->GetEngine()->GetSceneManager()->ToggleRuntime();
 	}
 
 public:
