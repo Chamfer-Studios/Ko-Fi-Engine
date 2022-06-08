@@ -175,7 +175,7 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 						if (emitter->texture->GetTextureId() == currentTextureId)
 						{
 							emitter->texture->SetTextureId(TEXTUREID_DEFAULT);
-							emitter->texture->SetAssetPath(nullptr);
+							//emitter->texture->SetAssetPath(nullptr);
 						}
 						if (!path.empty() || path != "")
 						{

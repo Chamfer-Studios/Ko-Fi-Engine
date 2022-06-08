@@ -197,6 +197,10 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 			cameraFrustum.SetViewPlaneDistances(planeDistances.x, planeDistances.y);
 			sCullingRadius = (planeDistances.y - planeDistances.x) / 2.0f;
 		}
+		ImGui::Separator();
+		bool drawSkybox = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->drawSkybox;
+		if (ImGui::Checkbox("Draw Skybox", &drawSkybox))
+			owner->GetEngine()->GetSceneManager()->GetCurrentScene()->drawSkybox = drawSkybox;
 	}
 	else
 		DrawDeleteButton(owner, this);

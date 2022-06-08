@@ -241,6 +241,7 @@ public:
 			"SetScale", &C_Transform::SetScale,
 			"GetFront", &C_Transform::Front,
 			"GetGlobalFront", &C_Transform::GlobalFront,
+			"GetGlobalRight", &C_Transform::GlobalRight,
 			"GetRight", &C_Transform::Right,
 			"GetUp", &C_Transform::Up,
 			"LookAt", &C_Transform::LookAt
@@ -258,7 +259,6 @@ public:
 			"SetPivot", &C_Transform2D::SetPivot,
 			"GetMask", &C_Transform2D::GetMask,
 			"SetMask", &C_Transform2D::SetMask
-			
 			);
 
 		// Component Camera
@@ -267,7 +267,8 @@ public:
 			"LookAt", &C_Camera::LookAt,
 			"right", &C_Camera::GetRight,
 			"GetFront", &C_Camera::GetFront,
-			"up", &C_Camera::GetUp
+			"up", &C_Camera::GetUp,
+			"SetFrontAndUp", &C_Camera::SetFrontAndUp
 			);
 
 		// Component Mesh
@@ -281,7 +282,9 @@ public:
 		lua.new_usertype<C_Text>("C_Text",
 			sol::constructors<void(GameObject*)>(),
 			"GetTextValue", &C_Text::GetTextValue,
-			"SetTextValue", &C_Text::SetTextValue);
+			"SetTextValue", &C_Text::SetTextValue,
+			"GetTextOpacity", &C_Text::GetOpacity,
+			"SetTextOpacity", &C_Text::SetOpacity);
 
 		// Component Image
 		lua.new_usertype<C_Image>("C_Image",
@@ -403,6 +406,7 @@ public:
 		lua.set_function("GetVsync", &Scripting::LuaGetVsync, this);
 		lua.set_function("SetVsync", &Scripting::LuaSetVsync, this);
 		lua.set_function("SetBrightness", &Scripting::LuaSetBrightness, this);
+		lua.set_function("GetBrightness", &Scripting::LuaGetBrightness, this);
 		lua.set_function("GetFullscreen", &Scripting::LuaGetFullscreen, this);
 		lua.set_function("SetFullscreen", &Scripting::LuaSetFullscreen, this);
 		lua.set_function("GetFullscreenDesktop", &Scripting::LuaGetFullscreenDesktop, this);
@@ -427,6 +431,7 @@ public:
 		lua.set_function("Log", &Scripting::LuaLog, this);
 		lua.set_function("GetCamera", &Scripting::GetCamera, this);
 		lua.set_function("GetNavigation", &Scripting::GetNavigation, this);
+		lua.set_function("GetAudio", &Scripting::GetAudio, this);
 		lua.set_function("GetPhysics", &Scripting::GetPhysics, this);
 		lua.set_function("SetLuaVariableFromGameObject", &Scripting::LuaSetLuaVariableFromGameObject, this);
 		lua.set_function("MulQuat", &Scripting::LuaMulQuat, this);
@@ -457,6 +462,7 @@ public:
 		lua.set_function("ChangeMouseTexture", &Scripting::LuaChangeMouseTexture, this);
 		lua.set_function("AddGameJsonElement", &Scripting::AddGameJsonElement, this);
 		lua.set_function("GetGameJsonElement", &Scripting::GetGameJsonElement, this);
+		lua.set_function("ToggleRuntime", &Scripting::LuaToggleRuntime, this);
 	}
 
 	bool CleanUp()
@@ -542,6 +548,11 @@ public:
 	void LuaSetBrightness(float brightness)
 	{
 		gameObject->GetEngine()->GetWindow()->AdjustBrightness(brightness);
+	}
+
+	float LuaGetBrightness()
+	{
+		return gameObject->GetEngine()->GetWindow()->GetBrightness();
 	}
 
 	KEY_STATE LuaGetInput(int button)
@@ -692,6 +703,11 @@ public:
 	M_Camera3D* GetCamera()
 	{
 		return gameObject->GetEngine()->GetCamera3D();
+	}
+
+	M_Audio* GetAudio()
+	{
+		return gameObject->GetEngine()->GetAudio();
 	}
 
 	M_Physics* GetPhysics()
@@ -1048,6 +1064,11 @@ public:
 
 	std::vector<GameObject*> CustomRayCastQueryList(float3 startPoint, float3 endPoint, std::vector<TAG> tagList) {
 		return gameObject->GetEngine()->GetPhysics()->CustomRayCastQueryList(startPoint, endPoint, tagList);
+	}
+
+	void LuaToggleRuntime()
+	{
+		gameObject->GetEngine()->GetSceneManager()->ToggleRuntime();
 	}
 
 public:

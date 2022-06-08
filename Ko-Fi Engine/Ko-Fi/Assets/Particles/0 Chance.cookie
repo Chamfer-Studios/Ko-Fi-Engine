@@ -1,0 +1,54 @@
+{
+    "0 Chance": {
+        "emitters": [
+            {
+                "loop": true,
+                "maxParticles": 500,
+                "modules": [
+                    {
+                        "maxParticleLife": 3.0,
+                        "minParticleLife": 0.004999999888241291,
+                        "particlesPerSpawn": 1,
+                        "randomParticleLife": false,
+                        "spawnTime": 0.0,
+                        "type": 1
+                    },
+                    {
+                        "billboardingType": 2,
+                        "frontAxis": true,
+                        "maxDegrees": 360,
+                        "minDegrees": 0,
+                        "sideAxis": false,
+                        "topAxis": false,
+                        "type": 5
+                    },
+                    {
+                        "colors": [
+                            {
+                                "color": [
+                                    1.0,
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ],
+                                "position": 0.0
+                            }
+                        ],
+                        "type": 3
+                    },
+                    {
+                        "minInitialSize": [
+                            15.0,
+                            15.0,
+                            15.0
+                        ],
+                        "type": 4
+                    }
+                ],
+                "name": "Chance",
+                "texture_path": "Assets/Textures/Particles/chance0.png"
+            }
+        ],
+        "name": "0 Chance"
+    }
+}

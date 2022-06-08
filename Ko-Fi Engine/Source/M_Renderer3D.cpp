@@ -207,6 +207,7 @@ bool M_Renderer3D::SaveConfiguration(Json& configModule) const
 bool M_Renderer3D::LoadConfiguration(Json& configModule)
 {
 	vsync = configModule["Vsync"];
+
 	return true;
 }
 
@@ -227,6 +228,7 @@ bool M_Renderer3D::InspectorDraw()
 			ResetFrustumCulling();
 			engine->GetCamera3D()->currentCamera->ApplyCullings();
 		}
+		
 
 		ImGui::Text("Objects in sphere %d", gameObejctsToRenderDistanceSphere.size());
 		ImGui::Text("Objects in frustrum %d", gameObejctsToRenderDistance.size());
@@ -397,7 +399,8 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 {
 	OPTICK_EVENT();
 
-	RenderSkyBox(camera, engine->GetSceneManager()->GetCurrentScene()->skybox);
+	if (engine->GetSceneManager()->GetCurrentScene()->drawSkybox == true)
+		RenderSkyBox(camera, engine->GetSceneManager()->GetCurrentScene()->skybox);
 
 	auto renderGo = [this, camera](GameObject* go) {
 		if (go->active && go->GetRenderGameObject())
@@ -738,6 +741,7 @@ void M_Renderer3D::RenderSkyBox(C_Camera* camera, SkyBox& skybox)
 		GLint projection_location = glGetUniformLocation(shader, "projection");
 
 		glUniformMatrix4fv(projection_location, 1, GL_FALSE, proj.Transposed().ptr());
+		
 		skybox.DrawSkyBox();
 		glUseProgram(0); // Always Last!
 
