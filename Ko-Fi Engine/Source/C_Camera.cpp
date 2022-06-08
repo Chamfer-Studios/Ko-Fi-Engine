@@ -43,7 +43,7 @@ C_Camera::C_Camera(GameObject* parent) : Component(parent)
 	cameraFrustum.SetPerspective(DegToRad(44.0f), DegToRad(72.57f));
 	cameraFrustum.SetHorizontalFovAndAspectRatio(DegToRad(44.0f), 1.778);
 	cameraFrustum.SetViewPlaneDistances(0.3f, 1000.0f);
-	cameraFrustum.SetFrame(float3(0.0f, 0.0f, 0.0f), float3(0.0f, 0.0f, 1.0f), float3(0.0f, 1.0f, 0.0f));
+	cameraFrustum.SetFrame(parent->GetTransform()->GetPosition(), float3(0.0f, 0.0f, 1.0f), float3(0.0f, 1.0f, 0.0f));
 	LookAt(cameraFrustum.Front());
 	SetIsSphereCullingActive(false);
 	SetIsFrustumActive(false);
