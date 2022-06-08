@@ -291,8 +291,6 @@ std::vector<GameObject*> Scene::GetLights(SourceType type)
 
 void Scene::SetShadowCaster(GameObject* shadowCaster)
 {
-	//if there is a shadow caster active maybe do smthng
-
 	this->shadowCaster = shadowCaster;
 }
 

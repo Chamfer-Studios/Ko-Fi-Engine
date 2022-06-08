@@ -63,6 +63,7 @@ bool C_LightSource::PostUpdate(float dt)
 	if (sourceType == SourceType::DIRECTIONAL)
 	{
 		//Keep the direction of the camera updated. Maybe this does not work because it sets itself back to match the transform
+		shadowCam->SetPosition(owner->GetTransform()->GetPosition());
 		shadowCam->LookAt(shadowCam->GetPosition() + ((DirectionalLight*)lightSource)->direction);
 		((DirectionalLight*)lightSource)->lightSpaceMatrix = shadowCam->GetCameraFrustum().ViewProjMatrix();
 
@@ -82,6 +83,7 @@ void C_LightSource::Save(Json& json) const
 	json["type"] = (int)type;
 
 	json["sourceType"] = (int)sourceType;
+	json["castShadows"] = castShadows;
 
 	switch (sourceType)
 	{
@@ -144,10 +146,17 @@ void C_LightSource::Load(Json& json)
 {
 	SourceType type = (SourceType)json.at("sourceType");
 
+	if (json.contains("castShadows"))
+	{
+		castShadows = json.at("castShadows");
+		if (castShadows)
+			owner->GetEngine()->GetSceneManager()->GetCurrentScene()->SetShadowCaster(owner);
+	}
+
 	switch (type)
 	{
 	case SourceType::DIRECTIONAL:
-	{
+	{        
 		DirectionalLight* currentLight = (DirectionalLight*)ChangeSourceType(type);
 		std::vector<float> values = json.at("lightPosition").get<std::vector<float>>();
 		currentLight->position = (float3(values[0], values[1], values[2]));
@@ -554,6 +563,7 @@ void C_LightSource::CastShadows()
 	Importer::GetInstance()->materialImporter->LoadAndCreateShader(rMat->GetAssetPath(), rMat);
 	cMat->SetMaterial(rMat);
 
+	castShadows = true;
 	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->SetShadowCaster(owner);
 }
 

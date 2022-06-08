@@ -215,6 +215,9 @@ void C_Camera::Save(Json& json) const
 	json["frustum_culling"] = isFrustumCullingActive;
 	json["sCullingRadius"] = sCullingRadius;
 	json["isMainCamera"] = isMainCamera;
+	json["cameraType"] = (int)cameraType;
+	json["orthoWidth"] = orthoWidth;
+	json["orthoHeight"] = orthoHeight;
 }
 
 void C_Camera::Load(Json& json)
@@ -228,6 +231,20 @@ void C_Camera::Load(Json& json)
 	}
 	isFrustumCullingActive = json.at("frustum_culling");
 	isMainCamera = json.at("isMainCamera");
+	if (json.contains("cameraType"))
+	{
+		cameraType = (CameraType)json.at("cameraType");
+	}
+	if (json.contains("orthoWidth"))
+	{
+		orthoWidth = json.at("orthoWidth");
+		orthoHeight = json.at("orthoHeight");
+		if (cameraType == CameraType::KOFI_ORTHOGRAPHIC)
+		{
+			SetProjectionType(cameraType);
+			ApplyOrthoWidthAndHeight();
+		}
+	}
 	if (isMainCamera)
 		owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
 }

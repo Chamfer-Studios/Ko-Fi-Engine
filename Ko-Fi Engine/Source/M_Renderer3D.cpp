@@ -439,9 +439,7 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 			C_RenderedUI* cRenderedUI = go->GetComponent<C_RenderedUI>();
 			if (cRenderedUI)
 			{
-				stopRenderingShadows = true;
 				RenderUI(go);
-				stopRenderingShadows = false;
 			}
 
 			C_Camera* cCamera = go->GetComponent<C_Camera>();
