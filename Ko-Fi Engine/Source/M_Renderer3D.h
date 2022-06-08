@@ -159,7 +159,6 @@ public:
 
 private:
 	bool vsync = false;
-	bool drawSkybox = true;
 	KoFiEngine *engine = nullptr;
 
 	// Debug ray for mouse picking

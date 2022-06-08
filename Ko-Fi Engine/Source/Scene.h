@@ -24,7 +24,9 @@ class Scene : public Resource
 {
 public:
 	Scene() : active(false)
-	{}
+	{
+		drawSkybox = true;
+	}
 
 	~Scene()
 	{
@@ -133,6 +135,7 @@ public:
 	LineSegment ray;
 
 	GameObject* shadowCaster = nullptr; //current light that casts shadows
+	bool drawSkybox;
 	SkyBox skybox;
 
 	std::vector<C_LightSource*> lights;
