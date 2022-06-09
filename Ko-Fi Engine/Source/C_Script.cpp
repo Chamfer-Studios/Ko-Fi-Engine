@@ -102,10 +102,39 @@ bool C_Script::Update(float dt)
 		}
 
 		s->lua_update = sol::protected_function(s->handler->lua["Update"]);
+		s->lua_update_UI = sol::protected_function(s->handler->lua["UpdateUI"]);
 		if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
 		{
 			if (s->lua_update.valid()) {
 				sol::protected_function_result result = s->lua_update(dt);
+				if (result.valid()) {
+					// Call succeeded
+				}
+				else {
+					// Call failed
+					sol::error err = result;
+					std::string what = err.what();
+					appLog->AddLog("%s\n", what.c_str());
+				}
+			}
+			if (s->lua_update_UI.valid()) {
+				sol::protected_function_result result = s->lua_update_UI(owner->GetEngine()->GetEngineTime());
+				if (result.valid()) {
+					// Call succeeded
+				}
+				else {
+					// Call failed
+					sol::error err = result;
+					std::string what = err.what();
+					appLog->AddLog("%s\n", what.c_str());
+				}
+			}
+		}
+		else if (/*owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING || 
+			*/owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PAUSED && s->isScriptLoaded)
+		{
+			if (s->lua_update_UI.valid()) {
+				sol::protected_function_result result = s->lua_update_UI(owner->GetEngine()->GetEngineTime());
 				if (result.valid()) {
 					// Call succeeded
 				}

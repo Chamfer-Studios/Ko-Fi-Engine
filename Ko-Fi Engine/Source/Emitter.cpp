@@ -34,8 +34,8 @@ bool Emitter::Cleanup()
 	modules.clear();
 	modules.shrink_to_fit();
 
-	texture = nullptr;
 
+	texture = nullptr;
 	name.clear();
 	name.shrink_to_fit();
 
@@ -53,6 +53,7 @@ void Emitter::DeleteModule(ParticleModule* m)
 	{
 		if ((*it) == m)
 		{
+			RELEASE(*it);
 			modules.erase(it);
 			modules.shrink_to_fit();
 		}

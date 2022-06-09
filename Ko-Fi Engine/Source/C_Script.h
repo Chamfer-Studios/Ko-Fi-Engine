@@ -27,6 +27,7 @@ struct ScriptHandler
 	std::string path = "";
 	std::vector<InspectorVariable*> inspectorVariables;
 	sol::protected_function lua_update;
+	sol::protected_function lua_update_UI;
 	bool isScriptLoaded = false;
 };
 

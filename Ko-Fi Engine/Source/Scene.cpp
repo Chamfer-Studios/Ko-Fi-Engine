@@ -279,7 +279,7 @@ std::vector<GameObject*> Scene::GetLights(SourceType type)
 	std::vector<GameObject*> ret;
 
 	for (auto light : lights) {
-		if (light->GetSourceType() == type && !light->owner->isCulled)
+		if (light->GetSourceType() == type  /*&& !light->owner->isCulled*/)
 		{
 			ret.push_back(light->owner);
 		}
@@ -290,8 +290,6 @@ std::vector<GameObject*> Scene::GetLights(SourceType type)
 
 void Scene::SetShadowCaster(GameObject* shadowCaster)
 {
-	//if there is a shadow caster active maybe do smthng
-
 	this->shadowCaster = shadowCaster;
 }
 

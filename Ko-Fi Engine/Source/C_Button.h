@@ -50,6 +50,7 @@ public:
 	bool IsHovered();
 	bool IsIdle();
 	void OnStoped();
+	float GetMouseXPos();
 	inline BUTTON_STATE GetState() { return state; }
 
 private:

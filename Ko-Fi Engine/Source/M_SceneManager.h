@@ -96,15 +96,16 @@ public:
 	void OnTick();
 	void OnClick(SDL_Event event);
 
+	void ToggleRuntime(); // Method to stop or resume the runtime.
+
 	// Guizmo
 	ImGuizmo::OPERATION GetGizmoOperation() { return currentGizmoOperation; }
 	void SetGizmoOperation(ImGuizmo::OPERATION operation) { currentGizmoOperation = operation; }
 	void GuizmoTransformation();
 	void UpdateGuizmo();
 
-	//Mouse Texture functions
+	// Mouse Texture functions
 	bool ChangeMouseTexture(std::string texturePathToBMPImage);
-
 
 public:
 	bool active;

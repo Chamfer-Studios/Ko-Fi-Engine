@@ -83,6 +83,7 @@ public:
 
 	//RayCast
 	void RayCastHits(float3 startPoint, float3 endPoint, std::string filterName, GameObject* senderGo, std::string uid = "", sol::function * callback = nullptr);
+	std::vector<GameObject*> CustomRayCastQueryList(float3 startPoint, float3 endPoint, std::vector<TAG> tagList);
 	bool CustomRayCastQuery(float3 startPoint, float3 endPoint, TAG tag);
 
 	inline bool IsDebugPhysics() const { return debugPhysics; };

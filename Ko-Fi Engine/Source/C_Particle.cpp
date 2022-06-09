@@ -39,7 +39,7 @@ C_Particle::C_Particle(GameObject* parent) : Component(parent)
 
 C_Particle::~C_Particle()
 {
-
+	CleanUp();
 }
 
 bool C_Particle::Start()
@@ -94,18 +94,16 @@ bool C_Particle::PostUpdate(float dt)
 
 bool C_Particle::CleanUp()
 {
-	for (std::vector<EmitterInstance*>::const_iterator it = emitterInstances.begin(); it != emitterInstances.end();++it)
+	for (auto emInst : emitterInstances)
 	{
-		emitterInstances.erase(it);
-		if (emitterInstances.empty())
-			break;
+		RELEASE(emInst);
 	}
 	emitterInstances.clear();
 	emitterInstances.shrink_to_fit();
 
 	if (resource != nullptr)
-		owner->GetEngine()->GetResourceManager()->FreeResource(resource->GetUID());
-	resource = nullptr;
+		RELEASE(resource);
+
 	return true;
 }
 
@@ -718,6 +716,7 @@ void C_Particle::DeleteModule(Emitter* e, ParticleModuleType t)
 	{
 		if ((*it)->type == t)
 		{
+			RELEASE(*it);
 			e->modules.erase(it);
 			return;
 		}
@@ -769,7 +768,7 @@ void C_Particle::SetLoop(bool v)
 	}
 }
 
-void C_Particle::SetColor(float r, float g, float b, float a)
+void C_Particle::SetColor(double r, double g, double b, double a)
 {
 	for (auto e : resource->emitters)
 	{
@@ -778,12 +777,44 @@ void C_Particle::SetColor(float r, float g, float b, float a)
 			if (m->type == ParticleModuleType::COLOR)
 			{
 				EmitterColor* eColor = (EmitterColor*)m;
-				eColor->colorOverTime[0].color = Color(r, g, b, a);
+				float fr = (float)r / 255.0f;
+				float fg = (float)g / 255.0f;
+				float fb = (float)b / 255.0f;
+				float fa = (float)a / 255.0f;
+				if(fr <= 1.0f && fg <= 1.0f && fb <= 1.0f && fa <= 1.0f)
+				{
+					eColor->colorOverTime[0].color = Color(fr, fg, fb, fa);
+				}
+				else
+				{
+					eColor->colorOverTime[0].color = Color(1.0f, 1.0f, 1.0f, 1.0f);
+				}
 			}
 		}
 	}
 }
 
+void C_Particle::SetAngle(double angle)
+{
+	for (auto e : resource->emitters)
+	{
+		for (auto m : e->modules)
+		{
+			if (m->type == ParticleModuleType::BILLBOARDING)
+			{
+				ParticleBillboarding* eBill = (ParticleBillboarding*)m;
+				if (angle >= 360)
+				{
+					eBill->minDegrees = 0;
+				}
+				else
+				{
+					eBill->minDegrees = angle;
+				}
+			}
+		}
+	}
+}
 void C_Particle::NewEmitterName(std::string& name, int n)
 {
 	for (auto emitter : resource->emitters)
@@ -935,11 +966,12 @@ void C_Particle::Load(Json& json)
 				ei->Init();
 				ei->loop = emitter.value().at("loop");
 				e->maxParticles = emitter.value().at("maxParticles");
-				e->texture = new R_Texture();
+
+				e->texture = nullptr;
 				if (emitter.value().contains("texture_path"))
-					e->texture->SetAssetPath(emitter.value().at("texture_path").get<std::string>().c_str());
-				if (e->texture->GetAssetPath() != "")
-					Importer::GetInstance()->textureImporter->Import(e->texture->GetAssetPath(), e->texture);
+					e->texture = (R_Texture*)owner->GetEngine()->GetResourceManager()->GetResourceFromLibrary(emitter.value().at("texture_path").get<std::string>().c_str());
+				else
+					e->texture = Importer::GetInstance()->textureImporter->GetCheckerTexture();
 
 				e->modules.clear();
 				e->modules.shrink_to_fit();

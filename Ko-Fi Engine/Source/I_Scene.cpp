@@ -262,6 +262,7 @@ bool I_Scene::SaveScene(Scene* scene, const char* customName)
 
 	jsonFile[name];
 	jsonFile[name]["name"] = name;
+	jsonFile[name]["draw_skybox"] = scene->drawSkybox;
 	jsonFile[name]["active"] = scene->active;
 	jsonFile[name]["navmesh"] = Json::object();
 	engine->GetNavigation()->Save(jsonFile[name]["navmesh"]);
@@ -347,6 +348,8 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 
 		jsonScene = jsonFile.at(name);
 		scene->name = jsonScene.at("name");
+		if (jsonScene.contains("draw_skybox"))
+			scene->drawSkybox = jsonScene.at("draw_skybox");
 		scene->rootGo->SetName(scene->name.c_str());
 
 		engine->GetWindow()->SetTitle("Ko-Fi Engine - " + scene->name);

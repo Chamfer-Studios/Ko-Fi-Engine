@@ -294,3 +294,8 @@ bool C_Transform2D::CheckPointWithinBounds(float2 vec)
 
 	return lowerLeft.x < vec.x && lowerLeft.y < vec.y && vec.x < upperRight.x && vec.y < upperRight.y;
 }
+
+void C_Transform2D::SetPositionX(const float& newPositionX)
+{
+	position.x = newPositionX;
+}

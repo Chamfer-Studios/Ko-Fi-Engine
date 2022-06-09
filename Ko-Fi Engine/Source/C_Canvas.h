@@ -7,6 +7,7 @@
 #include "C_Transform2D.h"
 
 class KoFiEngine;
+class GameObject;
 
 class C_Canvas : public C_Transform2D
 {
@@ -29,7 +30,7 @@ public:
 
 	float2 LogicalToViewport(float2 vec);
 	float2 ViewportToLogical(float2 vec);
-	float2 ScreenToViewport(float2 vec);
+	static float2 ScreenToViewport(float2 vec);
 	float2 ScreenToLogical(float2 vec);
 
 	//void OnLoad(const JSONReader& reader) override;
@@ -37,4 +38,5 @@ public:
 
 private:
 	float2 logicalSize;
+	inline static KoFiEngine* engine = nullptr;
 };

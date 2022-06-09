@@ -16,10 +16,18 @@ EmitterInstance::EmitterInstance(Emitter* e, C_Particle* cp) : emitter(e),compon
 EmitterInstance::~EmitterInstance()
 {
 	component->owner->GetEngine()->GetResourceManager()->FreeResource(emitter->texture->GetUID());
+
+
+	emitter = nullptr;
+
+
+
 	particles.clear();
 	particles.shrink_to_fit();
-	emitter = nullptr;
+
 	component = nullptr;
+
+
 	RELEASE(particleIndices);
 }
 
