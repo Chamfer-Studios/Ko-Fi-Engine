@@ -458,6 +458,7 @@ function Start()
     end
 
     ParticlesStart()
+    hoveredWeaponName = nil
 
     targetDirection = componentTransform:GetFront()
     auditoryDebuffMultiplier = 1
@@ -473,6 +474,8 @@ function Start()
     }
     dartCount = 2
     isAttacking = false
+
+    players = {Find("Zhib"), Find("Nerala"), Find("Omozra")}
 end
 
 function ParticlesStart()
@@ -488,6 +491,58 @@ function ParticlesStart()
         slashParticle = gameObject:GetParent():GetChildren()[3]:GetChildren()[3]
         if (slashParticle ~= nil) then
             slashParticle:GetComponentParticle():StopParticleSpawn()
+        end
+        ChanceParticle0 = gameObject:GetParent():GetChildren()[3]:GetChildren()[4]
+        if (ChanceParticle0 ~= nil) then
+            ChanceParticle0:GetComponentParticle():StopParticleSpawn()
+        end
+        ChanceParticle10 = gameObject:GetParent():GetChildren()[3]:GetChildren()[5]
+        if (ChanceParticle10 ~= nil) then
+            ChanceParticle10:GetComponentParticle():StopParticleSpawn()
+        end
+        ChanceParticle20 = gameObject:GetParent():GetChildren()[3]:GetChildren()[6]
+        if (ChanceParticle20 ~= nil) then
+            ChanceParticle20:GetComponentParticle():StopParticleSpawn()
+        end
+        ChanceParticle30 = gameObject:GetParent():GetChildren()[3]:GetChildren()[7]
+        if (ChanceParticle30 ~= nil) then
+            ChanceParticle30:GetComponentParticle():StopParticleSpawn()
+        end
+        ChanceParticle40 = gameObject:GetParent():GetChildren()[3]:GetChildren()[8]
+        if (ChanceParticle40 ~= nil) then
+            ChanceParticle40:GetComponentParticle():StopParticleSpawn()
+        end
+        ChanceParticle50 = gameObject:GetParent():GetChildren()[3]:GetChildren()[9]
+        if (ChanceParticle50 ~= nil) then
+            ChanceParticle50:GetComponentParticle():StopParticleSpawn()
+        end
+        ChanceParticle60 = gameObject:GetParent():GetChildren()[3]:GetChildren()[10]
+        if (ChanceParticle60 ~= nil) then
+            ChanceParticle60:GetComponentParticle():StopParticleSpawn()
+        end
+        ChanceParticle70 = gameObject:GetParent():GetChildren()[3]:GetChildren()[11]
+        if (ChanceParticle70 ~= nil) then
+            ChanceParticle70:GetComponentParticle():StopParticleSpawn()
+        end
+        ChanceParticle80 = gameObject:GetParent():GetChildren()[3]:GetChildren()[12]
+        if (ChanceParticle80 ~= nil) then
+            ChanceParticle80:GetComponentParticle():StopParticleSpawn()
+        end
+        ChanceParticle90 = gameObject:GetParent():GetChildren()[3]:GetChildren()[13]
+        if (ChanceParticle90 ~= nil) then
+            ChanceParticle90:GetComponentParticle():StopParticleSpawn()
+        end
+        ChanceParticle100 = gameObject:GetParent():GetChildren()[3]:GetChildren()[14]
+        if (ChanceParticle100 ~= nil) then
+            ChanceParticle100:GetComponentParticle():StopParticleSpawn()
+        end
+        HitParticle = gameObject:GetParent():GetChildren()[3]:GetChildren()[15]
+        if (HitParticle ~= nil) then
+            HitParticle:GetComponentParticle():StopParticleSpawn()
+        end
+        MissParticle = gameObject:GetParent():GetChildren()[3]:GetChildren()[16]
+        if (MissParticle ~= nil) then
+            MissParticle:GetComponentParticle():StopParticleSpawn()
         end
     end
 end
@@ -673,6 +728,9 @@ function SwitchState(from, to)
     end
 
     DispatchEvent("Change_State", {from, to})
+    if (hoveredWeaponName ~= nil) then
+        CalculateChances(hoveredWeaponName)
+    end
 end
 
 function UpdateAnimation(dt, oldState, target)
@@ -753,9 +811,78 @@ function UpdateParticles(dt)
         debuffParticle:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x,
             componentTransform:GetPosition().y + 22, componentTransform:GetPosition().z + 12))
     end
+
+    if (HitParticle ~= nil) then
+        if (HitDone == false) then
+            HitParticle:GetComponentParticle():StopParticleSpawn()
+        end
+        HitDone = false
+        HitParticle:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+
+    if (MissParticle ~= nil) then
+        if (MissDone == false) then
+            MissParticle:GetComponentParticle():StopParticleSpawn()
+        end
+        MissDone = false
+        MissParticle:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+
+    if (ChanceParticle0 ~= nil) then
+        ChanceParticle0:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+    if (ChanceParticle10 ~= nil) then
+        ChanceParticle10:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+    if (ChanceParticle20 ~= nil) then
+        ChanceParticle20:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+    if (ChanceParticle30 ~= nil) then
+        ChanceParticle30:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+    if (ChanceParticle40 ~= nil) then
+        ChanceParticle40:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+    if (ChanceParticle50 ~= nil) then
+        ChanceParticle50:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+    if (ChanceParticle60 ~= nil) then
+        ChanceParticle60:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+    if (ChanceParticle70 ~= nil) then
+        ChanceParticle70:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+    if (ChanceParticle80 ~= nil) then
+        ChanceParticle80:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+    if (ChanceParticle90 ~= nil) then
+        ChanceParticle90:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+    if (ChanceParticle100 ~= nil) then
+        ChanceParticle100:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
 end
 
 function Update(dt)
+
+    if (AnyPlayerInRange() == false) then
+        do
+            return
+        end
+    end
 
     UpdateParticles(dt)
 
@@ -845,7 +972,6 @@ end
 
 function EventHandler(key, fields)
     if key == "Stop_Movement" then
-        isMoving = false
         if (fields[1] == "Worm") then
             isWormTarget = true
         end
@@ -866,8 +992,10 @@ function EventHandler(key, fields)
         if (debuffParticle ~= nil) then
             debuffParticle:GetComponentParticle():ResumeParticleSpawn()
         end
-        Log("HIT\n")
-        DispatchGlobalEvent("Hit", {})
+        if (HitParticle ~= nil) then
+            HitParticle:GetComponentParticle():ResumeParticleSpawn()
+            HitDone = true
+        end
     elseif key == "Assign_Type" then
         thisType = fields[1]
         attackRange = 40
@@ -881,17 +1009,19 @@ function EventHandler(key, fields)
         end
     elseif key == "Mosquito_Spawn" then
         mosquito = fields[1]
+        players[4] = mosquito
     elseif key == "Mosquito_Death" then
         mosquito = nil
+        players[4] = nil
     elseif key == "Missed" then
         if (MissParticle ~= nil) then
             MissParticle:GetComponentParticle():ResumeParticleSpawn()
             MissDone = true
         end
     elseif key == "Enemy_Death" then -- fields[1] = EnemyDeath table --- fields[2] = EnemyTypeString
-        if (fields[1] == EnemyDeath.KNIFE or fields[1] == EnemyDeath.PLAYER_ATTACK) then
-            Log("HIT\n")
-            DispatchGlobalEvent("Hit", {})
+        if (HitParticle ~= nil and (fields[1] == EnemyDeath.KNIFE or fields[1] == EnemyDeath.PLAYER_ATTACK)) then
+            HitParticle:GetComponentParticle():ResumeParticleSpawn()
+            HitDone = true
         end
         if (debuffParticle ~= nil) then
             debuffParticle:GetComponentParticle():StopParticleSpawn()
@@ -940,8 +1070,147 @@ function EventHandler(key, fields)
             gameObject:DeleteComponent(coneLight)
             coneLight = nil
         end
-    elseif key == "Chance_Start" then
-        DispatchGlobalEvent("Chance_End", {state, thisType})
+    elseif key == "Hover_Start" then
+        hoveredWeaponName = fields[1]
+        CalculateChances(fields[1])
+    elseif key == "Hover_End" then
+        hoveredWeaponName = nil
+        StopChanceParticles()
+    elseif key == "Stop_Movement" then
+        isMoving = false
+    end
+end
+
+function CalculateChances(name)
+    local chance = 0
+    if (thisType == "Harkonnen") then
+        if (state == STATE.UNAWARE) then
+            if (name == "Knife") then
+                chance = GetVariable("Zhib.lua", "unawareChanceHarkKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            elseif (name == "Dart") then
+                chance = GetVariable("Nerala.lua", "unawareChanceHarkDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            end
+        elseif (state == STATE.SUS) then
+            if (name == "Knife") then
+                chance = GetVariable("Zhib.lua", "awareChanceHarkKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            elseif (name == "Dart") then
+                chance = GetVariable("Nerala.lua", "awareChanceHarkDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            end
+        elseif (state == STATE.AGGRO) then
+            if (name == "Knife") then
+                chance = GetVariable("Zhib.lua", "aggroChanceHarkKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            elseif (name == "Dart") then
+                chance = GetVariable("Nerala.lua", "aggroChanceHarkDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            end
+        end
+    elseif (thisType == "Sardaukar") then
+        if (state == STATE.UNAWARE) then
+            if (name == "Knife") then
+                chance = GetVariable("Zhib.lua", "unawareChanceSardKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            elseif (name == "Dart") then
+                chance = GetVariable("Nerala.lua", "unawareChanceSardDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            end
+        elseif (state == STATE.SUS) then
+            if (name == "Knife") then
+                chance = GetVariable("Zhib.lua", "awareChanceSardKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            elseif (name == "Dart") then
+                chance = GetVariable("Nerala.lua", "awareChanceSardDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            end
+        elseif (state == STATE.AGGRO) then
+            if (name == "Knife") then
+                chance = GetVariable("Zhib.lua", "aggroChanceSardKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            elseif (name == "Dart") then
+                chance = GetVariable("Nerala.lua", "aggroChanceSardDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            end
+        end
+    end
+    if (state ~= STATE.DEAD) then
+        EventChanceParticle(chance)
+    end
+end
+
+function EventChanceParticle(chance)
+    StopChanceParticles()
+    if (chance == 0) then
+        if (ChanceParticle0 ~= nil) then
+            ChanceParticle0:GetComponentParticle():ResumeParticleSpawn()
+        end
+    elseif (chance == 10) then
+        if (ChanceParticle10 ~= nil) then
+            ChanceParticle10:GetComponentParticle():ResumeParticleSpawn()
+        end
+    elseif (chance == 20) then
+        if (ChanceParticle20 ~= nil) then
+            ChanceParticle20:GetComponentParticle():ResumeParticleSpawn()
+        end
+    elseif (chance == 30) then
+        if (ChanceParticle30 ~= nil) then
+            ChanceParticle30:GetComponentParticle():ResumeParticleSpawn()
+        end
+    elseif (chance == 40) then
+        if (ChanceParticle40 ~= nil) then
+            ChanceParticle40:GetComponentParticle():ResumeParticleSpawn()
+        end
+    elseif (chance == 50) then
+        if (ChanceParticle50 ~= nil) then
+            ChanceParticle50:GetComponentParticle():ResumeParticleSpawn()
+        end
+    elseif (chance == 60) then
+        if (ChanceParticle60 ~= nil) then
+            ChanceParticle60:GetComponentParticle():ResumeParticleSpawn()
+        end
+    elseif (chance == 70) then
+        if (ChanceParticle70 ~= nil) then
+            ChanceParticle70:GetComponentParticle():ResumeParticleSpawn()
+        end
+    elseif (chance == 80) then
+        if (ChanceParticle80 ~= nil) then
+            ChanceParticle80:GetComponentParticle():ResumeParticleSpawn()
+        end
+    elseif (chance == 90) then
+        if (ChanceParticle90 ~= nil) then
+            ChanceParticle90:GetComponentParticle():ResumeParticleSpawn()
+        end
+    elseif (chance == 100) then
+        if (ChanceParticle100 ~= nil) then
+            ChanceParticle100:GetComponentParticle():ResumeParticleSpawn()
+        end
+    end
+end
+
+function StopChanceParticles()
+    if (ChanceParticle0 ~= nil) then
+        ChanceParticle0:GetComponentParticle():StopParticleSpawn()
+    end
+    if (ChanceParticle10 ~= nil) then
+        ChanceParticle10:GetComponentParticle():StopParticleSpawn()
+    end
+    if (ChanceParticle20 ~= nil) then
+        ChanceParticle20:GetComponentParticle():StopParticleSpawn()
+    end
+    if (ChanceParticle30 ~= nil) then
+        ChanceParticle30:GetComponentParticle():StopParticleSpawn()
+    end
+    if (ChanceParticle40 ~= nil) then
+        ChanceParticle40:GetComponentParticle():StopParticleSpawn()
+    end
+    if (ChanceParticle50 ~= nil) then
+        ChanceParticle50:GetComponentParticle():StopParticleSpawn()
+    end
+    if (ChanceParticle60 ~= nil) then
+        ChanceParticle60:GetComponentParticle():StopParticleSpawn()
+    end
+    if (ChanceParticle70 ~= nil) then
+        ChanceParticle70:GetComponentParticle():StopParticleSpawn()
+    end
+    if (ChanceParticle80 ~= nil) then
+        ChanceParticle80:GetComponentParticle():StopParticleSpawn()
+    end
+    if (ChanceParticle90 ~= nil) then
+        ChanceParticle90:GetComponentParticle():StopParticleSpawn()
+    end
+    if (ChanceParticle100 ~= nil) then
+        ChanceParticle100:GetComponentParticle():StopParticleSpawn()
     end
 end
 
@@ -1102,6 +1371,16 @@ function ChangeTrack(_trackList)
         currentTrackID = _trackList[index]
         componentSwitch:PlayTrack(currentTrackID)
     end
+end
+
+function AnyPlayerInRange()
+    for i = 1, #players do
+        if (math.abs(Float3Distance(players[i]:GetTransform():GetPosition(), componentTransform:GetPosition())) <= 500) then
+            return true
+        end
+    end
+
+    return false
 end
 
 print("EnemyController.lua compiled successfully!")
