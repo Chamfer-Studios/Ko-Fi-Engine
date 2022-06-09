@@ -3,6 +3,7 @@
 #include "R_Particle.h"
 #include "Emitter.h"
 #include "ParticleModule.h"
+#include "M_ResourceManager.h"
 #include "Engine.h"
 #include "FSDefs.h"
 #include "M_FileSystem.h"
@@ -169,11 +170,11 @@ bool I_Particle::Load(R_Particle* particle, const char* name, int loop)
 			Emitter* e = new Emitter(emitter.value().at("name").get<std::string>().c_str());
 			e->maxParticles = emitter.value().at("maxParticles");
 			loop = (int)emitter.value().at("loop");
-			e->texture = new R_Texture();
+			e->texture = nullptr;
 			if (emitter.value().contains("texture_path"))
-				e->texture->SetAssetPath(emitter.value().at("texture_path").get<std::string>().c_str());
-			if (e->texture->GetAssetPath() != "")
-				Importer::GetInstance()->textureImporter->Import(e->texture->GetAssetPath(), e->texture);
+				e->texture = (R_Texture*)engine->GetResourceManager()->GetResourceFromLibrary(emitter.value().at("texture_path").get<std::string>().c_str());
+			else
+				e->texture = Importer::GetInstance()->textureImporter->GetCheckerTexture();
 
 			e->modules.clear();
 			e->modules.shrink_to_fit();

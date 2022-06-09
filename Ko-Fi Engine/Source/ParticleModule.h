@@ -23,7 +23,7 @@ class ParticleModule
 public:
 
 	ParticleModule();
-	~ParticleModule();
+	virtual ~ParticleModule();
 	virtual void Spawn(Particle* particle, EmitterInstance* emitter);
 	virtual bool Update(float dt, EmitterInstance* emitter);
 	float GetPercentage(Particle* p);
@@ -40,6 +40,7 @@ class EmitterDefault : public ParticleModule
 {
 public:
 	EmitterDefault();
+	~EmitterDefault();
 
 	void Spawn(Particle* particle, EmitterInstance* emitter);
 	bool Update(float dt, EmitterInstance* emitter);

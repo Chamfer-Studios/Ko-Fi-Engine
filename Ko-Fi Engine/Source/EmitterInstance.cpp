@@ -1,6 +1,8 @@
 #include "EmitterInstance.h"
 #include "ParticleModule.h"
 #include "R_Texture.h"
+#include "M_ResourceManager.h"
+#include "Engine.h"
 #include "Log.h"
 
 EmitterInstance::EmitterInstance(Emitter* e, C_Particle* cp) : emitter(e),component(cp)
@@ -12,7 +14,14 @@ EmitterInstance::EmitterInstance(Emitter* e, C_Particle* cp) : emitter(e),compon
 }
 
 EmitterInstance::~EmitterInstance()
-{}
+{
+	component->owner->GetEngine()->GetResourceManager()->FreeResource(emitter->texture->GetUID());
+	particles.clear();
+	particles.shrink_to_fit();
+	emitter = nullptr;
+	component = nullptr;
+	RELEASE(particleIndices);
+}
 
 void EmitterInstance::Init()
 {
