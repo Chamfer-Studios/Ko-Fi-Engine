@@ -94,13 +94,6 @@ bool C_Particle::PostUpdate(float dt)
 
 bool C_Particle::CleanUp()
 {
-	for (auto emInst : emitterInstances)
-	{
-		RELEASE(emInst);
-	}
-	emitterInstances.clear();
-	emitterInstances.shrink_to_fit();
-
 	if (resource != nullptr)
 	{
 		for (auto emitter : resource->emitters)
@@ -109,6 +102,13 @@ bool C_Particle::CleanUp()
 		}
 		RELEASE(resource);
 	}
+
+	for (auto emInst : emitterInstances)
+	{
+		RELEASE(emInst);
+	}
+	emitterInstances.clear();
+	emitterInstances.shrink_to_fit();
 
 	return true;
 }
