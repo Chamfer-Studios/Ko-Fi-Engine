@@ -648,10 +648,8 @@ function DrawHoverParticle()
             finalPosition = drawingTarget:GetTransform():GetPosition()
             finalPosition.y = finalPosition.y + 1
 
-            Log("CHANCE_START\n")
             DispatchGlobalEvent("Chance_Start", {drawingTarget:GetName()})
             if (enemyHoveredType ~= nil) then
-                Log(drawingTarget:GetTransform():GetPosition() .. "\n")
                 if (enemyHoveredType == "Harkonnen") then
                     if (enemyHoveredState == 1) then
                         ChanceParticle100:GetComponentParticle():ResumeParticleSpawn()
@@ -659,7 +657,6 @@ function DrawHoverParticle()
                             float3.new(drawingTarget:GetTransform():GetPosition().x + 15,
                                 drawingTarget:GetTransform():GetPosition().y + 23,
                                 drawingTarget:GetTransform():GetPosition().z + 12))
-                        Log(ChanceParticle100:GetTransform():GetPosition() .. "\n")
                     elseif (enemyHoveredState == 2) then
                         ChanceParticle80:GetComponentParticle():ResumeParticleSpawn()
                         ChanceParticle80:GetTransform():SetPosition(

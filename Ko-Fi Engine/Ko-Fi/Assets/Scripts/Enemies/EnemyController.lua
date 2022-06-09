@@ -948,6 +948,8 @@ function EventHandler(key, fields)
             gameObject:DeleteComponent(coneLight)
             coneLight = nil
         end
+    elseif (key == "Chance_Start") then
+        DispatchGlobalEvent("Chance_End", {state, thisType})
     end
 end
 
