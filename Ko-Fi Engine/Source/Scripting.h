@@ -41,6 +41,8 @@
 #include "C_LightSource.h"
 #include "RNG.h"
 
+#include "optick.h"
+
 enum INSPECTOR_VARIABLE_TYPE
 {
 	INSPECTOR_NO_TYPE,
@@ -557,6 +559,8 @@ public:
 
 	KEY_STATE LuaGetInput(int button)
 	{
+		OPTICK_EVENT();
+
 		if (button < 6 && button > 0)
 			return gameObject->GetEngine()->GetInput()->GetMouseButton(button);
 
@@ -763,6 +767,9 @@ public:
 
 	std::variant<int, float, float2, float3, bool, std::string, std::vector<float3>, GameObject*> LuaGetVariable(std::string path, std::string variable, INSPECTOR_VARIABLE_TYPE type)
 	{
+		OPTICK_EVENT();
+		OPTICK_TAG(path.c_str(), variable.c_str());
+
 		for (GameObject* go : gameObject->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList)
 		{
 			// C_Script* script = go->GetComponent<C_Script>();

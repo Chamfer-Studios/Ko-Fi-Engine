@@ -60,6 +60,8 @@ bool C_Mesh::Start()
 
 bool C_Mesh::Update(float dt)
 {
+	OPTICK_EVENT();
+
 	return true;
 }
 

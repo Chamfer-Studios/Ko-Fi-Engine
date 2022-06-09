@@ -2,6 +2,7 @@
 #define __GAMEOBJECT_H__
 
 #include "R_Mesh.h"
+#include "C_Mesh.h"
 #include <vector>
 
 #include <unordered_map>
@@ -46,6 +47,9 @@ public:
 	bool Start();
 	bool PreUpdate();
 	bool Update(float dt);
+	bool InitUpdateScripts(float dt);
+	bool DoUpdateScripts(float dt);
+	bool DoUpdateAsyncScripts(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
 
@@ -66,7 +70,6 @@ public:
 		T* component = nullptr;
 
 		std::type_index id = typeid(T);
-
 		for (Component* c : components)
 		{
 			if (c != nullptr && c->typeIndex == id) {
@@ -173,7 +176,7 @@ private:
 
 	KoFiEngine *engine = nullptr;
 	C_Transform *transform = nullptr;
-	
+	C_Mesh* mesh = nullptr;
 };
 
 #endif // !__GAMEOBJECT_H__

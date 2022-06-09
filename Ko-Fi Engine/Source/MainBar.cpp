@@ -339,7 +339,6 @@ void MainBar::ChoosersListener()
 		std::string file = editor->GetPanelChooser()->OnChooserClosed();
 		if (!file.empty())
 		{
-#pragma omp parallel private()
 			{
 				Importer::GetInstance()->sceneImporter->LoadScene(editor->engine->GetSceneManager()->GetCurrentScene(), editor->engine->GetFileSystem()->GetNameFromPath(file).c_str());
 			}

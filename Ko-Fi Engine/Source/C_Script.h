@@ -3,7 +3,8 @@
 #include "Component.h"
 #include <lua.hpp>
 #include <sol.hpp>
-
+#include <thread>
+#include "M_SceneManager.h"
 #include <queue>
 
 #include "MathGeoLib/Math/float2.h"
@@ -26,8 +27,16 @@ struct ScriptHandler
 	Scripting* handler = nullptr;
 	std::string path = "";
 	std::vector<InspectorVariable*> inspectorVariables;
+	sol::protected_function lua_start;
+	bool lua_start_is_valid = false;
+	sol::protected_function lua_event_handler;
+	bool lua_event_handler_is_valid = false;
 	sol::protected_function lua_update;
+	bool lua_update_is_valid = false;
 	sol::protected_function lua_update_UI;
+	bool lua_update_UI_is_valid = false;
+	sol::protected_function lua_post_update;
+	bool lua_post_update_is_valid = false;
 	bool isScriptLoaded = false;
 };
 
@@ -50,6 +59,7 @@ public:
 
 	bool Start() override;
 	bool Update(float dt) override;
+	void InnerUpdate(float dt);
 	bool PostUpdate(float dt) override;
 	bool OnPlay() override;
 	bool OnSceneSwitch() override;
@@ -63,8 +73,22 @@ public:
 
 	void SetId(int id);
 
+	void InitScriptUpdate(float dt);
+	void DoScriptUpdate(float dt);
+	void UpdateInspectorVariables(float dt);
+	void UpdateEventHandler(float dt);
+	void UpdateScript(float dt);
+	void UpdateUIPlay(float dt);
+	void UpdateUIPause(float dt);
+	void PostUpdateScript(float dt);
+
+	void ProcessResult(sol::protected_function_result result);
+
 	ScriptHandler* s = nullptr;
 	int id = -1;
 
 	std::queue<ScriptingEvent> eventQueue;
+	std::shared_ptr<std::thread> worker = nullptr;
+
+	bool isAsync = false;
 };

@@ -45,6 +45,8 @@ bool C_BoxCollider::Start()
 
 bool C_BoxCollider::Update(float dt)
 {
+	OPTICK_EVENT();
+
 	if (!owner->GetComponent<C_RigidBody>())
 	{
 		owner->DeleteComponent(this);

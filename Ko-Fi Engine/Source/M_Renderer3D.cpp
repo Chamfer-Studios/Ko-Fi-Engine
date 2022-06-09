@@ -420,21 +420,20 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 	};
 
 	if (gameObejctsToRenderDistanceOrdered.size() != 0) {
-#pragma omp parallel for
+
 		for (GameObject* go : gameObejctsToRenderDistanceOrdered)
 		{
 			renderGo(go);
 		}
 	}
 	else {
-#pragma omp parallel for
-		for (GameObject* go : gameObejctsToRenderDistance)
-		{
+
+		for (GameObject* go : gameObejctsToRenderDistance) {
 			renderGo(go);
 		}
 	}
 	RenderAllParticles();
-#pragma omp parallel for
+
 	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 	{
 		if (go->active)
@@ -1289,14 +1288,24 @@ uint M_Renderer3D::GetPreviewTextureBuffer()
 void M_Renderer3D::AddParticle(R_Texture& tex, Color color, const float4x4 transform, float distanceToCamera)
 {
 	ParticleRenderer pRenderer = ParticleRenderer(tex, color, transform);
-	particles.insert(std::map<float, ParticleRenderer>::value_type(distanceToCamera, pRenderer));
+	particles.insert(std::make_pair(distanceToCamera, pRenderer));
 }
 
 void M_Renderer3D::RenderAllParticles()
 {
-	for (std::map<float,ParticleRenderer>::reverse_iterator particle = particles.rbegin();particle != particles.rend();++particle)
+	OPTICK_EVENT();
+
+	std::vector<float> key;
+	for (auto it = particles.begin(); it != particles.end(); ++it) {
+		key.push_back(it->first);
+	}
+
+#pragma omp parallel for
+	for (int i = 0; i < key.size(); i++)
 	{
-		RenderParticle(&particle->second);
+		float k = key[i];
+		auto p = particles[k];
+		RenderParticle(&p);
 	}
 
 	particles.clear();
@@ -1342,7 +1351,7 @@ void M_Renderer3D::FillShadowMap()
 		if (!lightMat)
 			return;
 
-		for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+		for (auto go : gameObejctsToRenderDistanceSphere)
 		{
 			if (!go->active)
 				continue;
@@ -1390,8 +1399,13 @@ void M_Renderer3D::ShadowMapUniforms(C_Mesh* cMesh, uint shader, GameObject* lig
 	glUniformMatrix4fv(lightSpaceMatrix, 1, GL_FALSE, dirLight->lightSpaceMatrix.Transposed().ptr());
 }
 
+ParticleRenderer::ParticleRenderer()
+{
+	tex = nullptr;
+}
+
 ParticleRenderer::ParticleRenderer(R_Texture& tex, Color color, const float4x4 transform):
-tex(tex),
+tex(&tex),
 color(color),
 transform(transform)
 {
@@ -1409,11 +1423,11 @@ void M_Renderer3D::RenderParticle(ParticleRenderer* particle)
 	glDisable(GL_TEXTURE_2D);
 	//glColor3f(1.0f, 1.0f, 1.0f);
 
-	if (particle->tex.GetTextureId() != TEXTUREID_DEFAULT)
+	if (particle->tex->GetTextureId() != TEXTUREID_DEFAULT)
 	{
 		glEnable(GL_TEXTURE_2D);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, particle->tex.GetTextureId());
+		glBindTexture(GL_TEXTURE_2D, particle->tex->GetTextureId());
 	}
 	
 	glColor4f(particle->color.r, particle->color.g, particle->color.b, particle->color.a);

@@ -18,6 +18,7 @@
 #include "PanelChooser.h"
 #include "Engine.h"
 #include "M_Editor.h"
+#include "RNG.h"
 
 #include "MathGeoLib/Math/MathFunc.h"
 
@@ -68,6 +69,8 @@ bool C_AudioSwitch::Start()
 
 bool C_AudioSwitch::Update(float dt)
 {
+    OPTICK_EVENT();
+
     bool ret = true;
 
     if (switching)
@@ -82,7 +85,8 @@ bool C_AudioSwitch::Update(float dt)
             CustomLoopLogic(index);
     }
 
-    UpdatePlayState();
+    if (RNG::GetBoundedRandomUint(0,10) == 1)
+        UpdatePlayState();
 
     return ret;
 }
@@ -449,6 +453,8 @@ void C_AudioSwitch::Load(Json& json)
 
 void C_AudioSwitch::UpdatePlayState()
 {
+    OPTICK_EVENT();
+
     for (R_Track* index : tracks)
     {
         if (index->IsTrackLoaded())

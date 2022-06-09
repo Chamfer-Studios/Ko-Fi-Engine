@@ -31,11 +31,12 @@ class SkyBox;
 
 struct ParticleRenderer
 {
-	ParticleRenderer(R_Texture &tex, Color color, const float4x4 transform);
+	ParticleRenderer();
+	ParticleRenderer(R_Texture& tex, Color color, const float4x4 transform);
 
 	// void Render();
 
-	R_Texture &tex;
+	R_Texture* tex;
 	Color color;
 	float4x4 transform;
 };
@@ -174,7 +175,7 @@ private:
 	uint previewTextureBuffer = 0;
 	bool show_viewport_window = true;
 	// Particle Map
-	std::multimap<float, ParticleRenderer> particles;
+	std::map<float, ParticleRenderer> particles;
 
 	// Occlusion Culling things
 	OcclusionQuery *query = nullptr;
