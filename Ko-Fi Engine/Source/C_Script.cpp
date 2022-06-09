@@ -143,7 +143,7 @@ void C_Script::UpdateUIPlay(float dt)
 	OPTICK_EVENT();
 
 	if (s->lua_update_UI_is_valid) {
-		ProcessResult(s->lua_update_UI(owner->GetEngine()->GetEngineTime()));
+		ProcessResult(s->lua_update_UI(dt));
 	}
 }
 void C_Script::UpdateUIPause(float dt)
@@ -151,7 +151,7 @@ void C_Script::UpdateUIPause(float dt)
 	OPTICK_EVENT();
 
 	if (s->lua_update_UI_is_valid) {
-		ProcessResult(s->lua_update_UI(owner->GetEngine()->GetEngineTime()));
+		ProcessResult(s->lua_update_UI(dt));
 	}
 }
 void C_Script::PostUpdateScript(float dt)
@@ -620,7 +620,7 @@ void C_Script::DoScriptUpdate(float dt)
 			UpdateScript(dt);
 			UpdateUIPlay(dt);
 		}
-		else if (/*owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING || */owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PAUSED && s->isScriptLoaded)
+		else if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PAUSED && s->isScriptLoaded)
 		{
 			UpdateUIPause(dt);
 		}
