@@ -211,6 +211,34 @@ function Start()
     if (jumpParticle ~= nil) then
         jumpParticle:GetComponentParticle():StopParticleSpawn()
     end
+    ChanceParticle0 = Find("0 Chance Particle")
+    if (ChanceParticle0 ~= nil) then
+        ChanceParticle0:GetComponentParticle():StopParticleSpawn()
+    end
+    ChanceParticle20 = Find("20 Chance Particle")
+    if (ChanceParticle20 ~= nil) then
+        ChanceParticle20:GetComponentParticle():StopParticleSpawn()
+    end
+    ChanceParticle30 = Find("30 Chance Particle")
+    if (ChanceParticle30 ~= nil) then
+        ChanceParticle30:GetComponentParticle():StopParticleSpawn()
+    end
+    ChanceParticle80 = Find("80 Chance Particle")
+    if (ChanceParticle80 ~= nil) then
+        ChanceParticle80:GetComponentParticle():StopParticleSpawn()
+    end
+    ChanceParticle100 = Find("100 Chance Particle")
+    if (ChanceParticle100 ~= nil) then
+        ChanceParticle100:GetComponentParticle():StopParticleSpawn()
+    end
+    HitParticle = Find("Hit Particle")
+    if (HitParticle ~= nil) then
+        HitParticle:GetComponentParticle():StopParticleSpawn()
+    end
+    MissParticle = Find("Miss Particle")
+    if (MissParticle ~= nil) then
+        MissParticle:GetComponentParticle():StopParticleSpawn()
+    end
 
     -- Audio
     currentTrackID = -1
@@ -619,6 +647,50 @@ function DrawHoverParticle()
             end
             finalPosition = drawingTarget:GetTransform():GetPosition()
             finalPosition.y = finalPosition.y + 1
+
+            -- Log("CHANCE_START\n")
+            -- DispatchGlobalEvent("Chance_Start", {drawingTarget:GetName()})
+            -- if (enemyHoveredType ~= nil) then
+            --     Log(drawingTarget:GetTransform():GetPosition() .. "\n")
+            --     if (enemyHoveredType == "Harkonnen") then
+            --         if (enemyHoveredState == 1) then
+            --             ChanceParticle100:GetComponentParticle():ResumeParticleSpawn()
+            --             ChanceParticle100:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
+            --             drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
+            --             :GetPosition().z + 12)
+            --             Log(ChanceParticle100:GetTransform():GetPosition().."\n")
+            --         elseif (enemyHoveredState == 2) then
+            --             ChanceParticle80:GetComponentParticle():ResumeParticleSpawn()
+            --             ChanceParticle80:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
+            --                 drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
+            --                     :GetPosition().z + 12)
+            --         elseif (enemyHoveredState == 3) then
+            --             ChanceParticle20:GetComponentParticle():ResumeParticleSpawn()
+            --             ChanceParticle20:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
+            --                 drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
+            --                     :GetPosition().z + 12)
+            --         end
+            --     elseif (enemyHoveredType == "Sardaukar") then
+            --         if (enemyHoveredState == 1) then
+            --             ChanceParticle80:GetComponentParticle():ResumeParticleSpawn()
+            --             ChanceParticle80:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
+            --                 drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
+            --                     :GetPosition().z + 12)
+            --         elseif (enemyHoveredState == 2) then
+            --             ChanceParticle30:GetComponentParticle():ResumeParticleSpawn()
+            --             ChanceParticle30:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
+            --                 drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
+            --                     :GetPosition().z + 12)
+            --         elseif (enemyHoveredState == 3) then
+            --             ChanceParticle0:GetComponentParticle():ResumeParticleSpawn()
+            --             ChanceParticle0:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
+            --                 drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
+            --                     :GetPosition().z + 12)
+            --         end
+
+            --     end
+            -- end
+
         elseif (currentState == State.AIM_SECONDARY and drawingTarget.tag == Tag.FLOOR) then
             local mouseClick = GetLastMouseClick()
             if (Distance3D(mouseClick, componentTransform:GetPosition()) <= secondaryCastRange) then
@@ -630,6 +702,13 @@ function DrawHoverParticle()
             finalPosition = float3.new(mouseClick.x, 1, mouseClick.z)
         else
             choosingTargetParticle:GetComponentParticle():StopParticleSpawn()
+            -- ChanceParticle0:GetComponentParticle():StopParticleSpawn()
+            -- ChanceParticle20:GetComponentParticle():StopParticleSpawn()
+            -- ChanceParticle30:GetComponentParticle():StopParticleSpawn()
+            -- ChanceParticle80:GetComponentParticle():StopParticleSpawn()
+            -- ChanceParticle100:GetComponentParticle():StopParticleSpawn()
+            -- enemyHoveredState = nil
+            -- enemyHoveredType = nil
             do
                 return
             end
@@ -824,6 +903,19 @@ function ManageTimers(dt)
                 jumpParticle:GetComponentParticle():StopParticleSpawn()
             end
             jumpParticleTimer = nil
+        end
+    end
+
+    if (hitOrMissTimer ~= nil) then
+        hitOrMissTimer = hitOrMissTimer + dt
+        if (hitOrMissTimer > 0.3) then
+            if (HitParticle ~= nil) then
+                HitParticle:GetComponentParticle():StopParticleSpawn()
+            end
+            if (MissParticle ~= nil) then
+                MissParticle:GetComponentParticle():StopParticleSpawn()
+            end
+            hitOrMissTimer = nil
         end
     end
 
@@ -1526,6 +1618,22 @@ function EventHandler(key, fields)
         DispatchGlobalEvent("Player_Ability", {characterID, Ability.Secondary, abilities.AbilitySecondary})
         decoyCount = decoyCount + 1
         Log("Decoy bugged, correction applied.\n")
+    elseif (key == "Hit") then
+        if (HitParticle ~= nil) then
+            HitParticle:GetComponentParticle():ResumeParticleSpawn()
+            HitParticle:GetTransform():SetPosition(fields[1].x + 15, fields[1].y + 23, fields[1].z + 12)
+            hitOrMissTimer = 0.0
+        end
+    elseif (key == "Missed") then
+        if (MissParticle ~= nil) then
+            MissParticle:GetComponentParticle():ResumeParticleSpawn()
+            MissParticle:GetTransform():SetPosition(fields[1].x + 15, fields[1].y + 23, fields[1].z + 12)
+            hitOrMissTimer = 0.0
+        end
+    elseif (key == "Chance_End") then
+        Log("Chance_END\n")
+        enemyHoveredState = fields[1]
+        enemyHoveredType = fields[2]
     end
 end
 --------------------------------------------------
