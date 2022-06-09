@@ -74,38 +74,35 @@ bool C_Script::Update(float dt)
 {
 	OPTICK_EVENT();
 
-	/*auto worker = std::make_shared<std::thread>
-		(std::thread(C_Script::InnerUpdate, dt, s, eventQueue, owner));*/
+	InnerUpdate(dt);
 
-	std::thread t(std::bind(&C_Script::InnerUpdate, dt, s, eventQueue, owner));     
-	t.detach();
-	
-
-	// workers.push_back(worker);
+	//if (worker != nullptr) worker->join();
+	//worker = std::make_shared<std::thread>(std::bind(&C_Script::InnerUpdate, this, std::ref(dt)));
+	//worker->detach();
 
 	return true;
 }
 
-void C_Script::InnerUpdate(float dt, ScriptHandler* sh, std::queue<ScriptingEvent>* queue, GameObject* go)
+void C_Script::InnerUpdate(float dt)
 {
 	OPTICK_EVENT();
 
-	if (sh != nullptr)
+	if (s != nullptr)
 	{
 
-		UpdateInspectorVariables(dt, sh, go);
+		UpdateInspectorVariables(dt);
 
 		if (RNG::GetBoundedRandomUint(0, 10) == 1)
-			UpdateEventHandler(dt, sh, queue);
+			UpdateEventHandler(dt);
 
-		if (go->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && sh->isScriptLoaded)
+		if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
 		{
-			UpdateScript(dt, sh);
-			UpdateUIPlay(dt, sh, go);
+			UpdateScript(dt);
+			UpdateUIPlay(dt);
 		}
-		else if (/*owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING || */go->GetEngine()->GetSceneManager()->GetGameState() == GameState::PAUSED && sh->isScriptLoaded)
+		else if (/*owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING || */owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PAUSED && s->isScriptLoaded)
 		{
-			UpdateUIPause(dt, sh, go);
+			UpdateUIPause(dt);
 		}
 	}
 
@@ -117,117 +114,86 @@ bool C_Script::PostUpdate(float dt)
 	{
 		if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
 		{
-			PostUpdateScript(dt, s);
+			PostUpdateScript(dt);
 		}
 	}
 
 	return true;
 }
 
-void C_Script::UpdateInspectorVariables(float dt, ScriptHandler* sh, GameObject* go2) 
+void C_Script::UpdateInspectorVariables(float dt) 
 {
 	OPTICK_EVENT();
 
-	for (auto v : sh->inspectorVariables) {
+	for (auto v : s->inspectorVariables) {
 		if (v->type == INSPECTOR_GAMEOBJECT) {
 			try {
 				GameObject* go = std::get<GameObject*>(v->value);
 			}
 			catch (...) {
-				v->value = go2->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(std::get<unsigned int>(v->value));
+				v->value = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(std::get<unsigned int>(v->value));
 			}
 		}
 	}
 }
-void C_Script::UpdateEventHandler(float dt, ScriptHandler* sh, std::queue<ScriptingEvent>* queue)
+void C_Script::UpdateEventHandler(float dt)
 {
 	OPTICK_EVENT();
 
-	if (sh->lua_event_handler_is_valid) {
-		while (queue->size() != 0) {
-			auto e = queue->front();
-			queue->pop();
+	if (s->lua_event_handler_is_valid) {
+		while (eventQueue.size() != 0) {
+			auto e = eventQueue.front();
+			eventQueue.pop();
 
-			sol::protected_function_result result = sh->lua_event_handler(e.key, e.fields);
-			if (result.valid()) {
-				// Call succeeded
-			}
-			else {
-				// Call failed
-				sol::error err = result;
-				std::string what = err.what();
-				appLog->AddLog("%s\n", what.c_str());
-			}
+			ProcessResult(s->lua_event_handler(e.key, e.fields));
 		}
 	}
 }
-void C_Script::UpdateScript(float dt, ScriptHandler* sh)
+void C_Script::UpdateScript(float dt)
 {
 	OPTICK_EVENT();
-	OPTICK_TAG("Script Name: ", sh->path.c_str());
+	OPTICK_TAG("Script Name: ", s->path.c_str());
 
-	if (sh->lua_update_is_valid) {
-		sol::protected_function_result result = sh->lua_update(dt);
-		if (result.valid()) {
-			// Call succeeded
-		}
-		else {
-			// Call failed
-			sol::error err = result;
-			std::string what = err.what();
-			appLog->AddLog("%s\n", what.c_str());
-		}
+	if (s->lua_update_is_valid) {
+		ProcessResult(s->lua_update(dt));
 	}
 }
-void C_Script::UpdateUIPlay(float dt, ScriptHandler* sh, GameObject* go)
+void C_Script::UpdateUIPlay(float dt)
 {
 	OPTICK_EVENT();
 
-	if (sh->lua_update_UI_is_valid) {
-		sol::protected_function_result result = sh->lua_update_UI(go->GetEngine()->GetEngineTime());
-		if (result.valid()) {
-			// Call succeeded
-		}
-		else {
-			// Call failed
-			sol::error err = result;
-			std::string what = err.what();
-			appLog->AddLog("%s\n", what.c_str());
-		}
+	if (s->lua_update_UI_is_valid) {
+		ProcessResult(s->lua_update_UI(owner->GetEngine()->GetEngineTime()));
 	}
 }
-void C_Script::UpdateUIPause(float dt, ScriptHandler* sh, GameObject* go)
+void C_Script::UpdateUIPause(float dt)
 {
 	OPTICK_EVENT();
 
-	if (sh->lua_update_UI_is_valid) {
-		sol::protected_function_result result = sh->lua_update_UI(go->GetEngine()->GetEngineTime());
-		if (result.valid()) {
-			// Call succeeded
-		}
-		else {
-			// Call failed
-			sol::error err = result;
-			std::string what = err.what();
-			appLog->AddLog("%s\n", what.c_str());
-		}
+	if (s->lua_update_UI_is_valid) {
+		ProcessResult(s->lua_update_UI(owner->GetEngine()->GetEngineTime()));
 	}
 }
-void C_Script::PostUpdateScript(float dt, ScriptHandler* sh)
+void C_Script::PostUpdateScript(float dt)
 {
 	OPTICK_EVENT();
 
-	if (sh->lua_post_update_is_valid) {
-		sol::protected_function_result result = sh->lua_post_update(dt);
-		if (result.valid()) {
-			// Call succeeded
-		}
-		else {
-			// Call failed
-			sol::error err = result;
-			std::string what = err.what();
-			appLog->AddLog("%s\n", what.c_str());
-		}
+	if (s->lua_post_update_is_valid) {
+		ProcessResult(s->lua_post_update(dt));
+	}
+}
+
+void C_Script::ProcessResult(sol::protected_function_result result)
+{
+	return;
+	if (result.valid()) {
+		// Call succeeded
+	}
+	else {
+		// Call failed
+		sol::error err = result;
+		std::string what = err.what();
+		appLog->AddLog("%s\n", what.c_str());
 	}
 }
 

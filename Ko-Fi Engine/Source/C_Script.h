@@ -59,7 +59,7 @@ public:
 
 	bool Start() override;
 	bool Update(float dt) override;
-	static void InnerUpdate(float dt, ScriptHandler* sh, std::queue<ScriptingEvent>* queue, GameObject* go);
+	void InnerUpdate(float dt);
 	bool PostUpdate(float dt) override;
 	bool OnPlay() override;
 	bool OnSceneSwitch() override;
@@ -75,16 +75,18 @@ public:
 
 
 
-	static void UpdateInspectorVariables(float dt, ScriptHandler* sh, GameObject* go);
-	static void UpdateEventHandler(float dt, ScriptHandler* sh, std::queue<ScriptingEvent>* queue);
-	static void UpdateScript(float dt, ScriptHandler* sh);
-	static void UpdateUIPlay(float dt, ScriptHandler* sh, GameObject* go);
-	static void UpdateUIPause(float dt, ScriptHandler* sh, GameObject* go);
-	static void PostUpdateScript(float dt, ScriptHandler* sh);
+	void UpdateInspectorVariables(float dt);
+	void UpdateEventHandler(float dt);
+	void UpdateScript(float dt);
+	void UpdateUIPlay(float dt);
+	void UpdateUIPause(float dt);
+	void PostUpdateScript(float dt);
+
+	void ProcessResult(sol::protected_function_result result);
 
 	ScriptHandler* s = nullptr;
 	int id = -1;
 
 	std::queue<ScriptingEvent> eventQueue;
-	std::vector<std::shared_ptr<std::thread>> workers;
+	std::shared_ptr<std::thread> worker = nullptr;
 };
