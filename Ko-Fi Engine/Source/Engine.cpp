@@ -49,13 +49,13 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	input = new M_Input(this);
 	camera = new M_Camera3D(this);
 	renderer = new M_Renderer3D(this);
+	audio = new M_Audio(this);
 	editor = new M_Editor(this);
 	sceneManager = new M_SceneManager(this);
 	ui = new M_UI(this);
 	//viewportBuffer = new ViewportFrameBuffer(this);
 	physics = new M_Physics(this);
 	resourceManager = new M_ResourceManager(this);
-	audio = new M_Audio(this);
 	navigation = new M_Navigation(this);
 
 	// Ordered for awake / Start / Update
