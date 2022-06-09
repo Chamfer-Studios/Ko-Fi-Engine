@@ -72,8 +72,9 @@ public:
 		std::type_index id = typeid(T);
 		for (Component* c : components)
 		{
-			if (c != nullptr && c->typeIndex == id) {
+			if (c != nullptr /*&& c->typeIndex == id*/) {
 				component = dynamic_cast<T*>(c);
+
 				if (component) {
 					break;
 				}
