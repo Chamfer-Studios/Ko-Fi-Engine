@@ -13,6 +13,8 @@ function Start()
     destination = GetVariable("Zhib.lua", "target", INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT3) -- float 3
     if (destination ~= nil) then
         destination.y = 0.0
+        effectRadius = GetVariable("Zhib.lua", "secondaryEffectRadius", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+        lifeTime = GetVariable("Zhib.lua", "secondaryDuration", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
         player = GetVariable("Zhib.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
         componentSwitch = gameObject:GetAudioSwitch()
         currentTrackID = -1
@@ -24,6 +26,7 @@ function Start()
         vec2 = Normalize(vec2, d)
         componentTransform:SetPosition(
             float3.new(playerPos.x + vec2[1] * 5, playerPos.y + 10, playerPos.z + vec2[2] * 5))
+        waveParticleTimer = 1.0
         waveParticle = Find("Zhib Wave Particle")
         if (waveParticle ~= nil) then
             waveParticle:GetComponentParticle():StopParticleSpawn()
@@ -51,6 +54,11 @@ function Update(dt)
         MoveToDestination(dt)
     elseif (lifeTimer <= lifeTime) then
 
+        if(currentTrackID ~= 0) then
+            trackList = {0}
+            ChangeTrack(trackList)
+        end
+
         if (componentLight ~= nil) then
             -- componentLight:SetAngle(360 / 2)
         end
@@ -58,15 +66,17 @@ function Update(dt)
         lifeTimer = lifeTimer + dt
 
         if (effectTimer == nil) then
-            if (waveParticle ~= nil) then
-                waveParticle:GetComponentParticle():ResumeParticleSpawn()
-                waveParticle:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x,
-                    componentTransform:GetPosition().y + 1, componentTransform:GetPosition().z))
+            waveParticleTimer = waveParticleTimer + dt
+            if (waveParticleTimer > 1.0) then
+                waveParticleTimer = 0.0
+                if (waveParticle ~= nil) then
+                    waveParticle:GetComponentParticle():ResumeParticleSpawn()
+                    waveParticle:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x,
+                        componentTransform:GetPosition().y + 1, componentTransform:GetPosition().z))
+                end
             end
-            trackList = {0}
-            ChangeTrack(trackList)
-            DispatchGlobalEvent("Auditory_Trigger",
-                {componentTransform:GetPosition(), effectRadius, "decoy", gameObject})
+            
+            DispatchGlobalEvent("Auditory_Trigger", {componentTransform:GetPosition(), effectRadius, "decoy", player})
             effectTimer = 0.0
         else
             effectTimer = effectTimer + dt
@@ -90,6 +100,7 @@ function Update(dt)
         -- Log("Decoy is grabbable! \n")
 
         if a == false then
+            DispatchGlobalEvent("Decoy_Trigger_End", {})
             DispatchGlobalEvent("Decoy_Grabbable", {})
             gameObject.tag = Tag.PICKUP
             a = true

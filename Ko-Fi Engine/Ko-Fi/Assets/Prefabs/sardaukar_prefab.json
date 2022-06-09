@@ -166,7 +166,7 @@
                                         0.05948351323604584,
                                         0.3447629511356354,
                                         0.9367772936820984,
-                                        -0.006969730835407972
+                                        -0.006969641428440809
                                     ],
                                     "scale": [
                                         1.0,
@@ -278,7 +278,7 @@
                                                             "rotation": [
                                                                 0.01333394180983305,
                                                                 0.008728082291781902,
-                                                                0.003083675168454647,
+                                                                0.0030834628269076347,
                                                                 0.9998682737350464
                                                             ],
                                                             "scale": [
@@ -621,15 +621,15 @@
                                                         1.0594725608825684e-05
                                                     ],
                                                     "rotation": [
-                                                        0.017119495198130608,
-                                                        -0.0027153328992426395,
-                                                        -0.006756466347724199,
-                                                        0.999826967716217
+                                                        0.017121700569987297,
+                                                        -0.0027152360416948795,
+                                                        -0.006756574846804142,
+                                                        0.9998269081115723
                                                     ],
                                                     "scale": [
                                                         1.0,
-                                                        0.9999968409538269,
-                                                        0.9999997019767761
+                                                        0.9999657869338989,
+                                                        0.9999786019325256
                                                     ],
                                                     "type": 21
                                                 }
@@ -653,14 +653,14 @@
                                                 0.0002126544713973999
                                             ],
                                             "rotation": [
-                                                0.017496854066848755,
+                                                0.017497094348073006,
                                                 -0.002765129553154111,
-                                                -0.007225497625768185,
+                                                -0.007225557696074247,
                                                 0.9998170137405396
                                             ],
                                             "scale": [
                                                 0.9999999403953552,
-                                                0.9999955296516418,
+                                                1.0,
                                                 0.9999982714653015
                                             ],
                                             "type": 21
@@ -685,15 +685,15 @@
                                         -3.9413599967956543
                                     ],
                                     "rotation": [
-                                        0.022543763741850853,
-                                        0.01745925098657608,
-                                        0.016806606203317642,
-                                        0.9994521141052246
+                                        0.02254657819867134,
+                                        0.01746143028140068,
+                                        0.016809280961751938,
+                                        0.9994519352912903
                                     ],
                                     "scale": [
-                                        0.9999909996986389,
-                                        0.9999950528144836,
-                                        0.9999974370002747
+                                        0.9999746084213257,
+                                        0.9999811053276062,
+                                        0.9999816417694092
                                     ],
                                     "type": 21
                                 }
@@ -763,14 +763,14 @@
                                                                 0.0001868903636932373
                                                             ],
                                                             "rotation": [
-                                                                0.2751132845878601,
-                                                                0.02718084305524826,
-                                                                -0.005437986925244331,
+                                                                0.27511319518089294,
+                                                                0.027181625366210938,
+                                                                -0.005437993444502354,
                                                                 0.9610121250152588
                                                             ],
                                                             "scale": [
-                                                                0.999997079372406,
-                                                                0.999999463558197,
+                                                                0.9999805688858032,
+                                                                0.9999994039535522,
                                                                 0.999999463558197
                                                             ],
                                                             "type": 21
@@ -797,11 +797,11 @@
                                                     "rotation": [
                                                         0.6777206063270569,
                                                         -0.00954693928360939,
-                                                        0.0009203877998515964,
+                                                        0.0009200442000292242,
                                                         0.7352569699287415
                                                     ],
                                                     "scale": [
-                                                        0.9999896883964539,
+                                                        0.9999296069145203,
                                                         1.0,
                                                         1.0
                                                     ],
@@ -859,13 +859,13 @@
                                         -4.6229248046875
                                     ],
                                     "rotation": [
-                                        -0.09814674407243729,
+                                        -0.09814675897359848,
                                         0.018607383593916893,
                                         0.9947928190231323,
                                         -0.020205974578857422
                                     ],
                                     "scale": [
-                                        1.000018835067749,
+                                        1.000138759613037,
                                         1.0000139474868774,
                                         1.0
                                     ],
@@ -892,12 +892,12 @@
                             ],
                             "rotation": [
                                 0.03154535964131355,
-                                -0.007260342128574848,
-                                -0.01159736979752779,
+                                -0.007260341662913561,
+                                -0.011597084812819958,
                                 0.9994086623191833
                             ],
                             "scale": [
-                                0.9999896287918091,
+                                0.9999883770942688,
                                 1.0,
                                 1.0
                             ],
@@ -952,9 +952,9 @@
                 {
                     "active": true,
                     "position": [
-                        -1526.3253173828125,
-                        -0.00016345977201126516,
-                        107.6223373413086
+                        -1577.3343505859375,
+                        0.0006381954299286008,
+                        603.5219116210938
                     ],
                     "rotation": [
                         0.0,
@@ -1118,6 +1118,11 @@
                             "name": "minRetargetingDistance",
                             "type": "int",
                             "value": 10
+                        },
+                        {
+                            "name": "standByTime",
+                            "type": "int",
+                            "value": 0
                         }
                     ],
                     "type": 5
@@ -1125,6 +1130,7 @@
                 {
                     "active": true,
                     "ambientValue": 0.0,
+                    "castShadows": false,
                     "constantAttenuationValue": 1.0,
                     "cutOffAngle": 0.8191520571708679,
                     "diffuseValue": 0.800000011920929,
@@ -1139,21 +1145,1892 @@
                         -1.0
                     ],
                     "lightPosition": [
-                        -1526.3253173828125,
-                        -0.00016345977201126516,
-                        107.6223373413086
+                        -1577.3343505859375,
+                        0.0006381954299286008,
+                        603.5219116210938
                     ],
                     "linearAttenuationValue": 0.0,
                     "quadraticAttenuationValue": 0.0,
                     "sourceType": 2,
                     "specularValue": 0.0,
                     "type": 19
+                },
+                {
+                    "active": true,
+                    "fade_time": 2.0,
+                    "offset_sync": false,
+                    "total_tracks": 10,
+                    "tracks": [
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Sardaukar/sardaukar_attack_1_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Sardaukar/sardaukar_attack_2_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Sardaukar/sardaukar_attack_3_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Sardaukar/sardaukar_death_1_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Sardaukar/sardaukar_death_2_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Sardaukar/sardaukar_death_3_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Generic/generic_enemy_dodge_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Generic/generic_enemy_aware_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Sardaukar/sardaukar_knife_throw_1_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Sardaukar/sardaukar_knife_throw_2_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        }
+                    ],
+                    "type": 11
                 }
             ],
             "is3D": true,
             "isPrefab": false,
             "name": "sardaukar_low",
             "tag": 2
+        },
+        {
+            "active": true,
+            "children": [
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        15.0,
+                                                        15.0,
+                                                        15.0
+                                                    ],
+                                                    "type": 4
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                0.3921568691730499
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                }
+                                            ],
+                                            "name": "Debuff",
+                                            "texture_path": "Assets/Textures/Particles/arrow.png"
+                                        }
+                                    ],
+                                    "name": "Debuff Indicator"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Enemy Debuff Particle (2)",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 320,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.5882353186607361
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "followForward": true,
+                                                    "maxAcceleration": [
+                                                        0.25,
+                                                        0.25,
+                                                        0.25
+                                                    ],
+                                                    "maxDirection": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -1.0
+                                                    ],
+                                                    "maxPosition": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "maxVelocity": 5.0,
+                                                    "minAcceleration": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minDirection": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "minPosition": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -5.0
+                                                    ],
+                                                    "minVelocity": 0.0,
+                                                    "randAcceleration": false,
+                                                    "randDirection": false,
+                                                    "randPosition": false,
+                                                    "randVelocity": false,
+                                                    "type": 2
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        20.0,
+                                                        20.0,
+                                                        20.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Blood Splatters",
+                                            "texture_path": "Assets/Textures/Particles/blood.png"
+                                        },
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.5882353186607361
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "followForward": true,
+                                                    "maxAcceleration": [
+                                                        0.25,
+                                                        0.25,
+                                                        0.25
+                                                    ],
+                                                    "maxDirection": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -1.0
+                                                    ],
+                                                    "maxPosition": [
+                                                        0.5,
+                                                        0.5,
+                                                        0.5
+                                                    ],
+                                                    "maxVelocity": 5.0,
+                                                    "minAcceleration": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minDirection": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "minPosition": [
+                                                        -0.5,
+                                                        -0.5,
+                                                        -5.0
+                                                    ],
+                                                    "minVelocity": 0.0,
+                                                    "randAcceleration": false,
+                                                    "randDirection": false,
+                                                    "randPosition": false,
+                                                    "randVelocity": false,
+                                                    "type": 2
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        20.0,
+                                                        20.0,
+                                                        20.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Blood Pools",
+                                            "texture_path": "Assets/Textures/Particles/blood_huge.png"
+                                        }
+                                    ],
+                                    "name": "Blood"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Enemy Blood Particle (2)",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                0.0,
+                                                                0.0,
+                                                                1.0
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        20.0,
+                                                        20.0,
+                                                        20.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Emitter",
+                                            "texture_path": "Assets/Textures/Particles/slash.png"
+                                        }
+                                    ],
+                                    "name": "Slash"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Enemy Slash Particle (2)",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        15.0,
+                                                        15.0,
+                                                        15.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Chance",
+                                            "texture_path": "Assets/Textures/Particles/chance0.png"
+                                        }
+                                    ],
+                                    "name": "0 Chance"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "0 Chance Particle (2)",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        15.0,
+                                                        15.0,
+                                                        15.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Chance",
+                                            "texture_path": "Assets/Textures/Particles/chance10.png"
+                                        }
+                                    ],
+                                    "name": "10 Chance"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "10 Chance Particle (2)",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        15.0,
+                                                        15.0,
+                                                        15.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Chance",
+                                            "texture_path": "Assets/Textures/Particles/chance20.png"
+                                        }
+                                    ],
+                                    "name": "20 Chance"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "20 Chance Particle (2)",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        15.0,
+                                                        15.0,
+                                                        15.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Chance",
+                                            "texture_path": "Assets/Textures/Particles/chance30.png"
+                                        }
+                                    ],
+                                    "name": "30 Chance"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "30 Chance Particle (2)",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        15.0,
+                                                        15.0,
+                                                        15.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Chance",
+                                            "texture_path": "Assets/Textures/Particles/chance40.png"
+                                        }
+                                    ],
+                                    "name": "40 Chance"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "40 Chance Particle (2)",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        15.0,
+                                                        15.0,
+                                                        15.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Chance",
+                                            "texture_path": "Assets/Textures/Particles/chance50.png"
+                                        }
+                                    ],
+                                    "name": "50 Chance"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "50 Chance Particle (2)",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        15.0,
+                                                        15.0,
+                                                        15.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Chance",
+                                            "texture_path": "Assets/Textures/Particles/chance60.png"
+                                        }
+                                    ],
+                                    "name": "60 Chance"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "60 Chance Particle (2)",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        15.0,
+                                                        15.0,
+                                                        15.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Chance",
+                                            "texture_path": "Assets/Textures/Particles/chance70.png"
+                                        }
+                                    ],
+                                    "name": "70 Chance"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "70 Chance Particle (2)",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        15.0,
+                                                        15.0,
+                                                        15.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Chance",
+                                            "texture_path": "Assets/Textures/Particles/chance80.png"
+                                        }
+                                    ],
+                                    "name": "80 Chance"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "80 Chance Particle (2)",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        15.0,
+                                                        15.0,
+                                                        15.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Chance",
+                                            "texture_path": "Assets/Textures/Particles/chance90.png"
+                                        }
+                                    ],
+                                    "name": "90 Chance"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "90 Chance Particle (2)",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 0.004999999888241291,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        15.0,
+                                                        15.0,
+                                                        15.0
+                                                    ],
+                                                    "type": 4
+                                                }
+                                            ],
+                                            "name": "Chance",
+                                            "texture_path": "Assets/Textures/Particles/chance100.png"
+                                        }
+                                    ],
+                                    "name": "100 Chance"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "100 Chance Particle (2)",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 1.25,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 1.25,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        10.0,
+                                                        10.0,
+                                                        10.0
+                                                    ],
+                                                    "type": 4
+                                                },
+                                                {
+                                                    "followForward": false,
+                                                    "maxAcceleration": [
+                                                        0.25,
+                                                        0.25,
+                                                        0.25
+                                                    ],
+                                                    "maxDirection": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -1.0
+                                                    ],
+                                                    "maxPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "maxVelocity": 5.0,
+                                                    "minAcceleration": [
+                                                        0.0,
+                                                        0.0,
+                                                        -0.05000000074505806
+                                                    ],
+                                                    "minDirection": [
+                                                        0.0,
+                                                        0.4000000059604645,
+                                                        -1.0
+                                                    ],
+                                                    "minPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minVelocity": 3.0,
+                                                    "randAcceleration": false,
+                                                    "randDirection": false,
+                                                    "randPosition": false,
+                                                    "randVelocity": false,
+                                                    "type": 2
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "position": 0.0
+                                                        },
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                0.0
+                                                            ],
+                                                            "position": 1.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                }
+                                            ],
+                                            "name": "Emitter",
+                                            "texture_path": "Assets/Textures/Particles/hit.png"
+                                        }
+                                    ],
+                                    "name": "Hit"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Hit Particle (2)",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 1.25,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 1.25,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        10.0,
+                                                        10.0,
+                                                        10.0
+                                                    ],
+                                                    "type": 4
+                                                },
+                                                {
+                                                    "followForward": false,
+                                                    "maxAcceleration": [
+                                                        0.25,
+                                                        0.25,
+                                                        0.25
+                                                    ],
+                                                    "maxDirection": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -1.0
+                                                    ],
+                                                    "maxPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "maxVelocity": 5.0,
+                                                    "minAcceleration": [
+                                                        0.0,
+                                                        0.0,
+                                                        -0.05000000074505806
+                                                    ],
+                                                    "minDirection": [
+                                                        0.0,
+                                                        0.4000000059604645,
+                                                        -1.0
+                                                    ],
+                                                    "minPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minVelocity": 3.0,
+                                                    "randAcceleration": false,
+                                                    "randDirection": false,
+                                                    "randPosition": false,
+                                                    "randVelocity": false,
+                                                    "type": 2
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "position": 0.0
+                                                        },
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                0.0
+                                                            ],
+                                                            "position": 1.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                }
+                                            ],
+                                            "name": "Emitter",
+                                            "texture_path": "Assets/Textures/Particles/miss.png"
+                                        }
+                                    ],
+                                    "name": "Miss"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Miss Particle (2)",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 21
+                }
+            ],
+            "is3D": true,
+            "isPrefab": true,
+            "name": "Enemy Particles (2)",
+            "tag": 0
         }
     ],
     "components": [
@@ -1271,11 +3148,11 @@
                 {
                     "clipDuration": 15.0,
                     "clipDurationInSeconds": 0.625,
-                    "clipEndFrame": 361.0,
+                    "clipEndFrame": 360.0,
                     "clipFinished": false,
                     "clipLoop": true,
                     "clipName": "Run",
-                    "clipStartFrame": 346.0,
+                    "clipStartFrame": 345.0,
                     "mapString": "Run"
                 },
                 {
@@ -1295,7 +3172,7 @@
                     "uid": 1806782001
                 }
             ],
-            "selectedClip": "Corpse",
+            "selectedClip": "Run",
             "type": 12
         }
     ],

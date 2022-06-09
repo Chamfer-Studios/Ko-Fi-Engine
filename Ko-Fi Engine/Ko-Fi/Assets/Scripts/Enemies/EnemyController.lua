@@ -13,13 +13,14 @@ local chaseSpeedIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 chaseSpeedIV = InspectorVariable.new("chaseSpeed", chaseSpeedIVT, chaseSpeed)
 NewVariable(chaseSpeedIV)
 
-attackRange = 20
+attackRange = 35
 local attackRangeIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 attackRangeIV = InspectorVariable.new("attackRange", attackRangeIVT, attackRange)
 NewVariable(attackRangeIV)
 
 attackSpeed = 1.5
 dartRange = 100
+chainAwarenessDistance = 100
 
 visionConeAngle = 90
 local visionConeAngleIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
@@ -342,6 +343,15 @@ function ProcessRepeatedAuditoryTrigger(position, source)
         end
     end
 
+    if (mosquito ~= nil) then
+        if (state == STATE.AGGRO and math.abs(Float3Distance(position, mosquito:GetTransform():GetPosition())) < 0.5) then
+            DispatchGlobalEvent("Mosquito_Detected", {})
+            do
+                return
+            end
+        end
+    end
+
     src = float3.new(componentTransform:GetPosition().x, componentTransform:GetPosition().y + 10,
         componentTransform:GetPosition().z)
     dst = float3.new(position.x, position.y + 10, position.z)
@@ -436,6 +446,8 @@ function Start()
     coneLight = gameObject:GetLight()
     componentRigidbody = gameObject:GetRigidBody()
     componentBoxCollider = gameObject:GetBoxCollider()
+    componentSwitch = gameObject:GetAudioSwitch()
+    currentTrackID = -1;
     componentAnimator = gameObject:GetParent():GetComponentAnimator()
     if (componentAnimator ~= nil) then
         if (static == true) then
@@ -445,21 +457,10 @@ function Start()
         end
     end
 
-    debuffParticle = gameObject:GetChildren()[1]
-    if (debuffParticle ~= nil) then
-        debuffParticle:GetComponentParticle():StopParticleSpawn()
-    end
-    bloodParticle = gameObject:GetChildren()[2]
-    if (bloodParticle ~= nil) then
-        bloodParticle:GetComponentParticle():StopParticleSpawn()
-    end
-    slashParticle = gameObject:GetChildren()[3]
-    if (slashParticle ~= nil) then
-        slashParticle:GetComponentParticle():StopParticleSpawn()
-    end
+    ParticlesStart()
+    hoveredWeaponName = nil
 
     targetDirection = componentTransform:GetFront()
-
     auditoryDebuffMultiplier = 1
     visualDebuffMultiplier = 1
 
@@ -475,13 +476,84 @@ function Start()
     isAttacking = false
 end
 
+function ParticlesStart()
+    if (#gameObject:GetParent():GetChildren() > 2) then
+        debuffParticle = gameObject:GetParent():GetChildren()[3]:GetChildren()[1]
+        if (debuffParticle ~= nil) then
+            debuffParticle:GetComponentParticle():StopParticleSpawn()
+        end
+        bloodParticle = gameObject:GetParent():GetChildren()[3]:GetChildren()[2]
+        if (bloodParticle ~= nil) then
+            bloodParticle:GetComponentParticle():StopParticleSpawn()
+        end
+        slashParticle = gameObject:GetParent():GetChildren()[3]:GetChildren()[3]
+        if (slashParticle ~= nil) then
+            slashParticle:GetComponentParticle():StopParticleSpawn()
+        end
+        ChanceParticle0 = gameObject:GetParent():GetChildren()[3]:GetChildren()[4]
+        if (ChanceParticle0 ~= nil) then
+            ChanceParticle0:GetComponentParticle():StopParticleSpawn()
+        end
+        ChanceParticle10 = gameObject:GetParent():GetChildren()[3]:GetChildren()[5]
+        if (ChanceParticle10 ~= nil) then
+            ChanceParticle10:GetComponentParticle():StopParticleSpawn()
+        end
+        ChanceParticle20 = gameObject:GetParent():GetChildren()[3]:GetChildren()[6]
+        if (ChanceParticle20 ~= nil) then
+            ChanceParticle20:GetComponentParticle():StopParticleSpawn()
+        end
+        ChanceParticle30 = gameObject:GetParent():GetChildren()[3]:GetChildren()[7]
+        if (ChanceParticle30 ~= nil) then
+            ChanceParticle30:GetComponentParticle():StopParticleSpawn()
+        end
+        ChanceParticle40 = gameObject:GetParent():GetChildren()[3]:GetChildren()[8]
+        if (ChanceParticle40 ~= nil) then
+            ChanceParticle40:GetComponentParticle():StopParticleSpawn()
+        end
+        ChanceParticle50 = gameObject:GetParent():GetChildren()[3]:GetChildren()[9]
+        if (ChanceParticle50 ~= nil) then
+            ChanceParticle50:GetComponentParticle():StopParticleSpawn()
+        end
+        ChanceParticle60 = gameObject:GetParent():GetChildren()[3]:GetChildren()[10]
+        if (ChanceParticle60 ~= nil) then
+            ChanceParticle60:GetComponentParticle():StopParticleSpawn()
+        end
+        ChanceParticle70 = gameObject:GetParent():GetChildren()[3]:GetChildren()[11]
+        if (ChanceParticle70 ~= nil) then
+            ChanceParticle70:GetComponentParticle():StopParticleSpawn()
+        end
+        ChanceParticle80 = gameObject:GetParent():GetChildren()[3]:GetChildren()[12]
+        if (ChanceParticle80 ~= nil) then
+            ChanceParticle80:GetComponentParticle():StopParticleSpawn()
+        end
+        ChanceParticle90 = gameObject:GetParent():GetChildren()[3]:GetChildren()[13]
+        if (ChanceParticle90 ~= nil) then
+            ChanceParticle90:GetComponentParticle():StopParticleSpawn()
+        end
+        ChanceParticle100 = gameObject:GetParent():GetChildren()[3]:GetChildren()[14]
+        if (ChanceParticle100 ~= nil) then
+            ChanceParticle100:GetComponentParticle():StopParticleSpawn()
+        end
+        HitParticle = gameObject:GetParent():GetChildren()[3]:GetChildren()[15]
+        if (HitParticle ~= nil) then
+            HitParticle:GetComponentParticle():StopParticleSpawn()
+        end
+        MissParticle = gameObject:GetParent():GetChildren()[3]:GetChildren()[16]
+        if (MissParticle ~= nil) then
+            MissParticle:GetComponentParticle():StopParticleSpawn()
+        end
+    end
+end
+
+decoyOnce = false
+
 function UpdateTargetAwareness()
     awarenessSpeed = awarenessDecaySpeed
 
     closestTarget = GetClosestTarget()
     closestTargetPosition = componentTransform:GetPosition()
     if (closestTarget ~= nil) then
-        closestTargetPosition = closestTarget["source"]:GetTransform():GetPosition()
+        closestTargetPosition = closestTarget["position"]
     end
 
     distance = Float3Distance(componentTransform:GetPosition(), closestTargetPosition)
@@ -495,10 +567,11 @@ function UpdateTargetAwareness()
         prop = 1.2 - (distance / hearingRange)
         awarenessSpeed = awarenessSoundSpeed * prop * auditoryDebuffMultiplier
     elseif #decoyAuditoryTriggers ~= 0 then
-        if state == STATE.UNAWARE then
+        if decoyOnce == false and state == STATE.UNAWARE then
             awareness = 1
-            targetAwareness = 1
+            decoyOnce = true
         end
+        targetAwareness = 1
     else
         targetAwareness = 0
     end
@@ -533,6 +606,10 @@ function UpdateStateFromAwareness()
         do
             return (oldState)
         end
+    end
+
+    if awareness < 1 and #decoyAuditoryTriggers ~= 0 then
+        awareness = 1
     end
 
     if math.abs(awareness) < 0.05 then
@@ -645,12 +722,19 @@ function SwitchState(from, to)
     if to == STATE.AGGRO then
         targetAwareness = 2
         awareness = 2
+        DispatchGlobalEvent("Enemy_Aggro", {gameObject, componentTransform:GetPosition(), chainAwarenessDistance}) -- fields[1] -> gameObject; fields[2] -> position; fields[3] -> range;
     end
 
     DispatchEvent("Change_State", {from, to})
+    if (hoveredWeaponName ~= nil) then
+        CalculateChances(hoveredWeaponName)
+    end
 end
 
 function UpdateAnimation(dt, oldState, target)
+    if #decoyAuditoryTriggers ~= 0 then
+        distance = 50
+    end
     if (attackTimer ~= nil) then
         attackTimer = attackTimer + dt
         if (attackTimer >= attackSpeed) then
@@ -673,46 +757,27 @@ function UpdateAnimation(dt, oldState, target)
                     componentAnimator:SetSelectedClip("Idle")
                 end
             elseif (isWalking == true) then
-                if (currentClip ~= "Walk") then
-                    componentAnimator:SetSelectedClip("Walk")
-                end
-            end
-        elseif state == STATE.AGGRO then
-            if (thisType == "Harkonnen") then
-                if currentClip ~= "Attack" and currentClip ~= "AttackToIdle" and attackTimer == nil and distance <
-                    attackRange then
-                    componentAnimator:SetSelectedClip("Attack")
-                    isAttacking = true
-                elseif currentClip == "Attack" then
-                    if (componentAnimator:IsCurrentClipPlaying() == false) then
-                        DispatchGlobalEvent("Enemy_Attack", {target["source"], thisType})
-                        componentAnimator:SetSelectedClip("AttackToIdle")
-                        attackTimer = 0
-                    end
-                elseif currentClip == "AttackToIdle" then
-                    if componentAnimator:IsCurrentClipPlaying() == false then
-                        if (distance > attackRange) then
-                            if (currentClip ~= "Run") then
-                                componentAnimator:SetSelectedClip("Run")
-                            end
-                        else
-                            componentAnimator:SetSelectedClip("Idle")
-                        end
-                        isAttacking = false
-                    end
-                elseif (isWalking == false) then
-                    if (currentClip ~= "Idle") then
-                        componentAnimator:SetSelectedClip("Idle")
+                if (thisType == "Rabban") then
+                    if (currentClip ~= "Wander") then
+                        componentAnimator:SetSelectedClip("Wander")
                     end
                 else
                     if (currentClip ~= "Walk") then
                         componentAnimator:SetSelectedClip("Walk")
                     end
                 end
+            end
+        elseif state == STATE.AGGRO then
+            if (thisType == "Harkonnen") then 
+                AttackHarkonnen(currentClip)
             elseif (thisType == "Sardaukar") then
-                AttackSardaukar(currentClip) -- Lo aparto para no estorbar
+                AttackSardaukar(currentClip)
+            elseif (thisType == "Rabban") then
+                AttackRabban(currentClip)
             end
         elseif componentAnimator:GetSelectedClip() ~= "Death" and state == STATE.DEAD then
+            trackList = {3,4,5}
+            ChangeTrack(trackList)
             componentAnimator:SetSelectedClip("Death")
         elseif componentAnimator:GetSelectedClip() == "Death" and state == STATE.DEAD and state ~= STATE.CORPSE and
             componentAnimator:IsCurrentClipPlaying() == false then
@@ -722,7 +787,97 @@ function UpdateAnimation(dt, oldState, target)
     end
 end
 
+function UpdateParticles(dt)
+    if (slashParticle ~= nil) then
+        slashParticle:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+        if (slashParticleTimer ~= nil) then
+            slashParticleTimer = slashParticleTimer + dt
+            if (slashParticleTimer > 0.5) then
+                slashParticle:GetComponentParticle():StopParticleSpawn()
+                slashParticleTimer = nil
+            end
+        end
+    end
+
+    if (bloodParticle ~= nil) then
+        bloodParticle:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+
+    if (debuffParticle ~= nil) then
+        debuffParticle:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x,
+            componentTransform:GetPosition().y + 22, componentTransform:GetPosition().z + 12))
+    end
+
+    if (HitParticle ~= nil) then
+        if (HitDone == false) then
+            HitParticle:GetComponentParticle():StopParticleSpawn()
+        end
+        HitDone = false
+        HitParticle:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+
+    if (MissParticle ~= nil) then
+        if (MissDone == false) then
+            MissParticle:GetComponentParticle():StopParticleSpawn()
+        end
+        MissDone = false
+        MissParticle:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+
+    if (ChanceParticle0 ~= nil) then
+        ChanceParticle0:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+    if (ChanceParticle10 ~= nil) then
+        ChanceParticle10:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+    if (ChanceParticle20 ~= nil) then
+        ChanceParticle20:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+    if (ChanceParticle30 ~= nil) then
+        ChanceParticle30:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+    if (ChanceParticle40 ~= nil) then
+        ChanceParticle40:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+    if (ChanceParticle50 ~= nil) then
+        ChanceParticle50:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+    if (ChanceParticle60 ~= nil) then
+        ChanceParticle60:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+    if (ChanceParticle70 ~= nil) then
+        ChanceParticle70:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+    if (ChanceParticle80 ~= nil) then
+        ChanceParticle80:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+    if (ChanceParticle90 ~= nil) then
+        ChanceParticle90:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+    if (ChanceParticle100 ~= nil) then
+        ChanceParticle100:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 15,
+            componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
+    end
+end
+
 function Update(dt)
+
+    UpdateParticles(dt)
+
     if state == STATE.DEAD then
         do
             UpdateAnimation(dt, oldState, target)
@@ -738,12 +893,23 @@ function Update(dt)
     UpdateAnimation(dt, oldState, target)
     RotateToTargetDirection(dt)
 
-    if state == STATE.UNAWARE and isOnStandBy == nil then
+    if (isWormTarget ~= nil) then
+        if (componentAnimator ~= nil) then
+            if (componentAnimator:GetSelectedClip() ~= "Idle") then
+                componentAnimator:SetSelectedClip("Idle")
+            end
+        end
+    elseif state == STATE.UNAWARE and isOnStandBy == nil then
         DispatchEvent(pathfinderFollowKey, {speed, dt, loop, false})
     elseif state == STATE.SUS then
         DispatchEvent(pathfinderFollowKey, {speed, dt, false, false})
     elseif state == STATE.AGGRO then
+        ClearDecoyTarget()
         if (not isAttacking) then
+            if(currentTrackID ~= 7) then
+                trackList = {7}
+                ChangeTrack(trackList)
+            end
             DispatchEvent(pathfinderFollowKey, {chaseSpeed, dt, false, false})
         end
     end
@@ -756,10 +922,8 @@ function ClearPerceptionMemory()
     nSingle = 1
     nRepeating = 1
     nVisual = 1
-    nDecoy = 1
 
     singleAuditoryTriggers = {}
-    decoyAuditoryTriggers = {}
     repeatingAuditoryTriggers = {}
     visualTriggers = {}
 end
@@ -776,6 +940,10 @@ function Die(leaveBody, enemyName)
 
     SwitchState(state, STATE.CORPSE)
 
+    if (bloodParticle ~= nil) then
+        bloodParticle:GetComponentParticle():StopParticleSpawn()
+    end
+
     -- Spice Loot Droprate
     math.randomseed(os.time())
     rng = math.random(100)
@@ -789,8 +957,20 @@ function Die(leaveBody, enemyName)
     -- Log(apetecan())
 end
 
+function ClearDecoyTarget()
+    nDecoy = 1
+    decoyAuditoryTriggers = {}
+end
+
 function EventHandler(key, fields)
-    if key == "Auditory_Trigger" then -- fields[1] -> position; fields[2] -> range; fields[3] -> type ("single", "repeated", "decoy"); fields[4] -> source ("GameObject");
+    if key == "Stop_Movement" then
+        if (fields[1] == "Worm") then
+            isWormTarget = true
+        end
+    elseif key == "Decoy_Trigger_End" then
+        decoyOnce = false
+        ClearDecoyTarget()
+    elseif key == "Auditory_Trigger" then -- fields[1] -> position; fields[2] -> range; fields[3] -> type ("single", "repeated", "decoy"); fields[4] -> source ("GameObject");
         ProcessAuditoryTrigger(fields[1], fields[2], fields[3], fields[4])
     elseif key == "Walking_Direction" then
         SetTargetDirection(fields[1])
@@ -803,27 +983,51 @@ function EventHandler(key, fields)
         visualDebuffMultiplier = fields[2] / 100
         if (debuffParticle ~= nil) then
             debuffParticle:GetComponentParticle():ResumeParticleSpawn()
-            debuffParticle:GetComponentParticle():SetLoop(true)
-            debuffParticle:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x,
-                componentTransform:GetPosition().y + 12, componentTransform:GetPosition().z)) -- 23,12
+        end
+        if (HitParticle ~= nil) then
+            HitParticle:GetComponentParticle():ResumeParticleSpawn()
+            HitDone = true
         end
     elseif key == "Assign_Type" then
         thisType = fields[1]
         attackRange = 40
     elseif key == "Patrol_Point" and state == STATE.UNAWARE then
         isOnStandBy = fields[1]
+    elseif key == "Enemy_Aggro" then -- fields[1] -> gameObject; fields[2] -> position; fields[3] -> range;
+        if (fields[1] ~= gameObject and Float3Distance(fields[2], componentTransform:GetPosition()) <= fields[3] and
+            state ~= STATE.AGGRO) then
+            awareness = 1
+            targetAwareness = 1
+        end
+    elseif key == "Mosquito_Spawn" then
+        mosquito = fields[1]
+    elseif key == "Mosquito_Death" then
+        mosquito = nil
+    elseif key == "Missed" then
+        if (MissParticle ~= nil) then
+            MissParticle:GetComponentParticle():ResumeParticleSpawn()
+            MissDone = true
+        end
     elseif key == "Enemy_Death" then -- fields[1] = EnemyDeath table --- fields[2] = EnemyTypeString
+        if (HitParticle ~= nil and (fields[1] == EnemyDeath.KNIFE or fields[1] == EnemyDeath.PLAYER_ATTACK)) then
+            HitParticle:GetComponentParticle():ResumeParticleSpawn()
+            HitDone = true
+        end
+        if (debuffParticle ~= nil) then
+            debuffParticle:GetComponentParticle():StopParticleSpawn()
+        end
         if fields[1] == EnemyDeath.PLAYER_ATTACK or fields[1] == EnemyDeath.KNIFE or fields[1] == EnemyDeath.MOSQUITO then
             SwitchState(state, STATE.DEAD)
             deathParameters.LeaveBody = true
             deathParameters.EnemyName = thisType
+            if (bloodParticle ~= nil) then
+                bloodParticle:GetComponentParticle():ResumeParticleSpawn()
+            end
         elseif fields[1] == EnemyDeath.WEIRDING_WAY then
             SwitchState(state, STATE.DEAD)
+            slashParticleTimer = 0.0
             if (slashParticle ~= nil) then
                 slashParticle:GetComponentParticle():ResumeParticleSpawn()
-                slashParticle:GetComponentParticle():SetLoop(false)
-                slashParticle:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x,
-                    componentTransform:GetPosition().y + 12, componentTransform:GetPosition().z)) -- 23,12
             end
             deathParameters.LeaveBody = true
             deathParameters.EnemyName = thisType
@@ -856,11 +1060,189 @@ function EventHandler(key, fields)
             gameObject:DeleteComponent(coneLight)
             coneLight = nil
         end
+    elseif key == "Hover_Start" then
+        hoveredWeaponName = fields[1]
+        CalculateChances(fields[1])
+    elseif key == "Hover_End" then
+        hoveredWeaponName = nil
+        StopChanceParticles()
+    elseif key == "Stop_Movement" then
+        isMoving = false
+    end
+end
+
+function CalculateChances(name)
+    local chance = 0
+    if (thisType == "Harkonnen") then
+        if (state == STATE.UNAWARE) then
+            if (name == "Knife") then
+                chance = GetVariable("Zhib.lua", "unawareChanceHarkKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            elseif (name == "Dart") then
+                chance = GetVariable("Nerala.lua", "unawareChanceHarkDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            end
+        elseif (state == STATE.SUS) then
+            if (name == "Knife") then
+                chance = GetVariable("Zhib.lua", "awareChanceHarkKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            elseif (name == "Dart") then
+                chance = GetVariable("Nerala.lua", "awareChanceHarkDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            end
+        elseif (state == STATE.AGGRO) then
+            if (name == "Knife") then
+                chance = GetVariable("Zhib.lua", "aggroChanceHarkKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            elseif (name == "Dart") then
+                chance = GetVariable("Nerala.lua", "aggroChanceHarkDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            end
+        end
+    elseif (thisType == "Sardaukar") then
+        if (state == STATE.UNAWARE) then
+            if (name == "Knife") then
+                chance = GetVariable("Zhib.lua", "unawareChanceSardKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            elseif (name == "Dart") then
+                chance = GetVariable("Nerala.lua", "unawareChanceSardDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            end
+        elseif (state == STATE.SUS) then
+            if (name == "Knife") then
+                chance = GetVariable("Zhib.lua", "awareChanceSardKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            elseif (name == "Dart") then
+                chance = GetVariable("Nerala.lua", "awareChanceSardDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            end
+        elseif (state == STATE.AGGRO) then
+            if (name == "Knife") then
+                chance = GetVariable("Zhib.lua", "aggroChanceSardKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            elseif (name == "Dart") then
+                chance = GetVariable("Nerala.lua", "aggroChanceSardDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            end
+        end
+    end
+    if (state ~= STATE.DEAD) then
+        EventChanceParticle(chance)
+    end
+end
+
+function EventChanceParticle(chance)
+    StopChanceParticles()
+    if (chance == 0) then
+        if (ChanceParticle0 ~= nil) then
+            ChanceParticle0:GetComponentParticle():ResumeParticleSpawn()
+        end
+    elseif (chance == 10) then
+        if (ChanceParticle10 ~= nil) then
+            ChanceParticle10:GetComponentParticle():ResumeParticleSpawn()
+        end
+    elseif (chance == 20) then
+        if (ChanceParticle20 ~= nil) then
+            ChanceParticle20:GetComponentParticle():ResumeParticleSpawn()
+        end
+    elseif (chance == 30) then
+        if (ChanceParticle30 ~= nil) then
+            ChanceParticle30:GetComponentParticle():ResumeParticleSpawn()
+        end
+    elseif (chance == 40) then
+        if (ChanceParticle40 ~= nil) then
+            ChanceParticle40:GetComponentParticle():ResumeParticleSpawn()
+        end
+    elseif (chance == 50) then
+        if (ChanceParticle50 ~= nil) then
+            ChanceParticle50:GetComponentParticle():ResumeParticleSpawn()
+        end
+    elseif (chance == 60) then
+        if (ChanceParticle60 ~= nil) then
+            ChanceParticle60:GetComponentParticle():ResumeParticleSpawn()
+        end
+    elseif (chance == 70) then
+        if (ChanceParticle70 ~= nil) then
+            ChanceParticle70:GetComponentParticle():ResumeParticleSpawn()
+        end
+    elseif (chance == 80) then
+        if (ChanceParticle80 ~= nil) then
+            ChanceParticle80:GetComponentParticle():ResumeParticleSpawn()
+        end
+    elseif (chance == 90) then
+        if (ChanceParticle90 ~= nil) then
+            ChanceParticle90:GetComponentParticle():ResumeParticleSpawn()
+        end
+    elseif (chance == 100) then
+        if (ChanceParticle100 ~= nil) then
+            ChanceParticle100:GetComponentParticle():ResumeParticleSpawn()
+        end
+    end
+end
+
+function StopChanceParticles()
+    if (ChanceParticle0 ~= nil) then
+        ChanceParticle0:GetComponentParticle():StopParticleSpawn()
+    end
+    if (ChanceParticle10 ~= nil) then
+        ChanceParticle10:GetComponentParticle():StopParticleSpawn()
+    end
+    if (ChanceParticle20 ~= nil) then
+        ChanceParticle20:GetComponentParticle():StopParticleSpawn()
+    end
+    if (ChanceParticle30 ~= nil) then
+        ChanceParticle30:GetComponentParticle():StopParticleSpawn()
+    end
+    if (ChanceParticle40 ~= nil) then
+        ChanceParticle40:GetComponentParticle():StopParticleSpawn()
+    end
+    if (ChanceParticle50 ~= nil) then
+        ChanceParticle50:GetComponentParticle():StopParticleSpawn()
+    end
+    if (ChanceParticle60 ~= nil) then
+        ChanceParticle60:GetComponentParticle():StopParticleSpawn()
+    end
+    if (ChanceParticle70 ~= nil) then
+        ChanceParticle70:GetComponentParticle():StopParticleSpawn()
+    end
+    if (ChanceParticle80 ~= nil) then
+        ChanceParticle80:GetComponentParticle():StopParticleSpawn()
+    end
+    if (ChanceParticle90 ~= nil) then
+        ChanceParticle90:GetComponentParticle():StopParticleSpawn()
+    end
+    if (ChanceParticle100 ~= nil) then
+        ChanceParticle100:GetComponentParticle():StopParticleSpawn()
     end
 end
 
 function DrawDebugger()
     DrawCircle(componentTransform:GetPosition(), hearingRange, float3.new(255.0, 0.0, 0.0), 5.0)
+end
+
+function AttackHarkonnen(currentClip)
+    if currentClip ~= "Attack" and currentClip ~= "AttackToIdle" and attackTimer == nil and distance < attackRange then
+        componentAnimator:SetSelectedClip("Attack")
+        isAttacking = true
+    elseif currentClip == "Attack" then
+        if(currentTrackID ~= 0 and currentTrackID ~= 1 and currentTrackID ~= 2) then
+            trackList = {0, 1, 2}
+            ChangeTrack(trackList)
+        end
+        if (componentAnimator:IsCurrentClipPlaying() == false) then
+            DispatchGlobalEvent("Enemy_Attack", {target["source"], thisType})
+            componentAnimator:SetSelectedClip("AttackToIdle")
+            attackTimer = 0
+        end
+    elseif currentClip == "AttackToIdle" then
+        currentTrackID = 7
+        if componentAnimator:IsCurrentClipPlaying() == false then
+            if (distance > attackRange) then
+                if (currentClip ~= "Run") then
+                    componentAnimator:SetSelectedClip("Run")
+                end
+            else
+                componentAnimator:SetSelectedClip("Idle")
+            end
+            isAttacking = false
+        end
+    elseif (isWalking == false) then
+        if (currentClip ~= "Idle") then
+            componentAnimator:SetSelectedClip("Idle")
+        end
+    else
+        if (currentClip ~= "Run") then
+            componentAnimator:SetSelectedClip("Run")
+        end
+    end
 end
 
 function AttackSardaukar(currentClip)
@@ -876,6 +1258,8 @@ function AttackSardaukar(currentClip)
             isAttacking = true
         elseif currentClip == "Ranged" then
             if (componentAnimator:IsCurrentClipPlaying() == false) then
+                trackList = {8,9}
+                ChangeTrack(trackList)
                 dartName = "SardaukarDart " .. gameObject:GetUID() .. " " .. dartCount * (-1) + 3
                 updateDartTarget = true
                 InstantiateNamedPrefab("SardaukarDart", dartName)
@@ -896,14 +1280,18 @@ function AttackSardaukar(currentClip)
             componentAnimator:SetSelectedClip("Attack")
             isAttacking = true
         elseif currentClip == "Attack" then
+            if(currentTrackID ~= 0 and currentTrackID ~= 1 and currentTrackID ~= 2) then
+                trackList = {0, 1, 2}
+                ChangeTrack(trackList)
+            end
             if (componentAnimator:IsCurrentClipPlaying() == false) then
                 DispatchGlobalEvent("Enemy_Attack", {target["source"], "Sardaukar"})
                 componentAnimator:SetSelectedClip("AttackToIdle")
                 attackTimer = 0
             end
-        elseif currentClip == "AttackToIdle" or currentClip == "RangedToIdle" then
+        elseif currentClip == "AttackToIdle" or currentClip == "RangedToIdle" then -- Both options use attack range since he can't range attack anymore
             if componentAnimator:IsCurrentClipPlaying() == false then
-                if (distance > attackRange) then -- Both options use attack range since he can't range attack anymore
+                if (distance > attackRange) then
                     if (currentClip ~= "Run") then
                         componentAnimator:SetSelectedClip("Run")
                     end
@@ -921,6 +1309,57 @@ function AttackSardaukar(currentClip)
                 componentAnimator:SetSelectedClip("Run")
             end
         end
+    end
+end
+
+function AttackRabban(currentClip)
+    if currentClip ~= "Attack" and currentClip ~= "AttackToIdle" and attackTimer == nil and distance < attackRange then
+        componentAnimator:SetSelectedClip("Attack")
+        isAttacking = true
+    elseif currentClip == "Attack" then
+        trackList = {1}
+        ChangeTrack(trackList)
+        if (componentAnimator:IsCurrentClipPlaying() == false) then
+            DispatchGlobalEvent("Enemy_Attack", {target["source"], thisType})
+            componentAnimator:SetSelectedClip("AttackToIdle")
+            attackTimer = 0
+        end
+    elseif currentClip == "AttackToIdle" then
+        if componentAnimator:IsCurrentClipPlaying() == false then
+            if (distance > attackRange) then
+                if (currentClip ~= "Run") then
+                    componentAnimator:SetSelectedClip("Run")
+                end
+            else
+                componentAnimator:SetSelectedClip("Idle")
+            end
+            isAttacking = false
+        end
+    elseif (isWalking == false) then
+        if (currentClip ~= "Idle") then
+            componentAnimator:SetSelectedClip("Idle")
+        end
+    else
+        if (currentClip ~= "Run") then
+            componentAnimator:SetSelectedClip("Run")
+        end
+    end
+end
+
+function ChangeTrack(_trackList)
+    size = 0
+    for i in pairs(_trackList) do
+        size = size + 1
+    end
+
+    index = math.random(size)
+
+    if (componentSwitch ~= nil) then
+        if (currentTrackID ~= -1) then
+            componentSwitch:StopTrack(currentTrackID)
+        end
+        currentTrackID = _trackList[index]
+        componentSwitch:PlayTrack(currentTrackID)
     end
 end
 

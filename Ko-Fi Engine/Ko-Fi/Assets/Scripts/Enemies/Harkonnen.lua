@@ -21,6 +21,11 @@ STATE = {
 
 currentState = STATE.UNAWARE
 
+function Start()
+    componentSwitch = gameObject:GetAudioSwitch()
+    currentTrackID = -1;
+end
+
 function Update(dt)
     -- Weirding Way death timer
     if (deathMarkTimer ~= nil) then
@@ -56,6 +61,7 @@ function EventHandler(key, fields)
                     else
                         Log("Culona's attack D100 roll has been " .. rng ..
                                 " so the UNAWARE HARKONNEN enemy has dodged the attack :( \n")
+                        DispatchEvent("Missed", {})
                     end
                 elseif currentState == STATE.SUS then
                     neralaAttackHitChance = GetVariable("Nerala.lua", "awareChanceHarkAttack",
@@ -68,6 +74,7 @@ function EventHandler(key, fields)
                     else
                         Log("Culona's attack D100 roll has been " .. rng ..
                                 " so the AWARE HARKONNEN enemy has dodged the attack :( \n")
+                        DispatchEvent("Missed", {})
                     end
                 elseif currentState == STATE.AGGRO then
                     neralaAttackHitChance = GetVariable("Nerala.lua", "aggroChanceHarkAttack",
@@ -80,6 +87,7 @@ function EventHandler(key, fields)
                     else
                         Log("Culona's attack D100 roll has been " .. rng ..
                                 " so the AGGRO HARKONNEN enemy has dodged the attack :( \n")
+                        DispatchEvent("Missed", {})
                     end
                 end
             end
@@ -98,7 +106,8 @@ function EventHandler(key, fields)
                 else
                     Log("Knife's D100 roll has been " .. rng ..
                             " so the UNAWARE HARKONNEN enemy has dodged the knife :( \n")
-                    trackList = {1}
+                    DispatchEvent("Missed", {})
+                    trackList = {6}
                     ChangeTrack(trackList)
                 end
             elseif (currentState == STATE.SUS) then
@@ -111,7 +120,8 @@ function EventHandler(key, fields)
                 else
                     Log("Knife's D100 roll has been " .. rng ..
                             " so the AWARE HARKONNEN enemy has dodged the knife :( \n")
-                    trackList = {1}
+                    DispatchEvent("Missed", {})
+                    trackList = {6}
                     ChangeTrack(trackList)
                 end
             elseif (currentState == STATE.AGGRO) then
@@ -124,7 +134,8 @@ function EventHandler(key, fields)
                 else
                     Log("Knife's D100 roll has been " .. rng ..
                             " so the AGGRO HARKONNEN enemy has dodged the knife :( \n")
-                    trackList = {1}
+                    DispatchEvent("Missed", {})
+                    trackList = {6}
                     ChangeTrack(trackList)
                 end
             end
@@ -133,7 +144,7 @@ function EventHandler(key, fields)
     elseif key == "Death_Mark" then
         if (fields[1] == gameObject) then
             deathMarkTimer = 0.0
-            deathMarkDuration = fields[2]
+            deathMarkDuration = fields[2] * 0.3
         end
         -- Nerala Mosquito
     elseif key == "Mosquito_Hit" then
@@ -143,7 +154,9 @@ function EventHandler(key, fields)
         -- Omozra ñam ñam
     elseif key == "Sadiq_Update_Target" then -- fields[1] -> target; targeted for (1 -> warning; 2 -> eat; 3 -> spit)
         if (fields[1] == gameObject) then
-            if (fields[2] == 2) then
+            if (fields[2] == 1) then
+                DispatchEvent("Stop_Movement", {"Worm"})
+            elseif (fields[2] == 2) then
                 if (currentState == STATE.UNAWARE or currentState == STATE.AWARE) then
                     secondaryHitChance = GetVariable("Omozra.lua", "unawareChanceHarkSecondary",
                         INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
@@ -155,6 +168,7 @@ function EventHandler(key, fields)
                     else
                         Log("Ñam ñam's D100 roll has been " .. rng ..
                                 " so the UNAWARE HARKONNEN enemy has dodged the ñam ñam :( \n")
+                        DispatchEvent("Missed", {})
                     end
                 elseif (currentState == STATE.SUS) then
                     secondaryHitChance = GetVariable("Omozra.lua", "awareChanceHarkSecondary",
@@ -167,6 +181,7 @@ function EventHandler(key, fields)
                     else
                         Log("Ñam ñam's D100 roll has been " .. rng ..
                                 " so the AWARE HARKONNEN enemy has dodged the ñam ñam :( \n")
+                        DispatchEvent("Missed", {})
                     end
                 elseif (currentState == STATE.AGGRO) then
                     secondaryHitChance = GetVariable("Omozra.lua", "aggroChanceHarkSecondary",
@@ -179,6 +194,7 @@ function EventHandler(key, fields)
                     else
                         Log("Ñam ñam's D100 roll has been " .. rng ..
                                 " so the AGGRO HARKONNEN enemy has dodged the ñam ñam :( \n")
+                        DispatchEvent("Missed", {})
                     end
                 end
             elseif fields[2] == 4 then
@@ -199,7 +215,8 @@ function EventHandler(key, fields)
                 else
                     Log("Dart's D100 roll has been " .. rng ..
                             " so the UNAWARE HARKONNEN enemy has dodged the dart :( \n")
-                    trackList = {1}
+                    DispatchEvent("Missed", {})
+                    trackList = {6}
                     ChangeTrack(trackList)
                 end
             elseif (currentState == STATE.SUS) then
@@ -211,7 +228,8 @@ function EventHandler(key, fields)
                     DispatchEvent("Dart_Success", {fields[2], fields[3]})
                 else
                     Log("Dart's D100 roll has been " .. rng .. " so the AWARE HARKONNEN enemy has dodged the dart :( \n")
-                    trackList = {1}
+                    DispatchEvent("Missed", {})
+                    trackList = {6}
                     ChangeTrack(trackList)
                 end
             elseif (currentState == STATE.AGGRO) then
@@ -223,7 +241,8 @@ function EventHandler(key, fields)
                     DispatchEvent("Dart_Success", {fields[2], fields[3]})
                 else
                     Log("Dart's D100 roll has been " .. rng .. " so the AGGRO HARKONNEN enemy has dodged the dart :( \n")
-                    trackList = {1}
+                    DispatchEvent("Missed", {})
+                    trackList = {6}
                     ChangeTrack(trackList)
                 end
             end

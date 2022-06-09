@@ -1,8 +1,8 @@
 ------------------- Variables --------------------
-speed = 10000
 destination = nil
 isGrabbable = false
 once = false
+soundRange = 0
 
 -------------------- Methods ---------------------
 function Start()
@@ -10,6 +10,7 @@ function Start()
     componentRigidBody = gameObject:GetRigidBody() -- This is here instead of at "awake" so the order of component creation does not affect
     componentSwitch = gameObject:GetAudioSwitch()
     currentTrackID = -1
+    soundRange = GetVariable("Zhib.lua", "primarySoundRange", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
     target = GetVariable("Zhib.lua", "target", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
     player = GetVariable("Zhib.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
     speed = GetVariable("Zhib.lua", "knifeSpeed", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
@@ -54,7 +55,7 @@ function OnTriggerEnter(go)
         if (once == false) then
             once = true
             DispatchGlobalEvent("Knife_Hit", {go}) -- Events better than OnTriggerEnter() for the enemies (cause more than one different type of projectile can hit an enemy)
-            DispatchGlobalEvent("Auditory_Trigger", {componentTransform:GetPosition(), 100, "single", player})
+            DispatchGlobalEvent("Auditory_Trigger", {componentTransform:GetPosition(), soundRange, "single", player})
             if (currentTrackID ~= -1 and componentSwitch ~= nil) then
                 componentSwitch:StopTrack(currentTrackID)
             end

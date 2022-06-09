@@ -1,9 +1,9 @@
 ------------------- Variables --------------------
 speed = 100
 destination = nil
-lifeTime = 10.0 -- secs --iv required
+lifeTime = 10.0 -- VARIABLE SET IN NERALA.LUA
 lifeTimer = 0
-effectRadius = 50.0
+effectRadius = 50.0 -- VARIABLE SET IN NERALA.LUA
 effectFlag = true
 
 -------------------- Methods ---------------------
@@ -12,6 +12,8 @@ function Start()
     destination = GetVariable("Nerala.lua", "target", INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT3) -- float 3
     if (destination ~= nil) then
         destination.y = 0.0
+        effectRadius = GetVariable("Nerala.lua", "secondaryEffectRadius", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+        lifeTime = GetVariable("Nerala.lua", "secondaryDuration", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
         player = GetVariable("Nerala.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
         componentSwitch = gameObject:GetAudioSwitch()
         currentTrackID = -1

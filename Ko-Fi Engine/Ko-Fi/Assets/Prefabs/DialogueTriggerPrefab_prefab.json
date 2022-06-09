@@ -1,0 +1,76 @@
+{
+    "active": true,
+    "children": [],
+    "components": [
+        {
+            "active": true,
+            "type": 23
+        },
+        {
+            "active": true,
+            "position": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": 21
+        },
+        {
+            "active": true,
+            "body_type": "Static",
+            "freeze_position_x": false,
+            "freeze_position_y": false,
+            "freeze_position_z": false,
+            "freeze_rotation_x": false,
+            "freeze_rotation_y": false,
+            "freeze_rotation_z": false,
+            "mass": 1.0,
+            "type": 6,
+            "use_gravity": true
+        },
+        {
+            "active": true,
+            "center": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "filter": "Interactuable",
+            "is_trigger": true,
+            "scale_factor": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": 7
+        },
+        {
+            "active": true,
+            "file_name": "Assets/Scripts/Dialogues/DialogueTrigger.lua",
+            "id": 1533301108,
+            "inspector_variables": [
+                {
+                    "name": "id",
+                    "type": "int",
+                    "value": -1
+                }
+            ],
+            "type": 5
+        }
+    ],
+    "is3D": true,
+    "isPrefab": true,
+    "name": "DialogueTriggerPrefab",
+    "tag": 0
+}

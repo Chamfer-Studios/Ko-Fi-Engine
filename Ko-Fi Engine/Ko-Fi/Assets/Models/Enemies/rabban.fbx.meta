@@ -4,9 +4,9 @@
     "contained_resources": [
         {
             "asset_file": "rabban.sugar",
-            "library_path": "Library/Meshes/341677954.sugar",
+            "library_path": "Library/Meshes/1315905135.sugar",
             "type": 0,
-            "uid": 341677954
+            "uid": 1315905135
         },
         {
             "asset_file": "rabban_base_color.png",
@@ -16,21 +16,15 @@
             "uid": 1735840098
         },
         {
-            "asset_file": "axe.sugar",
-            "library_path": "Library/Meshes/2060719482.sugar",
-            "type": 0,
-            "uid": 2060719482
-        },
-        {
-            "asset_file": "rabban_armature|rabban_reel.cake",
-            "library_path": "Library/Animations/263567546.cake",
+            "asset_file": "rabban_armature|rabban_armature|rabban_armature|rabban_reel.cake",
+            "library_path": "Library/Animations/831539168.cake",
             "type": 5,
-            "uid": 263567546
+            "uid": 831539168
         }
     ],
-    "hash": "337a2895c44c772d287a76e6b200ab5b",
-    "library_file": "1554357596.tea",
-    "library_path": "Library/Models/1554357596.tea",
+    "hash": "5cebbf0da83eaf8fbdbf3b7b75412957",
+    "library_file": "594996538.tea",
+    "library_path": "Library/Models/594996538.tea",
     "type": 3,
-    "uid": 1554357596
+    "uid": 594996538
 }

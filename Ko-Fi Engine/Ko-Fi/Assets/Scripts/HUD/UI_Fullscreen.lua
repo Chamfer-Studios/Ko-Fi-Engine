@@ -13,7 +13,7 @@ function Update(dt)
 			elseif (fullscreen == false) then
 				image = default
 			end
-			-- setear textura idle image
+			gameObject:GetButton():SetIdleTexture(image)
 			isStarting = false
 		end
 		if (gameObject:GetButton():IsPressed() == true) then
@@ -21,13 +21,11 @@ function Update(dt)
 			if (fullscreen == true) then
 				SetFullscreen(false)
 				image = default
-				--gameObject:GetChild("cross1").active = false
 			elseif (fullscreen == false) then
 				SetFullscreen(true)
 				image = checked
-				--gameObject:GetChild("cross1").active = true
 			end
-			-- setear textura idle image
+			gameObject:GetButton():SetIdleTexture(image)
 		end
 	end
 end

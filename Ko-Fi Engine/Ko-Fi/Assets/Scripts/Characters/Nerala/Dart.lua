@@ -13,8 +13,11 @@ function Start()
     ChangeTrack(trackList)
     target = GetVariable("Nerala.lua", "target", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
     if (target ~= nil) then
+        auditoryDebuffMultiplier = GetVariable("Nerala.lua", "primaryAuditoryDebuff",
+            INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+        visualDebuffMultiplier = GetVariable("Nerala.lua", "primaryVisualDebuff", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
         player = GetVariable("Nerala.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
-        speed = GetVariable("Nerala.lua", "dartSpeed", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+        speed = GetVariable("Nerala.lua", "primarySpeed", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
         playerPos = player:GetTransform():GetPosition()
         destination = target:GetTransform():GetPosition()
         local targetPos2D = {destination.x, destination.z}

@@ -1,0 +1,167 @@
+{
+    "active": true,
+    "children": [],
+    "components": [
+        {
+            "active": true,
+            "type": 23
+        },
+        {
+            "active": true,
+            "position": [
+                -1659.0166015625,
+                14.626046180725098,
+                858.9496459960938
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": 21
+        },
+        {
+            "active": true,
+            "body_type": "Dynamic",
+            "freeze_position_x": false,
+            "freeze_position_y": true,
+            "freeze_position_z": false,
+            "freeze_rotation_x": false,
+            "freeze_rotation_y": false,
+            "freeze_rotation_z": false,
+            "mass": 1.0,
+            "type": 6,
+            "use_gravity": true
+        },
+        {
+            "active": true,
+            "center": [
+                0.0,
+                0.0,
+                -3.200000047683716
+            ],
+            "filter": "projectile",
+            "is_trigger": true,
+            "scale_factor": [
+                1.0,
+                1.0,
+                1.899999976158142
+            ],
+            "type": 7
+        },
+        {
+            "active": true,
+            "file_name": "Assets/Scripts/Characters/Omozra/SpitHeal.lua",
+            "id": 196177237,
+            "type": 5
+        },
+        {
+            "active": true,
+            "resource": [
+                {
+                    "emitters": [
+                        {
+                            "loop": true,
+                            "maxParticles": 500,
+                            "modules": [
+                                {
+                                    "maxParticleLife": 3.0,
+                                    "minParticleLife": 0.004999999888241291,
+                                    "particlesPerSpawn": 1,
+                                    "randomParticleLife": false,
+                                    "spawnTime": 0.0,
+                                    "type": 1
+                                },
+                                {
+                                    "billboardingType": 2,
+                                    "frontAxis": true,
+                                    "maxDegrees": 360,
+                                    "minDegrees": 0,
+                                    "sideAxis": false,
+                                    "topAxis": false,
+                                    "type": 5
+                                },
+                                {
+                                    "colors": [
+                                        {
+                                            "color": [
+                                                0.37254902720451355,
+                                                1.0,
+                                                0.0,
+                                                0.8980392217636108
+                                            ],
+                                            "position": 0.0
+                                        }
+                                    ],
+                                    "type": 3
+                                },
+                                {
+                                    "followForward": true,
+                                    "maxAcceleration": [
+                                        0.25,
+                                        0.25,
+                                        0.25
+                                    ],
+                                    "maxDirection": [
+                                        -1.0,
+                                        -1.0,
+                                        -1.0
+                                    ],
+                                    "maxPosition": [
+                                        0.5,
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "maxVelocity": 5.0,
+                                    "minAcceleration": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "minDirection": [
+                                        1.0,
+                                        1.0,
+                                        1.0
+                                    ],
+                                    "minPosition": [
+                                        -0.5,
+                                        -0.5,
+                                        -5.0
+                                    ],
+                                    "minVelocity": 0.0,
+                                    "randAcceleration": false,
+                                    "randDirection": false,
+                                    "randPosition": false,
+                                    "randVelocity": false,
+                                    "type": 2
+                                },
+                                {
+                                    "minInitialSize": [
+                                        12.0,
+                                        5.0,
+                                        18.71500015258789
+                                    ],
+                                    "type": 4
+                                }
+                            ],
+                            "name": "Blood Pools",
+                            "texture_path": "Assets/Textures/Particles/blood_huge.png"
+                        }
+                    ],
+                    "name": "Blood"
+                }
+            ],
+            "type": 3
+        }
+    ],
+    "is3D": true,
+    "isPrefab": true,
+    "name": "SpitHeal2",
+    "tag": 0
+}

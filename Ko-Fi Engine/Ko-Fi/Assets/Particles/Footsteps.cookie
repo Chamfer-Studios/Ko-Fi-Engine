@@ -10,7 +10,7 @@
                         "minParticleLife": 1.5,
                         "particlesPerSpawn": 1,
                         "randomParticleLife": false,
-                        "spawnTime": 0.5,
+                        "spawnTime": 1.0,
                         "type": 1
                     },
                     {

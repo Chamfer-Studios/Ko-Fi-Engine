@@ -89,7 +89,7 @@
     },
     "ResourceManager": null,
     "SceneManager": {
-        "DefaultScene": "SceneTutorial"
+        "DefaultScene": "aaaParticleless"
     },
     "UI": null,
     "Window": {

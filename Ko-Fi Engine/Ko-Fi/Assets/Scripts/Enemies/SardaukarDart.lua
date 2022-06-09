@@ -1,5 +1,5 @@
 ------------------- Variables --------------------
-speed = 7000
+speed = 17000
 destination = nil
 lifeTime = 5
 -------------------- Methods ---------------------

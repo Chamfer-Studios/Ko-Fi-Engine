@@ -99,6 +99,11 @@
                     "name": "minRetargetingDistance",
                     "type": "int",
                     "value": 3
+                },
+                {
+                    "name": "standByTime",
+                    "type": "int",
+                    "value": 0
                 }
             ],
             "type": 5
@@ -131,9 +136,9 @@
                     "offset": 0.0,
                     "pan": 0.0,
                     "play_on_start": false,
-                    "track_path": "Assets/Audio/SFX/Nerala/temp_mosquito_move.wav",
+                    "track_path": "Assets/Audio/SFX/Nerala/nerala_mosquito_moving_fx.wav",
                     "transpose": 1.0,
-                    "volume": 10.616439819335938
+                    "volume": 100.0
                 },
                 {
                     "bypass": false,

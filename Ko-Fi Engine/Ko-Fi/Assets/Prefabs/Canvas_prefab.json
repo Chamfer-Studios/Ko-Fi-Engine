@@ -21,7 +21,7 @@
                             ],
                             "position": [
                                 0.0,
-                                25.0
+                                35.0
                             ],
                             "rotation": [
                                 0.0,
@@ -29,22 +29,15 @@
                                 0.0
                             ],
                             "size": [
-                                40.0,
-                                40.0
+                                60.0,
+                                60.0
                             ],
                             "type": 22
                         },
                         {
                             "active": true,
-                            "color": [
-                                255,
-                                255,
-                                255,
-                                255
-                            ],
-                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
-                            "type": 16,
-                            "value": "Z"
+                            "texture": "Assets/New UI/Controls/Z_Key_Light.png",
+                            "type": 14
                         }
                     ],
                     "is3D": false,
@@ -111,7 +104,7 @@
                             ],
                             "position": [
                                 0.0,
-                                25.0
+                                35.0
                             ],
                             "rotation": [
                                 0.0,
@@ -119,22 +112,15 @@
                                 0.0
                             ],
                             "size": [
-                                40.0,
-                                40.0
+                                60.0,
+                                60.0
                             ],
                             "type": 22
                         },
                         {
                             "active": true,
-                            "color": [
-                                255,
-                                255,
-                                255,
-                                255
-                            ],
-                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
-                            "type": 16,
-                            "value": "X"
+                            "texture": "Assets/New UI/Controls/X_Key_Light.png",
+                            "type": 14
                         }
                     ],
                     "is3D": false,
@@ -201,7 +187,7 @@
                             ],
                             "position": [
                                 0.0,
-                                25.0
+                                35.0
                             ],
                             "rotation": [
                                 0.0,
@@ -209,22 +195,15 @@
                                 0.0
                             ],
                             "size": [
-                                40.0,
-                                40.0
+                                60.0,
+                                60.0
                             ],
                             "type": 22
                         },
                         {
                             "active": true,
-                            "color": [
-                                255,
-                                255,
-                                255,
-                                255
-                            ],
-                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
-                            "type": 16,
-                            "value": "C"
+                            "texture": "Assets/New UI/Controls/C_Key_Light.png",
+                            "type": 14
                         }
                     ],
                     "is3D": false,
@@ -1667,13 +1646,13 @@
                 },
                 {
                     "active": true,
-                    "anchor": 2,
+                    "anchor": 0,
                     "pivot": [
                         0.5,
                         0.5
                     ],
                     "position": [
-                        92.0,
+                        -95.0,
                         -363.0
                     ],
                     "rotation": [
@@ -2218,7 +2197,7 @@
                             ],
                             "position": [
                                 -150.0,
-                                90.0
+                                82.0
                             ],
                             "rotation": [
                                 0.0,
@@ -2226,22 +2205,15 @@
                                 0.0
                             ],
                             "size": [
-                                30.0,
-                                30.0
+                                45.0,
+                                45.0
                             ],
                             "type": 22
                         },
                         {
                             "active": true,
-                            "color": [
-                                255,
-                                255,
-                                255,
-                                255
-                            ],
-                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
-                            "type": 16,
-                            "value": "1"
+                            "texture": "Assets/New UI/Controls/1_Key_Light.png",
+                            "type": 14
                         }
                     ],
                     "is3D": false,
@@ -2266,7 +2238,7 @@
                             ],
                             "position": [
                                 0.0,
-                                90.0
+                                82.0
                             ],
                             "rotation": [
                                 0.0,
@@ -2274,22 +2246,15 @@
                                 0.0
                             ],
                             "size": [
-                                30.0,
-                                30.0
+                                45.0,
+                                45.0
                             ],
                             "type": 22
                         },
                         {
                             "active": true,
-                            "color": [
-                                255,
-                                255,
-                                255,
-                                255
-                            ],
-                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
-                            "type": 16,
-                            "value": "2"
+                            "texture": "Assets/New UI/Controls/2_Key_Light.png",
+                            "type": 14
                         }
                     ],
                     "is3D": false,
@@ -2314,7 +2279,7 @@
                             ],
                             "position": [
                                 150.0,
-                                90.0
+                                82.0
                             ],
                             "rotation": [
                                 0.0,
@@ -2322,22 +2287,15 @@
                                 0.0
                             ],
                             "size": [
-                                30.0,
-                                30.0
+                                45.0,
+                                45.0
                             ],
                             "type": 22
                         },
                         {
                             "active": true,
-                            "color": [
-                                255,
-                                255,
-                                255,
-                                255
-                            ],
-                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
-                            "type": 16,
-                            "value": "3"
+                            "texture": "Assets/New UI/Controls/3_Key_Light.png",
+                            "type": 14
                         }
                     ],
                     "is3D": false,
@@ -2403,7 +2361,7 @@
                             ],
                             "position": [
                                 0.0,
-                                50.0
+                                40.0
                             ],
                             "rotation": [
                                 0.0,
@@ -2420,17 +2378,11 @@
                             "active": true,
                             "texture": "Assets/New UI/spice_bar_fill_default.png",
                             "type": 14
-                        },
-                        {
-                            "active": true,
-                            "file_name": "Assets/Scripts/New HUD Scripts/spice_bar.lua",
-                            "id": 2040907340,
-                            "type": 5
                         }
                     ],
                     "is3D": false,
                     "isPrefab": false,
-                    "name": "Spice bar fill",
+                    "name": "Stamina Bar Fill",
                     "tag": 0
                 },
                 {
@@ -2450,7 +2402,7 @@
                             ],
                             "position": [
                                 0.0,
-                                50.0
+                                40.0
                             ],
                             "rotation": [
                                 0.0,
@@ -2471,61 +2423,7 @@
                     ],
                     "is3D": false,
                     "isPrefab": false,
-                    "name": "Spice Bar Frame",
-                    "tag": 0
-                },
-                {
-                    "active": true,
-                    "children": [],
-                    "components": [
-                        {
-                            "active": true,
-                            "type": 23
-                        },
-                        {
-                            "active": true,
-                            "anchor": 7,
-                            "pivot": [
-                                0.5,
-                                0.5
-                            ],
-                            "position": [
-                                0.0,
-                                50.0
-                            ],
-                            "rotation": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "size": [
-                                60.0,
-                                30.0
-                            ],
-                            "type": 22
-                        },
-                        {
-                            "active": true,
-                            "color": [
-                                255,
-                                255,
-                                255,
-                                255
-                            ],
-                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
-                            "type": 16,
-                            "value": "0"
-                        },
-                        {
-                            "active": true,
-                            "file_name": "Assets/Scripts/New HUD Scripts/spice_text.lua",
-                            "id": 1443486017,
-                            "type": 5
-                        }
-                    ],
-                    "is3D": false,
-                    "isPrefab": false,
-                    "name": "Spice Text",
+                    "name": "Stamina Bar Frame",
                     "tag": 0
                 }
             ],
@@ -2563,7 +2461,7 @@
             ],
             "is3D": false,
             "isPrefab": false,
-            "name": "Spice",
+            "name": "Stamina",
             "tag": 0
         },
         {
@@ -3058,6 +2956,1093 @@
             "is3D": false,
             "isPrefab": false,
             "name": "HP Frame 4",
+            "tag": 0
+        },
+        {
+            "active": false,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 4,
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        1920.0,
+                        1080.0
+                    ],
+                    "type": 22
+                },
+                {
+                    "active": true,
+                    "texture": "Assets/New UI/blood_screen.png",
+                    "type": 14
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "Take Damage Border",
+            "tag": 0
+        },
+        {
+            "active": true,
+            "children": [
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 8,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -80.0,
+                                80.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                75.0,
+                                75.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/spice_mask_default.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Spice Mask Default",
+                    "tag": 0
+                },
+                {
+                    "active": false,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 8,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -80.0,
+                                80.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                75.0,
+                                75.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/spice_mask_using.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Spice Mask Blink",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 8,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -80.0,
+                                80.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                80.0,
+                                80.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/spice_frame.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Spice Frame",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        76.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        150.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        255,
+                                        255,
+                                        255,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                                    "type": 16,
+                                    "value": "+1000"
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Spice Text Additional",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 8,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -150.0,
+                                78.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                60.0,
+                                70.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "color": [
+                                255,
+                                255,
+                                255,
+                                255
+                            ],
+                            "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                            "type": 16,
+                            "value": "10"
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Spice Text New",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 4,
+                    "logicalSize": [
+                        1920.0,
+                        1080.0
+                    ],
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        200.0,
+                        200.0
+                    ],
+                    "type": 13
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "Spice",
+            "tag": 0
+        },
+        {
+            "active": true,
+            "children": [
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_active.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Blink 3",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_frame.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Frame 3",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 5,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -80.0,
+                                -40.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                70.0,
+                                70.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/omozra_charge_full.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Omozra Charge Full 3",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_active.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Blink 4",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_frame.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Frame 4",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 5,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -80.0,
+                                40.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                70.0,
+                                70.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/omozra_charge_full.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Omozra Charge Full 4",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_active.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Blink 5",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_frame.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Frame 5",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 5,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -80.0,
+                                120.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                70.0,
+                                70.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/omozra_charge_full.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Omozra Charge Full 5",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_active.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Blink 6",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_frame.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Frame 6",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 5,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -80.0,
+                                200.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                70.0,
+                                70.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/omozra_charge_full.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Omozra Charge Full 6",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_active.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Blink 2",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_frame.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Frame 2",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 5,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -80.0,
+                                -120.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                70.0,
+                                70.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/omozra_charge_full.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Omozra Charge Full 2",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_active.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Blink 1",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_frame.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Frame 1",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 5,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -80.0,
+                                -200.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                70.0,
+                                70.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/omozra_charge_full.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Omozra Charge Full 1",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 4,
+                    "logicalSize": [
+                        1920.0,
+                        1080.0
+                    ],
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        200.0,
+                        200.0
+                    ],
+                    "type": 13
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "Omozra Charges",
             "tag": 0
         }
     ],

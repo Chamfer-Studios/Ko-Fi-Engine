@@ -3,7 +3,90 @@
     "children": [
         {
             "active": true,
-            "children": [],
+            "children": [
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                235.0,
+                                148.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/abilities_text_background.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Background",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                220.0,
+                                132.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/abilities_text_background_frame.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "MissionMark",
+                    "tag": 0
+                }
+            ],
             "components": [
                 {
                     "active": true,
@@ -17,8 +100,8 @@
                         0.5
                     ],
                     "position": [
-                        828.0,
-                        341.0
+                        823.0,
+                        297.0
                     ],
                     "rotation": [
                         0.0,
@@ -26,61 +109,20 @@
                         0.0
                     ],
                     "size": [
-                        235.0,
-                        148.0
+                        200.0,
+                        200.0
                     ],
                     "type": 22
                 },
                 {
                     "active": true,
-                    "texture": "Assets/New UI/abilities_text_background.png",
+                    "texture": "Assets/UI/HUD/blank_asset_v1.0.png",
                     "type": 14
                 }
             ],
             "is3D": false,
             "isPrefab": false,
-            "name": "Background",
-            "tag": 0
-        },
-        {
-            "active": true,
-            "children": [],
-            "components": [
-                {
-                    "active": true,
-                    "type": 23
-                },
-                {
-                    "active": true,
-                    "anchor": 4,
-                    "pivot": [
-                        0.5,
-                        0.5
-                    ],
-                    "position": [
-                        827.0,
-                        342.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "size": [
-                        220.0,
-                        132.0
-                    ],
-                    "type": 22
-                },
-                {
-                    "active": true,
-                    "texture": "Assets/New UI/abilities_text_background_frame.png",
-                    "type": 14
-                }
-            ],
-            "is3D": false,
-            "isPrefab": false,
-            "name": "MissionMark",
+            "name": "Image",
             "tag": 0
         }
     ],

@@ -608,6 +608,19 @@
                         "idleTexture": "Assets/New UI/button_a_default.png",
                         "pressedTexture": "Assets/New UI/button_a_pressed.png",
                         "type": 15
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/HUD/UI_OpenSettingsPopUp.lua",
+                        "id": 445987514,
+                        "inspector_variables": [
+                            {
+                                "name": "name",
+                                "type": "string",
+                                "value": "Settings Menu"
+                            }
+                        ],
+                        "type": 5
                     }
                 ],
                 "is3D": false,
@@ -1313,14 +1326,14 @@
                     },
                     {
                         "active": true,
-                        "anchor": 4,
+                        "anchor": 3,
                         "pivot": [
                             0.5,
                             0.5
                         ],
                         "position": [
-                            0.0,
-                            0.0
+                            232.0,
+                            98.0
                         ],
                         "rotation": [
                             0.0,
@@ -1339,12 +1352,30 @@
                         "idleTexture": "Assets/New UI/slider_button_default.png",
                         "pressedTexture": "Assets/New UI/slider_button_pressed.png",
                         "type": 15
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/HUD/UI_MasterAudio.lua",
+                        "id": 489075817,
+                        "inspector_variables": [
+                            {
+                                "name": "rightPos",
+                                "type": "int",
+                                "value": 400
+                            },
+                            {
+                                "name": "leftPos",
+                                "type": "int",
+                                "value": 75
+                            }
+                        ],
+                        "type": 5
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
                 "name": "MV Button",
-                "parent_UID": 1448512991,
+                "parent_UID": 2055808393,
                 "tag": 0
             },
             {
@@ -1448,14 +1479,14 @@
                     },
                     {
                         "active": true,
-                        "anchor": 4,
+                        "anchor": 3,
                         "pivot": [
                             0.5,
                             0.5
                         ],
                         "position": [
-                            0.0,
-                            0.0
+                            1247.0,
+                            98.0
                         ],
                         "rotation": [
                             0.0,
@@ -1474,12 +1505,30 @@
                         "idleTexture": "Assets/New UI/slider_button_default.png",
                         "pressedTexture": "Assets/New UI/slider_button_pressed.png",
                         "type": 15
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/HUD/UI_ScreenBrightness.lua",
+                        "id": 1914436183,
+                        "inspector_variables": [
+                            {
+                                "name": "rightPos",
+                                "type": "int",
+                                "value": 1400
+                            },
+                            {
+                                "name": "leftPos",
+                                "type": "int",
+                                "value": 1100
+                            }
+                        ],
+                        "type": 5
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
                 "name": "SB Button",
-                "parent_UID": 1407584223,
+                "parent_UID": 2055808393,
                 "tag": 0
             },
             {
@@ -1571,7 +1620,13 @@
                         ],
                         "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
                         "type": 16,
-                        "value": "SPF"
+                        "value": "FPS"
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/HUD/UI_FPS.lua",
+                        "id": 844645124,
+                        "type": 5
                     }
                 ],
                 "is3D": false,
@@ -1664,7 +1719,7 @@
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "30 Button",
+                "name": "120 Button",
                 "parent_UID": 1816059730,
                 "tag": 0
             },
@@ -1708,7 +1763,7 @@
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "120 Button",
+                "name": "30 Button",
                 "parent_UID": 1816059730,
                 "tag": 0
             },
@@ -1944,6 +1999,12 @@
                         "idleTexture": "Assets/New UI/checkbox_a_default.png",
                         "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
                         "type": 15
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/HUD/UI_Vsync.lua",
+                        "id": 1106885570,
+                        "type": 5
                     }
                 ],
                 "is3D": false,
@@ -2037,6 +2098,12 @@
                         "idleTexture": "Assets/New UI/checkbox_a_default.png",
                         "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
                         "type": 15
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/HUD/UI_Borderless.lua",
+                        "id": 1496512952,
+                        "type": 5
                     }
                 ],
                 "is3D": false,
@@ -2131,6 +2198,12 @@
                         "idleTexture": "Assets/New UI/checkbox_a_default.png",
                         "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
                         "type": 15
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/HUD/UI_Windowed.lua",
+                        "id": 1305222561,
+                        "type": 5
                     }
                 ],
                 "is3D": false,
@@ -2371,6 +2444,12 @@
                         "idleTexture": "Assets/New UI/checkbox_a_default.png",
                         "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
                         "type": 15
+                    },
+                    {
+                        "active": true,
+                        "file_name": "Assets/Scripts/HUD/UI_FullscreenDesktop.lua",
+                        "id": 129396576,
+                        "type": 5
                     }
                 ],
                 "is3D": false,

@@ -7,5 +7,6 @@ function Update(dt)
         else
             gameObject:Active(false)
         end
+        ToggleRuntime()
     end
 end

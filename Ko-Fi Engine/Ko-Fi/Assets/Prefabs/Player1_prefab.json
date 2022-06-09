@@ -12,9 +12,9 @@
                 {
                     "active": true,
                     "position": [
-                        -1491.6207275390625,
-                        9.5367431640625e-07,
-                        798.4801635742188
+                        -1503.8651123046875,
+                        1.02881324437476e-06,
+                        835.8765869140625
                     ],
                     "rotation": [
                         -1.9470718370939721e-07,
@@ -96,6 +96,7 @@
                 {
                     "active": true,
                     "ambientValue": 0.0,
+                    "castShadows": false,
                     "constantAttenuationValue": 0.0,
                     "cutOffAngle": 1.0,
                     "diffuseValue": 0.10000000149011612,
@@ -110,9 +111,9 @@
                         0.0
                     ],
                     "lightPosition": [
-                        -1491.6207275390625,
-                        9.5367431640625e-07,
-                        798.4801635742188
+                        -1503.8651123046875,
+                        1.02881324437476e-06,
+                        835.8765869140625
                     ],
                     "linearAttenuationValue": 0.0,
                     "quadraticAttenuationValue": 0.0,
@@ -128,10 +129,271 @@
                         {
                             "name": "minRetargetingDistance",
                             "type": "int",
-                            "value": 3
+                            "value": 1
+                        },
+                        {
+                            "name": "standByTime",
+                            "type": "int",
+                            "value": 0
                         }
                     ],
                     "type": 5
+                },
+                {
+                    "active": true,
+                    "fade_time": 2.0,
+                    "offset_sync": false,
+                    "total_tracks": 19,
+                    "tracks": [
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Zhib/zhib_attack_1_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Zhib/zhib_attack_2_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Zhib/zhib_hurt_1_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Zhib/zhib_hurt_2_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Zhib/zhib_hurt_3_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Zhib/zhib_death_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Zhib/zhib_knife_throw_1_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Zhib/zhib_knife_throw_2_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Zhib/zhib_decoy_throw_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Zhib/zhib_weird_vanish_1_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Zhib/zhib_weird_vanish_2_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Zhib/zhib_weird_attack_1_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Zhib/zhib_weird_attack_2_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Zhib/zhib_weird_stomp_1_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Zhib/zhib_weird_stomp_2_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Generic/generic_item_pick_1_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Generic/generic_item_pick_2_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": true,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Generic/generic_sand_steps_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": true,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Generic/generic_sand_run_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        }
+                    ],
+                    "type": 11
                 }
             ],
             "is3D": true,
@@ -415,11 +677,11 @@
                                                             "rotation": [
                                                                 0.25332510471343994,
                                                                 0.036499813199043274,
-                                                                -0.009565611369907856,
+                                                                -0.009565610438585281,
                                                                 0.9666450619697571
                                                             ],
                                                             "scale": [
-                                                                0.9999901056289673,
+                                                                0.9999895095825195,
                                                                 0.9999998211860657,
                                                                 0.9999997615814209
                                                             ],
@@ -807,15 +1069,15 @@
                                                                                                 -0.0008106231689453125
                                                                                             ],
                                                                                             "rotation": [
-                                                                                                0.14897367358207703,
+                                                                                                0.14897368848323822,
                                                                                                 0.00812781136482954,
                                                                                                 -0.007138106040656567,
-                                                                                                0.9887821078300476
+                                                                                                0.9887819886207581
                                                                                             ],
                                                                                             "scale": [
                                                                                                 0.9999999403953552,
                                                                                                 0.9999992847442627,
-                                                                                                0.9999993443489075
+                                                                                                0.9999992847442627
                                                                                             ],
                                                                                             "type": 21
                                                                                         }
@@ -871,15 +1133,15 @@
                                                                                 2.86102294921875e-05
                                                                             ],
                                                                             "rotation": [
-                                                                                0.014922238886356354,
-                                                                                0.006744782906025648,
-                                                                                -0.26260003447532654,
-                                                                                0.9647659063339233
+                                                                                0.014922630973160267,
+                                                                                0.006744930986315012,
+                                                                                -0.2626000642776489,
+                                                                                0.9647657871246338
                                                                             ],
                                                                             "scale": [
                                                                                 0.9999997615814209,
-                                                                                0.9999997615814209,
-                                                                                1.0
+                                                                                0.9999945759773254,
+                                                                                0.9999443888664246
                                                                             ],
                                                                             "type": 21
                                                                         }
@@ -938,12 +1200,12 @@
                                                                 0.614894688129425,
                                                                 -0.3867248594760895,
                                                                 0.5503819584846497,
-                                                                0.4116165041923523
+                                                                0.4116164743900299
                                                             ],
                                                             "scale": [
                                                                 1.0000001192092896,
                                                                 1.000000238418579,
-                                                                1.0000004768371582
+                                                                1.0000003576278687
                                                             ],
                                                             "type": 21
                                                         }
@@ -1119,14 +1381,14 @@
                                                                                     ],
                                                                                     "rotation": [
                                                                                         0.08883091807365417,
-                                                                                        0.007327508181333542,
+                                                                                        0.007327745668590069,
                                                                                         -0.2205013930797577,
                                                                                         0.9713056087493896
                                                                                     ],
                                                                                     "scale": [
                                                                                         0.9999999403953552,
                                                                                         0.9999998807907104,
-                                                                                        1.0
+                                                                                        0.9999999403953552
                                                                                     ],
                                                                                     "type": 21
                                                                                 }
@@ -1150,8 +1412,8 @@
                                                                                 -0.0001291036605834961
                                                                             ],
                                                                             "rotation": [
-                                                                                0.015570697374641895,
-                                                                                -0.006470123305916786,
+                                                                                0.015570838004350662,
+                                                                                -0.006470127962529659,
                                                                                 0.26554375886917114,
                                                                                 0.9639513492584229
                                                                             ],
@@ -1248,11 +1510,11 @@
                                                     "rotation": [
                                                         0.01454379502683878,
                                                         -0.02604457177221775,
-                                                        0.0029034907929599285,
+                                                        0.0029035070911049843,
                                                         0.9995507597923279
                                                     ],
                                                     "scale": [
-                                                        0.9999926090240479,
+                                                        0.999978244304657,
                                                         1.0,
                                                         0.9999991059303284
                                                     ],
@@ -1280,15 +1542,15 @@
                                                         -212.80902099609375
                                                     ],
                                                     "rotation": [
-                                                        0.009828039444983006,
-                                                        0.03849184140563011,
-                                                        0.011558699421584606,
+                                                        0.009828436188399792,
+                                                        0.038491662591695786,
+                                                        0.01155894622206688,
                                                         0.9991438388824463
                                                     ],
                                                     "scale": [
                                                         0.9999961256980896,
                                                         1.0,
-                                                        0.999998927116394
+                                                        0.9999966621398926
                                                     ],
                                                     "type": 21
                                                 }
@@ -1312,14 +1574,14 @@
                                                 -1.1920928955078125e-06
                                             ],
                                             "rotation": [
-                                                0.014676700346171856,
-                                                -0.02611522190272808,
-                                                0.0022169107105582952,
+                                                0.014676685445010662,
+                                                -0.026115229353308678,
+                                                0.0022172746248543262,
                                                 0.9995487332344055
                                             ],
                                             "scale": [
                                                 0.9999991655349731,
-                                                0.9999901652336121,
+                                                0.9999323487281799,
                                                 0.9999994039535522
                                             ],
                                             "type": 21
@@ -1344,14 +1606,14 @@
                                         -2.4058048725128174
                                     ],
                                     "rotation": [
-                                        0.0019189902814105153,
+                                        0.0019191437168046832,
                                         -0.002420386066660285,
-                                        0.0022836634889245033,
+                                        0.002283706795424223,
                                         0.9999926090240479
                                     ],
                                     "scale": [
                                         1.0,
-                                        0.9999901652336121,
+                                        0.9999116063117981,
                                         1.0
                                     ],
                                     "type": 21
@@ -1429,357 +1691,6 @@
         {
             "active": true,
             "children": [
-                {
-                    "active": true,
-                    "children": [],
-                    "components": [
-                        {
-                            "active": true,
-                            "type": 23
-                        },
-                        {
-                            "active": true,
-                            "position": [
-                                -8.560174942016602,
-                                15.211343765258789,
-                                0.0
-                            ],
-                            "rotation": [
-                                0.0,
-                                0.0,
-                                0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ],
-                            "type": 21
-                        },
-                        {
-                            "active": true,
-                            "resource": [
-                                {
-                                    "emitters": [
-                                        {
-                                            "loop": true,
-                                            "maxParticles": 500,
-                                            "modules": [
-                                                {
-                                                    "maxParticleLife": 3.0,
-                                                    "minParticleLife": 0.20000000298023224,
-                                                    "particlesPerSpawn": 1,
-                                                    "randomParticleLife": false,
-                                                    "spawnTime": 1.2000000476837158,
-                                                    "type": 1
-                                                },
-                                                {
-                                                    "billboardingType": 2,
-                                                    "frontAxis": false,
-                                                    "maxDegrees": 180,
-                                                    "minDegrees": 0,
-                                                    "sideAxis": false,
-                                                    "topAxis": true,
-                                                    "type": 5
-                                                },
-                                                {
-                                                    "followForward": false,
-                                                    "maxAcceleration": [
-                                                        0.25,
-                                                        0.25,
-                                                        0.25
-                                                    ],
-                                                    "maxDirection": [
-                                                        0.0,
-                                                        0.0,
-                                                        0.0
-                                                    ],
-                                                    "maxPosition": [
-                                                        0.0,
-                                                        0.0,
-                                                        0.0
-                                                    ],
-                                                    "maxVelocity": 5.0,
-                                                    "minAcceleration": [
-                                                        0.0,
-                                                        0.0,
-                                                        0.0
-                                                    ],
-                                                    "minDirection": [
-                                                        1.0,
-                                                        1.0,
-                                                        1.0
-                                                    ],
-                                                    "minPosition": [
-                                                        0.0,
-                                                        0.0,
-                                                        0.0
-                                                    ],
-                                                    "minVelocity": 0.0,
-                                                    "randAcceleration": false,
-                                                    "randDirection": true,
-                                                    "randPosition": false,
-                                                    "randVelocity": false,
-                                                    "type": 2
-                                                },
-                                                {
-                                                    "colors": [
-                                                        {
-                                                            "color": [
-                                                                1.0,
-                                                                1.0,
-                                                                1.0,
-                                                                0.7843137383460999
-                                                            ],
-                                                            "position": 0.5
-                                                        },
-                                                        {
-                                                            "color": [
-                                                                1.0,
-                                                                1.0,
-                                                                1.0,
-                                                                0.0
-                                                            ],
-                                                            "position": 1.0
-                                                        }
-                                                    ],
-                                                    "type": 3
-                                                },
-                                                {
-                                                    "minInitialSize": [
-                                                        15.0,
-                                                        15.0,
-                                                        15.0
-                                                    ],
-                                                    "type": 4
-                                                }
-                                            ],
-                                            "name": "Hit",
-                                            "texture_path": "Assets/Textures/Particles/light_2.png"
-                                        }
-                                    ],
-                                    "name": "Impact Feedback"
-                                }
-                            ],
-                            "type": 3
-                        }
-                    ],
-                    "is3D": true,
-                    "isPrefab": false,
-                    "name": "Zhib Impact Particle",
-                    "tag": 0
-                },
-                {
-                    "active": true,
-                    "children": [],
-                    "components": [
-                        {
-                            "active": true,
-                            "type": 23
-                        },
-                        {
-                            "active": true,
-                            "position": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "rotation": [
-                                0.0,
-                                0.0,
-                                0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ],
-                            "type": 21
-                        },
-                        {
-                            "active": true,
-                            "resource": [
-                                {
-                                    "emitters": [
-                                        {
-                                            "loop": true,
-                                            "maxParticles": 500,
-                                            "modules": [
-                                                {
-                                                    "maxParticleLife": 3.0,
-                                                    "minParticleLife": 0.20000000298023224,
-                                                    "particlesPerSpawn": 1,
-                                                    "randomParticleLife": false,
-                                                    "spawnTime": 0.5,
-                                                    "type": 1
-                                                },
-                                                {
-                                                    "billboardingType": 6,
-                                                    "frontAxis": true,
-                                                    "maxDegrees": 360,
-                                                    "minDegrees": 0,
-                                                    "sideAxis": false,
-                                                    "topAxis": false,
-                                                    "type": 5
-                                                },
-                                                {
-                                                    "followForward": true,
-                                                    "maxAcceleration": [
-                                                        0.25,
-                                                        0.25,
-                                                        0.25
-                                                    ],
-                                                    "maxDirection": [
-                                                        -1.0,
-                                                        -1.0,
-                                                        -1.0
-                                                    ],
-                                                    "maxPosition": [
-                                                        0.0,
-                                                        0.0,
-                                                        0.0
-                                                    ],
-                                                    "maxVelocity": 5.0,
-                                                    "minAcceleration": [
-                                                        0.0,
-                                                        0.0,
-                                                        0.0
-                                                    ],
-                                                    "minDirection": [
-                                                        1.0,
-                                                        1.0,
-                                                        1.0
-                                                    ],
-                                                    "minPosition": [
-                                                        0.0,
-                                                        0.0,
-                                                        0.0
-                                                    ],
-                                                    "minVelocity": 40.0,
-                                                    "randAcceleration": false,
-                                                    "randDirection": false,
-                                                    "randPosition": false,
-                                                    "randVelocity": false,
-                                                    "type": 2
-                                                },
-                                                {
-                                                    "minInitialSize": [
-                                                        5.0,
-                                                        5.0,
-                                                        5.0
-                                                    ],
-                                                    "type": 4
-                                                }
-                                            ],
-                                            "name": "Emitter",
-                                            "texture_path": "Assets/Textures/Particles/dash_projectile.png"
-                                        }
-                                    ],
-                                    "name": "Swoosh"
-                                }
-                            ],
-                            "type": 3
-                        }
-                    ],
-                    "is3D": true,
-                    "isPrefab": false,
-                    "name": "Zhib Swoosh Particle",
-                    "tag": 0
-                },
-                {
-                    "active": true,
-                    "children": [],
-                    "components": [
-                        {
-                            "active": true,
-                            "type": 23
-                        },
-                        {
-                            "active": true,
-                            "position": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "rotation": [
-                                0.0,
-                                0.0,
-                                0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ],
-                            "type": 21
-                        },
-                        {
-                            "active": true,
-                            "resource": [
-                                {
-                                    "emitters": [
-                                        {
-                                            "loop": true,
-                                            "maxParticles": 500,
-                                            "modules": [
-                                                {
-                                                    "maxParticleLife": 3.0,
-                                                    "minParticleLife": 1.5,
-                                                    "particlesPerSpawn": 1,
-                                                    "randomParticleLife": false,
-                                                    "spawnTime": 0.5,
-                                                    "type": 1
-                                                },
-                                                {
-                                                    "billboardingType": 2,
-                                                    "frontAxis": true,
-                                                    "maxDegrees": 360,
-                                                    "minDegrees": 0,
-                                                    "sideAxis": false,
-                                                    "topAxis": false,
-                                                    "type": 5
-                                                },
-                                                {
-                                                    "minInitialSize": [
-                                                        10.0,
-                                                        10.0,
-                                                        10.0
-                                                    ],
-                                                    "type": 4
-                                                },
-                                                {
-                                                    "colors": [
-                                                        {
-                                                            "color": [
-                                                                0.0,
-                                                                0.0,
-                                                                0.0,
-                                                                0.29411765933036804
-                                                            ],
-                                                            "position": 0.0
-                                                        }
-                                                    ],
-                                                    "type": 3
-                                                }
-                                            ],
-                                            "name": "Emitter",
-                                            "texture_path": "Assets/Textures/Particles/simple.png"
-                                        }
-                                    ],
-                                    "name": "Footsteps"
-                                }
-                            ],
-                            "type": 3
-                        }
-                    ],
-                    "is3D": true,
-                    "isPrefab": false,
-                    "name": "Zhib Footstep Particle",
-                    "tag": 0
-                },
                 {
                     "active": true,
                     "children": [],
@@ -2144,6 +2055,248 @@
                     "isPrefab": false,
                     "name": "Zhib Blood Particle",
                     "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 1.5,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 1.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        10.0,
+                                                        10.0,
+                                                        10.0
+                                                    ],
+                                                    "type": 4
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.29411765933036804
+                                                            ],
+                                                            "position": 0.0
+                                                        },
+                                                        {
+                                                            "color": [
+                                                                0.0,
+                                                                0.0,
+                                                                0.0,
+                                                                0.0
+                                                            ],
+                                                            "position": 1.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                }
+                                            ],
+                                            "name": "Emitter",
+                                            "texture_path": "Assets/Textures/Particles/simple.png"
+                                        }
+                                    ],
+                                    "name": "Footsteps"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Zhib Footstep Particle",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                -1503.701171875,
+                                -55.403324127197266,
+                                832.96142578125
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 1.0,
+                                                    "particlesPerSpawn": 1,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        3.0,
+                                                        3.0,
+                                                        3.0
+                                                    ],
+                                                    "type": 4
+                                                },
+                                                {
+                                                    "followForward": false,
+                                                    "maxAcceleration": [
+                                                        0.25,
+                                                        0.25,
+                                                        0.25
+                                                    ],
+                                                    "maxDirection": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -1.0
+                                                    ],
+                                                    "maxPosition": [
+                                                        7.0,
+                                                        0.0,
+                                                        7.0
+                                                    ],
+                                                    "maxVelocity": 5.0,
+                                                    "minAcceleration": [
+                                                        -0.25,
+                                                        0.0,
+                                                        -0.25
+                                                    ],
+                                                    "minDirection": [
+                                                        1.0,
+                                                        1.0,
+                                                        0.5
+                                                    ],
+                                                    "minPosition": [
+                                                        -7.0,
+                                                        0.0,
+                                                        -7.0
+                                                    ],
+                                                    "minVelocity": 20.0,
+                                                    "randAcceleration": false,
+                                                    "randDirection": false,
+                                                    "randPosition": true,
+                                                    "randVelocity": false,
+                                                    "type": 2
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                0.7843137383460999,
+                                                                0.47058823704719543,
+                                                                1.0
+                                                            ],
+                                                            "position": 0.0
+                                                        },
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                0.7058823704719543,
+                                                                0.0
+                                                            ],
+                                                            "position": 1.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                }
+                                            ],
+                                            "name": "Emitter",
+                                            "texture_path": "Assets/Textures/Particles/dust_1.png"
+                                        }
+                                    ],
+                                    "name": "Jump"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Zhib Jump Particle",
+                    "tag": 0
                 }
             ],
             "components": [
@@ -2284,7 +2437,7 @@
                     "clipDuration": 99.0,
                     "clipDurationInSeconds": 4.125,
                     "clipEndFrame": 100.0,
-                    "clipFinished": false,
+                    "clipFinished": true,
                     "clipLoop": true,
                     "clipName": "Idle",
                     "clipStartFrame": 1.0,
@@ -2294,8 +2447,8 @@
                     "clipDuration": 1.0,
                     "clipDurationInSeconds": 0.0416666679084301,
                     "clipEndFrame": 141.0,
-                    "clipFinished": false,
-                    "clipLoop": false,
+                    "clipFinished": true,
+                    "clipLoop": true,
                     "clipName": "IdleCrouch",
                     "clipStartFrame": 140.0,
                     "mapString": "IdleCrouch"
@@ -2367,7 +2520,7 @@
                     "uid": 2018873560
                 }
             ],
-            "selectedClip": "Idle",
+            "selectedClip": "IdleCrouch",
             "type": 12
         }
     ],

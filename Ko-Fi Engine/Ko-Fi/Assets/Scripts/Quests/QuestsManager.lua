@@ -9,23 +9,37 @@ local path = "Assets/Quests/quests.json"
 local prefabPath = "Mission"
 local missionIndex = 1
 
+local missionCap = 5
+
 missionList = {}
 
 ------------ Dialogue Manager ------------
 function Start()
+    --if (GetInput(14) == KEY_STATE.KEY_DOWN) then -- Q
+        --limit the logic with the capMission
+        --if (missionIndex < missionCap) then
+           -- InstantiateNamedPrefab(prefabPath, "Mission_" .. missionIndex )
+            --if(missionIndex > 1) then
+            --local newMission = Find("Mission_" .. missionIndex - 1)
+            --table.insert(missionList, newMission)
 
+            --Layout()
+            --end
+            --missionIndex = missionIndex + 1
+        --end
+    --end
 end
 
 function Update(dt)
+
     -- TODO: SET THE ID FROM EVENT AND SET OPENDIALOGUE TO TRUE
     -- DispatchEvent(pathfinderUpdateKey, { patrolWaypoints, pingpong, componentTransform:GetPosition() })
-    if (GetInput(14) == KEY_STATE.KEY_DOWN) then -- Q
-        InstantiateNamedPrefab(prefabPath, "Mission_" .. missionIndex )
-        table.insert(missionList, Find("Mission_" .. missionIndex))
-        missionIndex = missionIndex + 1
-        Layout()
-    end
     
+    
+    
+end
+
+function PostUpdate(dt)
     
 end
 
@@ -47,7 +61,11 @@ end
 
 function Layout()
     for i = 1, #missionList do
-        Log("Mission Name:" .. missionList[i]:GetName() .. "\n")
+        Log(missionList[i]:GetName() .. "\n")
+        local mission = missionList[i]:GetChildren()[1]
+        missionPosition = mission:GetTransform2D():GetPosition()
+        missionPosition.y = missionPosition.y - (1 * 145)
+        mission:GetTransform2D():SetPosition(float2.new(missionPosition.x, missionPosition.y))
     end
 end
 

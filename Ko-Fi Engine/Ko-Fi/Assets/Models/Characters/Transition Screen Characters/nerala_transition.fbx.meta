@@ -1,0 +1,30 @@
+{
+    "asset_file": "nerala_transition.fbx",
+    "asset_path": "Assets/Models/Characters/Transition Screen Characters/nerala_transition.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "nerala_high.sugar",
+            "library_path": "Library/Meshes/1869303194.sugar",
+            "type": 0,
+            "uid": 1869303194
+        },
+        {
+            "asset_file": "nerala_base_color.png",
+            "asset_path": "Assets/Textures/Characters/Nerala/nerala_base_color.png",
+            "library_path": "Library/Textures/1203275279.cacao",
+            "type": 1,
+            "uid": 1203275279
+        },
+        {
+            "asset_file": "nerala_armature_h|nerala_armature_h|nerala_armature_h|nerala_transition_animation.cake",
+            "library_path": "Library/Animations/953693980.cake",
+            "type": 5,
+            "uid": 953693980
+        }
+    ],
+    "hash": "6e33cf88152d9a08052c7e708192019f",
+    "library_file": "2005099251.tea",
+    "library_path": "Library/Models/2005099251.tea",
+    "type": 3,
+    "uid": 2005099251
+}

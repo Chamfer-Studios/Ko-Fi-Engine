@@ -7,10 +7,10 @@
                 "modules": [
                     {
                         "maxParticleLife": 3.0,
-                        "minParticleLife": 1.75,
-                        "particlesPerSpawn": 1,
+                        "minParticleLife": 1.0,
+                        "particlesPerSpawn": 12,
                         "randomParticleLife": false,
-                        "spawnTime": 1.75,
+                        "spawnTime": 1.0,
                         "type": 1
                     },
                     {
@@ -46,20 +46,55 @@
                         "type": 3
                     },
                     {
-                        "minFinalSize": [
-                            25.0,
-                            25.0,
-                            25.0
-                        ],
                         "minInitialSize": [
-                            15.0,
-                            15.0,
-                            15.0
+                            6.0,
+                            6.0,
+                            6.0
                         ],
                         "type": 4
+                    },
+                    {
+                        "followForward": false,
+                        "maxAcceleration": [
+                            0.25,
+                            0.25,
+                            0.25
+                        ],
+                        "maxDirection": [
+                            -1.0,
+                            -1.0,
+                            -1.0
+                        ],
+                        "maxPosition": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "maxVelocity": 5.0,
+                        "minAcceleration": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "minDirection": [
+                            1.0,
+                            1.0,
+                            1.0
+                        ],
+                        "minPosition": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "minVelocity": 4.0,
+                        "randAcceleration": false,
+                        "randDirection": true,
+                        "randPosition": false,
+                        "randVelocity": false,
+                        "type": 2
                     }
                 ],
-                "name": "Heal Emitter",
+                "name": "Small Heal Emitter",
                 "texture_path": "Assets/Textures/Particles/healing.png"
             }
         ],

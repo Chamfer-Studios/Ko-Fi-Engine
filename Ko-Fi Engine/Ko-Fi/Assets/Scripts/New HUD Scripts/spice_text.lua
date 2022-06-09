@@ -45,6 +45,12 @@ function EventHandler(key, fields)
         textSpice = spiceAmount .. " + " .. spiceReward
         gameObject:GetTransform2D():SetSize(float2.new(#textSpice * 17.5, sizeY))
         gameObject:GetText():SetTextValue(textSpice)
+    elseif key == "Used_Ultimate" then
+        textTimer = 0.0
+        spiceCost = fields[1]
+        textSpice = spiceAmount .. " - " .. spiceCost
+        gameObject:GetTransform2D():SetSize(float2.new(#textSpice * 17.5, sizeY))
+        gameObject:GetText():SetTextValue(textSpice)
     end
 end
 
