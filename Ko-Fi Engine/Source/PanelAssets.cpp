@@ -32,7 +32,7 @@ bool PanelAssets::Update()
 	OPTICK_EVENT();
 
 #ifdef KOFI_GAME
-	return;
+	return true;
 #endif
 
 	ImGui::Begin("Assets");
