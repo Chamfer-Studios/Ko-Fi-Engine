@@ -15,12 +15,7 @@
 #include "MathGeoLib/Math/float3x3.h"
 
 ParticleModule::ParticleModule()
-{
-	//if (emitter != nullptr)
-	//{
-	//	emitter->AddModule(this);
-	//}
-}
+{}
 
 ParticleModule::~ParticleModule()
 {}
@@ -46,15 +41,12 @@ EmitterDefault::EmitterDefault()
 }
 
 EmitterDefault::~EmitterDefault()
-{
-	instance = nullptr;
-}
+{}
 
 void EmitterDefault::Spawn(Particle* particle, EmitterInstance* emitter)
 {
 	LCG random;
 	GameObject* go = emitter->component->owner;
-	instance = emitter;
 
 	particle->position = go->GetTransform()->GetGlobalTransform().TranslatePart();
 

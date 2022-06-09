@@ -30,7 +30,6 @@ public:
 
 public:
 	ParticleModuleType type = ParticleModuleType::NONE;
-	//Emitter* emitter = nullptr;
 	bool disable = false;
 };
 
@@ -53,7 +52,6 @@ public:
 	float minParticleLife = 1.0f;
 	float maxParticleLife = 3.0f;
 	uint particlesPerSpawn = 1;
-	EmitterInstance* instance = nullptr;
 };
 
 class EmitterMovement : public ParticleModule

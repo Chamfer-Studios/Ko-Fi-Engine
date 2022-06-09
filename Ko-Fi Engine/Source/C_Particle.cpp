@@ -102,7 +102,13 @@ bool C_Particle::CleanUp()
 	emitterInstances.shrink_to_fit();
 
 	if (resource != nullptr)
+	{
+		for (auto emitter : resource->emitters)
+		{
+			owner->GetEngine()->GetResourceManager()->FreeResource(emitter->texture->GetUID());
+		}
 		RELEASE(resource);
+	}
 
 	return true;
 }
@@ -315,9 +321,18 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 										e->minParticleLife = particleLife;
 								}
 
-								if (e->instance)
+								EmitterInstance* ei = nullptr;
+								for (std::vector<EmitterInstance*>::iterator yt = emitterInstances.begin(); yt < emitterInstances.end(); ++yt)
 								{
-									std::string activeParticlesName = "ActiveParticles: " + std::to_string(e->instance->activeParticles);
+									if ((*yt)->emitter == (Emitter*)e)
+									{
+										ei = (*yt);
+										break;
+									}
+								}
+								if (ei != nullptr)
+								{
+									std::string activeParticlesName = "ActiveParticles: " + std::to_string(ei->activeParticles);
 									ImGui::Text(activeParticlesName.c_str());
 								}
 
