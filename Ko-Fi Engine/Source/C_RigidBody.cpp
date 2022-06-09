@@ -33,6 +33,7 @@ bool C_RigidBody::Start()
 
 bool C_RigidBody::Update(float dt)
 {
+	OPTICK_EVENT();
 
 	if (owner->GetEngine()->GetSceneManager()->GetGameState() != GameState::PLAYING || body->getType() == reactphysics3d::BodyType::STATIC)
 	{

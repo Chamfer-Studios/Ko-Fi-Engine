@@ -68,6 +68,8 @@ bool C_Particle::Start()
 
 bool C_Particle::Update(float dt)
 {
+	OPTICK_EVENT();
+
 	for (auto it : emitterInstances)
 	{
 		it->Update(dt); //kill inactive and update emitter instances

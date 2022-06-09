@@ -87,6 +87,8 @@ bool C_Animator::PreUpdate()
 
 bool C_Animator::Update(float dt)
 {
+	OPTICK_EVENT();
+
 	return true;
 }
 

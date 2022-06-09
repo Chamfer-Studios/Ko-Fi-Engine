@@ -119,6 +119,8 @@ bool C_Transform::InspectorDraw(PanelChooser *chooser)
 
 void C_Transform::SetPosition(const float3 &newPosition)
 {
+	OPTICK_EVENT();
+
 	transformMatrixLocal = float4x4::FromTRS(newPosition, GetRotationQuat(), GetScale());
 	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
 	isDirty = true;

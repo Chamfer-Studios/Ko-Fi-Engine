@@ -55,7 +55,8 @@ bool C_LightSource::Start()
 
 bool C_LightSource::Update(float dt)
 {
-	
+	OPTICK_EVENT();
+
 	return true;
 }
 

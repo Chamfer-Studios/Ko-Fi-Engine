@@ -120,7 +120,8 @@ bool GameObject::Update(float dt)
 {
 	OPTICK_EVENT();
 
-	bool ret = true;
+	bool ret = true;	
+	#pragma omp parallel for
 	for (Component* component : components)
 	{
 		if (component)
@@ -453,6 +454,7 @@ GameObject* GameObject::GetParent() const
 
 C_Transform* GameObject::GetTransform() const
 {
+	OPTICK_EVENT();
 	return this->transform;
 }
 
