@@ -26,6 +26,8 @@ public:
 	float ambient;
 	float diffuse;
 	float specular;
+
+	virtual bool GOInRange(GameObject* go) = 0;
 };
 
 //similar to sunlight, all rays are have the same direction and there is no perceivable attenuation
@@ -38,6 +40,8 @@ public:
 
 	float3 direction;
 	float4x4 lightSpaceMatrix;
+
+	bool GOInRange(GameObject* go) { return true; };
 };
 
 //omnidirectional rays with attenuation following the next formula: 
@@ -51,6 +55,7 @@ public:
 	float linear;
 	float quadratic;
 
+	bool GOInRange(GameObject* go) { return true; };
 };
 
 //same as point light but acting only in a defined area. (can have blurred borders or not)
@@ -67,6 +72,7 @@ public:
 	float linear;
 	float quadratic;
 
+	bool GOInRange(GameObject* go);
 };
 
 class C_LightSource : public Component

@@ -136,7 +136,7 @@ public:
 	void RenderAllParticles();
 
 	void InitDepthMapFramebufferAndTexture();
-	void LightUniforms(uint shader);
+	void LightUniforms(uint shader, GameObject* go);
 
 	void ShadowMapUniforms(C_Mesh *cMesh, uint shader, GameObject *light);
 	void FillShadowMap();

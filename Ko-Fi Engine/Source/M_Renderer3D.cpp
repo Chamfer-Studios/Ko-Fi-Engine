@@ -679,7 +679,7 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 						break;
 					}
 				}
-				LightUniforms(shader);
+				LightUniforms(shader, go);
 				
 				GameObject* light = engine->GetSceneManager()->GetCurrentScene()->GetShadowCaster();
 				if (light)
@@ -750,7 +750,7 @@ void M_Renderer3D::RenderSkyBox(C_Camera* camera, SkyBox& skybox)
 
 }
 
-void M_Renderer3D::LightUniforms(uint shader)
+void M_Renderer3D::LightUniforms(uint shader, GameObject* go)
 {
 	OPTICK_EVENT();
 
@@ -881,6 +881,8 @@ void M_Renderer3D::LightUniforms(uint shader)
 					continue;
 				// --- basic light parameters ---
 				auto lightSource = (FocalLight*)c_light->GetLightSource();
+
+				if (!lightSource->GOInRange(go)) continue;
 
 				// -- basic light parameters --
 				//fill the first variable of the focalLights struct: vec3 color

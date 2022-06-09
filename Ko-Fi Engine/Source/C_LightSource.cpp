@@ -13,6 +13,8 @@
 #include "Globals.h"
 #include "SceneIntro.h"
 #include "M_Renderer3D.h"
+#include "C_Mesh.h"
+#include "R_Mesh.h"
 
 #include "FSDefs.h"
 
@@ -599,4 +601,12 @@ FocalLight::FocalLight() : LightSource()
 	constant = 1.00f;
 	linear = 0.020f;
 	quadratic = 0.02f;
+}
+
+bool FocalLight::GOInRange(GameObject* go)
+{
+	C_Mesh* mesh = go->GetComponent<C_Mesh>();
+	if (mesh == nullptr) return false;
+
+	return mesh->aabb.Intersects(math::Sphere(position, range));
 }
