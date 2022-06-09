@@ -47,9 +47,9 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	window = new M_Window(this);
 	fileSystem = new M_FileSystem(this);
 	input = new M_Input(this);
+	audio = new M_Audio(this);
 	camera = new M_Camera3D(this);
 	renderer = new M_Renderer3D(this);
-	audio = new M_Audio(this);
 	editor = new M_Editor(this);
 	sceneManager = new M_SceneManager(this);
 	ui = new M_UI(this);
@@ -63,8 +63,8 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(window);
 	AddModule(physics);
 	AddModule(input);
-	AddModule(camera);
 	AddModule(audio);
+	AddModule(camera);
 	AddModule(fileSystem);
 	AddModule(resourceManager);
 	AddModule(ui);

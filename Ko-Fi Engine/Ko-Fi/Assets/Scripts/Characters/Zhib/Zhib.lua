@@ -93,7 +93,7 @@ maxDecoy = 1
 secondaryEffectRadius = 120
 secondaryDuration = 7.5
 secondaryCastRange = 200 -- 75
-secondaryCooldown = 7.5
+secondaryCooldown = 8
 
 -- Ultimate ability --
 ultimateCastRange = 75
