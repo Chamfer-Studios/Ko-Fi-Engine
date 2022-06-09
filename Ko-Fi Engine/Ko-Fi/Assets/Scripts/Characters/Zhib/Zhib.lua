@@ -648,48 +648,48 @@ function DrawHoverParticle()
             finalPosition = drawingTarget:GetTransform():GetPosition()
             finalPosition.y = finalPosition.y + 1
 
-            -- Log("CHANCE_START\n")
-            -- DispatchGlobalEvent("Chance_Start", {drawingTarget:GetName()})
-            -- if (enemyHoveredType ~= nil) then
-            --     Log(drawingTarget:GetTransform():GetPosition() .. "\n")
-            --     if (enemyHoveredType == "Harkonnen") then
-            --         if (enemyHoveredState == 1) then
-            --             ChanceParticle100:GetComponentParticle():ResumeParticleSpawn()
-            --             ChanceParticle100:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
-            --             drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
-            --             :GetPosition().z + 12)
-            --             Log(ChanceParticle100:GetTransform():GetPosition().."\n")
-            --         elseif (enemyHoveredState == 2) then
-            --             ChanceParticle80:GetComponentParticle():ResumeParticleSpawn()
-            --             ChanceParticle80:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
-            --                 drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
-            --                     :GetPosition().z + 12)
-            --         elseif (enemyHoveredState == 3) then
-            --             ChanceParticle20:GetComponentParticle():ResumeParticleSpawn()
-            --             ChanceParticle20:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
-            --                 drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
-            --                     :GetPosition().z + 12)
-            --         end
-            --     elseif (enemyHoveredType == "Sardaukar") then
-            --         if (enemyHoveredState == 1) then
-            --             ChanceParticle80:GetComponentParticle():ResumeParticleSpawn()
-            --             ChanceParticle80:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
-            --                 drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
-            --                     :GetPosition().z + 12)
-            --         elseif (enemyHoveredState == 2) then
-            --             ChanceParticle30:GetComponentParticle():ResumeParticleSpawn()
-            --             ChanceParticle30:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
-            --                 drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
-            --                     :GetPosition().z + 12)
-            --         elseif (enemyHoveredState == 3) then
-            --             ChanceParticle0:GetComponentParticle():ResumeParticleSpawn()
-            --             ChanceParticle0:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
-            --                 drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
-            --                     :GetPosition().z + 12)
-            --         end
+            Log("CHANCE_START\n")
+            DispatchGlobalEvent("Chance_Start", {drawingTarget:GetName()})
+            if (enemyHoveredType ~= nil) then
+                Log(drawingTarget:GetTransform():GetPosition() .. "\n")
+                if (enemyHoveredType == "Harkonnen") then
+                    if (enemyHoveredState == 1) then
+                        ChanceParticle100:GetComponentParticle():ResumeParticleSpawn()
+                        ChanceParticle100:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
+                            drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
+                                :GetPosition().z + 12)
+                        Log(ChanceParticle100:GetTransform():GetPosition() .. "\n")
+                    elseif (enemyHoveredState == 2) then
+                        ChanceParticle80:GetComponentParticle():ResumeParticleSpawn()
+                        ChanceParticle80:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
+                            drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
+                                :GetPosition().z + 12)
+                    elseif (enemyHoveredState == 3) then
+                        ChanceParticle20:GetComponentParticle():ResumeParticleSpawn()
+                        ChanceParticle20:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
+                            drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
+                                :GetPosition().z + 12)
+                    end
+                elseif (enemyHoveredType == "Sardaukar") then
+                    if (enemyHoveredState == 1) then
+                        ChanceParticle80:GetComponentParticle():ResumeParticleSpawn()
+                        ChanceParticle80:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
+                            drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
+                                :GetPosition().z + 12)
+                    elseif (enemyHoveredState == 2) then
+                        ChanceParticle30:GetComponentParticle():ResumeParticleSpawn()
+                        ChanceParticle30:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
+                            drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
+                                :GetPosition().z + 12)
+                    elseif (enemyHoveredState == 3) then
+                        ChanceParticle0:GetComponentParticle():ResumeParticleSpawn()
+                        ChanceParticle0:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
+                            drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
+                                :GetPosition().z + 12)
+                    end
 
-            --     end
-            -- end
+                end
+            end
 
         elseif (currentState == State.AIM_SECONDARY and drawingTarget.tag == Tag.FLOOR) then
             local mouseClick = GetLastMouseClick()
@@ -702,13 +702,13 @@ function DrawHoverParticle()
             finalPosition = float3.new(mouseClick.x, 1, mouseClick.z)
         else
             choosingTargetParticle:GetComponentParticle():StopParticleSpawn()
-            -- ChanceParticle0:GetComponentParticle():StopParticleSpawn()
-            -- ChanceParticle20:GetComponentParticle():StopParticleSpawn()
-            -- ChanceParticle30:GetComponentParticle():StopParticleSpawn()
-            -- ChanceParticle80:GetComponentParticle():StopParticleSpawn()
-            -- ChanceParticle100:GetComponentParticle():StopParticleSpawn()
-            -- enemyHoveredState = nil
-            -- enemyHoveredType = nil
+            ChanceParticle0:GetComponentParticle():StopParticleSpawn()
+            ChanceParticle20:GetComponentParticle():StopParticleSpawn()
+            ChanceParticle30:GetComponentParticle():StopParticleSpawn()
+            ChanceParticle80:GetComponentParticle():StopParticleSpawn()
+            ChanceParticle100:GetComponentParticle():StopParticleSpawn()
+            enemyHoveredState = nil
+            enemyHoveredType = nil
             do
                 return
             end
@@ -1611,27 +1611,24 @@ function EventHandler(key, fields)
         abilities.AbilityPrimary = AbilityStatus.Normal
         DispatchGlobalEvent("Player_Ability", {characterID, Ability.Primary, abilities.AbilityPrimary})
         knifeCount = knifeCount + 1
-        Log("Knife bugged, correction applied.\n")
     elseif (key == "Zhib_Secondary_Bugged") then
         secondaryTimer = nil
         abilities.AbilitySecondary = AbilityStatus.Normal
         DispatchGlobalEvent("Player_Ability", {characterID, Ability.Secondary, abilities.AbilitySecondary})
         decoyCount = decoyCount + 1
-        Log("Decoy bugged, correction applied.\n")
     elseif (key == "Hit") then
         if (HitParticle ~= nil) then
             HitParticle:GetComponentParticle():ResumeParticleSpawn()
-            HitParticle:GetTransform():SetPosition(fields[1].x + 15, fields[1].y + 23, fields[1].z + 12)
+            HitParticle:GetTransform():SetPosition(float3.new(fields[1] + 15, fields[2] + 23, fields[3] + 12))
             hitOrMissTimer = 0.0
         end
     elseif (key == "Missed") then
         if (MissParticle ~= nil) then
             MissParticle:GetComponentParticle():ResumeParticleSpawn()
-            MissParticle:GetTransform():SetPosition(fields[1].x + 15, fields[1].y + 23, fields[1].z + 12)
+            MissParticle:GetTransform():SetPosition(float3.new(fields[1] + 15, fields[2] + 23, fields[3] + 12))
             hitOrMissTimer = 0.0
         end
     elseif (key == "Chance_End") then
-        Log("Chance_END\n")
         enemyHoveredState = fields[1]
         enemyHoveredType = fields[2]
     end

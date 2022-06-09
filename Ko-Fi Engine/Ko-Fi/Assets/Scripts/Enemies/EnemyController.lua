@@ -992,10 +992,9 @@ function EventHandler(key, fields)
         if (debuffParticle ~= nil) then
             debuffParticle:GetComponentParticle():ResumeParticleSpawn()
         end
-        if (HitParticle ~= nil) then
-            HitParticle:GetComponentParticle():ResumeParticleSpawn()
-            HitDone = true
-        end
+        Log("HIT\n")
+        DispatchGlobalEvent("Hit", {componentTransform:GetPosition().x, componentTransform:GetPosition().y,
+                                    componentTransform:GetPosition().z})
     elseif key == "Assign_Type" then
         thisType = fields[1]
         attackRange = 40
@@ -1013,15 +1012,11 @@ function EventHandler(key, fields)
     elseif key == "Mosquito_Death" then
         mosquito = nil
         players[4] = nil
-    elseif key == "Missed" then
-        if (MissParticle ~= nil) then
-            MissParticle:GetComponentParticle():ResumeParticleSpawn()
-            MissDone = true
-        end
     elseif key == "Enemy_Death" then -- fields[1] = EnemyDeath table --- fields[2] = EnemyTypeString
-        if (HitParticle ~= nil and (fields[1] == EnemyDeath.KNIFE or fields[1] == EnemyDeath.PLAYER_ATTACK)) then
-            HitParticle:GetComponentParticle():ResumeParticleSpawn()
-            HitDone = true
+        if (fields[1] == EnemyDeath.KNIFE or fields[1] == EnemyDeath.PLAYER_ATTACK) then
+            Log("HIT\n")
+            DispatchGlobalEvent("Hit", {componentTransform:GetPosition().x, componentTransform:GetPosition().y,
+                                        componentTransform:GetPosition().z})
         end
         if (debuffParticle ~= nil) then
             debuffParticle:GetComponentParticle():StopParticleSpawn()
