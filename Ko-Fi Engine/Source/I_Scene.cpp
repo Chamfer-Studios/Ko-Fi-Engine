@@ -380,7 +380,7 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 
 		Json jsonGameObjects = jsonScene.at("game_objects_list");
 		float startTime = (float)engine->GetEngineTime();
-#pragma omp parallel for
+
 		for (const auto& goIt : jsonGameObjects.items())
 		{
 			Json jsonGo = goIt.value();
@@ -407,7 +407,7 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 			go->SetParentUID(parentUid);
 
 			Json jsonCmps = jsonGo.at("components");
-#pragma omp parallel for
+
 			for (const auto& cmpIt : jsonCmps.items())
 			{
 				Json jsonCmp = cmpIt.value();
@@ -480,7 +480,6 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 		appLog->AddLog("Time to load: %f\n", endTime);
 
 		// Reparenting
-#pragma omp parallel for
 		for (std::vector<GameObject*>::iterator goIt = scene->gameObjectList.begin(); goIt < scene->gameObjectList.end(); ++goIt)
 		{
 			for (std::vector<GameObject*>::iterator childrenIt = scene->gameObjectList.begin(); childrenIt < scene->gameObjectList.end(); ++childrenIt)
@@ -764,7 +763,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 
 		Json jsonGameObjects = jsonScene.at("game_objects_list");
 		float startTime = (float)engine->GetEngineTime();
-#pragma omp parallel for
+
 		for (const auto& goIt : jsonGameObjects.items())
 		{
 			Json jsonGo = goIt.value();
@@ -787,7 +786,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			go->SetParentUID(parentUid);
 
 			Json jsonCmps = jsonGo.at("components");
-#pragma omp parallel for
+			
 			for (const auto& cmpIt : jsonCmps.items())
 			{
 				Json jsonCmp = cmpIt.value();
@@ -993,7 +992,6 @@ bool I_Scene::Load(Scene* scene, const char* name)
 		float endTime = (float)engine->GetEngineTime();
 		appLog->AddLog("Time to load: %f\n", endTime - startTime);
 
-#pragma omp parallel for
 		for (std::vector<GameObject*>::iterator goIt = scene->gameObjectList.begin(); goIt < scene->gameObjectList.end(); ++goIt)
 		{
 			for (std::vector<GameObject*>::iterator childrenIt = scene->gameObjectList.begin(); childrenIt < scene->gameObjectList.end(); ++childrenIt)

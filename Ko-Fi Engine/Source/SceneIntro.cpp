@@ -156,9 +156,63 @@ bool SceneIntro::PreUpdate(float dt)
 bool SceneIntro::Update(float dt)
 {
 	OPTICK_EVENT();
-	for (GameObject* go : this->gameObjectList)
+
+	for (int i = 0; i < this->gameObjectList.size(); i++)
 	{
+		GameObject* go = this->gameObjectList[i];
 		go->Update(dt);
+		if (go->changeScene)
+		{
+			switchScene = true;
+			sceneNameGO = go->sceneName;
+			go->changeScene = false;
+		}
+		if (go->isQuitting)
+		{
+			quitPlease = true;
+			go->isQuitting = false;
+		}
+	}
+
+	for (int i = 0; i < this->gameObjectList.size(); i++)
+	{
+		GameObject* go = this->gameObjectList[i];
+		go->InitUpdateScripts(dt);
+		if (go->changeScene)
+		{
+			switchScene = true;
+			sceneNameGO = go->sceneName;
+			go->changeScene = false;
+		}
+		if (go->isQuitting)
+		{
+			quitPlease = true;
+			go->isQuitting = false;
+		}
+	}
+
+	for (int i = 0; i < this->gameObjectList.size(); i++)
+	{
+		GameObject* go = this->gameObjectList[i];
+		go->DoUpdateScripts(dt);
+		if (go->changeScene)
+		{
+			switchScene = true;
+			sceneNameGO = go->sceneName;
+			go->changeScene = false;
+		}
+		if (go->isQuitting)
+		{
+			quitPlease = true;
+			go->isQuitting = false;
+		}
+	}
+
+#pragma omp parallel for
+	for (int i = 0; i < this->gameObjectList.size(); i++)
+	{
+		GameObject* go = this->gameObjectList[i];
+		go->DoUpdateAsyncScripts(dt);
 		if (go->changeScene)
 		{
 			switchScene = true;

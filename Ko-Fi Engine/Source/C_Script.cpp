@@ -86,26 +86,6 @@ bool C_Script::Update(float dt)
 void C_Script::InnerUpdate(float dt)
 {
 	OPTICK_EVENT();
-
-	if (s != nullptr)
-	{
-
-		UpdateInspectorVariables(dt);
-
-		if (RNG::GetBoundedRandomUint(0, 10) == 1)
-			UpdateEventHandler(dt);
-
-		if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
-		{
-			UpdateScript(dt);
-			UpdateUIPlay(dt);
-		}
-		else if (/*owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING || */owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PAUSED && s->isScriptLoaded)
-		{
-			UpdateUIPause(dt);
-		}
-	}
-
 }
 
 bool C_Script::PostUpdate(float dt)
@@ -292,6 +272,8 @@ bool C_Script::InspectorDraw(PanelChooser* chooser)
 		}
 
 		bool isSeparatorNeeded = true;
+
+		ImGui::Checkbox("ASYNC", &isAsync);
 
 		if (s != nullptr)
 		{
@@ -495,6 +477,7 @@ void C_Script::Save(Json& json) const
 
 	json["id"] = id;
 	json["file_name"] = s->path;
+	json["async"] = isAsync;
 	Json jsonIV;
 	for (InspectorVariable* variable : s->inspectorVariables)
 	{
@@ -598,6 +581,14 @@ void C_Script::Load(Json& json)
 	else {
 		SetId(RNG::GetRandomUint());
 	}
+
+	if (json.find("async") != json.end()) {
+		isAsync = json.at("async");
+	}
+	else {
+		isAsync = false;
+	}
+
 	LoadInspectorVariables(json);
 	ReloadScript(s);
 	RemoveOldVariables();
@@ -606,6 +597,34 @@ void C_Script::Load(Json& json)
 void C_Script::SetId(int id)
 {
 	this->id = id;
+}
+
+void C_Script::InitScriptUpdate(float dt)
+{
+	if (s != nullptr)
+	{
+
+		UpdateInspectorVariables(dt);
+
+		//if (RNG::GetBoundedRandomUint(0, 10) == 1)
+		UpdateEventHandler(dt);
+	}
+}
+
+void C_Script::DoScriptUpdate(float dt)
+{
+	if (s != nullptr)
+	{
+		if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
+		{
+			UpdateScript(dt);
+			UpdateUIPlay(dt);
+		}
+		else if (/*owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING || */owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PAUSED && s->isScriptLoaded)
+		{
+			UpdateUIPause(dt);
+		}
+	}
 }
 
 

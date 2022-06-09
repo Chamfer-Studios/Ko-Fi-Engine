@@ -73,8 +73,8 @@ public:
 
 	void SetId(int id);
 
-
-
+	void InitScriptUpdate(float dt);
+	void DoScriptUpdate(float dt);
 	void UpdateInspectorVariables(float dt);
 	void UpdateEventHandler(float dt);
 	void UpdateScript(float dt);
@@ -89,4 +89,6 @@ public:
 
 	std::queue<ScriptingEvent> eventQueue;
 	std::shared_ptr<std::thread> worker = nullptr;
+
+	bool isAsync = false;
 };

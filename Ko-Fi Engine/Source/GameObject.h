@@ -47,6 +47,9 @@ public:
 	bool Start();
 	bool PreUpdate();
 	bool Update(float dt);
+	bool InitUpdateScripts(float dt);
+	bool DoUpdateScripts(float dt);
+	bool DoUpdateAsyncScripts(float dt);
 	bool PostUpdate(float dt);
 	bool CleanUp();
 

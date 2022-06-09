@@ -42,9 +42,10 @@ bool EmitterInstance::Update(float dt)
 	KillDeadParticles();
 
 	//update modules
-	for (std::vector<ParticleModule*>::iterator it = emitter->modules.begin(); it < emitter->modules.end(); ++it)
+	for (int i = 0; i < emitter->modules.size(); i++)
 	{
-		(*it)->Update(dt, this);
+		auto it = emitter->modules[i];
+		it->Update(dt, this);
 	}
 
 	//add particle to render list

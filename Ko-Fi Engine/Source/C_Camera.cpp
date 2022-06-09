@@ -344,11 +344,11 @@ void C_Camera::SphereCulling()
 	OPTICK_EVENT();
 	//1st culling iteration where we check the distance of the game object to a middle point between the near and far plane,
 	//If object is further from the sphere radius, we discard them.
-	std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
+	//std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
 
-	for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
+	for (int i = 0; i < owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList.size(); i++)
 	{
-		GameObject* gameObject = (*go);
+		GameObject* gameObject = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList[i];
 		C_Mesh* cMesh = gameObject->GetComponent<C_Mesh>();
 		if (!cMesh || gameObject == owner)
 			continue;
@@ -388,9 +388,15 @@ void C_Camera::FrustumCulling()
 
 	std::unordered_set<GameObject*>::iterator it;
 
-	for (it = owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.begin(); it != owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.end(); it++)
+	std::vector<GameObject*> gos;
+
+	for (it = owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.begin(); it != owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.end(); it++) {
+		gos.push_back(*it);
+	}
+
+	for (int i = 0; i < gos.size(); i++)
 	{
-		GameObject* go = (*it);
+		GameObject* go = gos[i];
 	/*	if (!gameObject->GetRenderGameObject())
 			continue;*/
 		C_Mesh* componentMesh = go->GetComponent<C_Mesh>();
