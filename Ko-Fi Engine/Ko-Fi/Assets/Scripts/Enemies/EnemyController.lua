@@ -875,9 +875,7 @@ function EventHandler(key, fields)
         if (debuffParticle ~= nil) then
             debuffParticle:GetComponentParticle():ResumeParticleSpawn()
         end
-        Log("HIT\n")
-        DispatchGlobalEvent("Hit", {componentTransform:GetPosition().x, componentTransform:GetPosition().y,
-                                    componentTransform:GetPosition().z})
+        DispatchGlobalEvent("Ability_Hit_Particle", {componentTransform:GetPosition()})
     elseif key == "Assign_Type" then
         thisType = fields[1]
         attackRange = 40
@@ -897,9 +895,7 @@ function EventHandler(key, fields)
         players[4] = nil
     elseif key == "Enemy_Death" then -- fields[1] = EnemyDeath table --- fields[2] = EnemyTypeString
         if (fields[1] == EnemyDeath.KNIFE or fields[1] == EnemyDeath.PLAYER_ATTACK) then
-            Log("HIT\n")
-            DispatchGlobalEvent("Hit", {componentTransform:GetPosition().x, componentTransform:GetPosition().y,
-                                        componentTransform:GetPosition().z})
+            DispatchGlobalEvent("Ability_Hit_Particle", {componentTransform:GetPosition()})
         end
         if (debuffParticle ~= nil) then
             debuffParticle:GetComponentParticle():StopParticleSpawn()

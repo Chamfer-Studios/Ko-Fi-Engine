@@ -911,7 +911,7 @@ function ManageTimers(dt)
 
     if (hitOrMissTimer ~= nil) then
         hitOrMissTimer = hitOrMissTimer + dt
-        if (hitOrMissTimer > 0.3) then
+        if (hitOrMissTimer > 1) then
             if (HitParticle ~= nil) then
                 HitParticle:GetComponentParticle():StopParticleSpawn()
             end
@@ -1619,16 +1619,17 @@ function EventHandler(key, fields)
         abilities.AbilitySecondary = AbilityStatus.Normal
         DispatchGlobalEvent("Player_Ability", {characterID, Ability.Secondary, abilities.AbilitySecondary})
         decoyCount = decoyCount + 1
-    elseif (key == "Hit") then
+        Log("Decoy bugged, correction applied.\n")
+    elseif (key == "Ability_Hit_Particle") then
         if (HitParticle ~= nil) then
             HitParticle:GetComponentParticle():ResumeParticleSpawn()
-            HitParticle:GetTransform():SetPosition(float3.new(fields[1] + 15, fields[2] + 23, fields[3] + 12))
+            HitParticle:GetTransform():SetPosition(float3.new(fields[1].x + 15, fields[1].y + 23, fields[1].z + 12))
             hitOrMissTimer = 0.0
         end
-    elseif (key == "Missed") then
+    elseif (key == "Ability_Miss_Particle") then
         if (MissParticle ~= nil) then
             MissParticle:GetComponentParticle():ResumeParticleSpawn()
-            MissParticle:GetTransform():SetPosition(float3.new(fields[1] + 15, fields[2] + 23, fields[3] + 12))
+            MissParticle:GetTransform():SetPosition(float3.new(fields[1].x + 15, fields[1].y + 23, fields[1].z + 12))
             hitOrMissTimer = 0.0
         end
     elseif (key == "Chance_End") then
