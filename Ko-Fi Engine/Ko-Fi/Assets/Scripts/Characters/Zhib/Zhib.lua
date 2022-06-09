@@ -655,37 +655,43 @@ function DrawHoverParticle()
                 if (enemyHoveredType == "Harkonnen") then
                     if (enemyHoveredState == 1) then
                         ChanceParticle100:GetComponentParticle():ResumeParticleSpawn()
-                        ChanceParticle100:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
-                            drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
-                                :GetPosition().z + 12)
+                        ChanceParticle100:GetTransform():SetPosition(
+                            float3.new(drawingTarget:GetTransform():GetPosition().x + 15,
+                                drawingTarget:GetTransform():GetPosition().y + 23,
+                                drawingTarget:GetTransform():GetPosition().z + 12))
                         Log(ChanceParticle100:GetTransform():GetPosition() .. "\n")
                     elseif (enemyHoveredState == 2) then
                         ChanceParticle80:GetComponentParticle():ResumeParticleSpawn()
-                        ChanceParticle80:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
-                            drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
-                                :GetPosition().z + 12)
+                        ChanceParticle80:GetTransform():SetPosition(
+                            float3.new(drawingTarget:GetTransform():GetPosition().x + 15,
+                                drawingTarget:GetTransform():GetPosition().y + 23,
+                                drawingTarget:GetTransform():GetPosition().z + 12))
                     elseif (enemyHoveredState == 3) then
                         ChanceParticle20:GetComponentParticle():ResumeParticleSpawn()
-                        ChanceParticle20:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
-                            drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
-                                :GetPosition().z + 12)
+                        ChanceParticle20:GetTransform():SetPosition(
+                            float3.new(drawingTarget:GetTransform():GetPosition().x + 15,
+                                drawingTarget:GetTransform():GetPosition().y + 23,
+                                drawingTarget:GetTransform():GetPosition().z + 12))
                     end
                 elseif (enemyHoveredType == "Sardaukar") then
                     if (enemyHoveredState == 1) then
                         ChanceParticle80:GetComponentParticle():ResumeParticleSpawn()
-                        ChanceParticle80:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
-                            drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
-                                :GetPosition().z + 12)
+                        ChanceParticle80:GetTransform():SetPosition(
+                            float3.new(drawingTarget:GetTransform():GetPosition().x + 15,
+                                drawingTarget:GetTransform():GetPosition().y + 23,
+                                drawingTarget:GetTransform():GetPosition().z + 12))
                     elseif (enemyHoveredState == 2) then
                         ChanceParticle30:GetComponentParticle():ResumeParticleSpawn()
-                        ChanceParticle30:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
-                            drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
-                                :GetPosition().z + 12)
+                        ChanceParticle30:GetTransform():SetPosition(
+                            float3.new(drawingTarget:GetTransform():GetPosition().x + 15,
+                                drawingTarget:GetTransform():GetPosition().y + 23,
+                                drawingTarget:GetTransform():GetPosition().z + 12))
                     elseif (enemyHoveredState == 3) then
                         ChanceParticle0:GetComponentParticle():ResumeParticleSpawn()
-                        ChanceParticle0:GetTransform():SetPosition(drawingTarget:GetTransform():GetPosition().x + 15,
-                            drawingTarget:GetTransform():GetPosition().y + 23, drawingTarget:GetTransform()
-                                :GetPosition().z + 12)
+                        ChanceParticle0:GetTransform():SetPosition(float3.new(
+                            drawingTarget:GetTransform():GetPosition().x + 15,
+                            drawingTarget:GetTransform():GetPosition().y + 23,
+                            drawingTarget:GetTransform():GetPosition().z + 12))
                     end
 
                 end
