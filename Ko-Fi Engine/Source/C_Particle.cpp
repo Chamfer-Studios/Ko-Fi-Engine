@@ -94,18 +94,16 @@ bool C_Particle::PostUpdate(float dt)
 
 bool C_Particle::CleanUp()
 {
-	for (std::vector<EmitterInstance*>::const_iterator it = emitterInstances.begin(); it != emitterInstances.end();++it)
+	for (auto emInst : emitterInstances)
 	{
-		emitterInstances.erase(it);
-		if (emitterInstances.empty())
-			break;
+		RELEASE(emInst);
 	}
 	emitterInstances.clear();
 	emitterInstances.shrink_to_fit();
 
 	if (resource != nullptr)
-		owner->GetEngine()->GetResourceManager()->FreeResource(resource->GetUID());
-	resource = nullptr;
+		RELEASE(resource);
+
 	return true;
 }
 
@@ -718,6 +716,7 @@ void C_Particle::DeleteModule(Emitter* e, ParticleModuleType t)
 	{
 		if ((*it)->type == t)
 		{
+			RELEASE(*it);
 			e->modules.erase(it);
 			return;
 		}
