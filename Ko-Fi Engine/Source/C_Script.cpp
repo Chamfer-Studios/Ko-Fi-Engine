@@ -54,9 +54,9 @@ bool C_Script::CleanUp()
 	{
 		s->handler->CleanUp();
 
-		for (std::vector<InspectorVariable*>::iterator var = s->inspectorVariables.begin(); var != s->inspectorVariables.end();)
+		for (auto var : s->inspectorVariables)
 		{
-			s->inspectorVariables.erase(var);
+			RELEASE(var);
 		}
 		s->inspectorVariables.clear();
 		s->inspectorVariables.shrink_to_fit();

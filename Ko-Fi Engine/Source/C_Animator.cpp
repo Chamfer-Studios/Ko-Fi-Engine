@@ -97,15 +97,7 @@ bool C_Animator::PostUpdate()
 
 bool C_Animator::CleanUp()
 {
-	//can improve a lot
-	if (animation != nullptr)
-		owner->GetEngine()->GetResourceManager()->FreeResource(animation->GetUID());
-
-
-	for (std::map<std::string, AnimatorClip>::iterator it = clips.begin(); it != clips.end(); it++)
-	{
-		owner->GetEngine()->GetResourceManager()->FreeResource(it->second.GetAnimation()->GetUID());
-	}
+	clips.clear();
 
 	for (auto it : meshesInfo)
 	{
@@ -116,19 +108,12 @@ bool C_Animator::CleanUp()
 
 	clips.clear();
 
-	if (selectedClip)
-	{
-		owner->GetEngine()->GetResourceManager()->FreeResource(selectedClip->GetAnimation()->GetUID());
-		selectedClip = nullptr;
-	}
-		
+	selectedClip = nullptr;
+	clipToDelete = nullptr;
 
-	if (clipToDelete)
-	{
-		owner->GetEngine()->GetResourceManager()->FreeResource(clipToDelete->GetAnimation()->GetUID());
-		clipToDelete = nullptr;
-	}
-		
+	//can improve a lot
+	if (animation != nullptr)
+		owner->GetEngine()->GetResourceManager()->FreeResource(animation->GetUID());
 
 	return true;
 }

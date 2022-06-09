@@ -94,6 +94,13 @@ bool C_Particle::PostUpdate(float dt)
 
 bool C_Particle::CleanUp()
 {
+	for (auto it : resourcesList)
+	{
+		it.clear();
+		it.shrink_to_fit();
+	}
+	resourcesList.clear();
+
 	if (resource != nullptr)
 	{
 		for (auto emitter : resource->emitters)
