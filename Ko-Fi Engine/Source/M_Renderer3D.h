@@ -176,7 +176,7 @@ private:
 	uint previewTextureBuffer = 0;
 	bool show_viewport_window = true;
 	// Particle Map
-	std::map<float, ParticleRenderer> particles;
+	std::multimap<float, ParticleRenderer> particles;
 
 	// Occlusion Culling things
 	OcclusionQuery *query = nullptr;

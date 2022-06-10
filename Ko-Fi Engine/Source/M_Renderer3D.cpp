@@ -1314,17 +1314,8 @@ void M_Renderer3D::RenderAllParticles()
 {
 	OPTICK_EVENT();
 
-	std::vector<float> key;
-	for (auto it = particles.begin(); it != particles.end(); ++it) {
-		key.push_back(it->first);
-	}
-
-#pragma omp parallel for
-	for (int i = 0; i < key.size(); i++)
-	{
-		float k = key[i];
-		auto p = particles[k];
-		RenderParticle(&p);
+	for (auto it = particles.rbegin(); it != particles.rend(); ++it) {
+		RenderParticle(&it->second);
 	}
 
 	particles.clear();
