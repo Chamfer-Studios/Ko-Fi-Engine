@@ -349,67 +349,6 @@
                 },
                 {
                     "active": true,
-                    "children": [],
-                    "components": [
-                        {
-                            "active": true,
-                            "type": 23
-                        },
-                        {
-                            "active": true,
-                            "anchor": 3,
-                            "pivot": [
-                                0.5,
-                                0.5
-                            ],
-                            "position": [
-                                232.0,
-                                98.0
-                            ],
-                            "rotation": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "size": [
-                                33.0,
-                                65.0
-                            ],
-                            "type": 22
-                        },
-                        {
-                            "active": true,
-                            "hoverTexture": "Assets/New UI/slider_button_hover.png",
-                            "idleTexture": "Assets/New UI/slider_button_default.png",
-                            "pressedTexture": "Assets/New UI/slider_button_pressed.png",
-                            "type": 15
-                        },
-                        {
-                            "active": true,
-                            "file_name": "Assets/Scripts/HUD/UI_MasterAudio.lua",
-                            "id": 489075817,
-                            "inspector_variables": [
-                                {
-                                    "name": "rightPos",
-                                    "type": "int",
-                                    "value": 400
-                                },
-                                {
-                                    "name": "leftPos",
-                                    "type": "int",
-                                    "value": 75
-                                }
-                            ],
-                            "type": 5
-                        }
-                    ],
-                    "is3D": false,
-                    "isPrefab": false,
-                    "name": "MV Button",
-                    "tag": 0
-                },
-                {
-                    "active": true,
                     "children": [
                         {
                             "active": true,
@@ -537,6 +476,7 @@
                         },
                         {
                             "active": true,
+                            "async": false,
                             "file_name": "Assets/Scripts/HUD/UI_ScreenBrightness.lua",
                             "id": 1914436183,
                             "inspector_variables": [
@@ -877,6 +817,7 @@
                         },
                         {
                             "active": true,
+                            "async": false,
                             "file_name": "Assets/Scripts/HUD/UI_FPS.lua",
                             "id": 844645124,
                             "type": 5
@@ -929,6 +870,7 @@
                                 },
                                 {
                                     "active": true,
+                                    "async": false,
                                     "file_name": "Assets/Scripts/HUD/UI_Vsync.lua",
                                     "id": 1106885570,
                                     "type": 5
@@ -1027,6 +969,7 @@
                                 },
                                 {
                                     "active": true,
+                                    "async": false,
                                     "file_name": "Assets/Scripts/HUD/UI_Borderless.lua",
                                     "id": 1496512952,
                                     "type": 5
@@ -1076,6 +1019,7 @@
                                 },
                                 {
                                     "active": true,
+                                    "async": false,
                                     "file_name": "Assets/Scripts/HUD/UI_Fullscreen.lua",
                                     "id": 268692700,
                                     "type": 5
@@ -1125,6 +1069,7 @@
                                 },
                                 {
                                     "active": true,
+                                    "async": false,
                                     "file_name": "Assets/Scripts/HUD/UI_Windowed.lua",
                                     "id": 1305222561,
                                     "type": 5
@@ -1367,6 +1312,7 @@
                                 },
                                 {
                                     "active": true,
+                                    "async": false,
                                     "file_name": "Assets/Scripts/HUD/UI_FullscreenDesktop.lua",
                                     "id": 129396576,
                                     "type": 5
@@ -1460,6 +1406,68 @@
             "is3D": false,
             "isPrefab": false,
             "name": "Background ",
+            "tag": 0
+        },
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 3,
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        306.0,
+                        98.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        33.0,
+                        65.0
+                    ],
+                    "type": 22
+                },
+                {
+                    "active": true,
+                    "hoverTexture": "Assets/New UI/slider_button_hover.png",
+                    "idleTexture": "Assets/New UI/slider_button_default.png",
+                    "pressedTexture": "Assets/New UI/slider_button_pressed.png",
+                    "type": 15
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/HUD/UI_MasterAudio.lua",
+                    "id": 489075817,
+                    "inspector_variables": [
+                        {
+                            "name": "rightPos",
+                            "type": "int",
+                            "value": 460
+                        },
+                        {
+                            "name": "leftPos",
+                            "type": "int",
+                            "value": 160
+                        }
+                    ],
+                    "type": 5
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "MV Button",
             "tag": 0
         }
     ],

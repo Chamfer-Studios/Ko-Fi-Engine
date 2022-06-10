@@ -33,8 +33,9 @@ function Update(dt)
 			gameObject:GetTransform2D():SetPositionX(mouseX)
 			isStarting = false
 		end
-		mouseX = gameObject:GetButton():GetMouseX()
-		mouseX = mouseX * 5.3
+		--mouseX = gameObject:GetButton():GetMouseX()
+		--mouseX = mouseX * 5.3
+		mouseX = GetMouseScreenPos().x * 1.8
 		onePart = (rightPos - leftPos) / 4
 		if (gameObject:GetButton():IsPressed() == true) then
 			isActive = true

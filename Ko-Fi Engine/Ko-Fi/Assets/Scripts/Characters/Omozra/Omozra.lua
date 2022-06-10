@@ -458,22 +458,6 @@ function Update(dt)
         MoveToDestination(dt)
         hasToMove = false
     end
-
-    if abilities.AbilityPrimary == AbilityStatus.Using then
-        isUsingQ = true
-    else
-        isUsingQ = false
-    end
-    if abilities.AbilitySecondary == AbilityStatus.Using then
-        isUsingW = true
-    else
-        isUsingW = false
-    end
-    if abilities.AbilityUltimate == AbilityStatus.Using then
-        isUsingE = true
-    else
-        isUsingE = false
-    end
 end
 
 --------------------------------------------------
@@ -734,7 +718,7 @@ function ManageTimers(dt)
     end
 
     if (currentState == State.AIM_PRIMARY) then
-        DispatchGlobalEvent("Omozra_Primary", {})
+        SetVariable(true, "GameState.lua", "omozraPrimary", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL)
     end
 
     -- Secondary ability cooldown
@@ -757,7 +741,7 @@ function ManageTimers(dt)
         end
     end
     if (currentState == State.AIM_ULTIMATE) then
-        DispatchGlobalEvent("Omozra_Ultimate", {})
+        SetVariable(true, "GameState.lua", "omozraUltimate", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL)
     end
 
     -- Animation timer
@@ -1265,7 +1249,7 @@ function Die()
         ChangeTrack(trackList)
     end
 
-    DispatchGlobalEvent("Player_Death", {characterID})
+    SetVariable(0, "GameState.lua", "gameOverTimer", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
 end
 --------------------------------------------------
 

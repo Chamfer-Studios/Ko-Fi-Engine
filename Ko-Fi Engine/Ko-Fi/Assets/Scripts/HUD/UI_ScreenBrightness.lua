@@ -33,7 +33,7 @@ function Update(dt)
 			isStarting = false
 		end
 		mouseX = gameObject:GetButton():GetMouseX()
-		mouseX = mouseX * 5.3
+		mouseX = mouseX * 1.7
 		onePart = (rightPos - leftPos) / 4
 		if (gameObject:GetButton():IsPressed() == true) then
 			isActive = true

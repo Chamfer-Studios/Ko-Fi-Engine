@@ -6,7 +6,7 @@ isStarting = true
 function Update(dt)
     if (isStarting == true) then
         startTime = os.time()
-        endTime = startTime+20
+        endTime = startTime + 20
         isStarting = false
         change = true
     end
@@ -48,14 +48,14 @@ function Update(dt)
         elseif (isActive == 6) then
             gameObject:GetChild("Text4"):GetChild("Text4Part1"):Active(false)
             gameObject:GetChild("Text4"):GetChild("Text4Part2"):Active(true)
-		elseif (isActive == 7) then
+        elseif (isActive == 7) then
             gameObject:GetChild("Text4"):GetChild("Text4Part2"):Active(false)
-			gameObject:GetChild("Text4"):GetChild("Text4Part3"):Active(true)
+            gameObject:GetChild("Text4"):GetChild("Text4Part3"):Active(true)
         elseif (isActive >= 8) then
-            gameObject:ChangeScene(true, "SceneTutorial")
+            gameObject:ChangeScene(true, "SceneTutorial_new")
         end
         change = false
     end
 end
-    
+
 print("UI_CutsceneIntro.lua compiled succesfully")

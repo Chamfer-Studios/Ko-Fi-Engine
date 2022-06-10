@@ -68,9 +68,6 @@ recoveryTime = 7
 staminaTimer = staminaSeconds
 standingStaminaMultiplier = 1.5
 isTired = false
-isUsingQ = false
-isUsingW = false
-isUsingE = false
 
 -- Basic Attack --
 attackRange = 25.0
@@ -211,26 +208,6 @@ function Start()
     if (jumpParticle ~= nil) then
         jumpParticle:GetComponentParticle():StopParticleSpawn()
     end
-    ChanceParticle0 = Find("0 Chance Particle")
-    if (ChanceParticle0 ~= nil) then
-        ChanceParticle0:GetComponentParticle():StopParticleSpawn()
-    end
-    ChanceParticle20 = Find("20 Chance Particle")
-    if (ChanceParticle20 ~= nil) then
-        ChanceParticle20:GetComponentParticle():StopParticleSpawn()
-    end
-    ChanceParticle30 = Find("30 Chance Particle")
-    if (ChanceParticle30 ~= nil) then
-        ChanceParticle30:GetComponentParticle():StopParticleSpawn()
-    end
-    ChanceParticle80 = Find("80 Chance Particle")
-    if (ChanceParticle80 ~= nil) then
-        ChanceParticle80:GetComponentParticle():StopParticleSpawn()
-    end
-    ChanceParticle100 = Find("100 Chance Particle")
-    if (ChanceParticle100 ~= nil) then
-        ChanceParticle100:GetComponentParticle():StopParticleSpawn()
-    end
     HitParticle = Find("Hit Particle")
     if (HitParticle ~= nil) then
         HitParticle:GetComponentParticle():StopParticleSpawn()
@@ -253,6 +230,10 @@ function Start()
 
     -- Stamina Bar Blue
     staminaBar = Find("Stamina Bar Fill")
+    staminaDefaultPath = "Assets/New UI/spice_bar_fill_default.png"
+    staminaRedPath = "Assets/New UI/spice_bar_fill_red.png"
+    staminaWhitePath = "Assets/New UI/spice_bar_fill_white.png"
+    staminaBar:GetImage():SetTexture(staminaDefaultPath)
 end
 
 -- Called each loop iteration
@@ -499,22 +480,6 @@ function Update(dt)
         MoveToDestination(dt)
         hasToMove = false
     end
-
-    if abilities.AbilityPrimary == AbilityStatus.Using then
-        isUsingQ = true
-    else
-        isUsingQ = false
-    end
-    if abilities.AbilitySecondary == AbilityStatus.Using then
-        isUsingW = true
-    else
-        isUsingW = false
-    end
-    if abilities.AbilityUltimate == AbilityStatus.Using then
-        isUsingE = true
-    else
-        isUsingE = false
-    end
 end
 --------------------------------------------------
 
@@ -617,6 +582,8 @@ function CancelAbilities(onlyAbilities)
     end
 end
 
+isHoveringEnemy = nil
+lastEnemyTarget = nil
 function DrawHoverParticle()
     if (choosingTargetParticle == nil) then
         do
@@ -636,8 +603,14 @@ function DrawHoverParticle()
             end
             choosingTargetParticle:GetComponentParticle():SetColor(255, 0, 255, 255)
             finalPosition = float3.new(t.x, t.y + 1, t.z)
+            lastEnemyTarget = drawingTarget
+            if isHoveringEnemy ~= nil then
+                DispatchGlobalEvent("Not_Hovering_Enemy", {lastEnemyTarget})
+                isHoveringEnemy = nil
+            end
         elseif ((currentState == State.AIM_PRIMARY or currentState == State.AIM_ULTIMATE) and
             (drawingTarget.tag == Tag.ENEMY)) then
+            lastEnemyTarget = drawingTarget
             local dist = Distance3D(drawingTarget:GetTransform():GetPosition(), componentTransform:GetPosition())
             if ((currentState == State.AIM_PRIMARY and dist <= primaryCastRange) or
                 (currentState == State.AIM_ULTIMATE and dist <= ultimateCastRange)) then
@@ -648,52 +621,12 @@ function DrawHoverParticle()
             finalPosition = drawingTarget:GetTransform():GetPosition()
             finalPosition.y = finalPosition.y + 1
 
-            DispatchGlobalEvent("Chance_Start", {drawingTarget:GetName()})
-            if (enemyHoveredType ~= nil) then
-                if (enemyHoveredType == "Harkonnen") then
-                    if (enemyHoveredState == 1) then
-                        ChanceParticle100:GetComponentParticle():ResumeParticleSpawn()
-                        ChanceParticle100:GetTransform():SetPosition(
-                            float3.new(drawingTarget:GetTransform():GetPosition().x + 15,
-                                drawingTarget:GetTransform():GetPosition().y + 23,
-                                drawingTarget:GetTransform():GetPosition().z + 12))
-                    elseif (enemyHoveredState == 2) then
-                        ChanceParticle80:GetComponentParticle():ResumeParticleSpawn()
-                        ChanceParticle80:GetTransform():SetPosition(
-                            float3.new(drawingTarget:GetTransform():GetPosition().x + 15,
-                                drawingTarget:GetTransform():GetPosition().y + 23,
-                                drawingTarget:GetTransform():GetPosition().z + 12))
-                    elseif (enemyHoveredState == 3) then
-                        ChanceParticle20:GetComponentParticle():ResumeParticleSpawn()
-                        ChanceParticle20:GetTransform():SetPosition(
-                            float3.new(drawingTarget:GetTransform():GetPosition().x + 15,
-                                drawingTarget:GetTransform():GetPosition().y + 23,
-                                drawingTarget:GetTransform():GetPosition().z + 12))
-                    end
-                elseif (enemyHoveredType == "Sardaukar") then
-                    if (enemyHoveredState == 1) then
-                        ChanceParticle80:GetComponentParticle():ResumeParticleSpawn()
-                        ChanceParticle80:GetTransform():SetPosition(
-                            float3.new(drawingTarget:GetTransform():GetPosition().x + 15,
-                                drawingTarget:GetTransform():GetPosition().y + 23,
-                                drawingTarget:GetTransform():GetPosition().z + 12))
-                    elseif (enemyHoveredState == 2) then
-                        ChanceParticle30:GetComponentParticle():ResumeParticleSpawn()
-                        ChanceParticle30:GetTransform():SetPosition(
-                            float3.new(drawingTarget:GetTransform():GetPosition().x + 15,
-                                drawingTarget:GetTransform():GetPosition().y + 23,
-                                drawingTarget:GetTransform():GetPosition().z + 12))
-                    elseif (enemyHoveredState == 3) then
-                        ChanceParticle0:GetComponentParticle():ResumeParticleSpawn()
-                        ChanceParticle0:GetTransform():SetPosition(float3.new(
-                            drawingTarget:GetTransform():GetPosition().x + 15,
-                            drawingTarget:GetTransform():GetPosition().y + 23,
-                            drawingTarget:GetTransform():GetPosition().z + 12))
-                    end
-
+            if isHoveringEnemy == nil then
+                if currentState == State.AIM_PRIMARY then
+                    DispatchGlobalEvent("Hovering_Enemy", {drawingTarget, "Knife"})
                 end
+                isHoveringEnemy = true
             end
-
         elseif (currentState == State.AIM_SECONDARY and drawingTarget.tag == Tag.FLOOR) then
             local mouseClick = GetLastMouseClick()
             if (Distance3D(mouseClick, componentTransform:GetPosition()) <= secondaryCastRange) then
@@ -704,14 +637,14 @@ function DrawHoverParticle()
             -- This is only 1 instead of mouseClick.y + 1 because if hovering game objects with height like characters, the hovering particle will go up
             finalPosition = float3.new(mouseClick.x, 1, mouseClick.z)
         else
+            if isHoveringEnemy ~= nil then
+                Log("Sending is not hovering event\n")
+                DispatchGlobalEvent("Not_Hovering_Enemy", {lastEnemyTarget})
+                isHoveringEnemy = nil
+            end
+
             choosingTargetParticle:GetComponentParticle():StopParticleSpawn()
-            ChanceParticle0:GetComponentParticle():StopParticleSpawn()
-            ChanceParticle20:GetComponentParticle():StopParticleSpawn()
-            ChanceParticle30:GetComponentParticle():StopParticleSpawn()
-            ChanceParticle80:GetComponentParticle():StopParticleSpawn()
-            ChanceParticle100:GetComponentParticle():StopParticleSpawn()
-            enemyHoveredState = nil
-            enemyHoveredType = nil
+
             do
                 return
             end
@@ -730,15 +663,15 @@ function DrawActiveAbilities()
             if (abilities.AbilityPrimary == AbilityStatus.Active) then
                 componentLight:SetRange(primaryCastRange)
                 componentLight:SetAngle(360 / 2)
-                componentLight:SetDiffuse(0.2)
+                componentLight:SetDiffuse(0.3)
             elseif (abilities.AbilitySecondary == AbilityStatus.Active) then
                 componentLight:SetRange(secondaryCastRange)
                 componentLight:SetAngle(360 / 2)
-                componentLight:SetDiffuse(0.2)
+                componentLight:SetDiffuse(0.3)
             elseif (abilities.AbilityUltimate == AbilityStatus.Active) then
                 componentLight:SetRange(ultimateCastRange)
                 componentLight:SetAngle(360 / 2)
-                componentLight:SetDiffuse(0.2)
+                componentLight:SetDiffuse(0.3)
             else
                 componentLight:SetAngle(0)
             end
@@ -760,6 +693,11 @@ function UpdateStamina()
 
     if staminaBar ~= nil then
         staminaBar:GetTransform2D():SetMask(float2.new(proportion, 1))
+        if proportion <= 0.3 then
+            staminaBar:GetImage():SetTexture(staminaRedPath)
+        else
+            staminaBar:GetImage():SetTexture(staminaDefaultPath)
+        end
     end
 end
 
@@ -1430,7 +1368,7 @@ function Die()
         ChangeTrack(trackList)
     end
 
-    DispatchGlobalEvent("Player_Death", {characterID})
+    SetVariable(0, "GameState.lua", "gameOverTimer", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
 end
 --------------------------------------------------
 
@@ -1614,6 +1552,7 @@ function EventHandler(key, fields)
         abilities.AbilityPrimary = AbilityStatus.Normal
         DispatchGlobalEvent("Player_Ability", {characterID, Ability.Primary, abilities.AbilityPrimary})
         knifeCount = knifeCount + 1
+        Log("Knife bugged, correction applied.\n")
     elseif (key == "Zhib_Secondary_Bugged") then
         secondaryTimer = nil
         abilities.AbilitySecondary = AbilityStatus.Normal
@@ -1632,9 +1571,6 @@ function EventHandler(key, fields)
             MissParticle:GetTransform():SetPosition(float3.new(fields[1].x + 15, fields[1].y + 23, fields[1].z + 12))
             hitOrMissTimer = 0.0
         end
-    elseif (key == "Chance_End") then
-        enemyHoveredState = fields[1]
-        enemyHoveredType = fields[2]
     end
 end
 --------------------------------------------------

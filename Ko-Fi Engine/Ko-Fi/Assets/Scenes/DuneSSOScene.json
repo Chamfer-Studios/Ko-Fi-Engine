@@ -2,7 +2,7 @@
     "DuneSSOScene": {
         "active": true,
         "draw_skybox": true,
-        "game_objects_amount": 6,
+        "game_objects_amount": 7,
         "game_objects_list": [
             {
                 "UID": 1772434662,
@@ -34,10 +34,13 @@
                     },
                     {
                         "active": true,
+                        "cameraType": 0,
                         "far_plane_distance": 1000.0,
                         "frustum_culling": false,
                         "isMainCamera": false,
                         "near_plane_distance": 0.30000001192092896,
+                        "orthoHeight": 1000.0,
+                        "orthoWidth": 1000.0,
                         "sCullingRadius": 499,
                         "sphere_culling": false,
                         "type": 4,
@@ -81,6 +84,7 @@
                     {
                         "active": true,
                         "ambientValue": 0.5,
+                        "castShadows": false,
                         "diffuseValue": 0.800000011920929,
                         "lightColor": [
                             1.0,
@@ -103,14 +107,17 @@
                     },
                     {
                         "active": true,
+                        "cameraType": 1,
                         "far_plane_distance": 1000.0,
                         "frustum_culling": false,
                         "isMainCamera": false,
                         "near_plane_distance": 0.30000001192092896,
+                        "orthoHeight": 1000.0,
+                        "orthoWidth": 1000.0,
                         "sCullingRadius": 499,
                         "sphere_culling": false,
                         "type": 4,
-                        "vertical_fov": 446.0
+                        "vertical_fov": 1000.0
                     }
                 ],
                 "is3D": true,
@@ -192,7 +199,49 @@
                     },
                     {
                         "active": true,
-                        "texture": "Assets/UI/Intro/pito03.png",
+                        "texture": "Assets/UI/Intro/transition.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Image 1",
+                "parent_UID": 1326020511,
+                "tag": 0
+            },
+            {
+                "UID": 381547809,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            960.0,
+                            540.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/UI/Logo/title_logo_color.png",
                         "type": 14
                     }
                 ],
@@ -203,7 +252,7 @@
                 "tag": 0
             },
             {
-                "UID": 602532925,
+                "UID": 1274242492,
                 "active": true,
                 "components": [
                     {
@@ -239,8 +288,9 @@
                     },
                     {
                         "active": true,
+                        "async": false,
                         "file_name": "Assets/Scripts/Intro/IntroTransitionEnd.lua",
-                        "id": 898523489,
+                        "id": 1668170532,
                         "type": 5
                     }
                 ],
@@ -251,7 +301,7 @@
                 "tag": 0
             },
             {
-                "UID": 1999386465,
+                "UID": 1637494965,
                 "active": true,
                 "components": [
                     {
@@ -287,8 +337,9 @@
                     },
                     {
                         "active": true,
+                        "async": false,
                         "file_name": "Assets/Scripts/Intro/IntroTransitionBegin.lua",
-                        "id": 1399250689,
+                        "id": 547779835,
                         "inspector_variables": [
                             {
                                 "name": "transitionTo",

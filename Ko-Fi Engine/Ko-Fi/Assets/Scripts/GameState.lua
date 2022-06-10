@@ -245,7 +245,7 @@ function EventHandler(key, fields)
             omozraAvailable = true
         end
         -- Make Sure it is done when unlocking characters (checkpoints)
-        -- SaveGame()
+        SaveGame()
     end
 end
 
@@ -366,6 +366,14 @@ function LoadGame()
     -- if(omozraAvailable == false) then
     --     DispatchEvent("Disable_Character", {3})
     -- end
+end
+
+function EventHandler(key, fields)
+    if key == "Last_Checkpoint" then -- fields[1] -> if it has to load
+        if (fields[1] == true) then
+			LoadGame()
+        end
+    end
 end
 
 print("GameState.lua compiled successfully!")

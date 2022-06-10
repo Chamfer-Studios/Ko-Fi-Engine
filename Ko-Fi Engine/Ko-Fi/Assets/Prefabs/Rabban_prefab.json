@@ -1,0 +1,1645 @@
+{
+    "active": true,
+    "children": [
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        -47.60499954223633,
+                        -0.0078116655349731445,
+                        -34.42100143432617
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "mesh": {
+                        "asset_path": "Assets/Models/Enemies/rabban.sugar",
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "is_animated": true,
+                        "shape_type": 0,
+                        "uid": 1315905135
+                    },
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "color": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "shader": {
+                        "asset_path": "Assets/Shaders/default_shader.glsl",
+                        "uniforms": null
+                    },
+                    "texture": {
+                        "asset_path": "Assets/Textures/Characters/Enemies/Rabban/rabban_base_color.png"
+                    },
+                    "type": 2
+                },
+                {
+                    "active": true,
+                    "body_type": "Static",
+                    "freeze_position_x": false,
+                    "freeze_position_y": false,
+                    "freeze_position_z": false,
+                    "freeze_rotation_x": false,
+                    "freeze_rotation_y": false,
+                    "freeze_rotation_z": false,
+                    "mass": 1.0,
+                    "type": 6,
+                    "use_gravity": true
+                },
+                {
+                    "active": true,
+                    "center": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "filter": "enemy",
+                    "is_trigger": false,
+                    "scale_factor": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 7
+                },
+                {
+                    "active": true,
+                    "ambientValue": 0.0,
+                    "castShadows": false,
+                    "constantAttenuationValue": 1.0,
+                    "cutOffAngle": 0.9649999737739563,
+                    "diffuseValue": 0.800000011920929,
+                    "lightColor": [
+                        0.0,
+                        1.0,
+                        0.0
+                    ],
+                    "lightDirection": [
+                        0.0,
+                        1.0,
+                        0.0
+                    ],
+                    "lightPosition": [
+                        -47.60499954223633,
+                        -0.0078116655349731445,
+                        -34.42100143432617
+                    ],
+                    "linearAttenuationValue": 0.0,
+                    "quadraticAttenuationValue": 0.0,
+                    "sourceType": 2,
+                    "specularValue": 0.0,
+                    "type": 19
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/Pathfinder.lua",
+                    "id": 863776207,
+                    "inspector_variables": [
+                        {
+                            "name": "minRetargetingDistance",
+                            "type": "int",
+                            "value": 20
+                        },
+                        {
+                            "name": "standByTime",
+                            "type": "int",
+                            "value": 3
+                        }
+                    ],
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/Enemies/EnemyController.lua",
+                    "id": 978740606,
+                    "inspector_variables": [
+                        {
+                            "name": "static",
+                            "type": "bool",
+                            "value": false
+                        },
+                        {
+                            "name": "speed",
+                            "type": "int",
+                            "value": 20
+                        },
+                        {
+                            "name": "chaseSpeed",
+                            "type": "int",
+                            "value": 150
+                        },
+                        {
+                            "name": "attackRange",
+                            "type": "int",
+                            "value": 35
+                        },
+                        {
+                            "name": "visionConeAngle",
+                            "type": "int",
+                            "value": 70
+                        },
+                        {
+                            "name": "visionConeRadius",
+                            "type": "int",
+                            "value": 170
+                        },
+                        {
+                            "name": "hearingRange",
+                            "type": "int",
+                            "value": 140
+                        },
+                        {
+                            "name": "awarenessOffset",
+                            "type": "float3",
+                            "value": {
+                                "x": 0.0,
+                                "y": 50.0,
+                                "z": 0.0
+                            }
+                        },
+                        {
+                            "name": "awarenessSize",
+                            "type": "float3",
+                            "value": {
+                                "x": 0.15000000596046448,
+                                "y": 0.30000001192092896,
+                                "z": 0.15000000596046448
+                            }
+                        },
+                        {
+                            "name": "pingpong",
+                            "type": "bool",
+                            "value": true
+                        },
+                        {
+                            "name": "loop",
+                            "type": "bool",
+                            "value": true
+                        },
+                        {
+                            "name": "patrolWaypoints",
+                            "type": "float3_array",
+                            "value": [
+                                -47.60505676269531,
+                                0.0,
+                                -34.42106628417969,
+                                -47.60505676269531,
+                                0.0,
+                                165.73934936523438,
+                                24.045974731445313,
+                                0.0,
+                                165.73934936523438,
+                                24.045974731445313,
+                                0.0,
+                                277.08465576171875,
+                                -145.33493041992188,
+                                0.0,
+                                277.08465576171875,
+                                -145.33493041992188,
+                                0.0,
+                                106.94499969482422,
+                                -430.0003356933594,
+                                0.0,
+                                106.94499969482422,
+                                -430.0003356933594,
+                                0.0,
+                                -32.0019416809082,
+                                -498.772216796875,
+                                0.0,
+                                -32.0019416809082,
+                                -498.772216796875,
+                                0.0,
+                                -152.04795837402344,
+                                -326.6402587890625,
+                                0.0,
+                                -152.04795837402344,
+                                -509.48004150390625,
+                                0.0,
+                                -151.84896850585938,
+                                -509.48004150390625,
+                                0.0,
+                                63.32586669921875,
+                                -590.253173828125,
+                                0.0,
+                                63.32586669921875,
+                                -590.253173828125,
+                                0.0,
+                                385.81219482421875,
+                                -261.6875305175781,
+                                0.0,
+                                385.81219482421875,
+                                -261.6875305175781,
+                                0.0,
+                                293.3394775390625,
+                                -524.6149291992188,
+                                0.0,
+                                293.3394775390625,
+                                -524.614990234375,
+                                0.0,
+                                64.77367401123047,
+                                -593.4080200195313,
+                                0.0,
+                                64.77367401123047,
+                                -593.4080200195313,
+                                0.0,
+                                -229.9845733642578,
+                                -258.6297912597656,
+                                0.0,
+                                -229.9845733642578,
+                                -258.6297912597656,
+                                0.0,
+                                -22.750015258789063,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                                0.0
+                            ]
+                        }
+                    ],
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/Enemies/Rabban.lua",
+                    "id": 1243611016,
+                    "type": 5
+                }
+            ],
+            "is3D": true,
+            "isPrefab": false,
+            "name": "rabban",
+            "tag": 2
+        },
+        {
+            "active": true,
+            "children": [
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": true,
+                            "children": [
+                                {
+                                    "active": true,
+                                    "children": [
+                                        {
+                                            "active": true,
+                                            "children": [
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        8.195638656616211e-07,
+                                                                        2.8088271617889404,
+                                                                        -5.960464477539063e-08
+                                                                    ],
+                                                                    "rotation": [
+                                                                        3.5390257835388184e-08,
+                                                                        -1.6889305697986856e-05,
+                                                                        3.129244134925102e-07,
+                                                                        1.0
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "rabban_left_toe_end",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                3.762543201446533e-06,
+                                                                6.821625232696533,
+                                                                -5.662441253662109e-07
+                                                            ],
+                                                            "rotation": [
+                                                                0.3230987787246704,
+                                                                0.17839735746383667,
+                                                                -0.05634724721312523,
+                                                                0.9276888370513916
+                                                            ],
+                                                            "scale": [
+                                                                0.9999999403953552,
+                                                                0.9999998211860657,
+                                                                1.0
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "rabban_left_toe_base",
+                                                    "tag": 0
+                                                }
+                                            ],
+                                            "components": [
+                                                {
+                                                    "active": true,
+                                                    "type": 23
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "position": [
+                                                        5.066394805908203e-07,
+                                                        8.722764015197754,
+                                                        7.152557373046875e-07
+                                                    ],
+                                                    "rotation": [
+                                                        0.614588737487793,
+                                                        0.09947502613067627,
+                                                        -0.11230769008398056,
+                                                        0.7744497656822205
+                                                    ],
+                                                    "scale": [
+                                                        0.9999999403953552,
+                                                        0.9999997615814209,
+                                                        0.9999998807907104
+                                                    ],
+                                                    "type": 21
+                                                }
+                                            ],
+                                            "is3D": true,
+                                            "isPrefab": false,
+                                            "name": "rabban_left_foot",
+                                            "tag": 0
+                                        }
+                                    ],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "position": [
+                                                4.76837158203125e-07,
+                                                10.401195526123047,
+                                                -5.960464477539063e-07
+                                            ],
+                                            "rotation": [
+                                                -0.49587997794151306,
+                                                0.05245058983564377,
+                                                -0.1300797164440155,
+                                                0.8569896817207336
+                                            ],
+                                            "scale": [
+                                                0.9999998807907104,
+                                                1.0,
+                                                1.0
+                                            ],
+                                            "type": 21
+                                        }
+                                    ],
+                                    "is3D": true,
+                                    "isPrefab": false,
+                                    "name": "rabban_left_leg",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "position": [
+                                        4.694434642791748,
+                                        -1.878455638885498,
+                                        -0.1049957349896431
+                                    ],
+                                    "rotation": [
+                                        0.15059813857078552,
+                                        0.32770150899887085,
+                                        0.9034758806228638,
+                                        -0.2316533923149109
+                                    ],
+                                    "scale": [
+                                        1.0,
+                                        1.0000001192092896,
+                                        1.0
+                                    ],
+                                    "type": 21
+                                }
+                            ],
+                            "is3D": true,
+                            "isPrefab": false,
+                            "name": "rabban_left_up_leg",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [
+                                {
+                                    "active": true,
+                                    "children": [
+                                        {
+                                            "active": true,
+                                            "children": [
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        -5.178153514862061e-07,
+                                                                        2.7919201850891113,
+                                                                        5.364418029785156e-07
+                                                                    ],
+                                                                    "rotation": [
+                                                                        -3.544121085496954e-08,
+                                                                        1.6346453776350245e-05,
+                                                                        4.2520717613570014e-08,
+                                                                        1.0
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "rabban_right_toe_end",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                -2.775341272354126e-06,
+                                                                6.914435386657715,
+                                                                -6.854534149169922e-07
+                                                            ],
+                                                            "rotation": [
+                                                                0.3105812072753906,
+                                                                -0.18134823441505432,
+                                                                0.05795831233263016,
+                                                                0.9312856793403625
+                                                            ],
+                                                            "scale": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "rabban_right_toe_base",
+                                                    "tag": 0
+                                                }
+                                            ],
+                                            "components": [
+                                                {
+                                                    "active": true,
+                                                    "type": 23
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "position": [
+                                                        4.76837158203125e-07,
+                                                        8.725973129272461,
+                                                        -7.152557373046875e-07
+                                                    ],
+                                                    "rotation": [
+                                                        0.6164341568946838,
+                                                        0.02301326021552086,
+                                                        0.12950006127357483,
+                                                        0.7763434052467346
+                                                    ],
+                                                    "scale": [
+                                                        0.9999991059303284,
+                                                        0.9999998211860657,
+                                                        0.9999997615814209
+                                                    ],
+                                                    "type": 21
+                                                }
+                                            ],
+                                            "is3D": true,
+                                            "isPrefab": false,
+                                            "name": "rabban_right_foot",
+                                            "tag": 0
+                                        }
+                                    ],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "position": [
+                                                7.152557373046875e-07,
+                                                10.395222663879395,
+                                                -1.1920928955078125e-06
+                                            ],
+                                            "rotation": [
+                                                -0.48808738589286804,
+                                                -0.0738980621099472,
+                                                0.06247304379940033,
+                                                0.8674139380455017
+                                            ],
+                                            "scale": [
+                                                0.9999996423721313,
+                                                0.9999997615814209,
+                                                1.0000003576278687
+                                            ],
+                                            "type": 21
+                                        }
+                                    ],
+                                    "is3D": true,
+                                    "isPrefab": false,
+                                    "name": "rabban_right_leg",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "position": [
+                                        -4.694437026977539,
+                                        -1.8784624338150024,
+                                        -0.05040880665183067
+                                    ],
+                                    "rotation": [
+                                        -0.1513374298810959,
+                                        0.32933032512664795,
+                                        0.9086782336235046,
+                                        0.20722545683383942
+                                    ],
+                                    "scale": [
+                                        0.9999997615814209,
+                                        1.0,
+                                        1.0
+                                    ],
+                                    "type": 21
+                                }
+                            ],
+                            "is3D": true,
+                            "isPrefab": false,
+                            "name": "rabban_right_up_leg",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [
+                                {
+                                    "active": true,
+                                    "children": [
+                                        {
+                                            "active": true,
+                                            "children": [
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [
+                                                                {
+                                                                    "active": true,
+                                                                    "children": [],
+                                                                    "components": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "type": 23
+                                                                        },
+                                                                        {
+                                                                            "active": true,
+                                                                            "position": [
+                                                                                -5.960464477539063e-08,
+                                                                                2.1625382900238037,
+                                                                                0.5807003974914551
+                                                                            ],
+                                                                            "rotation": [
+                                                                                0.0,
+                                                                                0.0,
+                                                                                0.0,
+                                                                                1.0
+                                                                            ],
+                                                                            "scale": [
+                                                                                1.0,
+                                                                                1.0,
+                                                                                1.0
+                                                                            ],
+                                                                            "type": 21
+                                                                        }
+                                                                    ],
+                                                                    "is3D": true,
+                                                                    "isPrefab": false,
+                                                                    "name": "rabban_head_top_end",
+                                                                    "tag": 0
+                                                                }
+                                                            ],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        3.0547380447387695e-07,
+                                                                        4.737816333770752,
+                                                                        1.27224600315094
+                                                                    ],
+                                                                    "rotation": [
+                                                                        -0.30306825041770935,
+                                                                        0.020942367613315582,
+                                                                        -0.014789791777729988,
+                                                                        0.9526239037513733
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "rabban_head",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                -2.0489096641540527e-08,
+                                                                5.08013391494751,
+                                                                4.682180588133633e-06
+                                                            ],
+                                                            "rotation": [
+                                                                0.13153241574764252,
+                                                                0.00944839883595705,
+                                                                9.285503620048985e-05,
+                                                                0.9912668466567993
+                                                            ],
+                                                            "scale": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "rabban_neck",
+                                                    "tag": 0
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [
+                                                                {
+                                                                    "active": true,
+                                                                    "children": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "children": [
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "children": [
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "children": [
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "children": [
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "children": [],
+                                                                                                            "components": [
+                                                                                                                {
+                                                                                                                    "active": true,
+                                                                                                                    "type": 23
+                                                                                                                },
+                                                                                                                {
+                                                                                                                    "active": true,
+                                                                                                                    "position": [
+                                                                                                                        0.08184540271759033,
+                                                                                                                        1.1936721801757813,
+                                                                                                                        -0.19896268844604492
+                                                                                                                    ],
+                                                                                                                    "rotation": [
+                                                                                                                        0.0,
+                                                                                                                        0.0,
+                                                                                                                        0.0,
+                                                                                                                        1.0
+                                                                                                                    ],
+                                                                                                                    "scale": [
+                                                                                                                        1.0,
+                                                                                                                        1.0,
+                                                                                                                        1.0
+                                                                                                                    ],
+                                                                                                                    "type": 21
+                                                                                                                }
+                                                                                                            ],
+                                                                                                            "is3D": true,
+                                                                                                            "isPrefab": false,
+                                                                                                            "name": "rabban_left_hand_index_4",
+                                                                                                            "tag": 0
+                                                                                                        }
+                                                                                                    ],
+                                                                                                    "components": [
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "type": 23
+                                                                                                        },
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "position": [
+                                                                                                                -0.6489270925521851,
+                                                                                                                2.0970089435577393,
+                                                                                                                0.46668124198913574
+                                                                                                            ],
+                                                                                                            "rotation": [
+                                                                                                                0.2504609227180481,
+                                                                                                                0.02510012313723564,
+                                                                                                                0.1679786592721939,
+                                                                                                                0.953112006187439
+                                                                                                            ],
+                                                                                                            "scale": [
+                                                                                                                0.999999463558197,
+                                                                                                                0.9999999403953552,
+                                                                                                                0.9999999403953552
+                                                                                                            ],
+                                                                                                            "type": 21
+                                                                                                        }
+                                                                                                    ],
+                                                                                                    "is3D": true,
+                                                                                                    "isPrefab": false,
+                                                                                                    "name": "rabban_left_hand_index_3",
+                                                                                                    "tag": 0
+                                                                                                }
+                                                                                            ],
+                                                                                            "components": [
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "type": 23
+                                                                                                },
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "position": [
+                                                                                                        -2.1457672119140625e-06,
+                                                                                                        1.5538749694824219,
+                                                                                                        -2.86102294921875e-06
+                                                                                                    ],
+                                                                                                    "rotation": [
+                                                                                                        0.27127960324287415,
+                                                                                                        0.061830777674913406,
+                                                                                                        -0.19795237481594086,
+                                                                                                        0.9398931860923767
+                                                                                                    ],
+                                                                                                    "scale": [
+                                                                                                        0.9999999403953552,
+                                                                                                        1.0,
+                                                                                                        1.0
+                                                                                                    ],
+                                                                                                    "type": 21
+                                                                                                }
+                                                                                            ],
+                                                                                            "is3D": true,
+                                                                                            "isPrefab": false,
+                                                                                            "name": "rabban_left_hand_index_2",
+                                                                                            "tag": 0
+                                                                                        }
+                                                                                    ],
+                                                                                    "components": [
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "type": 23
+                                                                                        },
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "position": [
+                                                                                                1.1920928955078125e-06,
+                                                                                                3.6411492824554443,
+                                                                                                1.0013580322265625e-05
+                                                                                            ],
+                                                                                            "rotation": [
+                                                                                                0.336490273475647,
+                                                                                                -0.01919797621667385,
+                                                                                                0.0006462594610638916,
+                                                                                                0.9414910078048706
+                                                                                            ],
+                                                                                            "scale": [
+                                                                                                1.0,
+                                                                                                1.0000004768371582,
+                                                                                                1.0
+                                                                                            ],
+                                                                                            "type": 21
+                                                                                        }
+                                                                                    ],
+                                                                                    "is3D": true,
+                                                                                    "isPrefab": false,
+                                                                                    "name": "rabban_left_hand_index_1",
+                                                                                    "tag": 0
+                                                                                }
+                                                                            ],
+                                                                            "components": [
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "type": 23
+                                                                                },
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "position": [
+                                                                                        -1.430511474609375e-06,
+                                                                                        7.5131964683532715,
+                                                                                        7.62939453125e-06
+                                                                                    ],
+                                                                                    "rotation": [
+                                                                                        0.18615029752254486,
+                                                                                        -0.12179914116859436,
+                                                                                        -0.1017155721783638,
+                                                                                        0.9696220755577087
+                                                                                    ],
+                                                                                    "scale": [
+                                                                                        1.0,
+                                                                                        1.0,
+                                                                                        1.0
+                                                                                    ],
+                                                                                    "type": 21
+                                                                                }
+                                                                            ],
+                                                                            "is3D": true,
+                                                                            "isPrefab": false,
+                                                                            "name": "rabban_left_hand",
+                                                                            "tag": 0
+                                                                        }
+                                                                    ],
+                                                                    "components": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "type": 23
+                                                                        },
+                                                                        {
+                                                                            "active": true,
+                                                                            "position": [
+                                                                                1.430511474609375e-06,
+                                                                                10.268522262573242,
+                                                                                7.62939453125e-06
+                                                                            ],
+                                                                            "rotation": [
+                                                                                0.011841260828077793,
+                                                                                -0.009895381517708302,
+                                                                                0.3020779490470886,
+                                                                                0.9531583189964294
+                                                                            ],
+                                                                            "scale": [
+                                                                                0.9999998211860657,
+                                                                                1.0,
+                                                                                1.0
+                                                                            ],
+                                                                            "type": 21
+                                                                        }
+                                                                    ],
+                                                                    "is3D": true,
+                                                                    "isPrefab": false,
+                                                                    "name": "rabban_left_fore_arm",
+                                                                    "tag": 0
+                                                                }
+                                                            ],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        1.5497207641601563e-06,
+                                                                        6.921271800994873,
+                                                                        -3.5762786865234375e-06
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.10048484802246094,
+                                                                        -0.09709783643484116,
+                                                                        0.4427272081375122,
+                                                                        0.8857016563415527
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.0,
+                                                                        1.000000238418579,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "rabban_left_arm",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                3.3499343395233154,
+                                                                4.540177345275879,
+                                                                -0.014667946845293045
+                                                            ],
+                                                            "rotation": [
+                                                                0.6710203886032104,
+                                                                0.5435572266578674,
+                                                                -0.3767378628253937,
+                                                                0.33518022298812866
+                                                            ],
+                                                            "scale": [
+                                                                1.0,
+                                                                1.0,
+                                                                0.9999999403953552
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "rabban_left_shoulder",
+                                                    "tag": 0
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "children": [
+                                                        {
+                                                            "active": true,
+                                                            "children": [
+                                                                {
+                                                                    "active": true,
+                                                                    "children": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "children": [
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "children": [
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "children": [
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "children": [
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "children": [],
+                                                                                                            "components": [
+                                                                                                                {
+                                                                                                                    "active": true,
+                                                                                                                    "type": 23
+                                                                                                                },
+                                                                                                                {
+                                                                                                                    "active": true,
+                                                                                                                    "position": [
+                                                                                                                        -0.06752967834472656,
+                                                                                                                        1.4051756858825684,
+                                                                                                                        -0.11093473434448242
+                                                                                                                    ],
+                                                                                                                    "rotation": [
+                                                                                                                        0.0,
+                                                                                                                        0.0,
+                                                                                                                        0.0,
+                                                                                                                        1.0
+                                                                                                                    ],
+                                                                                                                    "scale": [
+                                                                                                                        1.0,
+                                                                                                                        1.0,
+                                                                                                                        1.0
+                                                                                                                    ],
+                                                                                                                    "type": 21
+                                                                                                                }
+                                                                                                            ],
+                                                                                                            "is3D": true,
+                                                                                                            "isPrefab": false,
+                                                                                                            "name": "rabban_right_hand_index_4",
+                                                                                                            "tag": 0
+                                                                                                        }
+                                                                                                    ],
+                                                                                                    "components": [
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "type": 23
+                                                                                                        },
+                                                                                                        {
+                                                                                                            "active": true,
+                                                                                                            "position": [
+                                                                                                                0.8371963500976563,
+                                                                                                                2.1871700286865234,
+                                                                                                                0.5181751251220703
+                                                                                                            ],
+                                                                                                            "rotation": [
+                                                                                                                0.3040093183517456,
+                                                                                                                -0.035416409373283386,
+                                                                                                                -0.17465263605117798,
+                                                                                                                0.9358528256416321
+                                                                                                            ],
+                                                                                                            "scale": [
+                                                                                                                1.0,
+                                                                                                                1.0,
+                                                                                                                1.0
+                                                                                                            ],
+                                                                                                            "type": 21
+                                                                                                        }
+                                                                                                    ],
+                                                                                                    "is3D": true,
+                                                                                                    "isPrefab": false,
+                                                                                                    "name": "rabban_right_hand_index_3",
+                                                                                                    "tag": 0
+                                                                                                }
+                                                                                            ],
+                                                                                            "components": [
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "type": 23
+                                                                                                },
+                                                                                                {
+                                                                                                    "active": true,
+                                                                                                    "position": [
+                                                                                                        1.430511474609375e-06,
+                                                                                                        1.5164861679077148,
+                                                                                                        3.427267074584961e-07
+                                                                                                    ],
+                                                                                                    "rotation": [
+                                                                                                        0.5609790086746216,
+                                                                                                        -0.12846484780311584,
+                                                                                                        0.23053309321403503,
+                                                                                                        0.7846361398696899
+                                                                                                    ],
+                                                                                                    "scale": [
+                                                                                                        1.0,
+                                                                                                        1.0,
+                                                                                                        1.0
+                                                                                                    ],
+                                                                                                    "type": 21
+                                                                                                }
+                                                                                            ],
+                                                                                            "is3D": true,
+                                                                                            "isPrefab": false,
+                                                                                            "name": "rabban_right_hand_index_2",
+                                                                                            "tag": 0
+                                                                                        }
+                                                                                    ],
+                                                                                    "components": [
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "type": 23
+                                                                                        },
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "position": [
+                                                                                                -1.9073486328125e-06,
+                                                                                                3.5977251529693604,
+                                                                                                -8.58306884765625e-06
+                                                                                            ],
+                                                                                            "rotation": [
+                                                                                                0.6204977035522461,
+                                                                                                0.05938698723912239,
+                                                                                                0.01596170663833618,
+                                                                                                0.781793475151062
+                                                                                            ],
+                                                                                            "scale": [
+                                                                                                1.0,
+                                                                                                1.0,
+                                                                                                1.0
+                                                                                            ],
+                                                                                            "type": 21
+                                                                                        }
+                                                                                    ],
+                                                                                    "is3D": true,
+                                                                                    "isPrefab": false,
+                                                                                    "name": "rabban_right_hand_index_1",
+                                                                                    "tag": 0
+                                                                                },
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "children": [],
+                                                                                    "components": [
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "type": 23
+                                                                                        },
+                                                                                        {
+                                                                                            "active": true,
+                                                                                            "position": [
+                                                                                                0.33426666259765625,
+                                                                                                3.1357338428497314,
+                                                                                                1.1923518180847168
+                                                                                            ],
+                                                                                            "rotation": [
+                                                                                                0.7450039982795715,
+                                                                                                -0.12603455781936646,
+                                                                                                0.4328518807888031,
+                                                                                                0.4916539490222931
+                                                                                            ],
+                                                                                            "scale": [
+                                                                                                1.0,
+                                                                                                1.0,
+                                                                                                1.0
+                                                                                            ],
+                                                                                            "type": 21
+                                                                                        }
+                                                                                    ],
+                                                                                    "is3D": true,
+                                                                                    "isPrefab": false,
+                                                                                    "name": "axe_joint",
+                                                                                    "tag": 0
+                                                                                }
+                                                                            ],
+                                                                            "components": [
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "type": 23
+                                                                                },
+                                                                                {
+                                                                                    "active": true,
+                                                                                    "position": [
+                                                                                        -3.814697265625e-06,
+                                                                                        7.4792704582214355,
+                                                                                        3.337860107421875e-06
+                                                                                    ],
+                                                                                    "rotation": [
+                                                                                        0.18920300900936127,
+                                                                                        0.08087020367383957,
+                                                                                        -0.032433971762657166,
+                                                                                        0.9780645370483398
+                                                                                    ],
+                                                                                    "scale": [
+                                                                                        0.9999980330467224,
+                                                                                        1.0,
+                                                                                        1.0
+                                                                                    ],
+                                                                                    "type": 21
+                                                                                }
+                                                                            ],
+                                                                            "is3D": true,
+                                                                            "isPrefab": false,
+                                                                            "name": "rabban_right_hand",
+                                                                            "tag": 0
+                                                                        }
+                                                                    ],
+                                                                    "components": [
+                                                                        {
+                                                                            "active": true,
+                                                                            "type": 23
+                                                                        },
+                                                                        {
+                                                                            "active": true,
+                                                                            "position": [
+                                                                                -4.827976226806641e-06,
+                                                                                10.271380424499512,
+                                                                                -3.337860107421875e-06
+                                                                            ],
+                                                                            "rotation": [
+                                                                                0.008091341704130173,
+                                                                                0.006669886875897646,
+                                                                                -0.2312086522579193,
+                                                                                0.9728477001190186
+                                                                            ],
+                                                                            "scale": [
+                                                                                1.0,
+                                                                                1.0,
+                                                                                0.9999942779541016
+                                                                            ],
+                                                                            "type": 21
+                                                                        }
+                                                                    ],
+                                                                    "is3D": true,
+                                                                    "isPrefab": false,
+                                                                    "name": "rabban_right_fore_arm",
+                                                                    "tag": 0
+                                                                }
+                                                            ],
+                                                            "components": [
+                                                                {
+                                                                    "active": true,
+                                                                    "type": 23
+                                                                },
+                                                                {
+                                                                    "active": true,
+                                                                    "position": [
+                                                                        8.344650268554688e-07,
+                                                                        6.9212646484375,
+                                                                        5.960464477539063e-07
+                                                                    ],
+                                                                    "rotation": [
+                                                                        0.2391333431005478,
+                                                                        0.26100704073905945,
+                                                                        -0.40146952867507935,
+                                                                        0.8446968793869019
+                                                                    ],
+                                                                    "scale": [
+                                                                        1.000000238418579,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "type": 21
+                                                                }
+                                                            ],
+                                                            "is3D": true,
+                                                            "isPrefab": false,
+                                                            "name": "rabban_right_arm",
+                                                            "tag": 0
+                                                        }
+                                                    ],
+                                                    "components": [
+                                                        {
+                                                            "active": true,
+                                                            "type": 23
+                                                        },
+                                                        {
+                                                            "active": true,
+                                                            "position": [
+                                                                -3.3499341011047363,
+                                                                4.5402750968933105,
+                                                                -0.017712056636810303
+                                                            ],
+                                                            "rotation": [
+                                                                0.6654136180877686,
+                                                                -0.5547201633453369,
+                                                                0.3410038650035858,
+                                                                0.36500227451324463
+                                                            ],
+                                                            "scale": [
+                                                                1.0,
+                                                                1.0000001192092896,
+                                                                1.0
+                                                            ],
+                                                            "type": 21
+                                                        }
+                                                    ],
+                                                    "is3D": true,
+                                                    "isPrefab": false,
+                                                    "name": "rabban_right_shoulder",
+                                                    "tag": 0
+                                                }
+                                            ],
+                                            "components": [
+                                                {
+                                                    "active": true,
+                                                    "type": 23
+                                                },
+                                                {
+                                                    "active": true,
+                                                    "position": [
+                                                        -1.0244548320770264e-08,
+                                                        4.515693664550781,
+                                                        2.5090412236750126e-07
+                                                    ],
+                                                    "rotation": [
+                                                        0.026042602956295013,
+                                                        0.0028312746435403824,
+                                                        -0.0002055674558505416,
+                                                        0.9996568560600281
+                                                    ],
+                                                    "scale": [
+                                                        0.9999999403953552,
+                                                        0.9999973177909851,
+                                                        0.9999999403953552
+                                                    ],
+                                                    "type": 21
+                                                }
+                                            ],
+                                            "is3D": true,
+                                            "isPrefab": false,
+                                            "name": "rabban_spine_2",
+                                            "tag": 0
+                                        }
+                                    ],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "position": [
+                                                1.862645149230957e-09,
+                                                3.9512076377868652,
+                                                -1.99961505131796e-06
+                                            ],
+                                            "rotation": [
+                                                0.0087957214564085,
+                                                0.0026806241367012262,
+                                                -5.2053470426471904e-05,
+                                                0.9999577403068542
+                                            ],
+                                            "scale": [
+                                                1.0,
+                                                0.9999942779541016,
+                                                0.9999964237213135
+                                            ],
+                                            "type": 21
+                                        }
+                                    ],
+                                    "is3D": true,
+                                    "isPrefab": false,
+                                    "name": "rabban_spine_1",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "position": [
+                                        3.725290298461914e-09,
+                                        3.3852274417877197,
+                                        -0.10153710842132568
+                                    ],
+                                    "rotation": [
+                                        0.1401117742061615,
+                                        0.002365489723160863,
+                                        0.0028833101969212294,
+                                        0.9901286959648132
+                                    ],
+                                    "scale": [
+                                        0.9999942779541016,
+                                        0.9999999403953552,
+                                        1.0
+                                    ],
+                                    "type": 21
+                                }
+                            ],
+                            "is3D": true,
+                            "isPrefab": false,
+                            "name": "rabban_spine",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.001176394522190094,
+                                21.701047897338867,
+                                0.2690039873123169
+                            ],
+                            "rotation": [
+                                0.032284095883369446,
+                                0.0001660150446696207,
+                                -0.0022666126023977995,
+                                0.9994761943817139
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                0.9999999403953552
+                            ],
+                            "type": 21
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "rabban_hips",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 21
+                }
+            ],
+            "is3D": true,
+            "isPrefab": false,
+            "name": "rabban_armature",
+            "tag": 0
+        }
+    ],
+    "components": [
+        {
+            "active": true,
+            "type": 23
+        },
+        {
+            "active": true,
+            "position": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": 21
+        },
+        {
+            "active": true,
+            "animation": {
+                "asset_path": "Assets/Models/Enemies/rabban_armature|rabban_armature|rabban_armature|rabban_reel.cake",
+                "uid": 831539168
+            },
+            "clips": [
+                {
+                    "clipDuration": 35.0,
+                    "clipDurationInSeconds": 1.1666666269302368,
+                    "clipEndFrame": 321.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "Attack",
+                    "clipStartFrame": 286.0,
+                    "mapString": "Attack"
+                },
+                {
+                    "clipDuration": 23.0,
+                    "clipDurationInSeconds": 0.7666666507720947,
+                    "clipEndFrame": 345.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "AttackToIdle",
+                    "clipStartFrame": 322.0,
+                    "mapString": "AttackToIdle"
+                },
+                {
+                    "clipDuration": 344.0,
+                    "clipDurationInSeconds": 11.466666221618652,
+                    "clipEndFrame": 344.0,
+                    "clipFinished": true,
+                    "clipLoop": false,
+                    "clipName": "Default clip",
+                    "clipStartFrame": 0.0,
+                    "mapString": "Default clip"
+                },
+                {
+                    "clipDuration": 130.0,
+                    "clipDurationInSeconds": 4.333333492279053,
+                    "clipEndFrame": 131.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Idle",
+                    "clipStartFrame": 1.0,
+                    "mapString": "Idle"
+                },
+                {
+                    "clipDuration": 19.0,
+                    "clipDurationInSeconds": 0.6333333253860474,
+                    "clipEndFrame": 246.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Run",
+                    "clipStartFrame": 227.0,
+                    "mapString": "Run"
+                },
+                {
+                    "clipDuration": 42.0,
+                    "clipDurationInSeconds": 1.399999976158142,
+                    "clipEndFrame": 182.0,
+                    "clipFinished": false,
+                    "clipLoop": true,
+                    "clipName": "Wander",
+                    "clipStartFrame": 140.0,
+                    "mapString": "Wander"
+                }
+            ],
+            "meshes": [
+                {
+                    "asset_path": "Assets/Models/Enemies/rabban.sugar",
+                    "uid": 1315905135
+                }
+            ],
+            "selectedClip": "Wander",
+            "type": 12
+        }
+    ],
+    "is3D": true,
+    "isPrefab": true,
+    "name": "Rabban",
+    "tag": 0
+}

@@ -122,11 +122,10 @@ function Start()
 
     maskSize = cooldownMaskQ:GetTransform2D():GetMask()
 
+    blinkTimerQ = nil
+    blinkTimerW = nil
+    blinkTimerE = nil
     blink = 0.4
-
-    isUsingQ = false
-    isUsingW = false
-    isUsingE = false
 
     takeDamageBorder = Find("Take Damage Border")
     takeDamageTimer = nil
@@ -206,8 +205,6 @@ function Update(dt)
 
     CurrentCharacterDrawing()
 
-    AbilityStateUsingBlinking(dt)
-
     if (skillButtonQ ~= nil and skillButtonW ~= nil and skillButtonE ~= nil and SkillDescription ~= nil) then
         if (skillButtonQ:GetButton():IsIdle() and skillButtonW:GetButton():IsIdle() and
             skillButtonE:GetButton():IsIdle()) then
@@ -263,11 +260,21 @@ function AbilityMasking(dt)
             pickableMaskQ.active = false
             disabledMaskQ.active = false
         elseif zhibAbilities.AbilityPrimary == 4 then
-            activeMaskQ.active = false
             cooldownMaskQ.active = false
-            usingMaskQ.active = true
             pickableMaskQ.active = false
             disabledMaskQ.active = false
+
+            if blinkTimerQ == nil then
+                blinkTimerQ = 0.0
+                usingMaskW.active = true
+                activeMaskW.active = false
+            end
+            blinkTimerQ = blinkTimerQ + dt
+            if blinkTimerQ > blink then
+                usingMaskQ.active = not usingMaskQ.active
+                activeMaskQ.active = not activeMaskQ.active
+                blinkTimerQ = 0.0
+            end
         elseif zhibAbilities.AbilityPrimary == 5 then
             activeMaskQ.active = false
             cooldownMaskQ.active = false
@@ -300,11 +307,21 @@ function AbilityMasking(dt)
             pickableMaskW.active = false
             disabledMaskW.active = false
         elseif zhibAbilities.AbilitySecondary == 4 then
-            activeMaskW.active = false
             cooldownMaskW.active = false
-            usingMaskW.active = true
             pickableMaskW.active = false
             disabledMaskW.active = false
+
+            if blinkTimerW == nil then
+                blinkTimerW = 0.0
+                usingMaskW.active = true
+                activeMaskW.active = false
+            end
+            blinkTimerW = blinkTimerW + dt
+            if blinkTimerW > blink then
+                usingMaskW.active = not usingMaskW.active
+                activeMaskW.active = not activeMaskW.active
+                blinkTimerW = 0.0
+            end
         elseif zhibAbilities.AbilitySecondary == 5 then
             activeMaskW.active = false
             cooldownMaskW.active = false
@@ -337,11 +354,21 @@ function AbilityMasking(dt)
             pickableMaskE.active = false
             disabledMaskE.active = false
         elseif zhibAbilities.AbilityUltimate == 4 then
-            activeMaskE.active = false
             cooldownMaskE.active = false
-            usingMaskE.active = true
             pickableMaskE.active = false
             disabledMaskE.active = false
+
+            if blinkTimerE == nil then
+                blinkTimerE = 0.0
+                usingMaskW.active = true
+                activeMaskW.active = false
+            end
+            blinkTimerE = blinkTimerE + dt
+            if blinkTimerE > blink then
+                usingMaskE.active = not usingMaskE.active
+                activeMaskE.active = not activeMaskE.active
+                blinkTimerE = 0.0
+            end
         elseif zhibAbilities.AbilityUltimate == 5 then
             activeMaskE.active = false
             cooldownMaskE.active = false
@@ -375,11 +402,21 @@ function AbilityMasking(dt)
             pickableMaskQ.active = false
             disabledMaskQ.active = false
         elseif neralaAbilities.AbilityPrimary == 4 then
-            activeMaskQ.active = false
             cooldownMaskQ.active = false
-            usingMaskQ.active = true
             pickableMaskQ.active = false
             disabledMaskQ.active = false
+
+            if blinkTimerQ == nil then
+                blinkTimerQ = 0.0
+                usingMaskW.active = true
+                activeMaskW.active = false
+            end
+            blinkTimerQ = blinkTimerQ + dt
+            if blinkTimerQ > blink then
+                usingMaskQ.active = not usingMaskQ.active
+                activeMaskQ.active = not activeMaskQ.active
+                blinkTimerQ = 0.0
+            end
         elseif neralaAbilities.AbilityPrimary == 5 then
             activeMaskQ.active = false
             cooldownMaskQ.active = false
@@ -412,11 +449,21 @@ function AbilityMasking(dt)
             pickableMaskW.active = false
             disabledMaskW.active = false
         elseif neralaAbilities.AbilitySecondary == 4 then
-            activeMaskW.active = false
             cooldownMaskW.active = false
-            usingMaskW.active = true
             pickableMaskW.active = false
             disabledMaskW.active = false
+
+            if blinkTimerW == nil then
+                blinkTimerW = 0.0
+                usingMaskW.active = true
+                activeMaskW.active = false
+            end
+            blinkTimerW = blinkTimerW + dt
+            if blinkTimerW > blink then
+                usingMaskW.active = not usingMaskW.active
+                activeMaskW.active = not activeMaskW.active
+                blinkTimerW = 0.0
+            end
         elseif neralaAbilities.AbilitySecondary == 5 then
             activeMaskW.active = false
             cooldownMaskW.active = false
@@ -449,11 +496,21 @@ function AbilityMasking(dt)
             pickableMaskE.active = false
             disabledMaskE.active = false
         elseif neralaAbilities.AbilityUltimate == 4 then
-            activeMaskE.active = false
             cooldownMaskE.active = false
-            usingMaskE.active = true
             pickableMaskE.active = false
             disabledMaskE.active = false
+
+            if blinkTimerE == nil then
+                blinkTimerE = 0.0
+                usingMaskW.active = true
+                activeMaskW.active = false
+            end
+            blinkTimerE = blinkTimerE + dt
+            if blinkTimerE > blink then
+                usingMaskE.active = not usingMaskE.active
+                activeMaskE.active = not activeMaskE.active
+                blinkTimerE = 0.0
+            end
         elseif neralaAbilities.AbilityUltimate == 5 then
             activeMaskE.active = false
             cooldownMaskE.active = false
@@ -495,11 +552,21 @@ function AbilityMasking(dt)
                 BlinkOmozraCharges(0, true, dt)
             end
         elseif omozraAbilities.AbilityPrimary == 4 then
-            activeMaskQ.active = false
             cooldownMaskQ.active = false
-            usingMaskQ.active = true
             pickableMaskQ.active = false
             disabledMaskQ.active = false
+
+            if blinkTimerQ == nil then
+                blinkTimerQ = 0.0
+                usingMaskW.active = true
+                activeMaskW.active = false
+            end
+            blinkTimerQ = blinkTimerQ + dt
+            if blinkTimerQ > blink then
+                usingMaskQ.active = not usingMaskQ.active
+                activeMaskQ.active = not activeMaskQ.active
+                blinkTimerQ = 0.0
+            end
         elseif omozraAbilities.AbilityPrimary == 5 then
             activeMaskQ.active = false
             cooldownMaskQ.active = false
@@ -540,11 +607,21 @@ function AbilityMasking(dt)
                 BlinkOmozraCharges(0, true, dt)
             end
         elseif omozraAbilities.AbilitySecondary == 4 then
-            activeMaskW.active = false
             cooldownMaskW.active = false
-            usingMaskW.active = true
             pickableMaskW.active = false
             disabledMaskW.active = false
+
+            if blinkTimerW == nil then
+                blinkTimerW = 0.0
+                usingMaskW.active = true
+                activeMaskW.active = false
+            end
+            blinkTimerW = blinkTimerW + dt
+            if blinkTimerW > blink then
+                usingMaskW.active = not usingMaskW.active
+                activeMaskW.active = not activeMaskW.active
+                blinkTimerW = 0.0
+            end
         elseif omozraAbilities.AbilitySecondary == 5 then
             activeMaskW.active = false
             cooldownMaskW.active = false
@@ -577,11 +654,21 @@ function AbilityMasking(dt)
             pickableMaskE.active = false
             disabledMaskE.active = false
         elseif omozraAbilities.AbilityUltimate == 4 then
-            activeMaskE.active = false
             cooldownMaskE.active = false
-            usingMaskE.active = true
             pickableMaskE.active = false
             disabledMaskE.active = false
+
+            if blinkTimerE == nil then
+                blinkTimerE = 0.0
+                usingMaskW.active = true
+                activeMaskW.active = false
+            end
+            blinkTimerE = blinkTimerE + dt
+            if blinkTimerE > blink then
+                usingMaskE.active = not usingMaskE.active
+                activeMaskE.active = not activeMaskE.active
+                blinkTimerE = 0.0
+            end
         elseif omozraAbilities.AbilityUltimate == 5 then
             activeMaskE.active = false
             cooldownMaskE.active = false
@@ -952,67 +1039,6 @@ function CurrentCharacterDrawing()
         zhibSkills:SetIsActiveToChildren(zhibSkills:GetChildren(), false) -- deactivate the skill slots to be invisible
         neralaSkills:SetIsActiveToChildren(neralaSkills:GetChildren(), false) -- deactivate the skill slots to be invisible
         omozraSkills:SetIsActiveToChildren(omozraSkills:GetChildren(), true) -- activate the skill slots to be visible
-    end
-end
-
-function AbilityStateUsingBlinking(dt)
-    if currentCharacterId == 1 then
-        isUsingQ = GetVariable("Zhib.lua", "isUsingQ", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL)
-        isUsingW = GetVariable("Zhib.lua", "isUsingW", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL)
-        isUsingE = GetVariable("Zhib.lua", "isUsingE", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL)
-    elseif currentCharacterId == 2 then
-        isUsingQ = GetVariable("Nerala.lua", "isUsingQ", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL)
-        isUsingW = GetVariable("Nerala.lua", "isUsingW", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL)
-        isUsingE = GetVariable("Nerala.lua", "isUsingE", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL)
-    elseif currentCharacterId == 3 then
-        isUsingQ = GetVariable("Omozra.lua", "isUsingQ", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL)
-        isUsingW = GetVariable("Omozra.lua", "isUsingW", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL)
-        isUsingE = GetVariable("Omozra.lua", "isUsingE", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL)
-    end
-
-    if isUsingQ == true then
-        if blinkTimerQ == nil then
-            blinkTimerQ = 0.0
-        end
-        blinkTimerQ = blinkTimerQ + dt
-        if blinkTimerQ >= blink then
-            blinkTimerQ = 0.0
-            usingMaskQ.active = not usingMaskQ.active
-            activeMaskQ.active = not activeMaskQ.active
-        end
-    else
-        usingMaskQ.active = false
-        activeMaskQ.active = false
-    end
-
-    if isUsingW == true then
-        if blinkTimerW == nil then
-            blinkTimerW = 0.0
-        end
-        blinkTimerW = blinkTimerW + dt
-        if blinkTimerW >= blink then
-            blinkTimerW = 0.0
-            usingMaskW.active = not usingMaskW.active
-            activeMaskW.active = not activeMaskW.active
-        end
-    else
-        usingMaskW.active = false
-        activeMaskW.active = false
-    end
-
-    if isUsingE == true then
-        if blinkTimerE == nil then
-            blinkTimerE = 0.0
-        end
-        blinkTimerE = blinkTimerE + dt
-        if blinkTimerE >= blink then
-            blinkTimerE = 0.0
-            usingMaskE.active = not usingMaskQ.active
-            activeMaskE.active = not activeMaskQ.active
-        end
-    else
-        usingMaskE.active = false
-        activeMaskE.active = false
     end
 end
 

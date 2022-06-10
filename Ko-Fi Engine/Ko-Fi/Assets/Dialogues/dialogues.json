@@ -133,7 +133,7 @@
       "targetID": -1,
       "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "Omozra ultimate ability will will let you teleport Zhib and Nerala.  ",
+      "line1": "Omozra ultimate ability will will let you teleport Zhib or Nerala.  ",
       "line2": "It can be very usefull to catch enemies off guard.                   "
     },
     {
@@ -165,7 +165,7 @@
       "targetID": 24,
       "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
       "char": "Zhib             ",
-      "line1": "What happened here?                               ",
+      "line1": "What happened here?                                               ",
       "line2": " "
     },
     {
@@ -198,7 +198,7 @@
       "src": "Assets/UI/HUD/Portraits/nerala_v1.0.png",
       "char": "Nerala           ",
       "line1": "But I will finish what I came to do, I wont let the death of these men ",
-      "line2": "be in vain."
+      "line2": "be in vain.                                                            "
     },
     {
       "id": 28,
@@ -210,9 +210,9 @@
     },
     {
       "id": 29,
-      "targetID": -1,
-      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
-      "char": "Zhib             ",
+      "targetID": 36,
+      "src": "Assets/UI/HUD/Portraits/nerala_v1.0.png",
+      "char": "Nerala           ",
       "line1": "Putting it simply, Rabban was sighted nearby supervising the reconnaissance",
       "line2": "mission himself, they are too close to our home, now is the time to end this."
     },
@@ -221,8 +221,8 @@
       "targetID": -1,
       "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
       "char": "Zhib             ",
-      "line1": "Hmm, I don't think we can face these enemies head on, follow me.    ",
-      "line2": "I saw something from the thopter, I think I know a way around them."
+      "line1": "Hmm, that must be the camp entrance, c'mon, follow me, Omozra shouldn't be",
+      "line2": "too far from here, and I dont belive he would be so naive as to enter alone"
     },
     {
       "id": 31,
@@ -263,6 +263,30 @@
       "char": "Zhib             ",
       "line1": "They just needed directions and few indications. They tortured our brothers,",
       "line2": "and they plan to do the same thing to our families. To the thopter, now!  "
+    },
+    {
+      "id": 36,
+      "targetID": -1,
+      "src": "Assets/UI/HUD/logo_dialogs.png",
+      "char": " ",
+      "line1": "You just unlocked a new character! Nerala is now available                ",
+      "line2": "You can switch between her and Zhib by pressing X and Z respectively      "
+    },
+    {
+      "id": 37,
+      "targetID": 38,
+      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "char": "Zhib             ",
+      "line1": "Good to see you, I managed to find Nerala, have you and Sadiq gathered new info?",
+      "line2": " "
+    },
+    {
+      "id": 38,
+      "targetID": -1,
+      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "char": "Zhib             ",
+      "line1": "Good to see you, I managed to find Nerala, have you and Sadiq gathered new info?",
+      "line2": " "
     }
   ]
 }
