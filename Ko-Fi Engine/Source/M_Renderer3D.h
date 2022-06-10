@@ -165,6 +165,7 @@ private:
 	// Debug ray for mouse picking
 	LineSegment ray;
 	float timeWaterShader = 0;
+	float timerShadowsReload = 0.0;
 
 	// Viewport frame buffer
 	uint frameBuffer = 0;
@@ -181,7 +182,7 @@ private:
 	OcclusionQuery *query = nullptr;
 	R_Material *occlusionMat = nullptr;
 
-	bool stopRenderingShadows = false;
+	bool reloadShadows = true;
 
 public:
 	struct GOComp

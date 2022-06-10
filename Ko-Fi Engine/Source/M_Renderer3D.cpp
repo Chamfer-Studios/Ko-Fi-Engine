@@ -53,6 +53,8 @@
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
+#define RELOAD_SHADOWS_TIMER 20
+
 M_Renderer3D::M_Renderer3D(KoFiEngine* engine) : Module()
 {
 	name = "Renderer3D";
@@ -130,6 +132,16 @@ bool M_Renderer3D::Update(float dt)
 	/*std::sort(gameObejctsToRenderDistanceOrdered.begin(),
 		gameObejctsToRenderDistanceOrdered.end(), 
 		[&cameraPosition](const GameObject* lhs, const GameObject* rhs) {return cameraPosition.DistanceSq(lhs->GetTransform()->GetPosition()) < cameraPosition.DistanceSq(rhs->GetTransform()->GetPosition()); });*/
+	
+	if (!reloadShadows) 
+	{
+		timerShadowsReload += dt;
+		if (timerShadowsReload > RELOAD_SHADOWS_TIMER)
+		{
+			timerShadowsReload = 0.0f;
+			reloadShadows = true;
+		}
+	}
 	return true;
 }
 
@@ -142,14 +154,21 @@ bool M_Renderer3D::PostUpdate(float dt)
 	GameObject* light = engine->GetSceneManager()->GetCurrentScene()->GetShadowCaster();
 	if (light)
 	{
-		glViewport(0, 0, depthMapResolution, depthMapResolution);		//configure viewport
-		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);		//bind framebuffer
-		glClear(GL_DEPTH_BUFFER_BIT);						//clear only the depth buffer
-		//glCullFace(GL_FRONT);
-		FillShadowMap();
-		//glCullFace(GL_BACK);
-		glViewport(0, 0, engine->GetEditor()->lastViewportSize.x, engine->GetEditor()->lastViewportSize.y);
-		UnbindFrameBuffers();
+		if (reloadShadows) //optimization to make shadows less real time and more efficient ( timer is a #define )
+		{
+			glViewport(0, 0, depthMapResolution, depthMapResolution);		//configure viewport
+			glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);		//bind framebuffer
+			//glCullFace(GL_FRONT);
+			if (reloadShadows)
+			{
+				glClear(GL_DEPTH_BUFFER_BIT);						//clear only the depth buffer
+				reloadShadows = false;
+				FillShadowMap();
+			}
+			//glCullFace(GL_BACK);
+			glViewport(0, 0, engine->GetEditor()->lastViewportSize.x, engine->GetEditor()->lastViewportSize.y);
+			UnbindFrameBuffers();
+		}
 	}
 
 	PrepareFrameBuffers();
@@ -604,7 +623,7 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				glBindTexture(GL_TEXTURE_2D, cMat->texture->GetTextureId());
 			}
 
-			if (engine->GetSceneManager()->GetCurrentScene()->GetShadowCaster() && !stopRenderingShadows)
+			if (engine->GetSceneManager()->GetCurrentScene()->GetShadowCaster())
 			{
 				glActiveTexture(GL_TEXTURE3);
 				glBindTexture(GL_TEXTURE_2D, depthMapTexture);
@@ -1342,6 +1361,7 @@ void M_Renderer3D::InitDepthMapFramebufferAndTexture()
 
 void M_Renderer3D::FillShadowMap()
 {
+	OPTICK_EVENT();
 	//skip filling the shadow map if there are no lights in the scene
 	//std::vector<GameObject*> directionalLights = engine->GetSceneManager()->GetCurrentScene()->GetLights(SourceType::DIRECTIONAL);
 	GameObject* light = engine->GetSceneManager()->GetCurrentScene()->GetShadowCaster();
@@ -1350,7 +1370,7 @@ void M_Renderer3D::FillShadowMap()
 		C_Material* lightMat = light->GetComponent<C_Material>();
 		if (!lightMat)
 			return;
-
+		
 		for (auto go : gameObejctsToRenderDistanceSphere)
 		{
 			if (!go->active)
