@@ -259,6 +259,8 @@ bool M_Input::PreUpdate(float dt)
 		return false;
 	if ((quit == true || quitGame == true) && (engine->GetSceneManager()->GetGameState() == GameState::PLAYING))
 		return false;
+	if ((quit == true || quitGame == true) && (engine->GetSceneManager()->GetGameState() == GameState::PAUSED))
+		return false;
 
 	return true;
 }
