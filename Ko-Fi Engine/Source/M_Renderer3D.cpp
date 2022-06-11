@@ -53,7 +53,7 @@
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
-#define RELOAD_SHADOWS_TIMER 20
+#define RELOAD_SHADOWS_TIMER 1
 
 M_Renderer3D::M_Renderer3D(KoFiEngine* engine) : Module()
 {
@@ -158,20 +158,14 @@ bool M_Renderer3D::PostUpdate(float dt)
 		{
 			glViewport(0, 0, depthMapResolution, depthMapResolution);		//configure viewport
 			glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);		//bind framebuffer
-			//glCullFace(GL_FRONT);
-			if (reloadShadows)
-			{
-				glClear(GL_DEPTH_BUFFER_BIT);						//clear only the depth buffer
-				reloadShadows = false;
-				FillShadowMap();
-			}
-			//glCullFace(GL_BACK);
+			glClear(GL_DEPTH_BUFFER_BIT);						//clear only the depth buffer
+			reloadShadows = false;
+			FillShadowMap();
 			glViewport(0, 0, engine->GetEditor()->lastViewportSize.x, engine->GetEditor()->lastViewportSize.y);
 			UnbindFrameBuffers();
+			PrepareFrameBuffers();
 		}
 	}
-
-	PrepareFrameBuffers();
 
 	PassProjectionAndViewToRenderer();
 
