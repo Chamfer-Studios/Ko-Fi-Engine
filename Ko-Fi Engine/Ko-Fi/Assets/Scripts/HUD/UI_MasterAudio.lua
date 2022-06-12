@@ -31,11 +31,13 @@ function Update(dt)
 				mouseX = rightPos
 			end
 			gameObject:GetTransform2D():SetPositionX(mouseX)
+			pos1 = Find("MV1")
+			pos2 = Find("MV2")
+			pos3 = Find("MV3")
+			pos4 = Find("MV4")
+			pos5 = Find("MV5")
 			isStarting = false
 		end
-		--mouseX = gameObject:GetButton():GetMouseX()
-		--mouseX = mouseX * 5.3
-		mouseX = GetMouseScreenPos().x * 1.8
 		onePart = (rightPos - leftPos) / 4
 		if (gameObject:GetButton():IsPressed() == true) then
 			isActive = true
@@ -44,23 +46,23 @@ function Update(dt)
 			isActive = false
 		end
 		if (isActive == true) then
-			if (mouseX < leftPos) then
+			if (pos1:GetButton():IsPressed() == true) then
 				mouseX = leftPos
 				gameObject:GetTransform2D():SetPositionX(mouseX)
 				audio:SetListenerVolume(0, 4)
-			elseif (mouseX >= (leftPos + onePart) and mouseX <= (leftPos + (onePart * 2))) then
+			elseif (pos2:GetButton():IsPressed() == true) then
 				mouseX = leftPos + onePart
 				gameObject:GetTransform2D():SetPositionX(mouseX)
 				audio:SetListenerVolume(1, 4)
-			elseif (mouseX >= (leftPos + (onePart * 2)) and (mouseX <= (leftPos + (onePart * 3)))) then
+			elseif (pos3:GetButton():IsPressed() == true) then
 				mouseX = leftPos + (onePart * 2)
 				gameObject:GetTransform2D():SetPositionX(mouseX)
 				audio:SetListenerVolume(2, 4)
-			elseif (mouseX >= (leftPos + (onePart * 3)) and (mouseX < rightPos)) then
+			elseif (pos4:GetButton():IsPressed() == true) then
 				mouseX = leftPos + (onePart * 3)
 				gameObject:GetTransform2D():SetPositionX(mouseX)
 				audio:SetListenerVolume(3, 4)
-			elseif (mouseX > rightPos) then
+			elseif (pos5:GetButton():IsPressed() == true) then
 				mouseX = rightPos
 				gameObject:GetTransform2D():SetPositionX(mouseX)
 				audio:SetListenerVolume(4, 4)

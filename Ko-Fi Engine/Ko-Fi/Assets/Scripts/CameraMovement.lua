@@ -129,31 +129,27 @@ end
 
 function Start()
     --Put the position of the selected character inside variable target
-
+    level = GetVariable("GameState.lua", "levelNumber", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+    if level == 1 then
+        borderXNegative = borderXNegative1
+        borderXPositive = borderXPositive1
+        borderZNegative = borderZNegative1
+        borderZPositive = borderZPositive1
+        --Log("Level 1")
+    elseif level == 2 then
+        borderXNegative = borderXNegative2
+        borderXPositive = borderXPositive2
+        borderZNegative = borderZNegative2
+        borderZPositive = borderZPositive2
+        --Log("Level 2")
+    end
+    --Log("Level xD")
     freePanningDebug = true
     GetSelectedCharacter()
 
 end
 
 function Update(dt)
-    if(isStarting == true) then
-        level = GetVariable("GameState.lua", "levelNumber", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
-        if level == 1 then
-            borderXNegative = borderXNegative1
-            borderXPositive = borderXPositive1
-            borderZNegative = borderZNegative1
-            borderZPositive = borderZPositive1
-            --Log("Level 1")
-        elseif level == 2 then
-            borderXNegative = borderXNegative2
-            borderXPositive = borderXPositive2
-            borderZNegative = borderZNegative2
-            borderZPositive = borderZPositive2
-            --Log("Level 2")
-        end
-        --Log("Level xD")
-        isStarting = false
-    end
     
     --str = "Position X: " .. tostring(gameObject:GetTransform():GetPosition().x) .. "Position Z: " .. tostring(gameObject:GetTransform():GetPosition().z) .. "\n"
     --Log(str)
@@ -350,18 +346,20 @@ function Update(dt)
 
     gameObject:GetCamera():LookAt(target)
 
-    if componentTransform:GetPosition() ~= lastFinalPos then
-    for i=1, #rayCastCulling do
-        rayCastCulling[i].active = true
+
+    if(freePanningDebug == false) then
+        if componentTransform:GetPosition() ~= lastFinalPos then
+            for i=1, #rayCastCulling do
+                rayCastCulling[i].active = true
+            end
+            if #rayCastCulling > 0 then
+                rayCastCulling = {}
+            end
+            rayCastCulling = CustomRayCastList(finalPos, target, {Tag.UNTAGGED, Tag.WALL})
+            for j=1, #rayCastCulling do
+                rayCastCulling[j].active = false
+            end
     end
-    if #rayCastCulling > 0 then
-        rayCastCulling = {}
-    end
-    rayCastCulling = CustomRayCastList(finalPos, target, {Tag.UNTAGGED, Tag.WALL})
-    for j=1, #rayCastCulling do
-        rayCastCulling[j].active = false
-    end
-    
     --1st iteration use look at to center at characters
     
 end

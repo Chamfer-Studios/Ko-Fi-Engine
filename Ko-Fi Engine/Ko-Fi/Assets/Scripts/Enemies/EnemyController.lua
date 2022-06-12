@@ -438,6 +438,10 @@ function UpdateSecondaryObjects()
 end
 
 function Start()
+
+    freePanningDebug = true
+    camera = Find("Main Camera")
+
     CheckAndRecalculatePath(true)
     InstantiateNamedPrefab("awareness_green", awareness_green_name)
     InstantiateNamedPrefab("awareness_yellow", awareness_yellow_name)
@@ -770,7 +774,7 @@ end
 
 function Update(dt)
 
-    if (AnyPlayerInRange() == false) then
+    if AnyPlayerInRange() == false or (freePanningDebug == true and IsCameraInRange() == false) then
         do
             return
         end
@@ -962,6 +966,8 @@ function EventHandler(key, fields)
         if gameObject == fields[1] then
             abilityType = nil
         end
+    elseif key == "Is_Camera_Panning" then
+        freePanningDebug = fields[1]
     end
 end
 
@@ -1129,6 +1135,17 @@ function AnyPlayerInRange()
         if (math.abs(Float3Distance(players[i]:GetTransform():GetPosition(), componentTransform:GetPosition())) <= 500) then
             return true
         end
+    end
+
+    return false
+end
+
+function IsCameraInRange()
+
+    -- Log(camera:GetTransform():GetPosition().x .. " " .. camera:GetTransform():GetPosition().y .. " " ..
+    --         camera:GetTransform():GetPosition().z .. "\n")
+    if (math.abs(Float3Distance(camera:GetTransform():GetPosition(), componentTransform:GetPosition())) <= 700) then
+        return true
     end
 
     return false

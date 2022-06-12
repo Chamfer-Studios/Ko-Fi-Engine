@@ -183,6 +183,7 @@ function Start()
     spiceTextSizeY = spiceText:GetTransform2D():GetSize().y
     spiceTextPosY = spiceText:GetTransform2D():GetPosition().y
     spiceTextPosX = spiceText:GetTransform2D():GetPosition().x + spiceTextPosFactor
+    spiceText:GetText():SetColorRGB(255, 255, 255)
 
     once = false
 end
@@ -804,12 +805,14 @@ function EventHandler(key, fields)
         else
             spiceAdditional = fields[1]
         end
+        spiceAmount = spiceAmount + fields[1]
         textTimer = 0.0
         spiceTextAdditional.active = true
         SetTextAdditional(spiceAdditional, "add")
     elseif key == "Used_Ultimate" then
         textTimer = 0.0
         spiceTextAdditional.active = true
+        spiceAmount = spiceAmount - fields[1]
         spiceAdditional = fields[1]
         SetTextAdditional(spiceAdditional, "minus")
     end
@@ -1114,11 +1117,19 @@ function ManageTimers(dt)
 
     if (textTimer ~= nil) then
         textTimer = textTimer + dt
+        if textBlinkTimer == nil then
+            textBlinkTimer = 0.0
+        end
+        textBlinkTimer = textBlinkTimer + dt
+        if textBlinkTimer >= 0.4 then
+            spiceTextAdditional.active = not spiceTextAdditional.active
+        end
         if textTimer >= spiceAdditionalDuration then
-            spiceAmount = GetVariable("GameState.lua", "spiceAmount", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            -- spiceAmount = GetVariable("GameState.lua", "spiceAmount", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
             SetText(spiceAmount)
             spiceTextAdditional.active = false
             textTimer = nil
+            textBlinkTimer = nil
         end
     end
 end

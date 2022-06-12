@@ -201,6 +201,7 @@ function Start()
 
     -- Particles
     characterSelectedParticle = Find("Selected Particle")
+    characterSelectedParticle:GetComponentParticle():SetColor(23, 168, 176, 255)
     mouseParticles = Find("Mouse Particle")
     if (mouseParticles ~= nil) then
         mouseParticles:GetComponentParticle():StopParticleSpawn()
@@ -224,10 +225,20 @@ function Start()
 
     -- Stamina Bar Blue
     staminaBar = Find("Stamina Bar Fill")
+    staminaDefaultPath = "Assets/New UI/spice_bar_fill_default.png"
+    staminaRedPath = "Assets/New UI/spice_bar_fill_red.png"
+    staminaWhitePath = "Assets/New UI/spice_bar_fill_white.png"
+    staminaBar:GetImage():SetTexture(staminaDefaultPath)
+
+    isAvailable = GetVariable("GameState.lua", "neralaAvailable", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL)
 end
 
 -- Called each loop iteration
 function Update(dt)
+    if isDialogueOpen == true then
+        StopMovement(false)
+    end
+
     isSelected = IsSelected()
 
     DrawActiveAbilities()
@@ -238,7 +249,7 @@ function Update(dt)
             componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
     end
 
-    if GetVariable("GameState.lua", "neralaAvailable", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL) == true then
+    if isAvailable == true then
         if (smokebombPosition == nil) then
             DispatchGlobalEvent("Player_Position", {componentTransform:GetPosition(), gameObject})
         elseif (Distance3D(componentTransform:GetPosition(), smokebombPosition) > smokebombRadius) then
@@ -675,14 +686,19 @@ function UpdateStamina()
     local proportion = staminaTimer / staminaSeconds
     local recoveryProportion = staminaTimer / recoveryTime
 
-    if proportion >= 0.5 then -- From Green to Yellow
-        characterSelectedParticle:GetComponentParticle():SetColor((2 - (proportion * 2)) * 255, 255, 0, 255)
-    else -- From Yellow to Red
-        characterSelectedParticle:GetComponentParticle():SetColor(255, (proportion * 2) * 255, 0, 255)
-    end
+    -- if proportion >= 0.5 then -- From Green to Yellow
+    --     characterSelectedParticle:GetComponentParticle():SetColor((2 - (proportion * 2)) * 255, 255, 0, 255)
+    -- else -- From Yellow to Red
+    --     characterSelectedParticle:GetComponentParticle():SetColor(255, (proportion * 2) * 255, 0, 255)
+    -- end
 
     if staminaBar ~= nil then
         staminaBar:GetTransform2D():SetMask(float2.new(proportion, 1))
+        if proportion <= 0.3 or isTired == true then
+            staminaBar:GetImage():SetTexture(staminaRedPath)
+        else
+            staminaBar:GetImage():SetTexture(staminaDefaultPath)
+        end
     end
 end
 
@@ -690,7 +706,7 @@ function ManageTimers(dt)
     local ret = true
 
     if (isDialogueOpen == true) then
-        ret = false
+        -- ret = false
     end
     if (currentMovement == Movement.RUN and
         GetVariable("GameState.lua", "GodMode", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL) == false) then
@@ -1428,6 +1444,14 @@ function EventHandler(key, fields)
         local NewSpice = OGSpice + ultimateSpiceCost
         SetVariable(NewSpice, "GameState.lua", "spiceAmount", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
         Log("Mosquito bugged, correction applied.\n")
+    elseif key == "Enable_Character" then
+        if characterID == fields[1] then
+            isAvailable = true
+        end
+    elseif key == "Disable_Character" then
+        if characterID == fields[1] then
+            isAvailable = false
+        end
     end
 end
 --------------------------------------------------

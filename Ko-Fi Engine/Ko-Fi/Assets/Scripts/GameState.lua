@@ -29,8 +29,8 @@ omozra_ultimate_level = 0
 omozra_passive_level = 0
 
 zhibAvailable = true
-neralaAvailable = true
-omozraAvailable = true
+neralaAvailable = false
+omozraAvailable = false
 
 anyCharacterSelected = true
 changedCharacter = false
@@ -250,6 +250,9 @@ function EventHandler(key, fields)
 end
 
 function SaveGame()
+
+    SetGameJsonInt("level_progression", levelNumber)
+
     SetGameJsonInt("spice", spiceAmount)
 
     -- Zhib Save
@@ -371,7 +374,7 @@ end
 function EventHandler(key, fields)
     if key == "Last_Checkpoint" then -- fields[1] -> if it has to load
         if (fields[1] == true) then
-			LoadGame()
+            LoadGame()
         end
     end
 end

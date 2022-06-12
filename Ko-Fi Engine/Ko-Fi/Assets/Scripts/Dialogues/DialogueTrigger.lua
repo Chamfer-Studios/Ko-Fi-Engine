@@ -30,36 +30,38 @@ function OnTriggerEnter(go)
     -- Only nerala
     if onlyNerala == true then
         if (triggered == false and go:GetName() == "Nerala") then
-            Log("Hol\n")
-            DispatchGlobalEvent("DialogueTriggered", {id})
             triggered = true
-            -- if unlockingNerala == true then
-            --     DispatchGlobalEvent("CharacterUnlocked", {"Nerala"})
-            -- elseif unlockingOmozra == true then
-            --     DispatchGlobalEvent("CharacterUnlocked", {"Omozra"})
-            -- end
+            if unlockingNerala == true then
+                DispatchGlobalEvent("DialogueTriggered", {id, 2})
+            elseif unlockingOmozra == true then
+                DispatchGlobalEvent("DialogueTriggered", {id, 3})
+            else
+                DispatchGlobalEvent("DialogueTriggered", {id, nil})
+            end
         end
         -- Only omozra
     elseif onlyOmozra == true then
         if (triggered == false and go:GetName() == "Omozra") then
-            DispatchGlobalEvent("DialogueTriggered", {id})
             triggered = true
-            -- if unlockingNerala == true then
-            --     DispatchGlobalEvent("CharacterUnlocked", {"Nerala"})
-            -- elseif unlockingOmozra == true then
-            --     DispatchGlobalEvent("CharacterUnlocked", {"Omozra"})
-            -- end
+            if unlockingNerala == true then
+                DispatchGlobalEvent("DialogueTriggered", {id, 2})
+            elseif unlockingOmozra == true then
+                DispatchGlobalEvent("DialogueTriggered", {id, 3})
+            else
+                DispatchGlobalEvent("DialogueTriggered", {id, nil})
+            end
         end
         -- All
     else
         if (triggered == false and (go:GetName() == "Omozra" or go:GetName() == "Nerala" or go:GetName() == "Zhib")) then
-            DispatchGlobalEvent("DialogueTriggered", {id})
             triggered = true
-            -- if unlockingNerala == true then
-            --     DispatchGlobalEvent("CharacterUnlocked", {"Nerala"})
-            -- elseif unlockingOmozra == true then
-            --     DispatchGlobalEvent("CharacterUnlocked", {"Omozra"})
-            -- end
+            if unlockingNerala == true then
+                DispatchGlobalEvent("DialogueTriggered", {id, 2})
+            elseif unlockingOmozra == true then
+                DispatchGlobalEvent("DialogueTriggered", {id, 3})
+            else
+                DispatchGlobalEvent("DialogueTriggered", {id, nil})
+            end
         end
     end
 end

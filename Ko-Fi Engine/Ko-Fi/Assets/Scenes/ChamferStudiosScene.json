@@ -2,7 +2,7 @@
     "ChamferStudiosScene": {
         "active": true,
         "draw_skybox": true,
-        "game_objects_amount": 6,
+        "game_objects_amount": 5,
         "game_objects_list": [
             {
                 "UID": 1772434662,
@@ -201,54 +201,12 @@
                         "active": true,
                         "texture": "Assets/UI/Intro/ch_banner_white.png",
                         "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Image",
-                "parent_UID": 1326020511,
-                "tag": 0
-            },
-            {
-                "UID": 1273623994,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1920.0,
-                            1080.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/Intro/transition.png",
-                        "type": 14
                     },
                     {
                         "active": true,
                         "async": false,
                         "file_name": "Assets/Scripts/Intro/IntroTransitionBegin.lua",
-                        "id": 1217744422,
+                        "id": 622354712,
                         "inspector_variables": [
                             {
                                 "name": "transitionTo",
@@ -261,7 +219,7 @@
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "Transition",
+                "name": "Image",
                 "parent_UID": 1326020511,
                 "tag": 0
             },

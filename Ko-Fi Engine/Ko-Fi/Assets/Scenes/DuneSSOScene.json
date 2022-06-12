@@ -2,7 +2,7 @@
     "DuneSSOScene": {
         "active": true,
         "draw_skybox": true,
-        "game_objects_amount": 7,
+        "game_objects_amount": 5,
         "game_objects_list": [
             {
                 "UID": 1772434662,
@@ -243,103 +243,12 @@
                         "active": true,
                         "texture": "Assets/UI/Logo/title_logo_color.png",
                         "type": 14
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Image",
-                "parent_UID": 1326020511,
-                "tag": 0
-            },
-            {
-                "UID": 1274242492,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            1920.0,
-                            1080.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            3.1415927410125732
-                        ],
-                        "size": [
-                            1920.0,
-                            1080.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/Intro/transition.png",
-                        "type": 14
-                    },
-                    {
-                        "active": true,
-                        "async": false,
-                        "file_name": "Assets/Scripts/Intro/IntroTransitionEnd.lua",
-                        "id": 1668170532,
-                        "type": 5
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "TransitionEnd",
-                "parent_UID": 1326020511,
-                "tag": 0
-            },
-            {
-                "UID": 1637494965,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1920.0,
-                            1080.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/Intro/transition.png",
-                        "type": 14
                     },
                     {
                         "active": true,
                         "async": false,
                         "file_name": "Assets/Scripts/Intro/IntroTransitionBegin.lua",
-                        "id": 547779835,
+                        "id": 1888825870,
                         "inspector_variables": [
                             {
                                 "name": "transitionTo",
@@ -352,7 +261,7 @@
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "Transition",
+                "name": "Image",
                 "parent_UID": 1326020511,
                 "tag": 0
             }

@@ -541,6 +541,7 @@ function SetDialogValue(index)
     if (index == 1) then
         dialogueGo:Active(true)
         dialog = GetTransString("description1", skillUiArray[1])
+        print(dialog)
         dialog1 = GetTransString("description2", skillUiArray[1])
         dialog2 = GetTransString("description3", skillUiArray[1])
         dialog3 = GetTransString("description4", skillUiArray[1])

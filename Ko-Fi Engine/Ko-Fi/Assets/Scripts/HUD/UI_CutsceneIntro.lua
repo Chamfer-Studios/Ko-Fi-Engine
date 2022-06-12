@@ -52,7 +52,7 @@ function Update(dt)
             gameObject:GetChild("Text4"):GetChild("Text4Part2"):Active(false)
             gameObject:GetChild("Text4"):GetChild("Text4Part3"):Active(true)
         elseif (isActive >= 8) then
-            gameObject:ChangeScene(true, "SceneTutorial_new")
+            gameObject:ChangeScene(true, "Level1")
         end
         change = false
     end
