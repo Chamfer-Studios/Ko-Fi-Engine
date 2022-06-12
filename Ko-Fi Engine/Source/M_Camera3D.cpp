@@ -403,7 +403,7 @@ GameObject* M_Camera3D::MousePicking(const bool& isRightButton)
 	for (size_t i = 0; i < sceneGameObjects.size(); i++)
 	{
 		C_Mesh* m = sceneGameObjects[i]->GetComponent<C_Mesh>();
-		if (m != nullptr)
+		if (m != nullptr && sceneGameObjects[i]->active)
 		{
 			bool hit = newRay.Intersects(m->GetGlobalAABB());
 
