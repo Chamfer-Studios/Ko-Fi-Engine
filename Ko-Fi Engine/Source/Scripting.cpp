@@ -49,13 +49,13 @@ std::string Scripting::GetDialogueString(const char* key, int id)
 
 std::string Scripting::GetTransString(const char* key, int id)
 {
-	const char* path = "Assets/Scenes/SceneTransitionUI/sceneTransition.json";
+	const char* path = "Assets/Descriptions/SceneTransitionDescriptions.json";
 	for (std::map<std::string, Json>::iterator file = files.begin(); file != files.end(); ++file)
 	{
 		if ((*file).first == path)
 		{
 			//KOFI_DEBUG("File Found: %s", (*file).first);
-			Json sceneTrans = (*file).second.at("sceneTransition");
+			Json sceneTrans = (*file).second.at("SceneTransitionDescriptions");
 			for (const auto& node : sceneTrans.items())
 			{
 				if (node.value().at("id") == id)

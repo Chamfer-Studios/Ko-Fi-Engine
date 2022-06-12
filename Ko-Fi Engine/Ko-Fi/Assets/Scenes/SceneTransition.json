@@ -1,6 +1,7 @@
 {
     "SceneTransition": {
         "active": true,
+        "draw_skybox": true,
         "game_objects_amount": 184,
         "game_objects_list": [
             {
@@ -33,10 +34,13 @@
                     },
                     {
                         "active": true,
+                        "cameraType": 0,
                         "far_plane_distance": 693.0,
                         "frustum_culling": false,
                         "isMainCamera": true,
                         "near_plane_distance": 0.30000001192092896,
+                        "orthoHeight": 1000.0,
+                        "orthoWidth": 1000.0,
                         "sCullingRadius": 346,
                         "sphere_culling": false,
                         "type": 4,
@@ -44,6 +48,7 @@
                     },
                     {
                         "active": true,
+                        "async": false,
                         "file_name": "Assets/Scripts/New HUD Scripts/TransitionCamera.lua",
                         "id": 1882050099,
                         "type": 5
@@ -154,8 +159,8 @@
                         ],
                         "scale": [
                             203.08840942382813,
-                            0.0014648378128185868,
-                            11.394963264465332
+                            0.001464836415834725,
+                            11.394951820373535
                         ],
                         "type": 21
                     },
@@ -482,6 +487,7 @@
                     {
                         "active": true,
                         "ambientValue": 0.8999999761581421,
+                        "castShadows": false,
                         "diffuseValue": 0.0,
                         "lightColor": [
                             1.0,
@@ -504,14 +510,17 @@
                     },
                     {
                         "active": true,
+                        "cameraType": 1,
                         "far_plane_distance": 1000.0,
                         "frustum_culling": false,
                         "isMainCamera": false,
                         "near_plane_distance": 0.30000001192092896,
+                        "orthoHeight": 1000.0,
+                        "orthoWidth": 1000.0,
                         "sCullingRadius": 499,
                         "sphere_culling": false,
                         "type": 4,
-                        "vertical_fov": 642.0
+                        "vertical_fov": 1000.0
                     }
                 ],
                 "is3D": true,
@@ -1407,12 +1416,14 @@
                     },
                     {
                         "active": true,
+                        "async": false,
                         "file_name": "Assets/Scripts/New HUD Scripts/sceneTransitionManager.lua",
                         "id": 1988531683,
                         "type": 5
                     },
                     {
                         "active": true,
+                        "async": false,
                         "file_name": "Assets/Scripts/HUD/UI_GameState.lua",
                         "id": 846408315,
                         "type": 5
@@ -2147,6 +2158,7 @@
                     },
                     {
                         "active": true,
+                        "async": false,
                         "file_name": "Assets/Scripts/HUD/UI_ChangeScenes.lua",
                         "id": 1783992787,
                         "inspector_variables": [
@@ -2204,6 +2216,7 @@
                     },
                     {
                         "active": true,
+                        "async": false,
                         "file_name": "Assets/Scripts/HUD/UI_ChangeScenes.lua",
                         "id": 1548671902,
                         "inspector_variables": [
@@ -2539,6 +2552,7 @@
                     },
                     {
                         "active": true,
+                        "async": false,
                         "file_name": "Assets/Scripts/New HUD Scripts/Feedbacks/skillFeedbackTopLeft.lua",
                         "id": 1438004354,
                         "type": 5
@@ -2587,6 +2601,7 @@
                     },
                     {
                         "active": true,
+                        "async": false,
                         "file_name": "Assets/Scripts/New HUD Scripts/Feedbacks/skillFeedbackButtomLeft.lua",
                         "id": 1463311174,
                         "type": 5
@@ -2635,6 +2650,7 @@
                     },
                     {
                         "active": true,
+                        "async": false,
                         "file_name": "Assets/Scripts/New HUD Scripts/Feedbacks/skillFeedbackTopRight.lua",
                         "id": 563031374,
                         "type": 5
@@ -3504,9 +3520,9 @@
                             -3.814697265625e-05
                         ],
                         "rotation": [
-                            0.014461243525147438,
-                            0.0026198194827884436,
-                            0.03734375908970833,
+                            0.014461266808211803,
+                            0.0026198208797723055,
+                            0.03734375163912773,
                             0.9991943836212158
                         ],
                         "scale": [
@@ -4446,12 +4462,12 @@
                         ],
                         "rotation": [
                             0.044304121285676956,
-                            5.001069439458661e-05,
-                            -0.00011630822700681165,
+                            5.001073805033229e-05,
+                            -0.0001163083070423454,
                             0.9990180730819702
                         ],
                         "scale": [
-                            0.999984085559845,
+                            0.9999833703041077,
                             1.0,
                             1.0
                         ],
@@ -4481,12 +4497,12 @@
                         ],
                         "rotation": [
                             0.04658829793334007,
-                            -0.0001332223619101569,
-                            4.1288799934591225e-07,
+                            -0.00013322223094291985,
+                            4.128798138935963e-07,
                             0.9989141821861267
                         ],
                         "scale": [
-                            0.9999840259552002,
+                            0.9999833106994629,
                             0.9999975562095642,
                             0.9999999403953552
                         ],
@@ -4832,7 +4848,7 @@
                         "rotation": [
                             -0.047845955938100815,
                             0.0013017946621403098,
-                            -0.02034013718366623,
+                            -0.02034013159573078,
                             0.9986467957496643
                         ],
                         "scale": [
@@ -5736,7 +5752,7 @@
                             -6.352324485778809
                         ],
                         "rotation": [
-                            -0.011061993427574635,
+                            -0.01106200460344553,
                             -0.0051909079775214195,
                             0.020608697086572647,
                             0.9997129440307617
@@ -6333,11 +6349,11 @@
                         "rotation": [
                             0.0908370241522789,
                             -0.00028024916537106037,
-                            -0.013408871367573738,
+                            -0.013408872298896313,
                             0.9957754611968994
                         ],
                         "scale": [
-                            0.9999840259552002,
+                            0.9999833106994629,
                             0.9999998211860657,
                             0.9999999403953552
                         ],
@@ -6536,12 +6552,12 @@
                         ],
                         "rotation": [
                             0.20774361491203308,
-                            0.004981556441634893,
+                            0.004981555975973606,
                             -0.0025303750298917294,
                             0.9781673550605774
                         ],
                         "scale": [
-                            0.9999840259552002,
+                            0.9999833106994629,
                             0.9999999403953552,
                             0.9999998807907104
                         ],

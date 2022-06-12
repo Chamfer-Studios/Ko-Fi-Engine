@@ -1582,5 +1582,8 @@
     <None Include="Ko-Fi\Assets\Scripts\Characters\Raban\Projectile.lua">
       <Filter>Scripts\Characters\Raban</Filter>
     </None>
+    <None Include="Ko-Fi\Assets\Scripts\New HUD Scripts\sceneTransitionManager.lua">
+      <Filter>Scripts</Filter>
+    </None>
   </ItemGroup>
 </Project>
