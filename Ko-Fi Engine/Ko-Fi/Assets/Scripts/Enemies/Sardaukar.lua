@@ -23,8 +23,6 @@ currentState = STATE.UNAWARE
 
 function Start()
     DispatchEvent("Assign_Type", {"Sardaukar"})
-    componentSwitch = gameObject:GetAudioSwitch()
-    currentTrackID = -1;
 
 end
 
@@ -236,22 +234,5 @@ function EventHandler(key, fields)
                 end
             end
         end
-    end
-end
-
-function ChangeTrack(_trackList)
-    size = 0
-    for i in pairs(_trackList) do
-        size = size + 1
-    end
-
-    index = math.random(size)
-
-    if (componentSwitch ~= nil) then
-        if (currentTrackID ~= -1) then
-            componentSwitch:StopTrack(currentTrackID)
-        end
-        currentTrackID = _trackList[index]
-        componentSwitch:PlayTrack(currentTrackID)
     end
 end

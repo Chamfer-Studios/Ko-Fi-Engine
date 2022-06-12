@@ -66,14 +66,14 @@
                     ],
                     "rotation": [
                         0.0,
-                        -0.4961296319961548,
+                        -0.4961296021938324,
                         0.0,
                         0.868248462677002
                     ],
                     "scale": [
-                        0.9999998807907104,
+                        0.9999998211860657,
                         1.0,
-                        0.9999998807907104
+                        0.9999998211860657
                     ],
                     "type": 21
                 },
@@ -157,20 +157,20 @@
                 {
                     "active": true,
                     "position": [
-                        -1495.1231689453125,
-                        14.165441513061523,
-                        701.1943359375
+                        -1546.66455078125,
+                        14.16545295715332,
+                        755.0648803710938
                     ],
                     "rotation": [
                         0.0,
-                        0.9287277460098267,
+                        -0.760512113571167,
                         0.0,
-                        -0.3707624077796936
+                        0.6493237614631653
                     ],
                     "scale": [
-                        1.0000001192092896,
+                        1.000000238418579,
                         1.3793421983718872,
-                        0.8452807664871216
+                        0.8452809453010559
                     ],
                     "type": 21
                 },
@@ -842,14 +842,14 @@
                     ],
                     "rotation": [
                         0.0,
-                        0.3581634759902954,
+                        0.358163446187973,
                         0.0,
                         0.9336588978767395
                     ],
                     "scale": [
-                        0.9999998807907104,
+                        0.9999999403953552,
                         1.0,
-                        0.9999998807907104
+                        0.9999999403953552
                     ],
                     "type": 21
                 },
@@ -906,7 +906,7 @@
                         {
                             "name": "unlockingNerala",
                             "type": "bool",
-                            "value": false
+                            "value": true
                         },
                         {
                             "name": "unlockingOmozra",
@@ -978,6 +978,40 @@
                         1.0
                     ],
                     "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/Dialogues/DialogueTrigger.lua",
+                    "id": 293359256,
+                    "inspector_variables": [
+                        {
+                            "name": "id",
+                            "type": "int",
+                            "value": 10
+                        },
+                        {
+                            "name": "onlyNerala",
+                            "type": "bool",
+                            "value": true
+                        },
+                        {
+                            "name": "onlyOmozra",
+                            "type": "bool",
+                            "value": false
+                        },
+                        {
+                            "name": "unlockingNerala",
+                            "type": "bool",
+                            "value": false
+                        },
+                        {
+                            "name": "unlockingOmozra",
+                            "type": "bool",
+                            "value": false
+                        }
+                    ],
+                    "type": 5
                 }
             ],
             "is3D": true,
@@ -1041,6 +1075,40 @@
                         1.0
                     ],
                     "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/Dialogues/DialogueTrigger.lua",
+                    "id": 1331682917,
+                    "inspector_variables": [
+                        {
+                            "name": "id",
+                            "type": "int",
+                            "value": 10
+                        },
+                        {
+                            "name": "onlyNerala",
+                            "type": "bool",
+                            "value": true
+                        },
+                        {
+                            "name": "onlyOmozra",
+                            "type": "bool",
+                            "value": false
+                        },
+                        {
+                            "name": "unlockingNerala",
+                            "type": "bool",
+                            "value": false
+                        },
+                        {
+                            "name": "unlockingOmozra",
+                            "type": "bool",
+                            "value": false
+                        }
+                    ],
+                    "type": 5
                 }
             ],
             "is3D": true,
@@ -1104,6 +1172,40 @@
                         1.0
                     ],
                     "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/Dialogues/DialogueTrigger.lua",
+                    "id": 1580604300,
+                    "inspector_variables": [
+                        {
+                            "name": "id",
+                            "type": "int",
+                            "value": 11
+                        },
+                        {
+                            "name": "onlyNerala",
+                            "type": "bool",
+                            "value": true
+                        },
+                        {
+                            "name": "onlyOmozra",
+                            "type": "bool",
+                            "value": false
+                        },
+                        {
+                            "name": "unlockingNerala",
+                            "type": "bool",
+                            "value": false
+                        },
+                        {
+                            "name": "unlockingOmozra",
+                            "type": "bool",
+                            "value": false
+                        }
+                    ],
+                    "type": 5
                 }
             ],
             "is3D": true,
@@ -1167,6 +1269,40 @@
                         1.0
                     ],
                     "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/Dialogues/DialogueTrigger.lua",
+                    "id": 1411442606,
+                    "inspector_variables": [
+                        {
+                            "name": "id",
+                            "type": "int",
+                            "value": 11
+                        },
+                        {
+                            "name": "onlyNerala",
+                            "type": "bool",
+                            "value": true
+                        },
+                        {
+                            "name": "onlyOmozra",
+                            "type": "bool",
+                            "value": false
+                        },
+                        {
+                            "name": "unlockingNerala",
+                            "type": "bool",
+                            "value": false
+                        },
+                        {
+                            "name": "unlockingOmozra",
+                            "type": "bool",
+                            "value": false
+                        }
+                    ],
+                    "type": 5
                 }
             ],
             "is3D": true,
@@ -1230,6 +1366,40 @@
                         1.0
                     ],
                     "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/Dialogues/DialogueTrigger.lua",
+                    "id": 736565278,
+                    "inspector_variables": [
+                        {
+                            "name": "id",
+                            "type": "int",
+                            "value": 12
+                        },
+                        {
+                            "name": "onlyNerala",
+                            "type": "bool",
+                            "value": true
+                        },
+                        {
+                            "name": "onlyOmozra",
+                            "type": "bool",
+                            "value": false
+                        },
+                        {
+                            "name": "unlockingNerala",
+                            "type": "bool",
+                            "value": false
+                        },
+                        {
+                            "name": "unlockingOmozra",
+                            "type": "bool",
+                            "value": false
+                        }
+                    ],
+                    "type": 5
                 }
             ],
             "is3D": true,
@@ -1248,20 +1418,20 @@
                 {
                     "active": true,
                     "position": [
-                        -958.7200927734375,
+                        -1073.7623291015625,
                         0.0,
-                        -1613.054931640625
+                        -1756.29541015625
                     ],
                     "rotation": [
                         0.0,
-                        0.15493114292621613,
+                        0.45916786789894104,
                         0.0,
-                        0.9879252910614014
+                        0.8883495330810547
                     ],
                     "scale": [
-                        0.9999995827674866,
+                        0.9999994039535522,
                         1.0,
-                        0.9999995827674866
+                        0.9999994039535522
                     ],
                     "type": 21
                 },
@@ -1293,6 +1463,40 @@
                         1.5
                     ],
                     "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/Dialogues/DialogueTrigger.lua",
+                    "id": 1097308853,
+                    "inspector_variables": [
+                        {
+                            "name": "id",
+                            "type": "int",
+                            "value": 12
+                        },
+                        {
+                            "name": "onlyNerala",
+                            "type": "bool",
+                            "value": true
+                        },
+                        {
+                            "name": "onlyOmozra",
+                            "type": "bool",
+                            "value": false
+                        },
+                        {
+                            "name": "unlockingNerala",
+                            "type": "bool",
+                            "value": false
+                        },
+                        {
+                            "name": "unlockingOmozra",
+                            "type": "bool",
+                            "value": false
+                        }
+                    ],
+                    "type": 5
                 }
             ],
             "is3D": true,
@@ -1356,6 +1560,40 @@
                         6.599999904632568
                     ],
                     "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/Dialogues/DialogueTrigger.lua",
+                    "id": 1372628476,
+                    "inspector_variables": [
+                        {
+                            "name": "id",
+                            "type": "int",
+                            "value": 14
+                        },
+                        {
+                            "name": "onlyNerala",
+                            "type": "bool",
+                            "value": false
+                        },
+                        {
+                            "name": "onlyOmozra",
+                            "type": "bool",
+                            "value": true
+                        },
+                        {
+                            "name": "unlockingNerala",
+                            "type": "bool",
+                            "value": false
+                        },
+                        {
+                            "name": "unlockingOmozra",
+                            "type": "bool",
+                            "value": false
+                        }
+                    ],
+                    "type": 5
                 }
             ],
             "is3D": true,
@@ -1385,9 +1623,9 @@
                         0.8842517137527466
                     ],
                     "scale": [
-                        0.9999997615814209,
+                        0.999999463558197,
                         1.0,
-                        0.9999997615814209
+                        0.999999463558197
                     ],
                     "type": 21
                 },
@@ -1419,6 +1657,40 @@
                         1.0
                     ],
                     "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/Dialogues/DialogueTrigger.lua",
+                    "id": 497855475,
+                    "inspector_variables": [
+                        {
+                            "name": "id",
+                            "type": "int",
+                            "value": 16
+                        },
+                        {
+                            "name": "onlyNerala",
+                            "type": "bool",
+                            "value": false
+                        },
+                        {
+                            "name": "onlyOmozra",
+                            "type": "bool",
+                            "value": true
+                        },
+                        {
+                            "name": "unlockingNerala",
+                            "type": "bool",
+                            "value": false
+                        },
+                        {
+                            "name": "unlockingOmozra",
+                            "type": "bool",
+                            "value": false
+                        }
+                    ],
+                    "type": 5
                 }
             ],
             "is3D": true,
@@ -1443,14 +1715,14 @@
                     ],
                     "rotation": [
                         0.0,
-                        -0.4362974166870117,
+                        -0.4362979829311371,
                         0.0,
-                        0.899802565574646
+                        0.8998022675514221
                     ],
                     "scale": [
-                        0.9999997019767761,
                         1.0,
-                        0.9999997019767761
+                        1.0,
+                        1.0
                     ],
                     "type": 21
                 },
@@ -1482,74 +1754,45 @@
                         4.099999904632568
                     ],
                     "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/Dialogues/DialogueTrigger.lua",
+                    "id": 2107862006,
+                    "inspector_variables": [
+                        {
+                            "name": "id",
+                            "type": "int",
+                            "value": 17
+                        },
+                        {
+                            "name": "onlyNerala",
+                            "type": "bool",
+                            "value": false
+                        },
+                        {
+                            "name": "onlyOmozra",
+                            "type": "bool",
+                            "value": true
+                        },
+                        {
+                            "name": "unlockingNerala",
+                            "type": "bool",
+                            "value": false
+                        },
+                        {
+                            "name": "unlockingOmozra",
+                            "type": "bool",
+                            "value": false
+                        }
+                    ],
+                    "type": 5
                 }
             ],
             "is3D": true,
             "isPrefab": false,
             "name": "Tuto14",
-            "tag": 0
-        },
-        {
-            "active": true,
-            "children": [],
-            "components": [
-                {
-                    "active": true,
-                    "type": 23
-                },
-                {
-                    "active": true,
-                    "position": [
-                        32.47593688964844,
-                        0.0,
-                        548.7749633789063
-                    ],
-                    "rotation": [
-                        0.0,
-                        -0.2541443407535553,
-                        0.0,
-                        0.9671663045883179
-                    ],
-                    "scale": [
-                        0.9999999403953552,
-                        1.0,
-                        0.9999999403953552
-                    ],
-                    "type": 21
-                },
-                {
-                    "active": true,
-                    "body_type": "Static",
-                    "freeze_position_x": false,
-                    "freeze_position_y": false,
-                    "freeze_position_z": false,
-                    "freeze_rotation_x": false,
-                    "freeze_rotation_y": false,
-                    "freeze_rotation_z": false,
-                    "mass": 1.0,
-                    "type": 6,
-                    "use_gravity": true
-                },
-                {
-                    "active": true,
-                    "center": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "filter": "Interactuable",
-                    "is_trigger": true,
-                    "scale_factor": [
-                        105.80000305175781,
-                        4.900000095367432,
-                        2.130000114440918
-                    ],
-                    "type": 7
-                }
-            ],
-            "is3D": true,
-            "isPrefab": false,
-            "name": "Tuto15",
             "tag": 0
         },
         {
@@ -1660,15 +1903,15 @@
                 {
                     "active": true,
                     "position": [
-                        1070.73291015625,
-                        -0.0029242411255836487,
-                        565.61279296875
+                        944.74951171875,
+                        187.24781799316406,
+                        529.958984375
                     ],
                     "rotation": [
                         0.0,
                         0.36758023500442505,
                         0.0,
-                        0.9299917817115784
+                        0.9299919009208679
                     ],
                     "scale": [
                         0.9999998807907104,
@@ -1812,7 +2055,7 @@
                         {
                             "name": "id",
                             "type": "int",
-                            "value": -1
+                            "value": 37
                         },
                         {
                             "name": "onlyNerala",
@@ -1832,7 +2075,7 @@
                         {
                             "name": "unlockingOmozra",
                             "type": "bool",
-                            "value": false
+                            "value": true
                         }
                     ],
                     "type": 5
@@ -1840,7 +2083,7 @@
             ],
             "is3D": true,
             "isPrefab": true,
-            "name": "DialogueTriggerPrefab",
+            "name": "Dialogue6andTuto16",
             "tag": 0
         }
     ],

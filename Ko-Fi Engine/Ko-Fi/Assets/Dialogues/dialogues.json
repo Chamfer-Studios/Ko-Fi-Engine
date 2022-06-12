@@ -106,7 +106,7 @@
     },
     {
       "id": 14,
-      "targetID": -1,
+      "targetID": 15,
       "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
       "line1": "Omozra's first ability is a heal.                                      ",
@@ -275,7 +275,7 @@
     {
       "id": 38,
       "targetID": 39,
-      "src": "Assets/UI/HUD/Portraits/omozra_v1.0",
+      "src": "Assets/UI/HUD/Portraits/omozra_v1.0.png",
       "char": "Omozra           ",
       "line1": "How have you have you been brother? Ah, Nerala, sister, glad you didn't get killed",
       "line2": "Did you cause a mess as always?                                               "
@@ -299,7 +299,7 @@
     {
       "id": 41,
       "targetID": 42,
-      "src": "Assets/UI/HUD/Portraits/omozra_v1.0",
+      "src": "Assets/UI/HUD/Portraits/omozra_v1.0.png",
       "char": "Omozra           ",
       "line1": "You passed through a camp entrance that was heavily guarded on your way here, no? ",
       "line2": "Well, Sadiq tells me that ogre is there, preparing his ship to leave somewhere.   "

@@ -6,9 +6,9 @@ function Start()
     levelToLoad = GetGameJsonInt("level_progression")
 
     if(levelToLoad == 1) then
-        levelToLoad = "Level1"
+        levelToLoad = "SceneLoadingLevel1"
     elseif (levelToLoad == 2) then
-        levelToLoad = "Level2"
+        levelToLoad = "SceneLoadingLevel2"
     end
 end
 

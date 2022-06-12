@@ -8,7 +8,7 @@ function Start()
     boxCollider = gameObject:GetBoxCollider() -- This is here instead of at "awake" so the order of component creation does not affect
     componentRigidBody = gameObject:GetRigidBody() -- This is here instead of at "awake" so the order of component creation does not affect
     componentSwitch = gameObject:GetAudioSwitch()
-    trackList = {0, 1}
+    trackList = {0}
     ChangeTrack(trackList)
 end
 

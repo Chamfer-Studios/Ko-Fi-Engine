@@ -233,8 +233,7 @@ end
 function OnTriggerEnter(go)
     if (go.tag == Tag.ENEMY and go == target and poisonTimer == nil) then
         DispatchGlobalEvent("Mosquito_Hit", {go})
-        trackList = {2, 3}
-        ChangeTrack(trackList)
+        ChangeTrack({2})
         if (poisonCount == 1) then
             Die()
         end

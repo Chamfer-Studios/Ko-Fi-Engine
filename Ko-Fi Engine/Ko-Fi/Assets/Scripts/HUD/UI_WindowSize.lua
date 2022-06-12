@@ -27,8 +27,8 @@ function UpdateUI(dt)
 			image1 = default
 			image2 = checked
 			image3 = default
-			SetWidth(1920)
-			SetHeight(1080)
+			SetWidth(960)
+			SetHeight(540)
 			pos1:GetButton():SetIdleTexture(image1)
 			pos2:GetButton():SetIdleTexture(image2)
 			pos3:GetButton():SetIdleTexture(image3)

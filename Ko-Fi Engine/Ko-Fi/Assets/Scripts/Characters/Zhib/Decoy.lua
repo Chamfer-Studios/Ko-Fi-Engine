@@ -53,10 +53,15 @@ function Update(dt)
     if (destination ~= nil) then
         MoveToDestination(dt)
     elseif (lifeTimer <= lifeTime) then
-
         if(currentTrackID ~= 0) then
-            trackList = {0}
-            ChangeTrack(trackList)
+            if (componentSwitch ~= nil) then
+                if (currentTrackID ~= -1) then
+                    componentSwitch:StopTrack(currentTrackID)
+                end
+
+                currentTrackID = 0
+                componentSwitch:PlayTrack(currentTrackID)
+            end
         end
 
         if (componentLight ~= nil) then
@@ -163,23 +168,6 @@ function Distance(a, b)
 
 end
 --------------------------------------------------
-
-function ChangeTrack(_trackList)
-    size = 0
-    for i in pairs(_trackList) do
-        size = size + 1
-    end
-
-    index = math.random(size)
-
-    if (componentSwitch ~= nil) then
-        if (currentTrackID ~= -1) then
-            componentSwitch:StopTrack(currentTrackID)
-        end
-        currentTrackID = _trackList[index]
-        componentSwitch:PlayTrack(currentTrackID)
-    end
-end
 
 print("Decoy.lua compiled succesfully")
 Log("Decoy.lua compiled succesfully")

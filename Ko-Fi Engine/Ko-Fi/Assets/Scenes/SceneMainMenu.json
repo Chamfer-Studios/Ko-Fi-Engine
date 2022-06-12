@@ -2,7 +2,7 @@
     "SceneMainMenu": {
         "active": true,
         "draw_skybox": true,
-        "game_objects_amount": 70,
+        "game_objects_amount": 68,
         "game_objects_list": [
             {
                 "UID": 1475716659,
@@ -530,7 +530,7 @@
                             {
                                 "name": "name",
                                 "type": "string",
-                                "value": "CutsceneIntro"
+                                "value": "SceneLoadingCutscene1"
                             }
                         ],
                         "type": 5
@@ -2089,57 +2089,6 @@
                 "tag": 0
             },
             {
-                "UID": 841311316,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            -135.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            151.0,
-                            122.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
-                        "idleTexture": "Assets/New UI/checkbox_a_default.png",
-                        "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
-                        "type": 15
-                    },
-                    {
-                        "active": true,
-                        "async": false,
-                        "file_name": "Assets/Scripts/HUD/UI_Borderless.lua",
-                        "id": 1496512952,
-                        "type": 5
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Borderless Button",
-                "parent_UID": 757573716,
-                "tag": 0
-            },
-            {
                 "UID": 393429371,
                 "active": true,
                 "components": [
@@ -2230,63 +2179,14 @@
                     {
                         "active": true,
                         "async": false,
-                        "file_name": "Assets/Scripts/HUD/UI_Windowed.lua",
+                        "file_name": "Assets/Scripts/HUD/UI_Borderless.lua",
                         "id": 1305222561,
                         "type": 5
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "Windowed Button",
-                "parent_UID": 757573716,
-                "tag": 0
-            },
-            {
-                "UID": 1512526623,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            -203.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            150.0,
-                            40.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
-                        "type": 16,
-                        "value": "Borderless"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Borderless Text",
+                "name": "Borderless Button",
                 "parent_UID": 757573716,
                 "tag": 0
             },
@@ -2379,12 +2279,12 @@
                         ],
                         "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
                         "type": 16,
-                        "value": "Windowed"
+                        "value": "Borderless"
                     }
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "Windowed Text",
+                "name": "Borderless Text",
                 "parent_UID": 757573716,
                 "tag": 0
             },
@@ -3056,7 +2956,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
                         "type": 16,
-                        "value": "1920 x 1080"
+                        "value": "960 x 540"
                     }
                 ],
                 "is3D": false,

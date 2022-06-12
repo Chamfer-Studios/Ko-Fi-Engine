@@ -662,10 +662,10 @@
                                                                         5.265894889831543
                                                                     ],
                                                                     "rotation": [
-                                                                        -0.1500478833913803,
+                                                                        -0.15004786849021912,
                                                                         -0.04944562911987305,
-                                                                        0.03920349106192589,
-                                                                        0.9866629838943481
+                                                                        0.03920348733663559,
+                                                                        0.9866631031036377
                                                                     ],
                                                                     "scale": [
                                                                         1.0,
@@ -1379,9 +1379,9 @@
                             "name": "awarenessSize",
                             "type": "float3",
                             "value": {
-                                "x": 0.029999999329447746,
-                                "y": 0.05999999865889549,
-                                "z": 0.029999999329447746
+                                "x": 0.10000000149011612,
+                                "y": 0.10000000149011612,
+                                "z": 0.10000000149011612
                             }
                         },
                         {
@@ -1415,7 +1415,7 @@
                     "castShadows": false,
                     "constantAttenuationValue": 1.0,
                     "cutOffAngle": 0.8660253882408142,
-                    "diffuseValue": 0.4000000059604645,
+                    "diffuseValue": 0.6000000238418579,
                     "lightColor": [
                         0.10000000149011612,
                         0.6000000238418579,
@@ -1441,7 +1441,7 @@
                     "active": true,
                     "fade_time": 2.0,
                     "offset_sync": false,
-                    "total_tracks": 8,
+                    "total_tracks": 3,
                     "tracks": [
                         {
                             "bypass": false,
@@ -1465,72 +1465,7 @@
                             "offset": 0.0,
                             "pan": 0.0,
                             "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Harkonnen/harkonnen_attack_2_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": false,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Harkonnen/harkonnen_attack_3_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": false,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
                             "track_path": "Assets/Audio/SFX/Harkonnen/harkonnen_death_1_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": false,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Harkonnen/harkonnen_death_2_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": false,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Harkonnen/harkonnen_death_3_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": false,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Generic/generic_enemy_dodge_fx.wav",
                             "transpose": 1.0,
                             "volume": 100.0
                         },
@@ -2081,7 +2016,7 @@
                     "clipDuration": 97.0,
                     "clipDurationInSeconds": 4.041666507720947,
                     "clipEndFrame": 97.0,
-                    "clipFinished": false,
+                    "clipFinished": true,
                     "clipLoop": true,
                     "clipName": "Idle",
                     "clipStartFrame": 0.0,

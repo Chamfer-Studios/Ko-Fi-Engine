@@ -121,6 +121,7 @@
                     },
                     {
                         "active": true,
+                        "async": false,
                         "file_name": "Assets/Scripts/ChangeSceneDebugKey.lua",
                         "id": 1588478319,
                         "inspector_variables": [
@@ -175,6 +176,7 @@
                     },
                     {
                         "active": true,
+                        "async": false,
                         "file_name": "Assets/Scripts/HUD/UI_CutsceneIntro.lua",
                         "id": 1411300524,
                         "type": 5
@@ -517,7 +519,7 @@
             },
             {
                 "UID": 752630075,
-                "active": false,
+                "active": true,
                 "components": [
                     {
                         "active": true,
@@ -559,7 +561,7 @@
             },
             {
                 "UID": 2056582413,
-                "active": false,
+                "active": true,
                 "components": [
                     {
                         "active": true,
@@ -597,7 +599,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "On of the only Fremen cities that escaped the Harkonnen control is Sannara,"
+                        "value": "One of the only Fremen cities that escaped the Harkonnen control is Sannara,"
                     }
                 ],
                 "is3D": false,
@@ -608,7 +610,7 @@
             },
             {
                 "UID": 2146979042,
-                "active": false,
+                "active": true,
                 "components": [
                     {
                         "active": true,
@@ -741,7 +743,7 @@
             },
             {
                 "UID": 707661581,
-                "active": false,
+                "active": true,
                 "components": [
                     {
                         "active": true,
@@ -783,7 +785,7 @@
             },
             {
                 "UID": 1104294419,
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "active": true,
@@ -1154,7 +1156,7 @@
             },
             {
                 "UID": 1235969954,
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "active": true,
@@ -1672,7 +1674,7 @@
             },
             {
                 "UID": 860861081,
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "active": true,
@@ -1714,7 +1716,7 @@
             },
             {
                 "UID": 2126748913,
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "active": true,
@@ -1763,7 +1765,7 @@
             },
             {
                 "UID": 1683578617,
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "active": true,

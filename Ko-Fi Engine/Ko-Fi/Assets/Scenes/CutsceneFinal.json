@@ -1,6 +1,7 @@
 {
     "CutsceneFinal": {
         "active": true,
+        "draw_skybox": true,
         "game_objects_amount": 39,
         "game_objects_list": [
             {
@@ -33,10 +34,13 @@
                     },
                     {
                         "active": true,
+                        "cameraType": 0,
                         "far_plane_distance": 500.0,
                         "frustum_culling": false,
                         "isMainCamera": true,
                         "near_plane_distance": 0.009999999776482582,
+                        "orthoHeight": 1000.0,
+                        "orthoWidth": 1000.0,
                         "sCullingRadius": 249,
                         "sphere_culling": true,
                         "type": 4,
@@ -80,6 +84,7 @@
                     {
                         "active": true,
                         "ambientValue": 0.5,
+                        "castShadows": false,
                         "diffuseValue": 0.800000011920929,
                         "lightColor": [
                             1.0,
@@ -102,17 +107,21 @@
                     },
                     {
                         "active": true,
+                        "cameraType": 1,
                         "far_plane_distance": 1000.0,
                         "frustum_culling": false,
                         "isMainCamera": false,
                         "near_plane_distance": 0.30000001192092896,
+                        "orthoHeight": 1000.0,
+                        "orthoWidth": 1000.0,
                         "sCullingRadius": 499,
                         "sphere_culling": false,
                         "type": 4,
-                        "vertical_fov": 378.0
+                        "vertical_fov": 1000.0
                     },
                     {
                         "active": true,
+                        "async": false,
                         "file_name": "Assets/Scripts/ChangeSceneDebugKey.lua",
                         "id": 483801531,
                         "inspector_variables": [
@@ -167,6 +176,7 @@
                     },
                     {
                         "active": true,
+                        "async": false,
                         "file_name": "Assets/Scripts/HUD/UI_CutsceneFinal.lua",
                         "id": 1411300524,
                         "type": 5
@@ -271,7 +281,7 @@
             },
             {
                 "UID": 282872236,
-                "active": false,
+                "active": true,
                 "components": [
                     {
                         "active": true,
@@ -391,7 +401,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "The city of Arrakeen was conquered after the shields were taken down."
                     }
@@ -440,7 +450,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "The harkonnen combined forces could not stop Paul’s frontal attack."
                     }
@@ -615,7 +625,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "The Fremen had regained power over their planet."
                     }
@@ -664,7 +674,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Arrakis had been unified under the same flag for the first"
                     }
@@ -797,7 +807,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "The Fremen celebrated during the next weeks, and a parade was"
                     }
@@ -846,7 +856,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "celebrated in honor of those who did not make it. Zhib, Omozra and"
                     }
@@ -895,7 +905,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "the trusty Shadiq stood with their heads up high when they received"
                     }
@@ -986,7 +996,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "After ending with Raban, they had finally taken revenge for their"
                     }
@@ -1035,7 +1045,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "lost brothers. All the emotions that had been building up inside "
                     }
@@ -1084,7 +1094,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "this heart bursted in a victory scream that resonated through the dunes."
                     }
@@ -1133,7 +1143,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "the honor of being recognized as one of the most crucial teams"
                     }
@@ -1182,7 +1192,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "The city fell on Muad'dib's hand."
                     }
@@ -1231,7 +1241,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "time, and it had the color of the sands. But this was just"
                     }
@@ -1280,7 +1290,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "the beginning, the Kwisatz Haderach’s jihad had just begun."
                     }
@@ -1316,7 +1326,7 @@
                             0.0
                         ],
                         "size": [
-                            1800.0,
+                            1853.0,
                             60.0
                         ],
                         "type": 22
@@ -1329,7 +1339,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "in the whole war and were given a commemorative title, the Special Spice Ops."
                     }
@@ -1533,7 +1543,7 @@
                             0.0
                         ],
                         "size": [
-                            1457.0,
+                            1603.0,
                             60.0
                         ],
                         "type": 22
@@ -1546,7 +1556,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "But what was lost would never come back, and the water that"
                     }
@@ -1595,7 +1605,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "was lost in the desert will never take its previous form."
                     }
@@ -1644,7 +1654,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Sannara was no more, their previous lives were buried under the sand."
                     }
@@ -1693,7 +1703,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "They were only united by the memories of those who disappeared,"
                     }
@@ -1729,7 +1739,7 @@
                             0.0
                         ],
                         "size": [
-                            1668.0,
+                            1636.0,
                             60.0
                         ],
                         "type": 22
@@ -1742,7 +1752,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "but life goes on, and arrakis never allows a man to mourn for long."
                     }
@@ -1778,7 +1788,7 @@
                             0.0
                         ],
                         "size": [
-                            1500.0,
+                            1205.0,
                             60.0
                         ],
                         "type": 22
@@ -1791,7 +1801,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "The dunes still shone under the sunlight,"
                     }
@@ -1827,7 +1837,7 @@
                             0.0
                         ],
                         "size": [
-                            1800.0,
+                            1263.0,
                             60.0
                         ],
                         "type": 22
@@ -1840,7 +1850,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "and the winds still carried the rhythms of war."
                     }

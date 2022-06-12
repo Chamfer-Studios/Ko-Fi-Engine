@@ -1,4 +1,4 @@
-local path = "Assets/Scenes/SceneTransitionUI/sceneTransition.json"
+local path = "Assets/Descriptions/SceneTransitionDescriptions.json"
 
 character = {
     Zhib = 1,
@@ -183,7 +183,6 @@ function Start()
     spiceTextSizeY = spiceText:GetTransform2D():GetSize().y
     spiceTextPosY = spiceText:GetTransform2D():GetPosition().y
     spiceTextPosX = spiceText:GetTransform2D():GetPosition().x + spiceTextPosFactor
-    spiceText:GetText():SetColorRGB(255, 255, 255)
 
     once = false
 end
@@ -1123,9 +1122,10 @@ function ManageTimers(dt)
         textBlinkTimer = textBlinkTimer + dt
         if textBlinkTimer >= 0.4 then
             spiceTextAdditional.active = not spiceTextAdditional.active
+            textBlinkTimer = 0.0
         end
         if textTimer >= spiceAdditionalDuration then
-            -- spiceAmount = GetVariable("GameState.lua", "spiceAmount", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+            spiceAmount = GetVariable("GameState.lua", "spiceAmount", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
             SetText(spiceAmount)
             spiceTextAdditional.active = false
             textTimer = nil

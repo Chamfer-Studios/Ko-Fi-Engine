@@ -21,11 +21,6 @@ STATE = {
 
 currentState = STATE.UNAWARE
 
-function Start()
-    componentSwitch = gameObject:GetAudioSwitch()
-    currentTrackID = -1;
-end
-
 function Update(dt)
     -- Weirding Way death timer
     if (deathMarkTimer ~= nil) then
@@ -235,22 +230,5 @@ function EventHandler(key, fields)
                 end
             end
         end
-    end
-end
-
-function ChangeTrack(_trackList)
-    size = 0
-    for i in pairs(_trackList) do
-        size = size + 1
-    end
-
-    index = math.random(size)
-
-    if (componentSwitch ~= nil) then
-        if (currentTrackID ~= -1) then
-            componentSwitch:StopTrack(currentTrackID)
-        end
-        currentTrackID = _trackList[index]
-        componentSwitch:PlayTrack(currentTrackID)
     end
 end

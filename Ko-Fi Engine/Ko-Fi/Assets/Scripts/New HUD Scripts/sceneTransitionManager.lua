@@ -196,6 +196,8 @@ local path = "Assets/Descriptions/SceneTransitionDescriptions.json"
 local primaryLvl1Cost = 200
 local ultimateLvl1Cost = 300
 
+
+
 function calcAbilityCost(level, flags)
     if (flags == "ultimate") then
         return math.floor(2 ^ level * 150)
@@ -216,6 +218,17 @@ function Start()
     skillUiArray = {1, 2, 3, 101}
     dialogueGo = Find("Dialogue")
 
+    firstSkillButton = Find("Button")
+    secondSkillButton = Find("Button (1)")
+    thirdSkillButton = Find("Button (2)")
+    fourthSkillButton = Find("Button (3)")
+
+    rightArrow = Find("RightArrow")
+    leftArrow = Find("LeftArrow")
+
+    omozraTransition = Find("omozra_transition")
+    neralaTransition = Find("nerala_transition")
+
     id = 0
 
 end
@@ -225,12 +238,12 @@ function Update(dt)
 
         -- Deactivate the characters that are not available
         if (GetVariable("UI_GameState.lua", "omozra_available", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL) == false) then
-            Find("RightArrow"):Active(false)
-            Find("omozra_transition"):Active(false)
+            rightArrow:Active(false)
+            omozraTransition:Active(false)
         end
         if (GetVariable("UI_GameState.lua", "nerala_available", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL) == false) then
-            Find("LeftArrow"):Active(false)
-            Find("nerala_transition"):Active(false)
+            leftArrow:Active(false)
+            neralaTransition:Active(false)
         end
 
         UpdateUI()
@@ -240,17 +253,17 @@ function Update(dt)
         isStarting = false
     end
 
-    if (Find("Button") == nil) then
+    if (firstSkillButton == nil) then
         Log("No button")
     end
 
-    if (Find("Button"):GetButton():IsIdle() == false and Find("Button"):GetButton():IsPressed() == false) then
+    if (firstSkillButton:GetButton():IsIdle() == false and firstSkillButton:GetButton():IsPressed() == false) then
         SetDialogValue(1)
-    elseif (Find("Button (1)"):GetButton():IsIdle() == false and Find("Button (1)"):GetButton():IsPressed() == false) then
+    elseif (secondSkillButton:GetButton():IsIdle() == false and secondSkillButton:GetButton():IsPressed() == false) then
         SetDialogValue(2)
-    elseif (Find("Button (2)"):GetButton():IsIdle() == false and Find("Button (2)"):GetButton():IsPressed() == false) then
+    elseif (thirdSkillButton:GetButton():IsIdle() == false and thirdSkillButton:GetButton():IsPressed() == false) then
         SetDialogValue(3)
-    elseif (Find("Button (3)"):GetButton():IsIdle() == false and Find("Button (3)"):GetButton():IsPressed() == false) then
+    elseif (fourthSkillButton:GetButton():IsIdle() == false and fourthSkillButton:GetButton():IsPressed() == false) then
         SetDialogValue(4)
     else
         SetDialogValue(0)

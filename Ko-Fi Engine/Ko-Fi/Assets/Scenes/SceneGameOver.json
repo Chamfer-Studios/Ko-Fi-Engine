@@ -1,6 +1,7 @@
 {
     "SceneGameOver": {
         "active": true,
+        "draw_skybox": true,
         "game_objects_amount": 9,
         "game_objects_list": [
             {
@@ -33,10 +34,13 @@
                     },
                     {
                         "active": true,
+                        "cameraType": 0,
                         "far_plane_distance": 500.0,
                         "frustum_culling": false,
                         "isMainCamera": true,
                         "near_plane_distance": 0.009999999776482582,
+                        "orthoHeight": 1000.0,
+                        "orthoWidth": 1000.0,
                         "sCullingRadius": 249,
                         "sphere_culling": false,
                         "type": 4,
@@ -65,21 +69,22 @@
                             0.0
                         ],
                         "rotation": [
-                            0.2705981135368347,
-                            -0.653281569480896,
-                            0.2705981135368347,
-                            0.6532813310623169
+                            0.27059805393218994,
+                            -0.6532815098762512,
+                            0.27059805393218994,
+                            0.6532815098762512
                         ],
                         "scale": [
-                            1.0000001192092896,
+                            1.0,
                             0.9999999403953552,
-                            1.0
+                            0.9999999403953552
                         ],
                         "type": 21
                     },
                     {
                         "active": true,
                         "ambientValue": 0.5,
+                        "castShadows": false,
                         "diffuseValue": 0.800000011920929,
                         "lightColor": [
                             1.0,
@@ -102,10 +107,13 @@
                     },
                     {
                         "active": true,
+                        "cameraType": 1,
                         "far_plane_distance": 1000.0,
                         "frustum_culling": false,
                         "isMainCamera": false,
                         "near_plane_distance": 0.30000001192092896,
+                        "orthoHeight": 1000.0,
+                        "orthoWidth": 1000.0,
                         "sCullingRadius": 499,
                         "sphere_culling": false,
                         "type": 4,
@@ -113,6 +121,7 @@
                     },
                     {
                         "active": true,
+                        "async": false,
                         "file_name": "Assets/Scripts/ChangeSceneDebugKey.lua",
                         "id": 1504469387,
                         "inspector_variables": [
@@ -216,13 +225,14 @@
                     },
                     {
                         "active": true,
+                        "async": false,
                         "file_name": "Assets/Scripts/New HUD Scripts/space_to_main_menu.lua",
                         "id": 1911298973,
                         "inspector_variables": [
                             {
                                 "name": "name",
                                 "type": "string",
-                                "value": "SceneMainMenu"
+                                "value": "SceneLoadingMaInMenu"
                             }
                         ],
                         "type": 5

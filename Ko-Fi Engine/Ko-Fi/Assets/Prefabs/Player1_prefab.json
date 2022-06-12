@@ -12,20 +12,20 @@
                 {
                     "active": true,
                     "position": [
-                        -1503.8651123046875,
-                        1.02881324437476e-06,
-                        835.8765869140625
+                        -1567.8388671875,
+                        1.0007988748839125e-06,
+                        876.8897705078125
                     ],
                     "rotation": [
-                        -1.9470718370939721e-07,
-                        1.0,
-                        -3.1391647326017846e-07,
-                        -6.112178905365306e-14
+                        -1.812191925409934e-07,
+                        0.9991003274917603,
+                        -3.218916901914781e-07,
+                        0.04240885376930237
                     ],
                     "scale": [
                         0.010000564157962799,
                         0.009999999776482582,
-                        0.010000284761190414
+                        0.01000028382986784
                     ],
                     "type": 21
                 },
@@ -89,6 +89,7 @@
                 },
                 {
                     "active": true,
+                    "async": false,
                     "file_name": "Assets/Scripts/Characters/Zhib/Zhib.lua",
                     "id": 1978369992,
                     "type": 5
@@ -111,9 +112,9 @@
                         0.0
                     ],
                     "lightPosition": [
-                        -1503.8651123046875,
-                        1.02881324437476e-06,
-                        835.8765869140625
+                        -1567.8388671875,
+                        1.0007988748839125e-06,
+                        876.8897705078125
                     ],
                     "linearAttenuationValue": 0.0,
                     "quadraticAttenuationValue": 0.0,
@@ -123,6 +124,7 @@
                 },
                 {
                     "active": true,
+                    "async": false,
                     "file_name": "Assets/Scripts/Pathfinder.lua",
                     "id": 50309009,
                     "inspector_variables": [
@@ -143,18 +145,31 @@
                     "active": true,
                     "fade_time": 2.0,
                     "offset_sync": false,
-                    "total_tracks": 19,
+                    "total_tracks": 14,
                     "tracks": [
                         {
                             "bypass": false,
                             "custom_loop": false,
-                            "loop": false,
+                            "loop": true,
                             "loop_offset": 0.0,
                             "mute": false,
                             "offset": 0.0,
                             "pan": 0.0,
                             "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Zhib/zhib_attack_1_fx.wav",
+                            "track_path": "Assets/Audio/SFX/Generic/generic_sand_steps_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": true,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Generic/generic_sand_run_fx.wav",
                             "transpose": 1.0,
                             "volume": 100.0
                         },
@@ -167,7 +182,7 @@
                             "offset": 0.0,
                             "pan": 0.0,
                             "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Zhib/zhib_attack_2_fx.wav",
+                            "track_path": "Assets/Audio/SFX/Generic/generic_item_pick_1_fx.wav",
                             "transpose": 1.0,
                             "volume": 100.0
                         },
@@ -232,7 +247,7 @@
                             "offset": 0.0,
                             "pan": 0.0,
                             "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Zhib/zhib_knife_throw_1_fx.wav",
+                            "track_path": "Assets/Audio/SFX/Zhib/zhib_attack_1_fx.wav",
                             "transpose": 1.0,
                             "volume": 100.0
                         },
@@ -245,7 +260,20 @@
                             "offset": 0.0,
                             "pan": 0.0,
                             "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Zhib/zhib_knife_throw_2_fx.wav",
+                            "track_path": "Assets/Audio/SFX/Zhib/zhib_attack_2_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Zhib/zhib_knife_throw_1_fx.wav",
                             "transpose": 1.0,
                             "volume": 100.0
                         },
@@ -284,19 +312,6 @@
                             "offset": 0.0,
                             "pan": 0.0,
                             "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Zhib/zhib_weird_vanish_2_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": false,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
                             "track_path": "Assets/Audio/SFX/Zhib/zhib_weird_attack_1_fx.wav",
                             "transpose": 1.0,
                             "volume": 100.0
@@ -310,85 +325,7 @@
                             "offset": 0.0,
                             "pan": 0.0,
                             "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Zhib/zhib_weird_attack_2_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": false,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
                             "track_path": "Assets/Audio/SFX/Zhib/zhib_weird_stomp_1_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": false,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Zhib/zhib_weird_stomp_2_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": false,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Generic/generic_item_pick_1_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": false,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Generic/generic_item_pick_2_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": true,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Generic/generic_sand_steps_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": true,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Generic/generic_sand_run_fx.wav",
                             "transpose": 1.0,
                             "volume": 100.0
                         }
@@ -1069,15 +1006,15 @@
                                                                                                 -0.0008106231689453125
                                                                                             ],
                                                                                             "rotation": [
-                                                                                                0.14897368848323822,
+                                                                                                0.14897367358207703,
                                                                                                 0.00812781136482954,
                                                                                                 -0.007138106040656567,
-                                                                                                0.9887819886207581
+                                                                                                0.9887821078300476
                                                                                             ],
                                                                                             "scale": [
                                                                                                 0.9999999403953552,
                                                                                                 0.9999992847442627,
-                                                                                                0.9999992847442627
+                                                                                                0.9999993443489075
                                                                                             ],
                                                                                             "type": 21
                                                                                         }
@@ -1200,12 +1137,12 @@
                                                                 0.614894688129425,
                                                                 -0.3867248594760895,
                                                                 0.5503819584846497,
-                                                                0.4116164743900299
+                                                                0.4116165041923523
                                                             ],
                                                             "scale": [
                                                                 1.0000001192092896,
                                                                 1.000000238418579,
-                                                                1.0000003576278687
+                                                                1.0000004768371582
                                                             ],
                                                             "type": 21
                                                         }
@@ -1542,10 +1479,10 @@
                                                         -212.80902099609375
                                                     ],
                                                     "rotation": [
-                                                        0.009828436188399792,
+                                                        0.009828435257077217,
                                                         0.038491662591695786,
                                                         0.01155894622206688,
-                                                        0.9991438388824463
+                                                        0.9991437196731567
                                                     ],
                                                     "scale": [
                                                         0.9999961256980896,
@@ -1576,7 +1513,7 @@
                                             "rotation": [
                                                 0.014676685445010662,
                                                 -0.026115229353308678,
-                                                0.0022172746248543262,
+                                                0.002217290922999382,
                                                 0.9995487332344055
                                             ],
                                             "scale": [
@@ -1606,14 +1543,14 @@
                                         -2.4058048725128174
                                     ],
                                     "rotation": [
-                                        0.0019191437168046832,
+                                        0.001919159316457808,
                                         -0.002420386066660285,
-                                        0.002283706795424223,
+                                        0.0022837091237306595,
                                         0.9999926090240479
                                     ],
                                     "scale": [
                                         1.0,
-                                        0.9999116063117981,
+                                        0.9999036192893982,
                                         1.0
                                     ],
                                     "type": 21
@@ -2447,7 +2384,7 @@
                     "clipDuration": 1.0,
                     "clipDurationInSeconds": 0.0416666679084301,
                     "clipEndFrame": 141.0,
-                    "clipFinished": true,
+                    "clipFinished": false,
                     "clipLoop": true,
                     "clipName": "IdleCrouch",
                     "clipStartFrame": 140.0,
@@ -2520,7 +2457,7 @@
                     "uid": 2018873560
                 }
             ],
-            "selectedClip": "IdleCrouch",
+            "selectedClip": "Idle",
             "type": 12
         }
     ],

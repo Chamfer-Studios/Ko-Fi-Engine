@@ -425,6 +425,8 @@ GameObject* M_Camera3D::MousePicking(const bool& isRightButton)
 		{
 			if (gameObject->tag == TAG::TAG_DECORATION_FLOOR)
 				continue;
+			else if (gameObject->tag == TAG::TAG_ENEMY)
+				return gameObject;
 		}
 
 		LineSegment rayLocal = newRay;

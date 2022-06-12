@@ -622,7 +622,7 @@
                                                     ],
                                                     "rotation": [
                                                         0.017121700569987297,
-                                                        -0.0027152360416948795,
+                                                        -0.002715203445404768,
                                                         -0.006756574846804142,
                                                         0.9998269081115723
                                                     ],
@@ -797,11 +797,11 @@
                                                     "rotation": [
                                                         0.6777206063270569,
                                                         -0.00954693928360939,
-                                                        0.0009200442000292242,
+                                                        0.000920005259104073,
                                                         0.7352569699287415
                                                     ],
                                                     "scale": [
-                                                        0.9999296069145203,
+                                                        0.9999212622642517,
                                                         1.0,
                                                         1.0
                                                     ],
@@ -865,7 +865,7 @@
                                         -0.020205974578857422
                                     ],
                                     "scale": [
-                                        1.000138759613037,
+                                        1.0001554489135742,
                                         1.0000139474868774,
                                         1.0
                                     ],
@@ -952,9 +952,9 @@
                 {
                     "active": true,
                     "position": [
-                        -1577.3343505859375,
-                        0.0006381954299286008,
-                        603.5219116210938
+                        -1246.603271484375,
+                        -0.004341105930507183,
+                        -463.2919616699219
                     ],
                     "rotation": [
                         0.0,
@@ -963,9 +963,9 @@
                         1.0
                     ],
                     "scale": [
-                        0.019999999552965164,
-                        0.019999999552965164,
-                        0.019999999552965164
+                        0.013783742673695087,
+                        0.013783742673695087,
+                        0.013783742673695087
                     ],
                     "type": 21
                 },
@@ -1029,19 +1029,21 @@
                 },
                 {
                     "active": true,
+                    "async": false,
                     "file_name": "Assets/Scripts/Enemies/Sardaukar.lua",
                     "id": 1378507452,
                     "type": 5
                 },
                 {
                     "active": true,
+                    "async": true,
                     "file_name": "Assets/Scripts/Enemies/EnemyController.lua",
                     "id": 2023131262,
                     "inspector_variables": [
                         {
                             "name": "static",
                             "type": "bool",
-                            "value": true
+                            "value": false
                         },
                         {
                             "name": "speed",
@@ -1086,31 +1088,39 @@
                             "name": "awarenessSize",
                             "type": "float3",
                             "value": {
-                                "x": 0.05999999865889549,
-                                "y": 0.11999999731779099,
-                                "z": 0.05999999865889549
+                                "x": 0.10000000149011612,
+                                "y": 0.10000000149011612,
+                                "z": 0.10000000149011612
                             }
                         },
                         {
                             "name": "pingpong",
                             "type": "bool",
-                            "value": true
+                            "value": false
                         },
                         {
                             "name": "loop",
                             "type": "bool",
-                            "value": true
+                            "value": false
                         },
                         {
                             "name": "patrolWaypoints",
                             "type": "float3_array",
-                            "value": []
+                            "value": [
+                                -1239.50439453125,
+                                -0.0014036281500011683,
+                                -454.4372253417969,
+                                -1280.162353515625,
+                                -0.0031094648875296116,
+                                -215.5453643798828
+                            ]
                         }
                     ],
                     "type": 5
                 },
                 {
                     "active": true,
+                    "async": false,
                     "file_name": "Assets/Scripts/Pathfinder.lua",
                     "id": 1116668619,
                     "inspector_variables": [
@@ -1122,7 +1132,7 @@
                         {
                             "name": "standByTime",
                             "type": "int",
-                            "value": 0
+                            "value": 3
                         }
                     ],
                     "type": 5
@@ -1133,11 +1143,11 @@
                     "castShadows": false,
                     "constantAttenuationValue": 1.0,
                     "cutOffAngle": 0.8191520571708679,
-                    "diffuseValue": 0.800000011920929,
+                    "diffuseValue": 0.6000000238418579,
                     "lightColor": [
-                        0.0,
-                        1.0,
-                        0.0
+                        0.10000000149011612,
+                        0.6000000238418579,
+                        1.0
                     ],
                     "lightDirection": [
                         -0.0,
@@ -1145,9 +1155,9 @@
                         -1.0
                     ],
                     "lightPosition": [
-                        -1577.3343505859375,
-                        0.0006381954299286008,
-                        603.5219116210938
+                        -1246.603271484375,
+                        -0.004341105930507183,
+                        -463.2919616699219
                     ],
                     "linearAttenuationValue": 0.0,
                     "quadraticAttenuationValue": 0.0,
@@ -1159,7 +1169,7 @@
                     "active": true,
                     "fade_time": 2.0,
                     "offset_sync": false,
-                    "total_tracks": 10,
+                    "total_tracks": 4,
                     "tracks": [
                         {
                             "bypass": false,
@@ -1183,72 +1193,7 @@
                             "offset": 0.0,
                             "pan": 0.0,
                             "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Sardaukar/sardaukar_attack_2_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": false,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Sardaukar/sardaukar_attack_3_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": false,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
                             "track_path": "Assets/Audio/SFX/Sardaukar/sardaukar_death_1_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": false,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Sardaukar/sardaukar_death_2_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": false,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Sardaukar/sardaukar_death_3_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": false,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Generic/generic_enemy_dodge_fx.wav",
                             "transpose": 1.0,
                             "volume": 100.0
                         },
@@ -1275,19 +1220,6 @@
                             "pan": 0.0,
                             "play_on_start": false,
                             "track_path": "Assets/Audio/SFX/Sardaukar/sardaukar_knife_throw_1_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": false,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Sardaukar/sardaukar_knife_throw_2_fx.wav",
                             "transpose": 1.0,
                             "volume": 100.0
                         }
@@ -1392,7 +1324,7 @@
                     ],
                     "is3D": true,
                     "isPrefab": false,
-                    "name": "Enemy Debuff Particle (2)",
+                    "name": "Enemy Debuff Particle (30)",
                     "tag": 0
                 },
                 {
@@ -1611,7 +1543,7 @@
                     ],
                     "is3D": true,
                     "isPrefab": false,
-                    "name": "Enemy Blood Particle (2)",
+                    "name": "Enemy Blood Particle (30)",
                     "tag": 0
                 },
                 {
@@ -1703,1301 +1635,7 @@
                     ],
                     "is3D": true,
                     "isPrefab": false,
-                    "name": "Enemy Slash Particle (2)",
-                    "tag": 0
-                },
-                {
-                    "active": true,
-                    "children": [],
-                    "components": [
-                        {
-                            "active": true,
-                            "type": 23
-                        },
-                        {
-                            "active": true,
-                            "position": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "rotation": [
-                                0.0,
-                                0.0,
-                                0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ],
-                            "type": 21
-                        },
-                        {
-                            "active": true,
-                            "resource": [
-                                {
-                                    "emitters": [
-                                        {
-                                            "loop": true,
-                                            "maxParticles": 500,
-                                            "modules": [
-                                                {
-                                                    "maxParticleLife": 3.0,
-                                                    "minParticleLife": 0.004999999888241291,
-                                                    "particlesPerSpawn": 1,
-                                                    "randomParticleLife": false,
-                                                    "spawnTime": 0.0,
-                                                    "type": 1
-                                                },
-                                                {
-                                                    "billboardingType": 2,
-                                                    "frontAxis": true,
-                                                    "maxDegrees": 360,
-                                                    "minDegrees": 0,
-                                                    "sideAxis": false,
-                                                    "topAxis": false,
-                                                    "type": 5
-                                                },
-                                                {
-                                                    "colors": [
-                                                        {
-                                                            "color": [
-                                                                1.0,
-                                                                1.0,
-                                                                1.0,
-                                                                1.0
-                                                            ],
-                                                            "position": 0.0
-                                                        }
-                                                    ],
-                                                    "type": 3
-                                                },
-                                                {
-                                                    "minInitialSize": [
-                                                        15.0,
-                                                        15.0,
-                                                        15.0
-                                                    ],
-                                                    "type": 4
-                                                }
-                                            ],
-                                            "name": "Chance",
-                                            "texture_path": "Assets/Textures/Particles/chance0.png"
-                                        }
-                                    ],
-                                    "name": "0 Chance"
-                                }
-                            ],
-                            "type": 3
-                        }
-                    ],
-                    "is3D": true,
-                    "isPrefab": false,
-                    "name": "0 Chance Particle (2)",
-                    "tag": 0
-                },
-                {
-                    "active": true,
-                    "children": [],
-                    "components": [
-                        {
-                            "active": true,
-                            "type": 23
-                        },
-                        {
-                            "active": true,
-                            "position": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "rotation": [
-                                0.0,
-                                0.0,
-                                0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ],
-                            "type": 21
-                        },
-                        {
-                            "active": true,
-                            "resource": [
-                                {
-                                    "emitters": [
-                                        {
-                                            "loop": true,
-                                            "maxParticles": 500,
-                                            "modules": [
-                                                {
-                                                    "maxParticleLife": 3.0,
-                                                    "minParticleLife": 0.004999999888241291,
-                                                    "particlesPerSpawn": 1,
-                                                    "randomParticleLife": false,
-                                                    "spawnTime": 0.0,
-                                                    "type": 1
-                                                },
-                                                {
-                                                    "billboardingType": 2,
-                                                    "frontAxis": true,
-                                                    "maxDegrees": 360,
-                                                    "minDegrees": 0,
-                                                    "sideAxis": false,
-                                                    "topAxis": false,
-                                                    "type": 5
-                                                },
-                                                {
-                                                    "colors": [
-                                                        {
-                                                            "color": [
-                                                                1.0,
-                                                                1.0,
-                                                                1.0,
-                                                                1.0
-                                                            ],
-                                                            "position": 0.0
-                                                        }
-                                                    ],
-                                                    "type": 3
-                                                },
-                                                {
-                                                    "minInitialSize": [
-                                                        15.0,
-                                                        15.0,
-                                                        15.0
-                                                    ],
-                                                    "type": 4
-                                                }
-                                            ],
-                                            "name": "Chance",
-                                            "texture_path": "Assets/Textures/Particles/chance10.png"
-                                        }
-                                    ],
-                                    "name": "10 Chance"
-                                }
-                            ],
-                            "type": 3
-                        }
-                    ],
-                    "is3D": true,
-                    "isPrefab": false,
-                    "name": "10 Chance Particle (2)",
-                    "tag": 0
-                },
-                {
-                    "active": true,
-                    "children": [],
-                    "components": [
-                        {
-                            "active": true,
-                            "type": 23
-                        },
-                        {
-                            "active": true,
-                            "position": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "rotation": [
-                                0.0,
-                                0.0,
-                                0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ],
-                            "type": 21
-                        },
-                        {
-                            "active": true,
-                            "resource": [
-                                {
-                                    "emitters": [
-                                        {
-                                            "loop": true,
-                                            "maxParticles": 500,
-                                            "modules": [
-                                                {
-                                                    "maxParticleLife": 3.0,
-                                                    "minParticleLife": 0.004999999888241291,
-                                                    "particlesPerSpawn": 1,
-                                                    "randomParticleLife": false,
-                                                    "spawnTime": 0.0,
-                                                    "type": 1
-                                                },
-                                                {
-                                                    "billboardingType": 2,
-                                                    "frontAxis": true,
-                                                    "maxDegrees": 360,
-                                                    "minDegrees": 0,
-                                                    "sideAxis": false,
-                                                    "topAxis": false,
-                                                    "type": 5
-                                                },
-                                                {
-                                                    "colors": [
-                                                        {
-                                                            "color": [
-                                                                1.0,
-                                                                1.0,
-                                                                1.0,
-                                                                1.0
-                                                            ],
-                                                            "position": 0.0
-                                                        }
-                                                    ],
-                                                    "type": 3
-                                                },
-                                                {
-                                                    "minInitialSize": [
-                                                        15.0,
-                                                        15.0,
-                                                        15.0
-                                                    ],
-                                                    "type": 4
-                                                }
-                                            ],
-                                            "name": "Chance",
-                                            "texture_path": "Assets/Textures/Particles/chance20.png"
-                                        }
-                                    ],
-                                    "name": "20 Chance"
-                                }
-                            ],
-                            "type": 3
-                        }
-                    ],
-                    "is3D": true,
-                    "isPrefab": false,
-                    "name": "20 Chance Particle (2)",
-                    "tag": 0
-                },
-                {
-                    "active": true,
-                    "children": [],
-                    "components": [
-                        {
-                            "active": true,
-                            "type": 23
-                        },
-                        {
-                            "active": true,
-                            "position": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "rotation": [
-                                0.0,
-                                0.0,
-                                0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ],
-                            "type": 21
-                        },
-                        {
-                            "active": true,
-                            "resource": [
-                                {
-                                    "emitters": [
-                                        {
-                                            "loop": true,
-                                            "maxParticles": 500,
-                                            "modules": [
-                                                {
-                                                    "maxParticleLife": 3.0,
-                                                    "minParticleLife": 0.004999999888241291,
-                                                    "particlesPerSpawn": 1,
-                                                    "randomParticleLife": false,
-                                                    "spawnTime": 0.0,
-                                                    "type": 1
-                                                },
-                                                {
-                                                    "billboardingType": 2,
-                                                    "frontAxis": true,
-                                                    "maxDegrees": 360,
-                                                    "minDegrees": 0,
-                                                    "sideAxis": false,
-                                                    "topAxis": false,
-                                                    "type": 5
-                                                },
-                                                {
-                                                    "colors": [
-                                                        {
-                                                            "color": [
-                                                                1.0,
-                                                                1.0,
-                                                                1.0,
-                                                                1.0
-                                                            ],
-                                                            "position": 0.0
-                                                        }
-                                                    ],
-                                                    "type": 3
-                                                },
-                                                {
-                                                    "minInitialSize": [
-                                                        15.0,
-                                                        15.0,
-                                                        15.0
-                                                    ],
-                                                    "type": 4
-                                                }
-                                            ],
-                                            "name": "Chance",
-                                            "texture_path": "Assets/Textures/Particles/chance30.png"
-                                        }
-                                    ],
-                                    "name": "30 Chance"
-                                }
-                            ],
-                            "type": 3
-                        }
-                    ],
-                    "is3D": true,
-                    "isPrefab": false,
-                    "name": "30 Chance Particle (2)",
-                    "tag": 0
-                },
-                {
-                    "active": true,
-                    "children": [],
-                    "components": [
-                        {
-                            "active": true,
-                            "type": 23
-                        },
-                        {
-                            "active": true,
-                            "position": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "rotation": [
-                                0.0,
-                                0.0,
-                                0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ],
-                            "type": 21
-                        },
-                        {
-                            "active": true,
-                            "resource": [
-                                {
-                                    "emitters": [
-                                        {
-                                            "loop": true,
-                                            "maxParticles": 500,
-                                            "modules": [
-                                                {
-                                                    "maxParticleLife": 3.0,
-                                                    "minParticleLife": 0.004999999888241291,
-                                                    "particlesPerSpawn": 1,
-                                                    "randomParticleLife": false,
-                                                    "spawnTime": 0.0,
-                                                    "type": 1
-                                                },
-                                                {
-                                                    "billboardingType": 2,
-                                                    "frontAxis": true,
-                                                    "maxDegrees": 360,
-                                                    "minDegrees": 0,
-                                                    "sideAxis": false,
-                                                    "topAxis": false,
-                                                    "type": 5
-                                                },
-                                                {
-                                                    "colors": [
-                                                        {
-                                                            "color": [
-                                                                1.0,
-                                                                1.0,
-                                                                1.0,
-                                                                1.0
-                                                            ],
-                                                            "position": 0.0
-                                                        }
-                                                    ],
-                                                    "type": 3
-                                                },
-                                                {
-                                                    "minInitialSize": [
-                                                        15.0,
-                                                        15.0,
-                                                        15.0
-                                                    ],
-                                                    "type": 4
-                                                }
-                                            ],
-                                            "name": "Chance",
-                                            "texture_path": "Assets/Textures/Particles/chance40.png"
-                                        }
-                                    ],
-                                    "name": "40 Chance"
-                                }
-                            ],
-                            "type": 3
-                        }
-                    ],
-                    "is3D": true,
-                    "isPrefab": false,
-                    "name": "40 Chance Particle (2)",
-                    "tag": 0
-                },
-                {
-                    "active": true,
-                    "children": [],
-                    "components": [
-                        {
-                            "active": true,
-                            "type": 23
-                        },
-                        {
-                            "active": true,
-                            "position": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "rotation": [
-                                0.0,
-                                0.0,
-                                0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ],
-                            "type": 21
-                        },
-                        {
-                            "active": true,
-                            "resource": [
-                                {
-                                    "emitters": [
-                                        {
-                                            "loop": true,
-                                            "maxParticles": 500,
-                                            "modules": [
-                                                {
-                                                    "maxParticleLife": 3.0,
-                                                    "minParticleLife": 0.004999999888241291,
-                                                    "particlesPerSpawn": 1,
-                                                    "randomParticleLife": false,
-                                                    "spawnTime": 0.0,
-                                                    "type": 1
-                                                },
-                                                {
-                                                    "billboardingType": 2,
-                                                    "frontAxis": true,
-                                                    "maxDegrees": 360,
-                                                    "minDegrees": 0,
-                                                    "sideAxis": false,
-                                                    "topAxis": false,
-                                                    "type": 5
-                                                },
-                                                {
-                                                    "colors": [
-                                                        {
-                                                            "color": [
-                                                                1.0,
-                                                                1.0,
-                                                                1.0,
-                                                                1.0
-                                                            ],
-                                                            "position": 0.0
-                                                        }
-                                                    ],
-                                                    "type": 3
-                                                },
-                                                {
-                                                    "minInitialSize": [
-                                                        15.0,
-                                                        15.0,
-                                                        15.0
-                                                    ],
-                                                    "type": 4
-                                                }
-                                            ],
-                                            "name": "Chance",
-                                            "texture_path": "Assets/Textures/Particles/chance50.png"
-                                        }
-                                    ],
-                                    "name": "50 Chance"
-                                }
-                            ],
-                            "type": 3
-                        }
-                    ],
-                    "is3D": true,
-                    "isPrefab": false,
-                    "name": "50 Chance Particle (2)",
-                    "tag": 0
-                },
-                {
-                    "active": true,
-                    "children": [],
-                    "components": [
-                        {
-                            "active": true,
-                            "type": 23
-                        },
-                        {
-                            "active": true,
-                            "position": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "rotation": [
-                                0.0,
-                                0.0,
-                                0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ],
-                            "type": 21
-                        },
-                        {
-                            "active": true,
-                            "resource": [
-                                {
-                                    "emitters": [
-                                        {
-                                            "loop": true,
-                                            "maxParticles": 500,
-                                            "modules": [
-                                                {
-                                                    "maxParticleLife": 3.0,
-                                                    "minParticleLife": 0.004999999888241291,
-                                                    "particlesPerSpawn": 1,
-                                                    "randomParticleLife": false,
-                                                    "spawnTime": 0.0,
-                                                    "type": 1
-                                                },
-                                                {
-                                                    "billboardingType": 2,
-                                                    "frontAxis": true,
-                                                    "maxDegrees": 360,
-                                                    "minDegrees": 0,
-                                                    "sideAxis": false,
-                                                    "topAxis": false,
-                                                    "type": 5
-                                                },
-                                                {
-                                                    "colors": [
-                                                        {
-                                                            "color": [
-                                                                1.0,
-                                                                1.0,
-                                                                1.0,
-                                                                1.0
-                                                            ],
-                                                            "position": 0.0
-                                                        }
-                                                    ],
-                                                    "type": 3
-                                                },
-                                                {
-                                                    "minInitialSize": [
-                                                        15.0,
-                                                        15.0,
-                                                        15.0
-                                                    ],
-                                                    "type": 4
-                                                }
-                                            ],
-                                            "name": "Chance",
-                                            "texture_path": "Assets/Textures/Particles/chance60.png"
-                                        }
-                                    ],
-                                    "name": "60 Chance"
-                                }
-                            ],
-                            "type": 3
-                        }
-                    ],
-                    "is3D": true,
-                    "isPrefab": false,
-                    "name": "60 Chance Particle (2)",
-                    "tag": 0
-                },
-                {
-                    "active": true,
-                    "children": [],
-                    "components": [
-                        {
-                            "active": true,
-                            "type": 23
-                        },
-                        {
-                            "active": true,
-                            "position": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "rotation": [
-                                0.0,
-                                0.0,
-                                0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ],
-                            "type": 21
-                        },
-                        {
-                            "active": true,
-                            "resource": [
-                                {
-                                    "emitters": [
-                                        {
-                                            "loop": true,
-                                            "maxParticles": 500,
-                                            "modules": [
-                                                {
-                                                    "maxParticleLife": 3.0,
-                                                    "minParticleLife": 0.004999999888241291,
-                                                    "particlesPerSpawn": 1,
-                                                    "randomParticleLife": false,
-                                                    "spawnTime": 0.0,
-                                                    "type": 1
-                                                },
-                                                {
-                                                    "billboardingType": 2,
-                                                    "frontAxis": true,
-                                                    "maxDegrees": 360,
-                                                    "minDegrees": 0,
-                                                    "sideAxis": false,
-                                                    "topAxis": false,
-                                                    "type": 5
-                                                },
-                                                {
-                                                    "colors": [
-                                                        {
-                                                            "color": [
-                                                                1.0,
-                                                                1.0,
-                                                                1.0,
-                                                                1.0
-                                                            ],
-                                                            "position": 0.0
-                                                        }
-                                                    ],
-                                                    "type": 3
-                                                },
-                                                {
-                                                    "minInitialSize": [
-                                                        15.0,
-                                                        15.0,
-                                                        15.0
-                                                    ],
-                                                    "type": 4
-                                                }
-                                            ],
-                                            "name": "Chance",
-                                            "texture_path": "Assets/Textures/Particles/chance70.png"
-                                        }
-                                    ],
-                                    "name": "70 Chance"
-                                }
-                            ],
-                            "type": 3
-                        }
-                    ],
-                    "is3D": true,
-                    "isPrefab": false,
-                    "name": "70 Chance Particle (2)",
-                    "tag": 0
-                },
-                {
-                    "active": true,
-                    "children": [],
-                    "components": [
-                        {
-                            "active": true,
-                            "type": 23
-                        },
-                        {
-                            "active": true,
-                            "position": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "rotation": [
-                                0.0,
-                                0.0,
-                                0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ],
-                            "type": 21
-                        },
-                        {
-                            "active": true,
-                            "resource": [
-                                {
-                                    "emitters": [
-                                        {
-                                            "loop": true,
-                                            "maxParticles": 500,
-                                            "modules": [
-                                                {
-                                                    "maxParticleLife": 3.0,
-                                                    "minParticleLife": 0.004999999888241291,
-                                                    "particlesPerSpawn": 1,
-                                                    "randomParticleLife": false,
-                                                    "spawnTime": 0.0,
-                                                    "type": 1
-                                                },
-                                                {
-                                                    "billboardingType": 2,
-                                                    "frontAxis": true,
-                                                    "maxDegrees": 360,
-                                                    "minDegrees": 0,
-                                                    "sideAxis": false,
-                                                    "topAxis": false,
-                                                    "type": 5
-                                                },
-                                                {
-                                                    "colors": [
-                                                        {
-                                                            "color": [
-                                                                1.0,
-                                                                1.0,
-                                                                1.0,
-                                                                1.0
-                                                            ],
-                                                            "position": 0.0
-                                                        }
-                                                    ],
-                                                    "type": 3
-                                                },
-                                                {
-                                                    "minInitialSize": [
-                                                        15.0,
-                                                        15.0,
-                                                        15.0
-                                                    ],
-                                                    "type": 4
-                                                }
-                                            ],
-                                            "name": "Chance",
-                                            "texture_path": "Assets/Textures/Particles/chance80.png"
-                                        }
-                                    ],
-                                    "name": "80 Chance"
-                                }
-                            ],
-                            "type": 3
-                        }
-                    ],
-                    "is3D": true,
-                    "isPrefab": false,
-                    "name": "80 Chance Particle (2)",
-                    "tag": 0
-                },
-                {
-                    "active": true,
-                    "children": [],
-                    "components": [
-                        {
-                            "active": true,
-                            "type": 23
-                        },
-                        {
-                            "active": true,
-                            "position": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "rotation": [
-                                0.0,
-                                0.0,
-                                0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ],
-                            "type": 21
-                        },
-                        {
-                            "active": true,
-                            "resource": [
-                                {
-                                    "emitters": [
-                                        {
-                                            "loop": true,
-                                            "maxParticles": 500,
-                                            "modules": [
-                                                {
-                                                    "maxParticleLife": 3.0,
-                                                    "minParticleLife": 0.004999999888241291,
-                                                    "particlesPerSpawn": 1,
-                                                    "randomParticleLife": false,
-                                                    "spawnTime": 0.0,
-                                                    "type": 1
-                                                },
-                                                {
-                                                    "billboardingType": 2,
-                                                    "frontAxis": true,
-                                                    "maxDegrees": 360,
-                                                    "minDegrees": 0,
-                                                    "sideAxis": false,
-                                                    "topAxis": false,
-                                                    "type": 5
-                                                },
-                                                {
-                                                    "colors": [
-                                                        {
-                                                            "color": [
-                                                                1.0,
-                                                                1.0,
-                                                                1.0,
-                                                                1.0
-                                                            ],
-                                                            "position": 0.0
-                                                        }
-                                                    ],
-                                                    "type": 3
-                                                },
-                                                {
-                                                    "minInitialSize": [
-                                                        15.0,
-                                                        15.0,
-                                                        15.0
-                                                    ],
-                                                    "type": 4
-                                                }
-                                            ],
-                                            "name": "Chance",
-                                            "texture_path": "Assets/Textures/Particles/chance90.png"
-                                        }
-                                    ],
-                                    "name": "90 Chance"
-                                }
-                            ],
-                            "type": 3
-                        }
-                    ],
-                    "is3D": true,
-                    "isPrefab": false,
-                    "name": "90 Chance Particle (2)",
-                    "tag": 0
-                },
-                {
-                    "active": true,
-                    "children": [],
-                    "components": [
-                        {
-                            "active": true,
-                            "type": 23
-                        },
-                        {
-                            "active": true,
-                            "position": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "rotation": [
-                                0.0,
-                                0.0,
-                                0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ],
-                            "type": 21
-                        },
-                        {
-                            "active": true,
-                            "resource": [
-                                {
-                                    "emitters": [
-                                        {
-                                            "loop": true,
-                                            "maxParticles": 500,
-                                            "modules": [
-                                                {
-                                                    "maxParticleLife": 3.0,
-                                                    "minParticleLife": 0.004999999888241291,
-                                                    "particlesPerSpawn": 1,
-                                                    "randomParticleLife": false,
-                                                    "spawnTime": 0.0,
-                                                    "type": 1
-                                                },
-                                                {
-                                                    "billboardingType": 2,
-                                                    "frontAxis": true,
-                                                    "maxDegrees": 360,
-                                                    "minDegrees": 0,
-                                                    "sideAxis": false,
-                                                    "topAxis": false,
-                                                    "type": 5
-                                                },
-                                                {
-                                                    "colors": [
-                                                        {
-                                                            "color": [
-                                                                1.0,
-                                                                1.0,
-                                                                1.0,
-                                                                1.0
-                                                            ],
-                                                            "position": 0.0
-                                                        }
-                                                    ],
-                                                    "type": 3
-                                                },
-                                                {
-                                                    "minInitialSize": [
-                                                        15.0,
-                                                        15.0,
-                                                        15.0
-                                                    ],
-                                                    "type": 4
-                                                }
-                                            ],
-                                            "name": "Chance",
-                                            "texture_path": "Assets/Textures/Particles/chance100.png"
-                                        }
-                                    ],
-                                    "name": "100 Chance"
-                                }
-                            ],
-                            "type": 3
-                        }
-                    ],
-                    "is3D": true,
-                    "isPrefab": false,
-                    "name": "100 Chance Particle (2)",
-                    "tag": 0
-                },
-                {
-                    "active": true,
-                    "children": [],
-                    "components": [
-                        {
-                            "active": true,
-                            "type": 23
-                        },
-                        {
-                            "active": true,
-                            "position": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "rotation": [
-                                0.0,
-                                0.0,
-                                0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ],
-                            "type": 21
-                        },
-                        {
-                            "active": true,
-                            "resource": [
-                                {
-                                    "emitters": [
-                                        {
-                                            "loop": true,
-                                            "maxParticles": 500,
-                                            "modules": [
-                                                {
-                                                    "maxParticleLife": 3.0,
-                                                    "minParticleLife": 1.25,
-                                                    "particlesPerSpawn": 1,
-                                                    "randomParticleLife": false,
-                                                    "spawnTime": 1.25,
-                                                    "type": 1
-                                                },
-                                                {
-                                                    "billboardingType": 2,
-                                                    "frontAxis": true,
-                                                    "maxDegrees": 360,
-                                                    "minDegrees": 0,
-                                                    "sideAxis": false,
-                                                    "topAxis": false,
-                                                    "type": 5
-                                                },
-                                                {
-                                                    "minInitialSize": [
-                                                        10.0,
-                                                        10.0,
-                                                        10.0
-                                                    ],
-                                                    "type": 4
-                                                },
-                                                {
-                                                    "followForward": false,
-                                                    "maxAcceleration": [
-                                                        0.25,
-                                                        0.25,
-                                                        0.25
-                                                    ],
-                                                    "maxDirection": [
-                                                        -1.0,
-                                                        -1.0,
-                                                        -1.0
-                                                    ],
-                                                    "maxPosition": [
-                                                        0.0,
-                                                        0.0,
-                                                        0.0
-                                                    ],
-                                                    "maxVelocity": 5.0,
-                                                    "minAcceleration": [
-                                                        0.0,
-                                                        0.0,
-                                                        -0.05000000074505806
-                                                    ],
-                                                    "minDirection": [
-                                                        0.0,
-                                                        0.4000000059604645,
-                                                        -1.0
-                                                    ],
-                                                    "minPosition": [
-                                                        0.0,
-                                                        0.0,
-                                                        0.0
-                                                    ],
-                                                    "minVelocity": 3.0,
-                                                    "randAcceleration": false,
-                                                    "randDirection": false,
-                                                    "randPosition": false,
-                                                    "randVelocity": false,
-                                                    "type": 2
-                                                },
-                                                {
-                                                    "colors": [
-                                                        {
-                                                            "color": [
-                                                                1.0,
-                                                                1.0,
-                                                                1.0,
-                                                                1.0
-                                                            ],
-                                                            "position": 0.0
-                                                        },
-                                                        {
-                                                            "color": [
-                                                                1.0,
-                                                                1.0,
-                                                                1.0,
-                                                                0.0
-                                                            ],
-                                                            "position": 1.0
-                                                        }
-                                                    ],
-                                                    "type": 3
-                                                }
-                                            ],
-                                            "name": "Emitter",
-                                            "texture_path": "Assets/Textures/Particles/hit.png"
-                                        }
-                                    ],
-                                    "name": "Hit"
-                                }
-                            ],
-                            "type": 3
-                        }
-                    ],
-                    "is3D": true,
-                    "isPrefab": false,
-                    "name": "Hit Particle (2)",
-                    "tag": 0
-                },
-                {
-                    "active": true,
-                    "children": [],
-                    "components": [
-                        {
-                            "active": true,
-                            "type": 23
-                        },
-                        {
-                            "active": true,
-                            "position": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "rotation": [
-                                0.0,
-                                0.0,
-                                0.0,
-                                1.0
-                            ],
-                            "scale": [
-                                1.0,
-                                1.0,
-                                1.0
-                            ],
-                            "type": 21
-                        },
-                        {
-                            "active": true,
-                            "resource": [
-                                {
-                                    "emitters": [
-                                        {
-                                            "loop": true,
-                                            "maxParticles": 500,
-                                            "modules": [
-                                                {
-                                                    "maxParticleLife": 3.0,
-                                                    "minParticleLife": 1.25,
-                                                    "particlesPerSpawn": 1,
-                                                    "randomParticleLife": false,
-                                                    "spawnTime": 1.25,
-                                                    "type": 1
-                                                },
-                                                {
-                                                    "billboardingType": 2,
-                                                    "frontAxis": true,
-                                                    "maxDegrees": 360,
-                                                    "minDegrees": 0,
-                                                    "sideAxis": false,
-                                                    "topAxis": false,
-                                                    "type": 5
-                                                },
-                                                {
-                                                    "minInitialSize": [
-                                                        10.0,
-                                                        10.0,
-                                                        10.0
-                                                    ],
-                                                    "type": 4
-                                                },
-                                                {
-                                                    "followForward": false,
-                                                    "maxAcceleration": [
-                                                        0.25,
-                                                        0.25,
-                                                        0.25
-                                                    ],
-                                                    "maxDirection": [
-                                                        -1.0,
-                                                        -1.0,
-                                                        -1.0
-                                                    ],
-                                                    "maxPosition": [
-                                                        0.0,
-                                                        0.0,
-                                                        0.0
-                                                    ],
-                                                    "maxVelocity": 5.0,
-                                                    "minAcceleration": [
-                                                        0.0,
-                                                        0.0,
-                                                        -0.05000000074505806
-                                                    ],
-                                                    "minDirection": [
-                                                        0.0,
-                                                        0.4000000059604645,
-                                                        -1.0
-                                                    ],
-                                                    "minPosition": [
-                                                        0.0,
-                                                        0.0,
-                                                        0.0
-                                                    ],
-                                                    "minVelocity": 3.0,
-                                                    "randAcceleration": false,
-                                                    "randDirection": false,
-                                                    "randPosition": false,
-                                                    "randVelocity": false,
-                                                    "type": 2
-                                                },
-                                                {
-                                                    "colors": [
-                                                        {
-                                                            "color": [
-                                                                1.0,
-                                                                1.0,
-                                                                1.0,
-                                                                1.0
-                                                            ],
-                                                            "position": 0.0
-                                                        },
-                                                        {
-                                                            "color": [
-                                                                1.0,
-                                                                1.0,
-                                                                1.0,
-                                                                0.0
-                                                            ],
-                                                            "position": 1.0
-                                                        }
-                                                    ],
-                                                    "type": 3
-                                                }
-                                            ],
-                                            "name": "Emitter",
-                                            "texture_path": "Assets/Textures/Particles/miss.png"
-                                        }
-                                    ],
-                                    "name": "Miss"
-                                }
-                            ],
-                            "type": 3
-                        }
-                    ],
-                    "is3D": true,
-                    "isPrefab": false,
-                    "name": "Miss Particle (2)",
+                    "name": "Enemy Slash Particle (30)",
                     "tag": 0
                 }
             ],
@@ -3029,7 +1667,7 @@
             ],
             "is3D": true,
             "isPrefab": true,
-            "name": "Enemy Particles (2)",
+            "name": "Enemy Particles (30)",
             "tag": 0
         }
     ],
@@ -3149,7 +1787,7 @@
                     "clipDuration": 15.0,
                     "clipDurationInSeconds": 0.625,
                     "clipEndFrame": 360.0,
-                    "clipFinished": false,
+                    "clipFinished": true,
                     "clipLoop": true,
                     "clipName": "Run",
                     "clipStartFrame": 345.0,

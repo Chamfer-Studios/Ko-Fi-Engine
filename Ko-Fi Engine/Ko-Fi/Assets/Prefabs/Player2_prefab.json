@@ -12,20 +12,20 @@
                 {
                     "active": true,
                     "position": [
-                        -1541.366455078125,
-                        0.0,
-                        821.3896484375
+                        -1404.17724609375,
+                        -0.001953125,
+                        -1817.9962158203125
                     ],
                     "rotation": [
-                        4.371138828673793e-08,
-                        1.0,
-                        1.9470718370939721e-07,
-                        -8.510920985441324e-15
+                        -1.7905145455188176e-07,
+                        0.23423892259597778,
+                        8.810342677634253e-08,
+                        0.9721790552139282
                     ],
                     "scale": [
-                        0.010000092908740044,
+                        0.01000009011477232,
                         0.010000000707805157,
-                        0.010000092908740044
+                        0.01000009011477232
                     ],
                     "type": 21
                 },
@@ -89,6 +89,7 @@
                 },
                 {
                     "active": true,
+                    "async": false,
                     "file_name": "Assets/Scripts/Characters/Nerala/Nerala.lua",
                     "id": 1196853938,
                     "inspector_variables": [
@@ -168,9 +169,9 @@
                         0.0
                     ],
                     "lightPosition": [
-                        -1541.366455078125,
-                        0.0,
-                        821.3896484375
+                        -1404.17724609375,
+                        -0.001953125,
+                        -1817.9962158203125
                     ],
                     "linearAttenuationValue": 0.0,
                     "quadraticAttenuationValue": 0.0,
@@ -180,6 +181,7 @@
                 },
                 {
                     "active": true,
+                    "async": false,
                     "file_name": "Assets/Scripts/Pathfinder.lua",
                     "id": 17687332,
                     "inspector_variables": [
@@ -200,7 +202,7 @@
                     "active": true,
                     "fade_time": 2.0,
                     "offset_sync": false,
-                    "total_tracks": 15,
+                    "total_tracks": 13,
                     "tracks": [
                         {
                             "bypass": false,
@@ -211,7 +213,7 @@
                             "offset": 0.0,
                             "pan": 0.0,
                             "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Nerala/nerala_attack_1_fx.wav",
+                            "track_path": "Assets/Audio/SFX/Generic/generic_sand_steps_fx.wav",
                             "transpose": 1.0,
                             "volume": 100.0
                         },
@@ -224,7 +226,20 @@
                             "offset": 0.0,
                             "pan": 0.0,
                             "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Nerala/nerala_attack_2_fx.wav",
+                            "track_path": "Assets/Audio/SFX/Generic/generic_sand_run_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Generic/generic_item_pick_1_fx.wav",
                             "transpose": 1.0,
                             "volume": 100.0
                         },
@@ -289,7 +304,7 @@
                             "offset": 0.0,
                             "pan": 0.0,
                             "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Nerala/nerala_dart_attack_1_fx.wav",
+                            "track_path": "Assets/Audio/SFX/Nerala/nerala_attack_1_fx.wav",
                             "transpose": 1.0,
                             "volume": 100.0
                         },
@@ -302,7 +317,20 @@
                             "offset": 0.0,
                             "pan": 0.0,
                             "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Nerala/nerala_dart_attack_2_fx.wav",
+                            "track_path": "Assets/Audio/SFX/Nerala/nerala_attack_2_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Nerala/nerala_dart_attack_1_fx.wav",
                             "transpose": 1.0,
                             "volume": 100.0
                         },
@@ -329,58 +357,6 @@
                             "pan": 0.0,
                             "play_on_start": false,
                             "track_path": "Assets/Audio/SFX/Nerala/nerala_mosquito_beep_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": false,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Generic/generic_item_pick_1_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": false,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Generic/generic_item_pick_2_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": true,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Generic/generic_sand_steps_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": true,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Generic/generic_sand_run_fx.wav",
                             "transpose": 1.0,
                             "volume": 100.0
                         },
@@ -650,7 +626,7 @@
                                                                     ],
                                                                     "rotation": [
                                                                         0.013312622904777527,
-                                                                        0.0068303057923913,
+                                                                        0.006830335594713688,
                                                                         -0.07146187126636505,
                                                                         0.9973311424255371
                                                                     ],
@@ -1427,12 +1403,12 @@
                                                                                                     ],
                                                                                                     "rotation": [
                                                                                                         0.1800972819328308,
-                                                                                                        -0.0006506986101157963,
-                                                                                                        -0.0005635599372908473,
+                                                                                                        -0.000650708272587508,
+                                                                                                        -0.0005635631387121975,
                                                                                                         0.983648419380188
                                                                                                     ],
                                                                                                     "scale": [
-                                                                                                        0.9999111890792847,
+                                                                                                        0.9999035596847534,
                                                                                                         1.0,
                                                                                                         0.9999999403953552
                                                                                                     ],
@@ -1650,15 +1626,15 @@
                                                 -5.960464477539063e-08
                                             ],
                                             "rotation": [
-                                                0.006305830553174019,
-                                                0.0017805940005928278,
+                                                0.0063058300875127316,
+                                                0.0017805902753025293,
                                                 0.05189020186662674,
                                                 0.9986312985420227
                                             ],
                                             "scale": [
                                                 0.9999944567680359,
                                                 0.9999973773956299,
-                                                0.9999184012413025
+                                                0.999913215637207
                                             ],
                                             "type": 21
                                         }
@@ -2931,7 +2907,7 @@
                     "uid": 273555772
                 }
             ],
-            "selectedClip": "IdleCrouch",
+            "selectedClip": "Idle",
             "type": 12
         }
     ],

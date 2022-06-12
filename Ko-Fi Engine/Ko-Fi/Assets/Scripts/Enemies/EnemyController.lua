@@ -49,7 +49,7 @@ NewVariable(awarenessSizeIV)
 
 awarenessSoundSpeed = 0.3
 awarenessVisualSpeed = 1.0
-awarenessDecaySpeed = 0.5
+awarenessDecaySpeed = 0.1
 
 pingpong = false
 local pingpongIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL
@@ -1095,6 +1095,8 @@ function AttackRabban(currentClip)
         if componentAnimator:IsCurrentClipPlaying() == false then
             if (distance > attackRange) then
                 if (currentClip ~= "Run") then
+                    trackList = {4}
+                    ChangeTrack(trackList)
                     componentAnimator:SetSelectedClip("Run")
                 end
             else
@@ -1108,6 +1110,8 @@ function AttackRabban(currentClip)
         end
     else
         if (currentClip ~= "Run") then
+            trackList = {4}
+            ChangeTrack(trackList)
             componentAnimator:SetSelectedClip("Run")
         end
     end

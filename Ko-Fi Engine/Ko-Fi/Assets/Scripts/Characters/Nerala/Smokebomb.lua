@@ -58,8 +58,7 @@ function Update(dt)
             -- DispatchGlobalEvent("Auditory_Trigger", { componentTransform:GetPosition(), effectRadius, "single", gameObject })
 
             if (currentTrackID ~= 0 and currentTrackID ~= 1) then
-                trackList = {0}
-                ChangeTrack(trackList)
+                ChangeTrack({0})
             end
 
             if (componentSwitch:IsAnyTrackPlaying() == false) then
@@ -71,8 +70,7 @@ function Update(dt)
             end
 
             if (currentTrackID ~= 1) then
-                trackList = {1}
-                ChangeTrack(trackList)
+                ChangeTrack({1})
             end
         end
     else

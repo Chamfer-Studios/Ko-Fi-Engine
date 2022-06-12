@@ -45,16 +45,10 @@ function EventHandler(key, fields)
         if (fields[1] == gameObject) then
             if (currentState == STATE.UNAWARE or currentState == STATE.AWARE) then
                 DispatchEvent("Missed", {})
-                trackList = {1}
-                ChangeTrack(trackList)
             elseif (currentState == STATE.SUS) then
                 DispatchEvent("Missed", {})
-                trackList = {1}
-                ChangeTrack(trackList)
             elseif (currentState == STATE.AGGRO) then
                 DispatchEvent("Missed", {})
-                trackList = {1}
-                ChangeTrack(trackList)
             end
         end
         -- Zhib Weirding way
@@ -87,34 +81,11 @@ function EventHandler(key, fields)
         if (fields[1] == gameObject) then
             if (currentState == STATE.UNAWARE or currentState == STATE.AWARE) then
                 DispatchEvent("Missed", {})
-                trackList = {1}
-                ChangeTrack(trackList)
             elseif (currentState == STATE.SUS) then
                 DispatchEvent("Missed", {})
-                trackList = {1}
-                ChangeTrack(trackList)
             elseif (currentState == STATE.AGGRO) then
                 DispatchEvent("Missed", {})
-                trackList = {1}
-                ChangeTrack(trackList)
             end
         end
-    end
-end
-
-function ChangeTrack(_trackList)
-    size = 0
-    for i in pairs(_trackList) do
-        size = size + 1
-    end
-
-    index = math.random(size)
-
-    if (componentSwitch ~= nil) then
-        if (currentTrackID ~= -1) then
-            componentSwitch:StopTrack(currentTrackID)
-        end
-        currentTrackID = _trackList[index]
-        componentSwitch:PlayTrack(currentTrackID)
     end
 end

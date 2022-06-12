@@ -35,14 +35,14 @@ mouseRightIn = true
 
 camSensitivity = 0.2
 lastDeltaX = 0
---resetOffset = 1;
---currentTarget = float3.new(0, 0, 0)
+-- resetOffset = 1;
+-- currentTarget = float3.new(0, 0, 0)
 closestY = -100.0
 furthestY = 2000.0
 rayCastCulling = {}
 local freePanningDebug
 isStarting = true
---use the fokin start
+-- use the fokin start
 
 function Float3Length(v)
     return math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z)
@@ -87,74 +87,68 @@ function Float3Angle(a, b)
 end
 
 function Float3Cross(a, b)
-    return float3.new(
-        a.y * b.z - a.z * b.y,
-        a.z * b.x - a.x * b.z,
-        a.x * b.y - a.y * b.x
-    )
+    return float3.new(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x)
 end
 
 function Float3Mult(a, b)
-    return float3.new(
-        a.x * b,
-        a.y * b,
-        a.z * b
-    )
+    return float3.new(a.x * b, a.y * b, a.z * b)
 end
 
 function Float3Sum(a, b)
-    return float3.new(
-        a.x + b.x,
-        a.y + b.y,
-        a.z + b.z
-    )
+    return float3.new(a.x + b.x, a.y + b.y, a.z + b.z)
 end
 
 function Float3RotateAxisAngle(v, axis, angle)
     do
         anglecos = math.cos(angle)
-        vbycos = float3.new(
-            v.x * anglecos,
-            v.y * anglecos,
-            v.z * anglecos
-        )
+        vbycos = float3.new(v.x * anglecos, v.y * anglecos, v.z * anglecos)
         anglesin = math.sin(angle)
         axisvectorcross = Float3Cross(axis, v)
         axisvectordot = Float3Dot(axis, v)
-        ret = Float3Sum(Float3Sum(vbycos, Float3Mult(axisvectorcross, anglesin)), (Float3Mult(axis, axisvectordot * (1 - anglecos))))
+        ret = Float3Sum(Float3Sum(vbycos, Float3Mult(axisvectorcross, anglesin)),
+            (Float3Mult(axis, axisvectordot * (1 - anglecos))))
 
-        do return ret end;
+        do
+            return ret
+        end
     end
 end
 
 function Start()
-    --Put the position of the selected character inside variable target
+    -- Put the position of the selected character inside variable target
     level = GetVariable("GameState.lua", "levelNumber", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
     if level == 1 then
         borderXNegative = borderXNegative1
         borderXPositive = borderXPositive1
         borderZNegative = borderZNegative1
         borderZPositive = borderZPositive1
-        --Log("Level 1")
+        -- Log("Level 1")
     elseif level == 2 then
         borderXNegative = borderXNegative2
         borderXPositive = borderXPositive2
         borderZNegative = borderZNegative2
         borderZPositive = borderZPositive2
-        --Log("Level 2")
+        -- Log("Level 2")
     end
-    --Log("Level xD")
-    freePanningDebug = true
+    -- Log("Level xD")
+    freePanningDebug = false
     GetSelectedCharacter()
+    offset = float3.new(0, 240, 270)
+    newZoomedPos = float3.new(0, 99, 112)
 
 end
 
 function Update(dt)
-    
-    --str = "Position X: " .. tostring(gameObject:GetTransform():GetPosition().x) .. "Position Z: " .. tostring(gameObject:GetTransform():GetPosition().z) .. "\n"
-    --Log(str)
+
+    if (GetMouseScreenPos().y < 0 or GetMouseScreenPos().y > GetLastViewportSize().y or GetMouseScreenPos().x < 0 or
+        GetMouseScreenPos().x > GetLastViewportSize().x) then
+        xPanning = 0.0
+        zPanning = 0.0
+    end
+    -- str = "Position X: " .. tostring(gameObject:GetTransform():GetPosition().x) .. "Position Z: " .. tostring(gameObject:GetTransform():GetPosition().z) .. "\n"
+    -- Log(str)
     local lastFinalPos = componentTransform:GetPosition()
-    --input: mouse wheel to zoom in and out
+    -- input: mouse wheel to zoom in and out
     -- local?
     if (GetMouseZ() > 0) then
         local deltaY = newZoomedPos.y + gameObject:GetCamera():GetFront().y * zoomSpeed
@@ -174,36 +168,38 @@ function Update(dt)
 
     if (GetInput(16) == KEY_STATE.KEY_REPEAT) then -- W --HAY UN KEY REPEAT
         zPanning = -1.0
-     end
-     if (GetInput(16) == KEY_STATE.KEY_UP) then -- W
-         zPanning = 0.0
-     end
-     if (GetInput(17) == KEY_STATE.KEY_REPEAT) then -- A
-        xPanning = -1
-     end
-     if (GetInput(17) == KEY_STATE.KEY_UP) then -- A
-         xPanning = 0.0
-     end
-     if (GetInput(18) == KEY_STATE.KEY_REPEAT) then -- S
-        zPanning = 1.0
-     end
-     if (GetInput(18) == KEY_STATE.KEY_UP) then -- S
+    end
+    if (GetInput(16) == KEY_STATE.KEY_UP) then -- W
         zPanning = 0.0
-     end
-     if (GetInput(19) == KEY_STATE.KEY_REPEAT) then -- D
-        xPanning = 1.0
-     end
-     if (GetInput(19) == KEY_STATE.KEY_UP) then -- D
+    end
+    if (GetInput(17) == KEY_STATE.KEY_REPEAT) then -- A
+        xPanning = -1
+    end
+    if (GetInput(17) == KEY_STATE.KEY_UP) then -- A
         xPanning = 0.0
-     end
+    end
+    if (GetInput(18) == KEY_STATE.KEY_REPEAT) then -- S
+        zPanning = 1.0
+    end
+    if (GetInput(18) == KEY_STATE.KEY_UP) then -- S
+        zPanning = 0.0
+    end
+    if (GetInput(19) == KEY_STATE.KEY_REPEAT) then -- D
+        xPanning = 1.0
+    end
+    if (GetInput(19) == KEY_STATE.KEY_UP) then -- D
+        xPanning = 0.0
+    end
 
-    --Mouse Movement
+    -- Mouse Movement
 
-    if (GetMouseScreenPos().y < GetLastViewportSize().y and GetMouseScreenPos().y > (GetLastViewportSize().y - cursorMargin)) then -- W --HAY UN KEY REPEAT
+    if (GetMouseScreenPos().y < GetLastViewportSize().y and GetMouseScreenPos().y >
+        (GetLastViewportSize().y - cursorMargin)) then -- W --HAY UN KEY REPEAT
         mouseTopIn = true
         zPanning = -1.0
     end
-    if ((GetMouseScreenPos().y < (GetLastViewportSize().y) - cursorMargin and GetMouseScreenPos().y > cursorMargin) and mouseTopIn == true) then -- W
+    if ((GetMouseScreenPos().y < (GetLastViewportSize().y) - cursorMargin and GetMouseScreenPos().y > cursorMargin) and
+        mouseTopIn == true) then -- W
         mouseTopIn = false
         zPanning = 0.0
     end
@@ -211,7 +207,8 @@ function Update(dt)
         mouseLeftIn = true
         xPanning = -1.0
     end
-    if (GetMouseScreenPos().x > cursorMargin and GetMouseScreenPos().x < (GetLastViewportSize().x - cursorMargin) and mouseLeftIn == true) then -- A
+    if (GetMouseScreenPos().x > cursorMargin and GetMouseScreenPos().x < (GetLastViewportSize().x - cursorMargin) and
+        mouseLeftIn == true) then -- A
         mouseLeftIn = false
         xPanning = 0.0
     end
@@ -219,20 +216,21 @@ function Update(dt)
         mouseBottomIn = true
         zPanning = 1.0
     end
-    if (GetMouseScreenPos().y > cursorMargin and GetMouseScreenPos().y < (GetLastViewportSize().y - cursorMargin) and mouseBottomIn == true) then -- S
+    if (GetMouseScreenPos().y > cursorMargin and GetMouseScreenPos().y < (GetLastViewportSize().y - cursorMargin) and
+        GetMouseScreenPos().y < 0 and mouseBottomIn == true) then -- S
         mouseBottomIn = false
         zPanning = 0.0
     end
-    if (GetMouseScreenPos().x < GetLastViewportSize().x and GetMouseScreenPos().x > (GetLastViewportSize().x - cursorMargin)) then -- D
+    if (GetMouseScreenPos().x < GetLastViewportSize().x and GetMouseScreenPos().x >
+        (GetLastViewportSize().x - cursorMargin)) then -- D
         mouseRightIn = true
         xPanning = 1.0
     end
-    if (GetMouseScreenPos().x < (GetLastViewportSize().x) - cursorMargin and GetMouseScreenPos().x > 15 and mouseRightIn == true) then -- D
+    if (GetMouseScreenPos().x < (GetLastViewportSize().x) - cursorMargin and GetMouseScreenPos().x > 15 and mouseRightIn ==
+        true) then -- D
         mouseRightIn = false
         xPanning = 0.0
     end
-
-
     -- go back to the selected character
     -- if  (GetInput(10) == KEY_STATE.KEY_DOWN) then -- R
     --     GetSelectedCharacter()
@@ -244,31 +242,30 @@ function Update(dt)
     --     else
     --         freePanningDebug = true
     --     end
-        
+
     -- end
-    if  (GetInput(10) == KEY_STATE.KEY_DOWN) then -- R
+    if (GetInput(43) == KEY_STATE.KEY_DOWN) then -- SPACE
         freePanningDebug = not freePanningDebug
         if freePanningDebug == true then
-             GetSelectedCharacter()
-             offset = float3.new(0, 240, 270)
-             newZoomedPos = float3.new(0, 0, 0)
-        end 
+            GetSelectedCharacter()
+            offset = float3.new(0, 240, 270)
+            newZoomedPos = float3.new(0, 99, 112)
+        end
     end
 
-
-    if  (GetInput(14) == KEY_STATE.KEY_REPEAT) then -- Q
+    if (GetInput(14) == KEY_STATE.KEY_REPEAT) then -- Q
         local newQuat = Quat.new(float3.new(0, 1, 0), -0.0174533)
-        offset = MulQuat(newQuat, offset) 
-        newZoomedPos = MulQuat(newQuat, newZoomedPos) 
+        offset = MulQuat(newQuat, offset)
+        newZoomedPos = MulQuat(newQuat, newZoomedPos)
     end
-    if  (GetInput(15) == KEY_STATE.KEY_REPEAT) then -- E
+    if (GetInput(15) == KEY_STATE.KEY_REPEAT) then -- E
         local newQuat = Quat.new(float3.new(0, 1, 0), 0.0174533)
         offset = MulQuat(newQuat, offset)
-        newZoomedPos = MulQuat(newQuat, newZoomedPos) 
+        newZoomedPos = MulQuat(newQuat, newZoomedPos)
 
     end
-    
-    if(GetMouseMotionX() > 0 and GetInput(2) == KEY_STATE.KEY_REPEAT )then
+
+    if (GetMouseMotionX() > 0 and GetInput(2) == KEY_STATE.KEY_REPEAT) then
         xMotion = GetMouseMotionX()
         newDeltaX = xMotion * camSensitivity -- camera sensitivity
         deltaX = newDeltaX + 0.8 * (lastDeltaX - newDeltaX)
@@ -276,11 +273,11 @@ function Update(dt)
         finalDelta = deltaX * dt
         local newQuat = Quat.new(float3.new(0, 1, 0), finalDelta)
         offset = MulQuat(newQuat, offset)
-        newZoomedPos = MulQuat(newQuat, newZoomedPos) 
+        newZoomedPos = MulQuat(newQuat, newZoomedPos)
         xMotion = 0
     end
 
-    if(GetMouseMotionX() < 0 and GetInput(2) == KEY_STATE.KEY_REPEAT) then
+    if (GetMouseMotionX() < 0 and GetInput(2) == KEY_STATE.KEY_REPEAT) then
         xMotion = GetMouseMotionX()
         newDeltaX = xMotion * camSensitivity -- camera sensitivity
         deltaX = newDeltaX + 0.8 * (lastDeltaX - newDeltaX)
@@ -288,10 +285,10 @@ function Update(dt)
         finalDelta = deltaX * dt
         local newQuat = Quat.new(float3.new(0, 1, 0), finalDelta)
         offset = MulQuat(newQuat, offset)
-        newZoomedPos = MulQuat(newQuat, newZoomedPos) 
+        newZoomedPos = MulQuat(newQuat, newZoomedPos)
         xMotion = 0
     end
-    
+
     -- modify target with the camera panning
     if (freePanningDebug == true) then
         local currentPanSpeed = panSpeed * dt
@@ -307,8 +304,8 @@ function Update(dt)
 
         panning = Float3Sum(Float3Mult(right, panning.x), Float3Mult(front, panning.z))
 
-        --str = "Front Normalized: " .. tostring(panning) .. "\n"
-        --Log(str)
+        -- str = "Front Normalized: " .. tostring(panning) .. "\n"
+        -- Log(str)
 
         if (target.z >= borderZPositive and panning.z > 0) then
             panning = float3.new(0, 0, 0)
@@ -329,16 +326,16 @@ function Update(dt)
         GetSelectedCharacter()
     end
 
-    --Log("current target " .. target.x .. " " .. target.z .. "\n")
+    -- Log("current target " .. target.x .. " " .. target.z .. "\n")
 
-    --add offset to the target to set the current camera position
+    -- add offset to the target to set the current camera position
     local newPos = float3.new(0, 0, 0)
     newPos.x = target.x + offset.x
     newPos.y = target.y + offset.y
     newPos.z = target.z + offset.z
-  
+
     -- --compute final position adding zoom
-    finalPos.x = newPos.x + newZoomedPos.x 
+    finalPos.x = newPos.x + newZoomedPos.x
     finalPos.y = newPos.y + newZoomedPos.y
     finalPos.z = newPos.z + newZoomedPos.z
 
@@ -346,26 +343,25 @@ function Update(dt)
 
     gameObject:GetCamera():LookAt(target)
 
-
-    if(freePanningDebug == false) then
+    if (freePanningDebug == false) then
         if componentTransform:GetPosition() ~= lastFinalPos then
-            for i=1, #rayCastCulling do
+            for i = 1, #rayCastCulling do
                 rayCastCulling[i].active = true
             end
             if #rayCastCulling > 0 then
                 rayCastCulling = {}
             end
-            rayCastCulling = CustomRayCastList(finalPos, target, {Tag.UNTAGGED, Tag.WALL})
-            for j=1, #rayCastCulling do
+            rayCastCulling = CustomRayCastList(finalPos, target, {Tag.UNTAGGED, Tag.WALL, Tag.DECORATIONFLOOR})
+            for j = 1, #rayCastCulling do
                 rayCastCulling[j].active = false
             end
+        end
+        -- 1st iteration use look at to center at characters
+
     end
-    --1st iteration use look at to center at characters
-    
-end
 end
 
-function EventHandler(key, fields) --funcion virtual que recibe todos los eventos que se componen de una key y unos fields. la cosa esta en especificar la key (quees el evento) 
+function EventHandler(key, fields) -- funcion virtual que recibe todos los eventos que se componen de una key y unos fields. la cosa esta en especificar la key (quees el evento) 
     if (key == "Mosquito_Spawn") then
         mosquito = fields[1]
     elseif (key == "Mosquito_Death") then
@@ -375,7 +371,7 @@ end
 
 function GetSelectedCharacter()
 
-    --get character selected. I keep it in order to center the camera arround a player in case needed
+    -- get character selected. I keep it in order to center the camera arround a player in case needed
     id = GetVariable("GameState.lua", "characterSelected", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
     if (id == 1) then
         target = Find("Zhib"):GetTransform():GetPosition()

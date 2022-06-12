@@ -155,12 +155,12 @@
                             -0.7071066498756409,
                             0.0,
                             0.0,
-                            0.70710688829422
+                            0.7071069478988647
                         ],
                         "scale": [
                             203.08840942382813,
-                            0.0014648345531895757,
-                            11.394936561584473
+                            0.00146483292337507,
+                            11.394923210144043
                         ],
                         "type": 21
                     },
@@ -186,7 +186,18 @@
                         ],
                         "shader": {
                             "asset_path": "Assets/Shaders/default_shader.glsl",
-                            "uniforms": null
+                            "uniforms": [
+                                {
+                                    "name": "albedoTint",
+                                    "type": 35666,
+                                    "value": {
+                                        "w": 1.0,
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                }
+                            ]
                         },
                         "texture": {
                             "asset_path": "Assets/New UI/Transition Screen Background.png"
@@ -250,7 +261,18 @@
                         ],
                         "shader": {
                             "asset_path": "Assets/Shaders/default_shader.glsl",
-                            "uniforms": null
+                            "uniforms": [
+                                {
+                                    "name": "albedoTint",
+                                    "type": 35666,
+                                    "value": {
+                                        "w": 1.0,
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                }
+                            ]
                         },
                         "texture": {
                             "asset_path": "Assets/New UI/Transition Screen Background.png"
@@ -314,7 +336,18 @@
                         ],
                         "shader": {
                             "asset_path": "Assets/Shaders/default_shader.glsl",
-                            "uniforms": null
+                            "uniforms": [
+                                {
+                                    "name": "albedoTint",
+                                    "type": 35666,
+                                    "value": {
+                                        "w": 1.0,
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                }
+                            ]
                         },
                         "texture": {
                             "asset_path": "Assets/New UI/Transition Screen Background.png"
@@ -378,7 +411,18 @@
                         ],
                         "shader": {
                             "asset_path": "Assets/Shaders/default_shader.glsl",
-                            "uniforms": null
+                            "uniforms": [
+                                {
+                                    "name": "albedoTint",
+                                    "type": 35666,
+                                    "value": {
+                                        "w": 1.0,
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                }
+                            ]
                         },
                         "texture": {
                             "asset_path": "Assets/New UI/Transition Screen Background.png"
@@ -442,7 +486,18 @@
                         ],
                         "shader": {
                             "asset_path": "Assets/Shaders/default_shader.glsl",
-                            "uniforms": null
+                            "uniforms": [
+                                {
+                                    "name": "albedoTint",
+                                    "type": 35666,
+                                    "value": {
+                                        "w": 1.0,
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                }
+                            ]
                         },
                         "texture": {
                             "asset_path": "Assets/New UI/Transition Screen Background.png"
@@ -2165,7 +2220,7 @@
                             {
                                 "name": "name",
                                 "type": "string",
-                                "value": "SceneMainMenu"
+                                "value": "SceneLoadingMaInMenu"
                             }
                         ],
                         "type": 5
@@ -2223,7 +2278,7 @@
                             {
                                 "name": "name",
                                 "type": "string",
-                                "value": "SceneTutorial"
+                                "value": "SceneLoadingCutscene2"
                             }
                         ],
                         "type": 5
@@ -3520,15 +3575,15 @@
                             -3.814697265625e-05
                         ],
                         "rotation": [
-                            0.014461302198469639,
-                            0.0026198229752480984,
-                            0.037343740463256836,
+                            0.014461339451372623,
+                            0.0026198262348771095,
+                            0.03734372556209564,
                             0.9991943836212158
                         ],
                         "scale": [
                             1.0,
                             1.0,
-                            0.9999996423721313
+                            0.9999986886978149
                         ],
                         "type": 21
                     }
@@ -3834,7 +3889,18 @@
                         ],
                         "shader": {
                             "asset_path": "Assets/Shaders/default_shader.glsl",
-                            "uniforms": null
+                            "uniforms": [
+                                {
+                                    "name": "albedoTint",
+                                    "type": 35666,
+                                    "value": {
+                                        "w": 1.0,
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                }
+                            ]
                         },
                         "texture": {
                             "asset_path": "Assets/Textures/Characters/Nerala/nerala_base_color.png"
@@ -4462,12 +4528,12 @@
                         ],
                         "rotation": [
                             0.044304121285676956,
-                            5.00107926200144e-05,
-                            -0.00011630842345766723,
+                            5.001085446565412e-05,
+                            -0.00011630853987298906,
                             0.9990180730819702
                         ],
                         "scale": [
-                            0.9999824166297913,
+                            0.9999814629554749,
                             1.0,
                             1.0
                         ],
@@ -4497,12 +4563,12 @@
                         ],
                         "rotation": [
                             0.04658829793334007,
-                            -0.00013322212907951325,
-                            4.1287071894657856e-07,
+                            -0.00013322207087185234,
+                            4.128620503252023e-07,
                             0.9989141821861267
                         ],
                         "scale": [
-                            0.9999823570251465,
+                            0.9999814033508301,
                             0.9999975562095642,
                             0.9999999403953552
                         ],
@@ -4847,8 +4913,8 @@
                         ],
                         "rotation": [
                             -0.047845955938100815,
-                            0.0013017943128943443,
-                            -0.020340124145150185,
+                            0.0013017944293096662,
+                            -0.020340116694569588,
                             0.9986467957496643
                         ],
                         "scale": [
@@ -4950,7 +5016,18 @@
                         ],
                         "shader": {
                             "asset_path": "Assets/Shaders/default_shader.glsl",
-                            "uniforms": null
+                            "uniforms": [
+                                {
+                                    "name": "albedoTint",
+                                    "type": 35666,
+                                    "value": {
+                                        "w": 1.0,
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                }
+                            ]
                         },
                         "texture": {
                             "asset_path": "Assets/Textures/Characters/Zhib/zhib_base_color.png"
@@ -5752,7 +5829,7 @@
                             -6.352324485778809
                         ],
                         "rotation": [
-                            -0.011062019504606724,
+                            -0.011062034405767918,
                             -0.0051909079775214195,
                             0.020608697086572647,
                             0.9997129440307617
@@ -6349,11 +6426,11 @@
                         "rotation": [
                             0.0908370241522789,
                             -0.00028024916537106037,
-                            -0.013408871367573738,
+                            -0.013408872298896313,
                             0.9957754611968994
                         ],
                         "scale": [
-                            0.9999823570251465,
+                            0.9999814033508301,
                             0.9999998211860657,
                             0.9999999403953552
                         ],
@@ -6486,7 +6563,18 @@
                         ],
                         "shader": {
                             "asset_path": "Assets/Shaders/default_shader.glsl",
-                            "uniforms": null
+                            "uniforms": [
+                                {
+                                    "name": "albedoTint",
+                                    "type": 35666,
+                                    "value": {
+                                        "w": 1.0,
+                                        "x": 1.0,
+                                        "y": 1.0,
+                                        "z": 1.0
+                                    }
+                                }
+                            ]
                         },
                         "texture": {
                             "asset_path": "Assets/Textures/Characters/Omozra/omozra_base_color.png"
@@ -6557,7 +6645,7 @@
                             0.9781673550605774
                         ],
                         "scale": [
-                            0.9999823570251465,
+                            0.9999814033508301,
                             0.9999999403953552,
                             0.9999998807907104
                         ],

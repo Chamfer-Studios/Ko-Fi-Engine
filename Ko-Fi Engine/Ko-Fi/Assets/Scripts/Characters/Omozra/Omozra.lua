@@ -214,8 +214,8 @@ end
 
 -- Called each loop iteration
 function Update(dt)
-    if isDialogueOpen == true then
-        StopMovement(false)
+    if isDialogueOpen == true or currentState == State.DEAD then
+        StopMovement()
     end
 
     isSelected = IsSelected()
@@ -316,7 +316,7 @@ function Update(dt)
     end
 
     -- Gather Inputs
-    if (isSelected == true) then
+    if (isSelected == true and isDialogueOpen == false) then
 
         UpdateStamina()
 
@@ -875,8 +875,12 @@ end
 
 function StopMovement(resetTarget)
 
-    if (currentMovement == Movement.CROUCH) then
-        SetMovement(Movement.IDLE_CROUCH)
+    if (currentMovement == Movement.CROUCH or currentMovement == Movement.IDLE_CROUCH) then
+        if resetTarget == nil then
+            SetMovement(Movement.IDLE_CROUCH)
+        else
+            SetMovement(Movement.IDLE)
+        end
     elseif (currentMovement ~= Movement.IDLE_CROUCH) then
         SetMovement(Movement.IDLE)
     end
