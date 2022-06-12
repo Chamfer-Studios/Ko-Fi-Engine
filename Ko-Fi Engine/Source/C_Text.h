@@ -47,7 +47,7 @@ public:
 	GLuint openGLTexture = 0;
 
 	void SetColor(SDL_Color color);
-	inline void SetColorRGBA(const int r, const int g, const int b, const int a) { col.r = (unsigned int)r; col.g = (unsigned int)g; col.b = (unsigned int)b; col.a = (unsigned int)a; }
+	inline void SetColorRGB(const int r, const int g, const int b) { col.r = (unsigned int)r; col.g = (unsigned int)g; col.b = (unsigned int)b; }
 private:
 	GLuint SurfaceToOpenGLTexture(SDL_Surface* surface);
 	void FreeTextures();
