@@ -1359,6 +1359,9 @@
     <ClInclude Include="Source\PerfTimer.h">
       <Filter>Source\Helpers\Timing</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>External Libraries</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\M_ResourceManager.h">
@@ -1585,5 +1588,11 @@
     <None Include="Ko-Fi\Assets\Scripts\New HUD Scripts\sceneTransitionManager.lua">
       <Filter>Scripts</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Ko-Fi Engine.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Ko-Fi\EngineConfig\Icons\logo_exe.ico" />
   </ItemGroup>
 </Project>

@@ -339,6 +339,7 @@
     <ClCompile Include="Source\M_Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Source\AdditionNode.h" />
     <ClInclude Include="Source\C_Walkable.h" />
     <ClInclude Include="Source\C_BoxCollider.h" />
@@ -630,6 +631,12 @@
     <None Include="Source\External\MathGeoLib\MathGeoLib\Geometry\TriangleMesh_IntersectRay_SSE.inl" />
     <None Include="Source\External\MathGeoLib\MathGeoLib\Math\float2.inl" />
     <None Include="Source\External\MathGeoLib\MathGeoLib\Math\Matrix.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Ko-Fi Engine.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Ko-Fi\EngineConfig\Icons\logo_exe.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
