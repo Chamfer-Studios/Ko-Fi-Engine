@@ -412,6 +412,10 @@ public:
 		lua.set_function("GetBrightness", &Scripting::LuaGetBrightness, this);
 		lua.set_function("GetFullscreen", &Scripting::LuaGetFullscreen, this);
 		lua.set_function("SetFullscreen", &Scripting::LuaSetFullscreen, this);
+		lua.set_function("GetHeight", &Scripting::LuaGetHeight, this);
+		lua.set_function("SetHeight", &Scripting::LuaSetHeight, this);
+		lua.set_function("GetWidth", &Scripting::LuaGetWidth, this);
+		lua.set_function("SetWidth", &Scripting::LuaSetWidth, this);
 		lua.set_function("GetFullscreenDesktop", &Scripting::LuaGetFullscreenDesktop, this);
 		lua.set_function("SetFullscreenDesktop", &Scripting::LuaSetFullscreenDesktop, this);
 		lua.set_function("GetBorderless", &Scripting::LuaGetBorderless, this);
@@ -510,6 +514,26 @@ public:
 	void LuaSetFullscreen(bool fullscreen)
 	{
 		gameObject->GetEngine()->GetWindow()->SetFullscreen(fullscreen);
+	}
+
+	int LuaGetHeight()
+	{
+		return gameObject->GetEngine()->GetWindow()->GetHeight();
+	}
+
+	void LuaSetHeight(int height)
+	{
+		gameObject->GetEngine()->GetWindow()->SetHeight(height);
+	}
+
+	int LuaGetWidth()
+	{
+		return gameObject->GetEngine()->GetWindow()->GetWidth();
+	}
+
+	void LuaSetWidth(int width)
+	{
+		gameObject->GetEngine()->GetWindow()->SetWidth(width);
 	}
 
 	bool LuaGetFullscreenDesktop()
