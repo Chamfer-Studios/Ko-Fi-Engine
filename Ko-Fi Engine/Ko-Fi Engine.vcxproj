@@ -636,7 +636,7 @@
     <ResourceCompile Include="Ko-Fi Engine.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Ko-Fi\EngineConfig\Icons\logo_exe_color.ico" />
+    <Image Include="Ko-Fi\EngineConfig\Icons\logo_exe.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
