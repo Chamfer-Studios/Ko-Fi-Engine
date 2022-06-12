@@ -425,7 +425,7 @@ GameObject* M_Camera3D::MousePicking(const bool& isRightButton)
 		{
 			if (gameObject->tag == TAG::TAG_DECORATION_FLOOR)
 				continue;
-			else if (gameObject->tag == TAG::TAG_ENEMY)
+			else if (gameObject->tag == TAG::TAG_ENEMY || gameObject->tag == TAG::TAG_PLAYER)
 				return gameObject;
 		}
 
