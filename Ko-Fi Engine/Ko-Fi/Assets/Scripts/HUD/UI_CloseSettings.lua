@@ -6,6 +6,7 @@ NewVariable(nameIV)
 
 function Start()
     child = Find(name)
+    pause = Find("Background")
 end
 
 -- Called each loop iteration
@@ -13,6 +14,7 @@ function UpdateUI(dt)
     if (gameObject.active == true) then
         if (gameObject:GetButton():IsPressed()) then
             child:Active(false)
+            pause:Active(true)
         end
     end
 end

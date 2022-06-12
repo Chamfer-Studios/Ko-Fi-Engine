@@ -107,8 +107,6 @@ function EventHandler(key, fields)
                     Log("Knife's D100 roll has been " .. rng ..
                             " so the UNAWARE HARKONNEN enemy has dodged the knife :( \n")
                     DispatchGlobalEvent("Ability_Miss_Particle", {gameObject:GetTransform():GetPosition()})
-                    trackList = {6}
-                    ChangeTrack(trackList)
                 end
             elseif (currentState == STATE.SUS) then
                 knifeHitChance = GetVariable("Zhib.lua", "awareChanceHarkKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
@@ -121,8 +119,6 @@ function EventHandler(key, fields)
                     Log("Knife's D100 roll has been " .. rng ..
                             " so the AWARE HARKONNEN enemy has dodged the knife :( \n")
                     DispatchGlobalEvent("Ability_Miss_Particle", {gameObject:GetTransform():GetPosition()})
-                    trackList = {6}
-                    ChangeTrack(trackList)
                 end
             elseif (currentState == STATE.AGGRO) then
                 knifeHitChance = GetVariable("Zhib.lua", "aggroChanceHarkKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
@@ -135,8 +131,6 @@ function EventHandler(key, fields)
                     Log("Knife's D100 roll has been " .. rng ..
                             " so the AGGRO HARKONNEN enemy has dodged the knife :( \n")
                     DispatchGlobalEvent("Ability_Miss_Particle", {gameObject:GetTransform():GetPosition()})
-                    trackList = {6}
-                    ChangeTrack(trackList)
                 end
             end
         end
@@ -216,8 +210,6 @@ function EventHandler(key, fields)
                     Log("Dart's D100 roll has been " .. rng ..
                             " so the UNAWARE HARKONNEN enemy has dodged the dart :( \n")
                     DispatchGlobalEvent("Ability_Miss_Particle", {gameObject:GetTransform():GetPosition()})
-                    trackList = {6}
-                    ChangeTrack(trackList)
                 end
             elseif (currentState == STATE.SUS) then
                 dartHitChance = GetVariable("Nerala.lua", "awareChanceHarkDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
@@ -229,8 +221,6 @@ function EventHandler(key, fields)
                 else
                     Log("Dart's D100 roll has been " .. rng .. " so the AWARE HARKONNEN enemy has dodged the dart :( \n")
                     DispatchGlobalEvent("Ability_Miss_Particle", {gameObject:GetTransform():GetPosition()})
-                    trackList = {6}
-                    ChangeTrack(trackList)
                 end
             elseif (currentState == STATE.AGGRO) then
                 dartHitChance = GetVariable("Nerala.lua", "aggroChanceHarkDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
@@ -242,8 +232,6 @@ function EventHandler(key, fields)
                 else
                     Log("Dart's D100 roll has been " .. rng .. " so the AGGRO HARKONNEN enemy has dodged the dart :( \n")
                     DispatchGlobalEvent("Ability_Miss_Particle", {gameObject:GetTransform():GetPosition()})
-                    trackList = {6}
-                    ChangeTrack(trackList)
                 end
             end
         end

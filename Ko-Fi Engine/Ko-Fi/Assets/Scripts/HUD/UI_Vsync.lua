@@ -4,7 +4,7 @@ checked = "Assets/New UI/checkbox_a_checked.png"
 image = default
 
 -- Called each loop iteration
-function Update(dt)
+function UpdateUI(dt)
 	if (gameObject.active == true) then
 		if (isStarting == true) then
 			vSync = GetVsync()

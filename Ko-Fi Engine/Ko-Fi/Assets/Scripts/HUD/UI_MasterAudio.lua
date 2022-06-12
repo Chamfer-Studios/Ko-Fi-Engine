@@ -13,7 +13,7 @@ leftPosIV = InspectorVariable.new("leftPos", leftPosIVT, leftPos)
 NewVariable(leftPosIV)
 
 -- Called each loop iteration
-function Update(dt)
+function UpdateUI(dt)
 	if (gameObject.active == true) then
 		if (isStarting == true) then
 			audio = GetAudio()

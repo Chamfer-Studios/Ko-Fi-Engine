@@ -108,8 +108,6 @@ function EventHandler(key, fields)
                     Log("Knife's D100 roll has been " .. rng ..
                             " so the UNAWARE SARDAUKAR enemy has dodged the knife :( \n")
                     DispatchEvent("Missed", {})
-                    trackList = {6}
-                    ChangeTrack(trackList)
                 end
             elseif (currentState == STATE.SUS) then
                 knifeHitChance = GetVariable("Zhib.lua", "awareChanceSardKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
@@ -122,8 +120,6 @@ function EventHandler(key, fields)
                     Log("Knife's D100 roll has been " .. rng ..
                             " so the AWARE SARDAUKAR enemy has dodged the knife :( \n")
                     DispatchEvent("Missed", {})
-                    trackList = {6}
-                    ChangeTrack(trackList)
                 end
             elseif (currentState == STATE.AGGRO) then
                 knifeHitChance = GetVariable("Zhib.lua", "aggroChanceSardKnife", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
@@ -136,8 +132,6 @@ function EventHandler(key, fields)
                     Log("Knife's D100 roll has been " .. rng ..
                             " so the AGGRO SARDAUKAR enemy has dodged the knife :( \n")
                     DispatchEvent("Missed", {})
-                    trackList = {6}
-                    ChangeTrack(trackList)
                 end
             end
         end
@@ -217,8 +211,6 @@ function EventHandler(key, fields)
                     Log("Dart's D100 roll has been " .. rng ..
                             " so the UNAWARE SARDAUKAR enemy has dodged the dart :( \n")
                     DispatchEvent("Missed", {})
-                    trackList = {6}
-                    ChangeTrack(trackList)
                 end
             elseif (currentState == STATE.SUS) then
                 dartHitChance = GetVariable("Nerala.lua", "awareChanceSardDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
@@ -230,8 +222,6 @@ function EventHandler(key, fields)
                 else
                     Log("Dart's D100 roll has been " .. rng .. " so the AWARE SARDAUKAR enemy has dodged the dart :( \n")
                     DispatchEvent("Missed", {})
-                    trackList = {6}
-                    ChangeTrack(trackList)
                 end
             elseif (currentState == STATE.AGGRO) then
                 dartHitChance = GetVariable("Nerala.lua", "aggroChanceSardDart", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
@@ -243,8 +233,6 @@ function EventHandler(key, fields)
                 else
                     Log("Dart's D100 roll has been " .. rng .. " so the AGGRO SARDAUKAR enemy has dodged the dart :( \n")
                     DispatchEvent("Missed", {})
-                    trackList = {6}
-                    ChangeTrack(trackList)
                 end
             end
         end

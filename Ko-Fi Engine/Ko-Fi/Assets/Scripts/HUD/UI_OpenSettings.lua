@@ -6,6 +6,7 @@ NewVariable(nameIV)
 
 function Start()
     child = Find(name)
+    own = Find("Background")
     child:Active(false)
 end
 
@@ -14,6 +15,7 @@ function UpdateUI(dt)
     if (gameObject.active == true) then
         if (gameObject:GetButton():IsPressed()) then
             child:Active(true)
+            own:Active(false)
         end
     end
 end

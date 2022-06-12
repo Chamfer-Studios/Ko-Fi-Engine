@@ -6,7 +6,7 @@ image2 = default
 image3 = default
 
 -- Called each loop iteration
-function Update(dt)
+function UpdateUI(dt)
 	if (gameObject.active == true) then
 		if (isStarting == true) then
 			image2 = checked

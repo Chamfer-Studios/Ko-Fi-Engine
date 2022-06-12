@@ -6,7 +6,7 @@ image2 = default
 image3 = default
 
 -- Called each loop iteration
-function Update(dt)
+function UpdateUI(dt)
 	if (gameObject.active == true) then
 		if (isStarting == true) then
 			pos1 = Find("WS Button 1")
@@ -45,4 +45,4 @@ function Update(dt)
 	end
 end
 
-print("UI_FPS.lua compiled succesfully")
+print("UI_WindowSize.lua compiled succesfully")
