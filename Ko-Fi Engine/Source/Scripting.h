@@ -286,7 +286,8 @@ public:
 			"GetTextValue", &C_Text::GetTextValue,
 			"SetTextValue", &C_Text::SetTextValue,
 			"GetTextOpacity", &C_Text::GetOpacity,
-			"SetTextOpacity", &C_Text::SetOpacity);
+			"SetTextOpacity", &C_Text::SetOpacity,
+			"SetTextColor", &C_Text::SetColorRGBA);
 
 		// Component Image
 		lua.new_usertype<C_Image>("C_Image",
