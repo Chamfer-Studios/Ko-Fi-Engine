@@ -145,8 +145,6 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 			else{}*/
 
 		// -- CLIP CREATOR
-		ImGui::Text("Select Animation");
-		
 		ImGui::Text(animation->GetName().c_str());
 
 		static char clipName[128] = "Enter Clip Name";
@@ -175,7 +173,7 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 		if (createClipErrorMessage)
 			ImGui::TextColored(Red.ToImVec4(), "Please, select a valid clip interval.");
 
-		ImGui::Text("Select Clip");
+		/*ImGui::Text("Select Clip");*/
 		if (ImGui::BeginCombo("Select Clip ##", ((selectedClip != nullptr) ? selectedClip->GetName().c_str() : "[SELECT CLIP]"), ImGuiComboFlags_None))
 		{
 			for (auto clip = clips.begin(); clip != clips.end(); ++clip)
@@ -203,7 +201,7 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 			ImGui::EndCombo();
 		}
 
-		ImGui::Text("Delete Clip");
+		/*ImGui::Text("Delete Clip");*/
 		if (ImGui::BeginCombo("Delete Clip ##", ((clipToDelete != nullptr) ? clipToDelete->GetName().c_str() : "[DELETE CLIP]"), ImGuiComboFlags_None))
 		{
 			for (auto clip = clips.begin(); clip != clips.end(); ++clip)
@@ -249,7 +247,7 @@ bool C_Animator::InspectorDraw(PanelChooser* chooser)
 		if (ImGui::Checkbox("Loop ##", &selectedClip->GetLoopBool())) {}
 
 		//ImGui::SameLine();
-		if (ImGui::Button("Restart", ImVec2(70, 18)))
+		if (ImGui::Button("Restart", ImVec2(70, 35)))
 			Reset();
 	}
 	else
