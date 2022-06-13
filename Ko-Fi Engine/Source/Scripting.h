@@ -603,6 +603,30 @@ public:
 		{
 			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_F3);
 		}
+		case 74:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_F4);
+		}
+		case 75:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_F5);
+		}
+		case 76:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_F6);
+		}
+		case 77:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_F7);
+		}
+		case 78:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_F8);
+		}
+		case 79:
+		{
+			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_F9);
+		}
 		/*case 5:
 		{
 			return gameObject->GetEngine()->GetInput()->GetKey(SDL_SCANCODE_H);
