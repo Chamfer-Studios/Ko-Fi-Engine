@@ -265,7 +265,8 @@ bool SceneIntro::PostUpdate(float dt)
 	if (switchScene)
 	{
 		switchScene = false;
-		std::string oldName(engine->GetSceneManager()->currentScene->name);
+		std::string oldName;
+		oldName = engine->GetSceneManager()->currentScene->name;
 		if (sceneNameGO != oldName) {
 			Importer::GetInstance()->sceneImporter->LoadScene(this, sceneNameGO.c_str());
 			engine->GetSceneManager()->OnSceneSwitch();
