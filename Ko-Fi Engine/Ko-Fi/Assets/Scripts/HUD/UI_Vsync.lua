@@ -1,6 +1,6 @@
 isStarting = true
 default = "Assets/New UI/checkbox_a_default.png"
-checked = "Assets/New UI/checkbox_a_checked.png"
+checked = "Assets/New UI/checkbox_a_checked_1.png"
 image = default
 
 -- Called each loop iteration

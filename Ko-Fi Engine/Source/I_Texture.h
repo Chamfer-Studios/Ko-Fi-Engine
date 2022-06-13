@@ -11,8 +11,8 @@ public:
 	I_Texture(KoFiEngine* engine);
 	~I_Texture();
 
-	bool Import(const char* path, R_Texture* texture);
-	bool Save(const R_Texture* texture, const char* path);
+	bool Import(const char* path, R_Texture* texture, bool cleanAfterImport = false);
+	bool Save(R_Texture* texture, const char* path);
 	bool Load(const char* path, R_Texture* texture);
 
 	R_Texture* GetCheckerTexture();

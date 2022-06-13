@@ -1,6 +1,6 @@
 isStarting = true
 default = "Assets/New UI/checkbox_a_default.png"
-checked = "Assets/New UI/checkbox_a_checked.png"
+checked = "Assets/New UI/checkbox_a_checked_1.png"
 image1 = default
 image2 = default
 image3 = default
@@ -12,9 +12,12 @@ function UpdateUI(dt)
 			pos1 = Find("WS Button 1")
 			pos2 = Find("WS Button 2")
 			pos3 = Find("WS Button 3")
+			sb1 = Find("WS SB 1")
+			sb2 = Find("WS SB 2")
+			sb3 = Find("WS SB 3")
 			isStarting = false
 		end
-		if (pos1:GetButton():IsPressed() == true) then
+		if (sb1:GetButton():IsPressed() == true) then
 			image1 = checked
 			image2 = default
 			image3 = default
@@ -23,7 +26,7 @@ function UpdateUI(dt)
 			pos1:GetButton():SetIdleTexture(image1)
 			pos2:GetButton():SetIdleTexture(image2)
 			pos3:GetButton():SetIdleTexture(image3)
-		elseif (pos2:GetButton():IsPressed() == true) then
+		elseif (sb2:GetButton():IsPressed() == true) then
 			image1 = default
 			image2 = checked
 			image3 = default
@@ -32,7 +35,7 @@ function UpdateUI(dt)
 			pos1:GetButton():SetIdleTexture(image1)
 			pos2:GetButton():SetIdleTexture(image2)
 			pos3:GetButton():SetIdleTexture(image3)
-		elseif (pos3:GetButton():IsPressed() == true) then
+		elseif (sb3:GetButton():IsPressed() == true) then
 			image1 = default
 			image2 = default
 			image3 = checked

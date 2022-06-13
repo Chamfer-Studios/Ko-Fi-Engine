@@ -2,6 +2,7 @@
     "Green Light": {
         "emitters": [
             {
+                "loop": true,
                 "maxParticles": 500,
                 "modules": [
                     {
@@ -34,6 +35,14 @@
                             }
                         ],
                         "type": 3
+                    },
+                    {
+                        "minInitialSize": [
+                            17.0,
+                            17.0,
+                            17.0
+                        ],
+                        "type": 4
                     }
                 ],
                 "name": "Light",

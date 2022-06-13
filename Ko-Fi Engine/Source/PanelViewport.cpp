@@ -54,15 +54,15 @@ bool PanelViewport::Start()
 	gizmoScaleIcon = new R_Texture();
 
 	std::string name = ICONS_DIR + std::string("video.png");
-	Importer::GetInstance()->textureImporter->Import(name.c_str(), speedCameraIcon);
+	Importer::GetInstance()->textureImporter->Import(name.c_str(), speedCameraIcon, true);
 	name = ICONS_DIR + std::string("lit_mode.png");
-	Importer::GetInstance()->textureImporter->Import(name.c_str(), litIcon);
+	Importer::GetInstance()->textureImporter->Import(name.c_str(), litIcon, true);
 	name = ICONS_DIR + std::string("translate.png");
-	Importer::GetInstance()->textureImporter->Import(name.c_str(), gizmoMoveIcon);
+	Importer::GetInstance()->textureImporter->Import(name.c_str(), gizmoMoveIcon, true);
 	name = ICONS_DIR + std::string("3d-rotate.png");
-	Importer::GetInstance()->textureImporter->Import(name.c_str(), gizmoRotateIcon);
+	Importer::GetInstance()->textureImporter->Import(name.c_str(), gizmoRotateIcon, true);
 	name = ICONS_DIR + std::string("maximize.png");
-	Importer::GetInstance()->textureImporter->Import(name.c_str(), gizmoScaleIcon);
+	Importer::GetInstance()->textureImporter->Import(name.c_str(), gizmoScaleIcon, true);
 	return true;
 }
 

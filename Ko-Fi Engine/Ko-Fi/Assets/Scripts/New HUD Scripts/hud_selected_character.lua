@@ -219,7 +219,8 @@ function SetText(number)
     local digitCount = NumberOfDigits(number)
     local newSizeX = digitCount * spiceTextSizeFactor
     spiceText:GetTransform2D():SetSize(float2.new(newSizeX, spiceTextSizeY))
-    spiceText:GetTransform2D():SetPosition(float2.new(spiceTextPosX - spiceTextPosFactor * digitCount, spiceTextPosY))
+    spiceText:GetTransform2D():SetPosition(
+        float2.new(spiceTextPosX - spiceTextPosFactor * digitCount / 2, spiceTextPosY))
 
     local textSpice = tostring(number)
     spiceText:GetText():SetTextValue(textSpice)

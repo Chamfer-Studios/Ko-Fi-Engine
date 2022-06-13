@@ -21,7 +21,7 @@ I_Texture::I_Texture(KoFiEngine* engine) : engine(engine), checkerTexture(nullpt
 I_Texture::~I_Texture()
 {}
 
-bool I_Texture::Import(const char* path, R_Texture* texture)
+bool I_Texture::Import(const char* path, R_Texture* texture, bool cleanAfterImport)
 {
 	if (texture == nullptr || path == nullptr)
 	{
@@ -35,10 +35,18 @@ bool I_Texture::Import(const char* path, R_Texture* texture)
 
 	texture->SetUpTexture();
 
+	if (cleanAfterImport) {
+		if (texture->data != nullptr)
+		{
+			stbi_image_free(texture->data);
+			texture->data = nullptr;
+		}
+	}
+
 	return true;
 }
 
-bool I_Texture::Save(const R_Texture* texture, const char* path)
+bool I_Texture::Save(R_Texture* texture, const char* path)
 {
 	if (engine->GetFileSystem()->CheckDirectory(TEXTURES_DIR))
 	{
@@ -61,6 +69,12 @@ bool I_Texture::Save(const R_Texture* texture, const char* path)
 	}
 	else
 		KOFI_ERROR(" Texture Save: directory %s couldn't be accessed.", TEXTURES_DIR);
+
+	if (texture->data != nullptr)
+	{
+		stbi_image_free(texture->data);
+		texture->data = nullptr;
+	}
 
 	return false;
 }

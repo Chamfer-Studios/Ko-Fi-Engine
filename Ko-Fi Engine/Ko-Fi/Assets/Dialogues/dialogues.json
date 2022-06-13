@@ -5,7 +5,7 @@
       "targetID": 2,
       "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
       "char": "Zhib             ",
-      "line1": "I hope it is not too late. I need to find Nerala as soon as possible ",
+      "line1": "I hope it is not too late! I need to find Nerala as soon as possible",
       "line2": "and reunite with Omozra.                                            "
     },
     {
@@ -13,95 +13,111 @@
       "targetID": 3,
       "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "You can move by right clicking where you want to go.              ",
-      "line2": "You can run by double clicking but only for a short period of time."
+      "line1": "You can move by right clicking where you want to go.                ",
+      "line2": "You can run by double clicking but only for a short period of time. "
     },
     {
       "id": 3,
+      "targetID":45,
+      "src": "Assets/UI/HUD/logo_dialogs.png",
+      "char": " ",
+      "line1": "The camera will automatically follow the selected character.",
+      "line2": "You can switch to free camera by pressing space."
+    },
+    {
+      "id": 45,
       "targetID": -1,
       "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "You can move the camera by approaching your mouse to the edges of the screen",
-      "line2": "OR with WASD. You can rotate it by clicking the mouse wheel and dragging.    "
+      "line1": "In that mode you can move it with dragging the mouse to the corner  ",
+      "line2": "of the screen or with WASD. To rotate it, use Q and E.              "
     },
     {
       "id": 4,
       "targetID": -1,
       "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "Spice is used to cast and upgrade your abilities.                    ",
-      "line2": "Your character will automatically pick it if you move close to it.   "
+      "line1": "Spice is used to cast and, later on, upgrade your abilities.        ",
+      "line2": "Your character will automatically pick it if you move close to it.  "
     },
     {
       "id": 5,
       "targetID": -1,
       "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "To better avoid being detected, you can enter stealth ",
-      "line2": "by pressing shift.                                    "
+      "line1": "To better avoid being detected, you can enter stealth               ",
+      "line2": "by pressing shift.                                                  "
     },
     {
       "id": 6,
       "targetID": -1,
       "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "Carefull! Enemies will detect you visually and auditory.            ",
+      "line1": "Careful! Enemies will detect you visually and auditory.               ",
       "line2": " "
     },
     {
       "id": 7,
-      "targetID": -1,
+      "targetID": 50,
       "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "You can eliminate enemies with a basic attack or with abilities.          ",
-      "line2": "Zhib's first ability is a throwable knife, use it to kill the Harkonnen.   "
+      "line1": "You can eliminate enemies with a basic attack or with abilities.    ",
+      "line2": "Zhib's first ability is a deadly throwable knife.                   "
+    },
+    {
+      "id": 50,
+      "targetID": 8,
+      "src": "Assets/UI/HUD/logo_dialogs.png",
+      "char": " ",
+      "line1": "You can use the dummies to test your attacks and abilities.         ",
+      "line2": " "
     },
     {
       "id": 8,
-      "targetID": 9,
+      "targetID": -1,
       "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "Zhib's second ability is a Decoy                                        ",
-      "line2": "You can throw it to distract enemies.                                   "
+      "line1": "Zhib's second ability is a Decoy.                                   ",
+      "line2": "You can throw it to attract enemies.                                "
     },
     {
       "id": 9,
       "targetID": -1,
       "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "Zhib's ultimate ability can kill entire groups of enemies.                ",
-      "line2": "Be careful to not abuse it, spice is scarce.                             "
+      "line1": "Zhib's ultimate ability can kill entire groups of enemies.          ",
+      "line2": "Be careful to not abuse it, spice is scarce.                        "
     },
     {
       "id": 10,
-      "targetID": -1,
+      "targetID": 11,
       "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "Nerala's first ability is a sleeping dart.                               ",
-      "line2": "Enemies under its effects will have a harder time detecting you.         "
+      "line1": "Nerala's first ability is a sleeping dart.                          ",
+      "line2": "Enemies under its effects will have a harder time detecting you.    "
     },
     {
       "id": 11,
       "targetID": -1,
       "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "Nerala's second ability is a smoke bomb.                                 ",
-      "line2": "Enemies will not detect you inside the smoke.                            "
+      "line1": "Nerala's second ability is a smoke bomb.                            ",
+      "line2": "Enemies will not detect you inside the smoke.                       "
     },
     {
       "id": 12,
       "targetID": 13,
       "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "Nerala's ultimate ability is the Hunter Seeker.                          ",
-      "line2": "It can kill enemies on contact, and also scout large areas.              "
+      "line1": "Nerala's ultimate ability is the Hunter Seeker.                     ",
+      "line2": "It can kill enemies on contact, and also scout large areas.         "
     },
     {
       "id": 13,
       "targetID": -1,
       "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "But be carefull, enemies should not detect it or it will be destroyed. ",
+      "line1": "But be careful, enemies should not detect it or it will be destroyed.",
       "line2": " "
     },
     {
@@ -109,32 +125,32 @@
       "targetID": 15,
       "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "Omozra's first ability is a heal.                                      ",
-      "line2": "It consumes charges.                                                   "
+      "line1": "Omozra's first ability is a heal.                                   ",
+      "line2": "It consumes charges.                                                "
     },
     {
       "id": 15,
-      "targetID": -1,
+      "targetID": 16,
       "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "You can get more charges by eating corpses with the worm.              ",
-      "line2": "To do so, right click a corpse with Omozra                             "
+      "line1": "You can get more charges by eating corpses with the worm.           ",
+      "line2": "To do so, right click a corpse with Omozra                          "
     },
     {
       "id": 16,
       "targetID": -1,
       "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "Omozra's second ability will let you kill enemies safely.             ",
-      "line2": "Keep it mind that it also needs charges to be used.                   "
+      "line1": "Omozra's second ability will let you kill enemies safely.           ",
+      "line2": "Keep it mind that it also needs charges to be used.                 "
     },
     {
       "id": 17,
       "targetID": -1,
       "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "Omozra's ultimate ability will will let you teleport Zhib or Nerala. ",
-      "line2": "It can be very useful to catch enemies off guard.                    "
+      "line1": "Omozra's ultimate ability will let you teleport Zhib or Nerala.",
+      "line2": "It can be very useful to catch enemies off guard.                   "
     },
     {
       "id": 20,
@@ -149,15 +165,15 @@
       "targetID": -1,
       "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
       "char": "Zhib             ",
-      "line1": "There are sounds of a struggle going on coming from there.           ",
-      "line2": "That could be Nerala!                                                "
+      "line1": "There are sounds of a struggle going on coming from there.          ",
+      "line2": "That could be Nerala!                                               "
     },
     {
       "id": 22,
       "targetID": 24,
       "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
       "char": "Zhib             ",
-      "line1": "What happened here?                                               ",
+      "line1": "What happened here?                                                 ",
       "line2": " "
     },
     {
@@ -165,8 +181,8 @@
       "targetID": 25,
       "src": "Assets/UI/HUD/Portraits/nerala_v1.0.png",
       "char": "Nerala           ",
-      "line1": "(Through the speaking device) It's too late, when I arrived they",
-      "line2": "ambushed me. We need to move, Rabban is still in the camp.      "
+      "line1": "*Through the speaking device* It's too late, when I arrived they    ",
+      "line2": "were already aware. We need to move, Rabban is still in the camp.   "
     },
     {
       "id": 25,
@@ -181,23 +197,23 @@
       "targetID": 27,
       "src": "Assets/UI/HUD/Portraits/nerala_v1.0.png",
       "char": "Nerala           ",
-      "line1": "I understand, but sometimes you have to take risks.               ",
-      "line2": "I will take full responsibility for my actions.                   "
+      "line1": "I understand, but sometimes you have to take risks.                 ",
+      "line2": "I will take full responsibility for my actions.                     "
     },
     {
       "id": 27,
       "targetID": 28,
       "src": "Assets/UI/HUD/Portraits/nerala_v1.0.png",
       "char": "Nerala           ",
-      "line1": "But I will finish what I came here to do.                          ",
-      "line2": "           "
+      "line1": "But I will finish what I came here to do.                           ",
+      "line2": " "
     },
     {
       "id": 28,
       "targetID": 29,
       "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
       "char": "Zhib             ",
-      "line1": "WE will finish what you started. Give me all the intel.            ",
+      "line1": "We will finish what you started. Give me all the intel.             ",
       "line2": " "
     },
     {
@@ -206,7 +222,7 @@
       "src": "Assets/UI/HUD/Portraits/nerala_v1.0.png",
       "char": "Nerala           ",
       "line1": "Putting it simply, Rabban was sighted nearby supervising the reconnaissance",
-      "line2": "mission himself, they are too close to our home, now is the time to end this."
+      "line2": "mission himself. They are too close to our home, now is the time to end him."
     },
     {
       "id": 30,
@@ -220,17 +236,25 @@
       "id": 31,
       "targetID": 32,
       "src": "Assets/UI/HUD/Portraits/rabban_icon.png",
-      "char": " ",
+      "char": "Rabban           ",
       "line1": "I thought that after all those attacks, your kind you would be a force",
       "line2": "to be reckoned. But you are nothing more than insects. Rats trying to steal"
     },
     {
       "id": 32,
-      "targetID": 33,
+      "targetID": 44,
       "src": "Assets/UI/HUD/Portraits/rabban_icon.png",
-      "char": " ",
+      "char": "Rabban           ",
       "line1": "the food from us, the great harkonnen. I will enjoy killing every single",
       "line2": "ant in that filthy burrow of yours.                                     "
+    },
+    {
+      "id": 44,
+      "targetID": 33,
+      "src": "Assets/UI/HUD/Portraits/rabban_icon.png",
+      "char": "Rabban           ",
+      "line1": "*Rabban leaves with a maniacal laugh in his personal thopter*       ",
+      "line2": " "
     },
     {
       "id": 33,
@@ -245,24 +269,24 @@
       "targetID": 35,
       "src": "Assets/UI/HUD/Portraits/nerala_v1.0.png",
       "char": "Nerala           ",
-      "line1": "That is not possible, they would have to follow us to find Sannara, or ",
-      "line2": "get the information from the source... oh no, our man.                 "
+      "line1": "That is not possible, unless they found Sennara by themselves or...",
+      "line2": "No! did they spot me when I left the sietch?                        "
     },
     {
       "id": 35,
       "targetID": -1,
       "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
       "char": "Zhib             ",
-      "line1": "They just needed directions and few indications. They tortured our brothers,",
-      "line2": "and they plan to do the same thing to our families. To the thopter, now!  "
+      "line1": "Probably yes. Or maybe they spoted us instead, while we were searching",
+      "line2": "for you. It may be too late now. Get to the thopter!                "
     },
     {
       "id": 36,
       "targetID": -1,
       "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "You just unlocked a new character! Nerala is now available                ",
-      "line2": "You can switch between her and Zhib by pressing X and Z respectively      "
+      "line1": "You just unlocked a new character! Nerala is now available.               ",
+      "line2": "You can switch between her and Zhib by pressing X and Z respectively.     "
     },
     {
       "id": 37,
@@ -270,14 +294,14 @@
       "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
       "char": "Zhib             ",
       "line1": "Good to see you, I managed to find Nerala, have you and Sadiq gathered new info?",
-      "line2": " "
+      "line2": "I know that your worm likes to snoop around.                                    "
     },
     {
       "id": 38,
       "targetID": 39,
       "src": "Assets/UI/HUD/Portraits/omozra_v1.0.png",
       "char": "Omozra           ",
-      "line1": "How have you have you been brother? Ah, Nerala, sister, glad you didn't get killed",
+      "line1": "How have you have you been brother? Ah, Nerala, glad you are still alive.     ",
       "line2": "Did you cause a mess as always?                                               "
     },
     {
@@ -285,7 +309,7 @@
       "targetID": 40,
       "src": "Assets/UI/HUD/Portraits/nerala_v1.0.png",
       "char": "Nerala           ",
-      "line1": "Anoying as always, wurm lover, I am ok, thanks for asking                         ",
+      "line1": "Annoying as usual, worm lover, I am ok, thanks for asking.                         ",
       "line2": " "
     },
     {
@@ -293,7 +317,7 @@
       "targetID": 41,
       "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
       "char": "Zhib             ",
-      "line1": "Focus both of you, can you tell us anything about the camp, Omozra?               ",
+      "line1": "Focus both of you. What can you tell us about the current situation, Omozra?",
       "line2": " "
     },
     {
@@ -302,14 +326,14 @@
       "src": "Assets/UI/HUD/Portraits/omozra_v1.0.png",
       "char": "Omozra           ",
       "line1": "You passed through a camp entrance that was heavily guarded on your way here, no? ",
-      "line2": "Well, Sadiq tells me that ogre is there, preparing his ship to leave somewhere.   "
+      "line2": "Well, Sadiq tells me that The Beast is there, preparing his ship to leave somewhere."
     },
     {
       "id": 42,
       "targetID": 43,
       "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
       "char": "Zhib             ",
-      "line1": "Let's go, focus and be ready!                                             ",
+      "line1": "Let's finish this. You know what to do.                             ",
       "line2": " "
     },
     {
@@ -317,8 +341,8 @@
       "targetID": -1,
       "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "You just unlocked a new character! Omozra is now available                ",
-      "line2": "His designed key is C, to switch to him                                   "
+      "line1": "You just unlocked the final character! Omozra is now available.          ",
+      "line2": "You can press the C key to select him.                                   "
     }
   ]
 }

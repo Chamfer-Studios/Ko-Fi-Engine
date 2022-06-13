@@ -1,6 +1,6 @@
 isStarting = true
 default = "Assets/New UI/checkbox_a_default.png"
-checked = "Assets/New UI/checkbox_a_checked.png"
+checked = "Assets/New UI/checkbox_a_checked_1.png"
 image = default
 
 -- Called each loop iteration
@@ -13,10 +13,11 @@ function UpdateUI(dt)
 			elseif (fullscreen == false) then
 				image = default
 			end
+			sb = Find("WSM SB 1")
 			gameObject:GetButton():SetIdleTexture(image)
 			isStarting = false
 		end
-		if (gameObject:GetButton():IsPressed() == true) then
+		if (sb:GetButton():IsPressed() == true) then
 			fullscreen = GetFullscreen()
 			if (fullscreen == true) then
 				SetFullscreen(false)

@@ -2,7 +2,7 @@
     "SceneMainMenu": {
         "active": true,
         "draw_skybox": true,
-        "game_objects_amount": 68,
+        "game_objects_amount": 76,
         "game_objects_list": [
             {
                 "UID": 1475716659,
@@ -955,7 +955,7 @@
                 "tag": 0
             },
             {
-                "UID": 255768270,
+                "UID": 1407536244,
                 "active": true,
                 "components": [
                     {
@@ -996,7 +996,7 @@
                 "tag": 0
             },
             {
-                "UID": 2055808393,
+                "UID": 107063620,
                 "active": true,
                 "components": [
                     {
@@ -1011,7 +1011,7 @@
                             0.5
                         ],
                         "position": [
-                            -148.0,
+                            -166.0,
                             0.0
                         ],
                         "rotation": [
@@ -1033,12 +1033,12 @@
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "Background ",
-                "parent_UID": 255768270,
+                "name": "Background Settings",
+                "parent_UID": 1407536244,
                 "tag": 0
             },
             {
-                "UID": 1526965354,
+                "UID": 33216256,
                 "active": true,
                 "components": [
                     {
@@ -1075,12 +1075,12 @@
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "Top Left",
-                "parent_UID": 2055808393,
+                "name": "Top Left (1)",
+                "parent_UID": 107063620,
                 "tag": 0
             },
             {
-                "UID": 1492684990,
+                "UID": 308780001,
                 "active": true,
                 "components": [
                     {
@@ -1117,12 +1117,12 @@
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "Top Right",
-                "parent_UID": 2055808393,
+                "name": "Top Right (1)",
+                "parent_UID": 107063620,
                 "tag": 0
             },
             {
-                "UID": 485761420,
+                "UID": 30924529,
                 "active": true,
                 "components": [
                     {
@@ -1159,12 +1159,12 @@
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "Bottom Left",
-                "parent_UID": 2055808393,
+                "name": "Bottom Left (1)",
+                "parent_UID": 107063620,
                 "tag": 0
             },
             {
-                "UID": 322594089,
+                "UID": 2028998426,
                 "active": true,
                 "components": [
                     {
@@ -1201,12 +1201,12 @@
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "Bottom Right",
-                "parent_UID": 2055808393,
+                "name": "Bottom Right (1)",
+                "parent_UID": 107063620,
                 "tag": 0
             },
             {
-                "UID": 153260454,
+                "UID": 862932992,
                 "active": true,
                 "components": [
                     {
@@ -1243,12 +1243,12 @@
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "Top Piece",
-                "parent_UID": 2055808393,
+                "name": "Top Piece (1)",
+                "parent_UID": 107063620,
                 "tag": 0
             },
             {
-                "UID": 1064106311,
+                "UID": 1437908541,
                 "active": true,
                 "components": [
                     {
@@ -1292,12 +1292,12 @@
                 ],
                 "is3D": false,
                 "isPrefab": false,
-                "name": "Settings Text",
-                "parent_UID": 2055808393,
+                "name": "Settings Text (1)",
+                "parent_UID": 107063620,
                 "tag": 0
             },
             {
-                "UID": 1448512991,
+                "UID": 1532844409,
                 "active": true,
                 "components": [
                     {
@@ -1335,11 +1335,60 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "MV Bar",
-                "parent_UID": 2055808393,
+                "parent_UID": 107063620,
                 "tag": 0
             },
             {
-                "UID": 478942909,
+                "UID": 183172928,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            72.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            324.0,
+                            50.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                        "type": 16,
+                        "value": "Master Volume"
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "MV Text",
+                "parent_UID": 1532844409,
+                "tag": 0
+            },
+            {
+                "UID": 924524402,
                 "active": true,
                 "components": [
                     {
@@ -1398,60 +1447,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "MV Button",
-                "parent_UID": 2055808393,
+                "parent_UID": 107063620,
                 "tag": 0
             },
             {
-                "UID": 1900895345,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            72.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            324.0,
-                            50.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
-                        "type": 16,
-                        "value": "Master Volume"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "MV Text",
-                "parent_UID": 1448512991,
-                "tag": 0
-            },
-            {
-                "UID": 1407584223,
+                "UID": 1270550849,
                 "active": true,
                 "components": [
                     {
@@ -1489,11 +1489,60 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "SB Bar",
-                "parent_UID": 2055808393,
+                "parent_UID": 107063620,
                 "tag": 0
             },
             {
-                "UID": 739976251,
+                "UID": 604655757,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            72.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            370.0,
+                            50.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "color": [
+                            255,
+                            255,
+                            255,
+                            255
+                        ],
+                        "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                        "type": 16,
+                        "value": "Screen Brightness"
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "SB Text",
+                "parent_UID": 1270550849,
+                "tag": 0
+            },
+            {
+                "UID": 1764009603,
                 "active": true,
                 "components": [
                     {
@@ -1552,60 +1601,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "SB Button",
-                "parent_UID": 2055808393,
+                "parent_UID": 107063620,
                 "tag": 0
             },
             {
-                "UID": 1292816114,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            72.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            370.0,
-                            50.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "color": [
-                            255,
-                            255,
-                            255,
-                            255
-                        ],
-                        "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
-                        "type": 16,
-                        "value": "Screen Brightness"
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "SB Text",
-                "parent_UID": 1407584223,
-                "tag": 0
-            },
-            {
-                "UID": 1816059730,
+                "UID": 395174160,
                 "active": true,
                 "components": [
                     {
@@ -1657,11 +1657,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "FPS Text",
-                "parent_UID": 2055808393,
+                "parent_UID": 107063620,
                 "tag": 0
             },
             {
-                "UID": 647261558,
+                "UID": 2053335459,
                 "active": true,
                 "components": [
                     {
@@ -1701,11 +1701,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "60 Button",
-                "parent_UID": 1816059730,
+                "parent_UID": 395174160,
                 "tag": 0
             },
             {
-                "UID": 1282529393,
+                "UID": 485839383,
                 "active": true,
                 "components": [
                     {
@@ -1745,11 +1745,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "120 Button",
-                "parent_UID": 1816059730,
+                "parent_UID": 395174160,
                 "tag": 0
             },
             {
-                "UID": 1111096012,
+                "UID": 1946421032,
                 "active": true,
                 "components": [
                     {
@@ -1789,11 +1789,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "30 Button",
-                "parent_UID": 1816059730,
+                "parent_UID": 395174160,
                 "tag": 0
             },
             {
-                "UID": 1796188527,
+                "UID": 1458631581,
                 "active": true,
                 "components": [
                     {
@@ -1838,11 +1838,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "60 Text",
-                "parent_UID": 1816059730,
+                "parent_UID": 395174160,
                 "tag": 0
             },
             {
-                "UID": 173706163,
+                "UID": 1182601465,
                 "active": true,
                 "components": [
                     {
@@ -1887,11 +1887,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "30 Text",
-                "parent_UID": 1816059730,
+                "parent_UID": 395174160,
                 "tag": 0
             },
             {
-                "UID": 287488125,
+                "UID": 1521052432,
                 "active": true,
                 "components": [
                     {
@@ -1936,11 +1936,143 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "120 Text",
-                "parent_UID": 1816059730,
+                "parent_UID": 395174160,
                 "tag": 0
             },
             {
-                "UID": 148945762,
+                "UID": 477767408,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -73.0,
+                            -79.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            89.0,
+                            46.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "FPS SB 1",
+                "parent_UID": 395174160,
+                "tag": 0
+            },
+            {
+                "UID": 1314961855,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            -135.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            86.0,
+                            46.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "FPS SB 2",
+                "parent_UID": 395174160,
+                "tag": 0
+            },
+            {
+                "UID": 304456076,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            71.0,
+                            -81.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            90.0,
+                            47.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "FPS SB 3",
+                "parent_UID": 395174160,
+                "tag": 0
+            },
+            {
+                "UID": 287386121,
                 "active": true,
                 "components": [
                     {
@@ -1985,11 +2117,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Vsync Text",
-                "parent_UID": 2055808393,
+                "parent_UID": 107063620,
                 "tag": 0
             },
             {
-                "UID": 1701848486,
+                "UID": 3991042,
                 "active": true,
                 "components": [
                     {
@@ -2036,11 +2168,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Vsync Button",
-                "parent_UID": 148945762,
+                "parent_UID": 287386121,
                 "tag": 0
             },
             {
-                "UID": 757573716,
+                "UID": 1887148178,
                 "active": true,
                 "components": [
                     {
@@ -2085,11 +2217,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "WSM Text",
-                "parent_UID": 2055808393,
+                "parent_UID": 107063620,
                 "tag": 0
             },
             {
-                "UID": 393429371,
+                "UID": 2093777078,
                 "active": true,
                 "components": [
                     {
@@ -2136,11 +2268,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "FS Button",
-                "parent_UID": 757573716,
+                "parent_UID": 1887148178,
                 "tag": 0
             },
             {
-                "UID": 548174983,
+                "UID": 620636682,
                 "active": true,
                 "components": [
                     {
@@ -2187,11 +2319,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Borderless Button",
-                "parent_UID": 757573716,
+                "parent_UID": 1887148178,
                 "tag": 0
             },
             {
-                "UID": 1755389238,
+                "UID": 1710110463,
                 "active": true,
                 "components": [
                     {
@@ -2236,11 +2368,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "FS Text",
-                "parent_UID": 757573716,
+                "parent_UID": 1887148178,
                 "tag": 0
             },
             {
-                "UID": 807271675,
+                "UID": 959671196,
                 "active": true,
                 "components": [
                     {
@@ -2285,11 +2417,99 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "Borderless Text",
-                "parent_UID": 757573716,
+                "parent_UID": 1887148178,
                 "tag": 0
             },
             {
-                "UID": 1266759538,
+                "UID": 757111252,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -74.0,
+                            -81.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            70.0,
+                            64.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "WSM SB 1",
+                "parent_UID": 1887148178,
+                "tag": 0
+            },
+            {
+                "UID": 1216536202,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            71.0,
+                            -82.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            68.0,
+                            60.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "WSM SB 2",
+                "parent_UID": 1887148178,
+                "tag": 0
+            },
+            {
+                "UID": 225699489,
                 "active": true,
                 "components": [
                     {
@@ -2341,11 +2561,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "WS Text",
-                "parent_UID": 2055808393,
+                "parent_UID": 107063620,
                 "tag": 0
             },
             {
-                "UID": 207380102,
+                "UID": 204594163,
                 "active": true,
                 "components": [
                     {
@@ -2385,451 +2605,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "WS Button 2",
-                "parent_UID": 1266759538,
+                "parent_UID": 225699489,
                 "tag": 0
             },
             {
-                "UID": 172215044,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -670.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            17.0,
-                            1023.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "MV1",
-                "parent_UID": 2055808393,
-                "tag": 0
-            },
-            {
-                "UID": 629809503,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -587.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            17.0,
-                            1022.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "MV2",
-                "parent_UID": 2055808393,
-                "tag": 0
-            },
-            {
-                "UID": 710378705,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -507.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            17.0,
-                            1024.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "MV3",
-                "parent_UID": 2055808393,
-                "tag": 0
-            },
-            {
-                "UID": 1386139016,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -421.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            17.0,
-                            1025.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "MV4",
-                "parent_UID": 2055808393,
-                "tag": 0
-            },
-            {
-                "UID": 343847606,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            -337.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            17.0,
-                            1023.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "MV5",
-                "parent_UID": 2055808393,
-                "tag": 0
-            },
-            {
-                "UID": 1088178828,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            335.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            17.0,
-                            1000.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "SB1",
-                "parent_UID": 2055808393,
-                "tag": 0
-            },
-            {
-                "UID": 1660250575,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            414.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            17.0,
-                            1000.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "SB2",
-                "parent_UID": 2055808393,
-                "tag": 0
-            },
-            {
-                "UID": 122331554,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            506.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            17.0,
-                            1000.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "SB3",
-                "parent_UID": 2055808393,
-                "tag": 0
-            },
-            {
-                "UID": 1464627638,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            586.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            17.0,
-                            1000.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "SB4",
-                "parent_UID": 2055808393,
-                "tag": 0
-            },
-            {
-                "UID": 1168117454,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            662.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            17.0,
-                            1000.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
-                        "type": 15
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "SB5",
-                "parent_UID": 2055808393,
-                "tag": 0
-            },
-            {
-                "UID": 921681555,
+                "UID": 214125523,
                 "active": true,
                 "components": [
                     {
@@ -2869,11 +2649,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "WS Button 1",
-                "parent_UID": 1266759538,
+                "parent_UID": 225699489,
                 "tag": 0
             },
             {
-                "UID": 98762895,
+                "UID": 690772640,
                 "active": true,
                 "components": [
                     {
@@ -2913,11 +2693,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "WS Button 3",
-                "parent_UID": 1266759538,
+                "parent_UID": 225699489,
                 "tag": 0
             },
             {
-                "UID": 1966900636,
+                "UID": 1089316903,
                 "active": true,
                 "components": [
                     {
@@ -2962,11 +2742,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "WS Text 2",
-                "parent_UID": 1266759538,
+                "parent_UID": 225699489,
                 "tag": 0
             },
             {
-                "UID": 1146944354,
+                "UID": 947109958,
                 "active": true,
                 "components": [
                     {
@@ -3011,11 +2791,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "WS Text 1 1",
-                "parent_UID": 1266759538,
+                "parent_UID": 225699489,
                 "tag": 0
             },
             {
-                "UID": 1528423433,
+                "UID": 257004783,
                 "active": true,
                 "components": [
                     {
@@ -3060,11 +2840,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "WS Text 3 1",
-                "parent_UID": 1266759538,
+                "parent_UID": 225699489,
                 "tag": 0
             },
             {
-                "UID": 405636396,
+                "UID": 96250439,
                 "active": true,
                 "components": [
                     {
@@ -3109,11 +2889,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "WS Text 3 2",
-                "parent_UID": 1266759538,
+                "parent_UID": 225699489,
                 "tag": 0
             },
             {
-                "UID": 1401567866,
+                "UID": 902834979,
                 "active": true,
                 "components": [
                     {
@@ -3158,11 +2938,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "WS Text 3 3",
-                "parent_UID": 1266759538,
+                "parent_UID": 225699489,
                 "tag": 0
             },
             {
-                "UID": 1194446400,
+                "UID": 1575208916,
                 "active": true,
                 "components": [
                     {
@@ -3207,11 +2987,11 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "WS Text 1 2",
-                "parent_UID": 1266759538,
+                "parent_UID": 225699489,
                 "tag": 0
             },
             {
-                "UID": 1543551619,
+                "UID": 2072539487,
                 "active": true,
                 "components": [
                     {
@@ -3256,7 +3036,579 @@
                 "is3D": false,
                 "isPrefab": false,
                 "name": "WS Text 1 3",
-                "parent_UID": 1266759538,
+                "parent_UID": 225699489,
+                "tag": 0
+            },
+            {
+                "UID": 697898850,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -73.0,
+                            -80.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            89.0,
+                            44.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "WS SB 1",
+                "parent_UID": 225699489,
+                "tag": 0
+            },
+            {
+                "UID": 1928765383,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            -136.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            91.0,
+                            45.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "pressedTexture": "Assets/UI/HUD/",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "WS SB 2",
+                "parent_UID": 225699489,
+                "tag": 0
+            },
+            {
+                "UID": 1744456204,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            72.0,
+                            -82.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            89.0,
+                            47.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "WS SB 3",
+                "parent_UID": 225699489,
+                "tag": 0
+            },
+            {
+                "UID": 822945541,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -670.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            17.0,
+                            1023.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "MV1",
+                "parent_UID": 107063620,
+                "tag": 0
+            },
+            {
+                "UID": 385113063,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -587.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            17.0,
+                            1022.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "MV2",
+                "parent_UID": 107063620,
+                "tag": 0
+            },
+            {
+                "UID": 315534667,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -507.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            17.0,
+                            1024.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "MV3",
+                "parent_UID": 107063620,
+                "tag": 0
+            },
+            {
+                "UID": 1504896435,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -421.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            17.0,
+                            1025.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "MV4",
+                "parent_UID": 107063620,
+                "tag": 0
+            },
+            {
+                "UID": 1293743892,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            -337.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            17.0,
+                            1023.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "MV5",
+                "parent_UID": 107063620,
+                "tag": 0
+            },
+            {
+                "UID": 503288848,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            335.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            17.0,
+                            1000.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "SB1",
+                "parent_UID": 107063620,
+                "tag": 0
+            },
+            {
+                "UID": 782948464,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            414.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            17.0,
+                            1000.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "SB2",
+                "parent_UID": 107063620,
+                "tag": 0
+            },
+            {
+                "UID": 904160234,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            506.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            17.0,
+                            1000.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "SB3",
+                "parent_UID": 107063620,
+                "tag": 0
+            },
+            {
+                "UID": 443934983,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            586.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            17.0,
+                            1000.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "SB4",
+                "parent_UID": 107063620,
+                "tag": 0
+            },
+            {
+                "UID": 1662521028,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            662.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            17.0,
+                            1000.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                        "type": 15
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "SB5",
+                "parent_UID": 107063620,
                 "tag": 0
             }
         ],

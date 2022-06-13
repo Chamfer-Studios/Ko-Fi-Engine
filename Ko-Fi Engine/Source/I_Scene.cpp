@@ -1452,7 +1452,7 @@ void I_Scene::ImportMaterial(const char* nodeName, const aiMaterial* assimpMater
 		texturePath = ASSETS_TEXTURES_DIR + textureFilename;
 
 		texture = new R_Texture();
-		bool ret = Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), texture);
+		bool ret = Importer::GetInstance()->textureImporter->Import(texturePath.c_str(), texture, true);
 
 		if (ret)
 		{

@@ -177,7 +177,10 @@ unlocked = false;
 ----------------------- Methods -------------------------
 
 function Start()
-SetRenderOutline(true)
+
+    SetRenderOutline(true)
+    SetOutlineThickness(40)
+
     -- Components
     componentRigidBody = gameObject:GetRigidBody()
     componentBoxCollider = gameObject:GetBoxCollider()
@@ -443,6 +446,19 @@ function Update(dt)
                         mouseParticles:GetTransform():SetPosition(destination)
                     end
                 end
+            end
+        end
+
+        -- To Keep Making Walk/Run Sound After Pickup
+        if (currentMovement == Movement.WALK and currentTrackID == 2) then
+            if(componentSwitch:IsAnyTrackPlaying() == false) then
+                ChangeTrack({0})
+            end
+        end
+
+        if (currentMovement == Movement.RUN and currentTrackID == 2) then
+            if(componentSwitch:IsAnyTrackPlaying() == false) then
+                ChangeTrack({1})
             end
         end
 
@@ -1356,9 +1372,7 @@ function Die()
         componentAnimator:SetSelectedClip("Death")
     end
 
-    if (currentTrackID ~= 3) then
-        ChangeTrack({6})
-    end
+    ChangeTrack({6})
 
     SetVariable(0, "GameState.lua", "gameOverTimer", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
 end
@@ -1397,6 +1411,7 @@ function EventHandler(key, fields)
         if (fields[1] == characterID) then
             -- If zhib is being changed
             CancelAbilities(true)
+            SetRenderOutline(false)
         end
         if (fields[2] == characterID) then
             DispatchGlobalEvent("Player_Health", {characterID, currentHP, maxHP})
@@ -1409,6 +1424,7 @@ function EventHandler(key, fields)
             DispatchGlobalEvent("Player_Ability",
                 {characterID, Ability.Ultimate, abilities.AbilityUltimate, ultimateTimer})
             -- Log("Zhib: Ultimate = " .. abilities.AbilityUltimate .. "\n")
+            SetRenderOutline(true)
         end
     elseif (key == "Knife_Grabbable") then
         abilities.AbilityPrimary = AbilityStatus.Pickable

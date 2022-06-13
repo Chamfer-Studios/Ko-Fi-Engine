@@ -1,76 +1,40 @@
-id = 1
-local src = " "
-local char = " "
-local line1 = " "
-local line2 = " "
-local targetID = -1
-
-local path = "Assets/Quests/quests.json"
-local prefabPath = "Mission"
-local missionIndex = 1
-
-local missionCap = 5
-
-missionList = {}
-
------------- Dialogue Manager ------------
 function Start()
-    --if (GetInput(14) == KEY_STATE.KEY_DOWN) then -- Q
-        --limit the logic with the capMission
-        --if (missionIndex < missionCap) then
-           -- InstantiateNamedPrefab(prefabPath, "Mission_" .. missionIndex )
-            --if(missionIndex > 1) then
-            --local newMission = Find("Mission_" .. missionIndex - 1)
-            --table.insert(missionList, newMission)
 
-            --Layout()
-            --end
-            --missionIndex = missionIndex + 1
-        --end
-    --end
+    questHolders = {gameObject:GetChild("Quest 1"), gameObject:GetChild("Quest 2"), gameObject:GetChild("Quest 3")}
+
+    if (GetVariable("GameState.lua", "neralaAvailable", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL) == false and
+        questHolders[1] ~= nil) then
+        questHolders[1]:GetText():SetTextValue("Find Nerala")
+    else
+        questHolders[1]:GetText():SetTextValue(" ")
+    end
+
+    if (GetVariable("GameState.lua", "omozraAvailable", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL) == false and
+        questHolders[2] ~= nil) then
+        questHolders[2]:GetText():SetTextValue("Meet Omozra")
+    else
+        questHolders[2]:GetText():SetTextValue(" ")
+    end
+
+    if (questHolders[3] ~= nil) then
+        questHolders[3]:GetText():SetTextValue("Kill Rabban")
+    else
+        questHolders[3]:GetText():SetTextValue(" ")
+    end
+
 end
 
 function Update(dt)
 
-    -- TODO: SET THE ID FROM EVENT AND SET OPENDIALOGUE TO TRUE
-    -- DispatchEvent(pathfinderUpdateKey, { patrolWaypoints, pingpong, componentTransform:GetPosition() })
-    
-    
-    
-end
-
-function PostUpdate(dt)
-    
 end
 
 function EventHandler(key, fields)
-    
-end
------------- END Dialogue Manager ------------
-
------------- Dialogue ------------
-
-function CompleteQuest()
-    
-end
-
-function AbandonQuest()
-   
-end
-
-
-function Layout()
-    for i = 1, #missionList do
-        Log(missionList[i]:GetName() .. "\n")
-        local mission = missionList[i]:GetChildren()[1]
-        missionPosition = mission:GetTransform2D():GetPosition()
-        missionPosition.y = missionPosition.y - (1 * 145)
-        mission:GetTransform2D():SetPosition(float2.new(missionPosition.x, missionPosition.y))
+    if (key == "Enable_Character") then
+        if (fields[1] == 2) then
+            questHolders[1]:GetText():SetTextValue(" ")
+        elseif (fields[1] == 3) then
+            questHolders[2]:GetText():SetTextValue(" ")
+        end
     end
 end
 
-
-
-
------------- END Dialogue ------------
-print("Dialogue Script Load Success")

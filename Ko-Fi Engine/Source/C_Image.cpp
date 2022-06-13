@@ -110,7 +110,7 @@ bool C_Image::InspectorDraw(PanelChooser* panelChooser)
 void C_Image::SetTexture(const char* path)
 {
 	FreeTextures();
-	Importer::GetInstance()->textureImporter->Import(path, &openGLTexture);
+	Importer::GetInstance()->textureImporter->Import(path, &openGLTexture, true);
 	openGLTexture.SetAssetPath(path);
 }
 

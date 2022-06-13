@@ -89,7 +89,7 @@
     },
     "ResourceManager": null,
     "SceneManager": {
-        "DefaultScene": "Level1"
+        "DefaultScene": "ChamferStudiosScene"
     },
     "UI": null,
     "Window": {

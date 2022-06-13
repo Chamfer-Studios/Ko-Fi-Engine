@@ -622,7 +622,7 @@
                                                     ],
                                                     "rotation": [
                                                         0.017121700569987297,
-                                                        -0.002715203445404768,
+                                                        -0.0027152011170983315,
                                                         -0.006756574846804142,
                                                         0.9998269081115723
                                                     ],
@@ -797,11 +797,11 @@
                                                     "rotation": [
                                                         0.6777206063270569,
                                                         -0.00954693928360939,
-                                                        0.000920005259104073,
+                                                        0.0009200024069286883,
                                                         0.7352569699287415
                                                     ],
                                                     "scale": [
-                                                        0.9999212622642517,
+                                                        0.999920666217804,
                                                         1.0,
                                                         1.0
                                                     ],
@@ -865,7 +865,7 @@
                                         -0.020205974578857422
                                     ],
                                     "scale": [
-                                        1.0001554489135742,
+                                        1.0001566410064697,
                                         1.0000139474868774,
                                         1.0
                                     ],
@@ -1080,7 +1080,7 @@
                             "type": "float3",
                             "value": {
                                 "x": 0.0,
-                                "y": 45.0,
+                                "y": 33.0,
                                 "z": 0.0
                             }
                         },
@@ -1169,7 +1169,7 @@
                     "active": true,
                     "fade_time": 2.0,
                     "offset_sync": false,
-                    "total_tracks": 4,
+                    "total_tracks": 3,
                     "tracks": [
                         {
                             "bypass": false,
@@ -1207,19 +1207,6 @@
                             "pan": 0.0,
                             "play_on_start": false,
                             "track_path": "Assets/Audio/SFX/Generic/generic_enemy_aware_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": false,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Sardaukar/sardaukar_knife_throw_1_fx.wav",
                             "transpose": 1.0,
                             "volume": 100.0
                         }
@@ -1787,7 +1774,7 @@
                     "clipDuration": 15.0,
                     "clipDurationInSeconds": 0.625,
                     "clipEndFrame": 360.0,
-                    "clipFinished": true,
+                    "clipFinished": false,
                     "clipLoop": true,
                     "clipName": "Run",
                     "clipStartFrame": 345.0,

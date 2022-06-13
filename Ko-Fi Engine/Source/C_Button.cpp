@@ -209,21 +209,21 @@ void C_Button::Draw()
 void C_Button::SetIdleTexture(const char* path)
 {
 	FreeTextures(BUTTON_STATE::IDLE);
-	Importer::GetInstance()->textureImporter->Import(path,&idleOpenGLTexture);
+	Importer::GetInstance()->textureImporter->Import(path,&idleOpenGLTexture, true);
 	idleOpenGLTexture.SetAssetPath(path);
 }
 
 void C_Button::SetHoverTexture(const char* path)
 {
 	FreeTextures(BUTTON_STATE::HOVER);
-	Importer::GetInstance()->textureImporter->Import(path, &hoverOpenGLTexture);
+	Importer::GetInstance()->textureImporter->Import(path, &hoverOpenGLTexture, true);
 	hoverOpenGLTexture.SetAssetPath(path);
 }
 
 void C_Button::SetPressedTexture(const char* path)
 {
 	FreeTextures(BUTTON_STATE::PRESSED);
-	Importer::GetInstance()->textureImporter->Import(path, &pressedOpenGLTexture);
+	Importer::GetInstance()->textureImporter->Import(path, &pressedOpenGLTexture, true);
 	pressedOpenGLTexture.SetAssetPath(path);
 }
 

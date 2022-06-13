@@ -3,69 +3,70 @@
     {
       "id": 1,
       "src": "Assets/New UI/ability_zhib1.png",
-      "description1": "Zhib aims at an enemy and throws a knife. If the knife hits, the",
-      "description2": "target is executed but it can be dodged. Zhib only has one knife,",
-      "description3": "but he can pick it up after throwing them.",
-      "description4": "The dodge chances are",
-      "description5": " ",
-      "description6": " "
+      "description1": "Zhib aims at an enemy and throws a knife.",
+      "description2": "                                               ",
+      "description3": "If the knife hits, the target is executed ",
+      "description4": "but it can be dodged.                                      ",
+      "description5": "Zhib only has one knife,                                   ",
+      "description6": "but he can pick it up after throwing it.  ",
+      "description7": " "
     },
     {
       "id": 2,
       "src": "Assets/New UI/ability_zhib2.png",
-      "description1": "Zhib throws a device that alerts and attracts nearby enemies for",
-      "description2": "… seconds. After this time has passed, Zhib can pick up the",
-      "description3": "device and use it again when it recharges.",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
+      "description1": "Zhib throws a device that alerts and      ",
+      "description2": "attracts nearby enemies for 7.5 seconds.  ",
+      "description3": "                               ",
+      "description4": "After this time has passed, Zhib can pick ",
+      "description5": "up the device and use it again when it    ",
+      "description6": "recharges.                                                         "
     },
     {
       "id": 3,
       "src": "Assets/New UI/ability_zhib3.png",
-      "description1": "Zhib targets an enemy and executes him. If there is another enemy",
-      "description2": "inside a close range, he will slash through the first one onto",
-      "description3": "the second one, executing him as well. This chain kill extends to",
-      "description4": "a maximum of … enemies.",
-      "description5": " ",
-      "description6": " "
+      "description1": "Zhib targets an enemy and executes him. ",
+      "description2": "               ",
+      "description3": "If there is another enemy inside a close range, ",
+      "description4": "he will slash through the first one onto the ",
+      "description5": "second one, executing him as well.                 ",
+      "description6": "This chain kill kills a maximum of 5 enemies. "
     },
     {
       "id": 4,
       "src": "Assets/New UI/ability_nerala1.png",
-      "description1": "Nerala aims at an enemy and fires a dart from her wrist that",
-      "description2": "makes enemies drowsy for … seconds. Drowsy enemies detect players slower.",
-      "description3": " ",
-      "description4": " ",
+      "description1": "Nerala aims at an enemy and fires a dart ",
+      "description2": "from her wrist that makes enemies drowsy ",
+      "description3": "                                              ",
+      "description4": "Drowsy enemies detect players slower.     ",
       "description5": " ",
       "description6": " "
     },
     {
       "id": 5,
       "src": "Assets/New UI/ability_nerala2.png",
-      "description1": "Nerala deploys a device that releases smoke in a given area",
-      "description2": "during … seconds, making her invisible to the eyes of enemies",
-      "description3": "while inside it. The smoke bomb only has … charges.",
-      "description4": " ",
+      "description1": "Nerala deploys a device that releases       ",
+      "description2": "smoke in a given area during 5 seconds,     ",
+      "description3": "making her invisible to the eyes of enemies ",
+      "description4": "while inside it.                                          ",
       "description5": " ",
-      "description6": " "
+      "description6": "The smoke bomb only has 3 charges.          "
     },
     {
       "id": 6,
       "src": "Assets/New UI/ability_nerala3.png",
-      "description1": "Nerala deploys a minuscule machine that she can control from afar",
-      "description2": "during … seconds. This machine can execute enemies and is",
-      "description3": "invisible to their eyes, but can still be heard. The machine will",
-      "description4": "be destroyed if it’s detected by an enemy, it flies out of a",
-      "description5": "given range, it kills … enemies or the batteries run out.",
-      "description6": " "
+      "description1": "Nerala deploys a machine controlled from afar",
+      "description2": "during 10 seconds.                                         ",
+      "description3": "It can execute enemies and is invisible to   ",
+      "description4": "their eyes, but can still be heard.                     ",
+      "description5": "It will be destroyed if it is detected, it flies  ",
+      "description6": " out of range or it kills an enemy.           "
     },
     {
       "id": 7,
       "src": "Assets/New UI/ability_omozra1.png",
-      "description1": "Omozra points at an ally or himself, prompting Sadiq to emerge",
-      "description2": "from the sand and spit on them, healing … hp points.",
-      "description3": " ",
+      "description1": "Omozra points at an ally or himself,         ",
+      "description2": "prompting Sadiq to emerge from the sand          ",
+      "description3": "and spit on them, healing 1 hp points.         ",
       "description4": " ",
       "description5": " ",
       "description6": " "
@@ -73,62 +74,376 @@
     {
       "id": 8,
       "src": "Assets/New UI/ability_omozra2.png",
-      "description1": "Omozra targets an enemy, commanding Sadiq to emerge from the sand and",
-      "description2": "eat them. Sadly, Sadiq will also eat any spice that the enemy might carry.",
+      "description1": "Omozra targets an enemy, commanding Sadiq to   ",
+      "description2": "emerge from the sand and eat them.               ",
+      "description3": " ",
+      "description4": "Sadly, Sadiq will also eat any spice that the ",
+      "description5": "enemy might carry.                                              ",
+      "description6": " "
+    },
+    {
+      "id": 9,
+      "src": "Assets/New UI/omozra_ability3.png",
+      "description1": "Omozra points at an ally and Sadiq emerges and  ",
+      "description2": "swallows them. While the ally is inside, Omozra ",
+      "description3": "can move, but can't cast any other abilities. ",
+      "description4": "Then, Omozra points at a spot and Sadiq pops up and",
+      "description5": "regurgitates the ally                                             ",
+      "description6": "This ability can’t be casted on Omozra himself."
+    },
+    {
+      "id": 101,
+      "src": "Assets/New UI/zhib_passive_icon.png",
+      "description1": "Zhib's Stats.                                         ",
+      "description2": " ",
       "description3": " ",
       "description4": " ",
       "description5": " ",
       "description6": " "
     },
     {
-      "id": 9,
-      "src": "Assets/New UI/omozra_ability3.png",
-      "description1": "Omozra points at an ally, prompting Sadiq to emerge from the sand",
-      "description2": "and partly swallow them. While the ally is inside Sadiq, Omozra",
-      "description3": "can move, but not cast any other abilities. Then, Omozra points",
-      "description4": "at a desired spot inside a given range and Sadiq pops up and",
-      "description5": "regurgitates the ally before disappearing under the sand again",
-      "description6": "This ability can’t be casted on Omozra himself."
-    },
-    {
-      "id": 101,
-      "src": "Assets/New UI/zhib_passive_icon.png",
-      "description1": "Omozra points at an ally, prompting Sadiq to emerge from the sand",
-      "description2": "and partly swallow them. While the ally is inside Sadiq, Omozra",
-      "description3": "can move, but not cast any other abilities. Then, Omozra points",
-      "description4": "at a desired spot inside a given range and Sadiq pops up and",
-      "description5": "regurgitates the ally before disappearing under the sand again",
-      "description6": "This ability can’t be casted on Omozra himself."
-    },
-    {
       "id": 102,
       "src": "Assets/New UI/nerala_passive_icon.png",
-      "description1": "Omozra points at an ally, prompting Sadiq to emerge from the sand",
-      "description2": "and partly swallow them. While the ally is inside Sadiq, Omozra",
-      "description3": "can move, but not cast any other abilities. Then, Omozra points",
-      "description4": "at a desired spot inside a given range and Sadiq pops up and",
-      "description5": "regurgitates the ally before disappearing under the sand again",
-      "description6": "This ability can’t be casted on Omozra himself."
+      "description1": "Nerala's Stats.                                      ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
     },
     {
       "id": 103,
       "src": "Assets/New UI/omozra_passive_icon.png",
-      "description1": "Omozra points at an ally, prompting Sadiq to emerge from the sand",
-      "description2": "and partly swallow them. While the ally is inside Sadiq, Omozra",
-      "description3": "can move, but not cast any other abilities. Then, Omozra points",
-      "description4": "at a desired spot inside a given range and Sadiq pops up and",
-      "description5": "regurgitates the ally before disappearing under the sand again",
-      "description6": "This ability can’t be casted on Omozra himself."
+      "description1": "Omozra's Stats                                       ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
     },
     {
-      "id": 1000,
-      "src": "",
-      "description1": "Level: 1",
-      "description2": "",
-      "description3": "",
-      "description4": "",
-      "description5": "",
-      "description6": ""
+      "id": 11,
+      "description1": "Impact Sound Range: 20->15.                          ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 12,
+      "description1": "Throwing Range: 10->12.5.                            ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 13,
+      "description1": "Increases overall chances of hitting enemies.         ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 21,
+      "description1": "Throwing Range: 13->15.                               ",
+      "description2": "Effect Range: 8->10.                                  ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 22,
+      "description1": "Duration: 7.5->10.                                    ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 23,
+      "description1": "Cooldown: 7.5->6.                                      ",
+      "description2": " ", 
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 31,
+      "description1": "Range: 5->7.5.                                        ",
+      "description2": "Chain Range: 5->6.                                    ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 32,
+      "description1": "Range: 7.5->8.5.                                      ",
+      "description2": "Chain Range: 6->6.5.                                  ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 33,
+      "description1": "Max Kills: 5->8.                                      ",
+      "description2": "Cost: 2000->1800.                                     ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 41,
+      "description1": "Range: 12->14.                                          ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 42,
+      "description1": "Increases overall chances of hitting enemies.        ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 43,
+      "description1": "Visual Debuff: 0->25%.                               ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 51,
+      "description1": "Range: 15->17.5.                                      ",
+      "description2": "Effect Radius: 3.33->4.                              ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 52,
+      "description1": "Duration: 5->7.                                      ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 53,
+      "description1": "Max Ammunition: 3->5.                                  ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 61,
+      "description1": "Max Range: 40->50.                                    ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 62,
+      "description1": "Duration: 10->15.                                     ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 63,
+      "description1": "Kills: 1->2.                                         ",
+      "description2": "Cost: 1000->750.                                     ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 71,
+      "description1": "Range: 15->17.5.                                     ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 72,
+      "description1": "Corpses Needed: 6->5.                                 ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 73,
+      "description1": "Range: 15->17.5.                                     ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 81,
+      "description1": "Range: 15->17.5.                                     ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 82,
+      "description1": "Range: 17.5->20.                                     ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 83,
+      "description1": "Corpses Needed: 6->5.                                   ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 91,
+      "description1": "Range: 10->12.5.                                     ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 92,
+      "description1": "Range: 12.5->15.                                     ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 93,
+      "description1": "Cost: 1000->750.                                     ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 1011,
+      "description1": "Stamina: 5->6.                                     ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 1012,
+      "description1": "Sprint Speed: 133->144%.                               ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 1013,
+      "description1": "Crouch Sound Range: 40->30%.                            ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 1021,
+      "description1": "Stamina: 3->5.                                         ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 1022,
+      "description1": "Walking Sound Range: 14->12.                             ",
+      "description2": "Time Between Attacks: 10.5->8.                           ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 1023,
+      "description1": "Crouch Sound Range: 37->25%.                             ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 1031,
+      "description1": "Stamina: 6->7.                                           ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 1032,
+      "description1": "Sprint Speed: 133->144%.                                  ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
+    },
+    {
+      "id": 1033,
+      "description1": "Max Health: 3->4.                                          ",
+      "description2": " ",
+      "description3": " ",
+      "description4": " ",
+      "description5": " ",
+      "description6": " "
     }
   ]
 }

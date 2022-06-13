@@ -6,7 +6,7 @@ NewVariable(nameIV)
 
 function Start()
     child = Find(name)
-    pause = Find("Background")
+    pause = Find("Pause Menu")
 end
 
 -- Called each loop iteration

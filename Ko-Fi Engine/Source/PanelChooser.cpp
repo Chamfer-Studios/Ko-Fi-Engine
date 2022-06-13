@@ -24,8 +24,8 @@ PanelChooser::~PanelChooser()
 
 bool PanelChooser::Start()
 {
-	Importer::GetInstance()->textureImporter->Import(fileIconPath.c_str(),fileTexture);
-	Importer::GetInstance()->textureImporter->Import(directoryIconPath.c_str(),directoryTexture);
+	Importer::GetInstance()->textureImporter->Import(fileIconPath.c_str(),fileTexture, true);
+	Importer::GetInstance()->textureImporter->Import(directoryIconPath.c_str(),directoryTexture, true);
 	return true;
 }
 

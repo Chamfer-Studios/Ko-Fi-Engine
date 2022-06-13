@@ -6,7 +6,7 @@ NewVariable(nameIV)
 
 function Start()
     child = Find(name)
-    own = Find("Background")
+    own = Find("Pause Menu")
     child:Active(false)
 end
 

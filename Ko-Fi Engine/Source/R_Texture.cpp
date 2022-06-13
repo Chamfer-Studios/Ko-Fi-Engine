@@ -58,12 +58,6 @@ void R_Texture::SetUpTexture()
 		appLog->AddLog("Texture Image not loaded correctly.\n");
 
 	glBindTexture(GL_TEXTURE_2D, 0);
-
-	if (data != nullptr)
-	{
-		stbi_image_free(data);
-		data = nullptr;
-	}
 }
 
 void R_Texture::DeleteTexture()

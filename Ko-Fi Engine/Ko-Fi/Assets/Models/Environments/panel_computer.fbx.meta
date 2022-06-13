@@ -1,0 +1,24 @@
+{
+    "asset_file": "panel_computer.fbx",
+    "asset_path": "Assets/Models/Environments/panel_computer.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "Cube.486.sugar",
+            "library_path": "Library/Meshes/363656941.sugar",
+            "type": 0,
+            "uid": 363656941
+        },
+        {
+            "asset_file": "group_2_base_color.png",
+            "asset_path": "Assets/Textures/Environments/Level 2/group_2_base_color.png",
+            "library_path": "Library/Textures/305941184.cacao",
+            "type": 1,
+            "uid": 305941184
+        }
+    ],
+    "hash": "3d906a30d482ca38d4376a2b90d1d312",
+    "library_file": "510739639.tea",
+    "library_path": "Library/Models/510739639.tea",
+    "type": 3,
+    "uid": 510739639
+}

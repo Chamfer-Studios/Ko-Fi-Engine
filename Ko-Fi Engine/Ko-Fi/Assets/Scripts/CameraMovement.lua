@@ -250,6 +250,7 @@ function Update(dt)
             GetSelectedCharacter()
             offset = float3.new(0, 240, 270)
             newZoomedPos = float3.new(0, 99, 112)
+            CleanCulling()
         end
     end
 
@@ -400,4 +401,13 @@ function GetSelectedCharacter()
         end
     end
 
+end
+
+function CleanCulling() 
+
+    for j = 1, #rayCastCulling do
+        rayCastCulling[j].active = true
+    end
+
+    rayCastCulling = {}
 end
