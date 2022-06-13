@@ -550,7 +550,7 @@ void M_SceneManager::ToggleRuntime()
 	if (runtimeState == GameState::PLAYING)
 		OnPause();
 	else if (runtimeState == GameState::PAUSED)
-		OnPlay();
+		OnResume();
 }
 
 void M_SceneManager::GuizmoTransformation()
