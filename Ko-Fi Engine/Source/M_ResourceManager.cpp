@@ -97,7 +97,7 @@ bool M_ResourceManager::PreUpdate(float dt)
 
 bool M_ResourceManager::CleanUp()
 {
-	CONSOLE_LOG("Cleaning M_ResourceManager up...");
+	LOG_BOTH("Cleaning M_ResourceManager up... %i",memory);
 	appLog->AddLog("Cleaning M_ResourceManager up...\n");
 
 	bool ret = true;
@@ -106,6 +106,7 @@ bool M_ResourceManager::CleanUp()
 	{
 		it->second->CleanUp();
 		RELEASE(it->second);
+		memory--;
 	}
 
 	resourcesMap.clear();
@@ -438,11 +439,11 @@ Resource* M_ResourceManager::CreateNewResource(const ResourceType& type, const c
 		//case ResourceType::FONT: { resource = new R_Font(); } break;
 		//case ResourceType::TRACK: { resource = new R_Track(); } break;
 		//case ResourceType::PARTICLE: { resource = new R_Particle(); } break;
-	case ResourceType::UNKNOWN: { resource = nullptr; } break;
+	case ResourceType::UNKNOWN: { resource = nullptr; memory--; } break;
 	default:
 		break;
 	}
-
+	memory++;
 	if (resource != nullptr)
 	{
 		if (assetPath != nullptr)
@@ -578,6 +579,7 @@ bool M_ResourceManager::UnloadResource(Resource* resource)
 
 	resource->CleanUp();
 	RELEASE(resource);
+	memory--;
 
 	if (resourcesMap.find(uid) != resourcesMap.end())
 		resourcesMap.erase(uid);
@@ -607,6 +609,7 @@ bool M_ResourceManager::UnloadResource(UID uid)
 
 	it->second->CleanUp();
 	RELEASE(it->second);
+	memory--;
 	resourcesMap.erase(uid);
 
 	return true;
@@ -628,6 +631,7 @@ bool M_ResourceManager::DeleteAndUnloadResource(UID uid)
 	{
 		it->second->CleanUp();
 		RELEASE(it->second);
+		memory--;
 	}
 
 	resourcesMap.erase(uid);

@@ -109,6 +109,8 @@ private:
 
 	float fileRefreshRate;
 	float fileRefreshTime;
+
+	int memory = 0;
 };
 
 #endif // !__RESOURCE_MANAGER_H__
