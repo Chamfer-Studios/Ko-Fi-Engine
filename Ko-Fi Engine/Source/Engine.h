@@ -115,7 +115,7 @@ private:
 	
 	PerfTimer ptimer;
 
-	std::list<Module*> modules;
+	std::vector<Module*> modules;
 	EngineConfig* engineConfig;
 
 	JsonHandler jsonHandler;

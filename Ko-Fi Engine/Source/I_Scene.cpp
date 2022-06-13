@@ -346,15 +346,15 @@ bool I_Scene::LoadScene(Scene* scene, const char* _name)
 
 	if (ret && !jsonFile->is_null())
 	{
-		SceneIntro* si = (SceneIntro*)scene;
-		RELEASE(si);
-		scene = new SceneIntro(engine);
-		scene->name = std::string(namecopy).c_str();
-		engine->GetSceneManager()->currentScene = scene;
-		engine->GetSceneManager()->sceneIntro = (SceneIntro*)scene;
-		scene->Init();
-		scene->Awake();
-		scene->Start();
+		//SceneIntro* si = (SceneIntro*)scene;
+		//RELEASE(si);
+		//scene = new SceneIntro(engine);
+		//scene->name = std::string(namecopy).c_str();
+		//engine->GetSceneManager()->currentScene = scene;
+		//engine->GetSceneManager()->sceneIntro = (SceneIntro*)scene;
+		//scene->Init();
+		//scene->Awake();
+		//scene->Start();
 
 		jsonScene = &jsonFile->at(namecopy);
 		scene->name = jsonScene->at("name");

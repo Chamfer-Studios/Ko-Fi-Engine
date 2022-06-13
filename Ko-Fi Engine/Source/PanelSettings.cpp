@@ -43,7 +43,7 @@ bool PanelSettings::ShowPanel(bool* toggleSettingsPanel)
         if (ImGui::Button("Save Config##"))
             editor->engine->SaveConfiguration();
 
-        std::list<Module*>::iterator item = editor->engine->AllModules().begin();;
+        auto item = editor->engine->AllModules().begin();;
         while (item != editor->engine->AllModules().end() && ret)
         {
             ret = (*item)->InspectorDraw();

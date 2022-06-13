@@ -81,7 +81,7 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 KoFiEngine::~KoFiEngine()
 {
 	// Release modules
-	for (std::list<Module*>::reverse_iterator item = modules.rbegin(); item != modules.rend(); ++item)
+	for (auto item = modules.rbegin(); item != modules.rend(); ++item)
 	{
 		RELEASE(*item);
 	}
@@ -129,7 +129,7 @@ bool KoFiEngine::Awake()
 
 	if (ret == true)
 	{
-		std::list<Module*>::iterator item = modules.begin();
+		auto item = modules.begin();
 
 		while (item != modules.end() && ret)
 		{
@@ -157,11 +157,11 @@ bool KoFiEngine::Start()
 
 
 
-	std::list<Module*>::iterator item = modules.begin();;
 
-	while (item != modules.end() && ret)
+	for (auto item : modules)
 	{
-		ret = (*item)->Start();
+		ret = item->Start();
+		if (!ret) break;
 		item++;
 	}
 
@@ -255,10 +255,9 @@ bool KoFiEngine::PreUpdate()
 {
 	bool ret = true;
 
-	std::list<Module*>::iterator item;
 	Module* pModule = NULL;
 
-	for (item = modules.begin(); item != modules.end() && ret == true; ++item)
+	for (auto item = modules.begin(); item != modules.end() && ret == true; ++item)
 	{
 		pModule = *item;
 
@@ -277,7 +276,7 @@ bool KoFiEngine::PreUpdate()
 bool KoFiEngine::DoUpdate()
 {
 	bool ret = true;
-	std::list<Module*>::iterator item = modules.begin();
+	auto item = modules.begin();
 	Module* pModule = NULL;
 
 	for (item = modules.begin(); item != modules.end() && ret == true; ++item)
@@ -300,10 +299,9 @@ bool KoFiEngine::DoUpdate()
 bool KoFiEngine::PostUpdate()
 {
 	bool ret = true;
-	std::list<Module*>::iterator item;
 	Module* pModule = NULL;
 
-	for (item = modules.begin(); item != modules.end() && ret == true; ++item)
+	for (auto item = modules.begin(); item != modules.end() && ret == true; ++item)
 	{
 		pModule = *item;
 
@@ -322,7 +320,7 @@ bool KoFiEngine::CleanUp()
 {
 	bool ret = true;
 
-	for (std::list<Module*>::reverse_iterator item = modules.rbegin(); item != modules.rend() && ret == true; ++item)
+	for (auto item = modules.rbegin(); item != modules.rend() && ret == true; ++item)
 	{
 		ret = (*item)->CleanUp();
 	}

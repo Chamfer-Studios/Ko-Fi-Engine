@@ -79,16 +79,6 @@ bool M_SceneManager::Start()
 {
 	bool ret = true;
 
-	// Load Default Screen (Can be changed from settings)
-	if (!engine->GetSceneManager()->GetDefaultScene().empty())
-	{
-		Importer::GetInstance()->sceneImporter->LoadScene(currentScene, engine->GetSceneManager()->GetDefaultScene().c_str());
-	}
-	else
-	{
-		// TODO: Load a default scene, or create a new empty one
-	}
-
 	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
 		if (*scene != nullptr) {
