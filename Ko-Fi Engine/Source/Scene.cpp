@@ -176,7 +176,14 @@ GameObject* Scene::CreateEmptyGameObject(const char* name, GameObject* parent, b
 
 void Scene::DeleteCurrentScene()
 {
-	CleanUp();
+	for (GameObject* go : gameObjectList)
+	{
+		RELEASE(go);
+	}
+
+	gameObjectList.clear();
+	gameObjectList.shrink_to_fit();
+
 	engine->GetPhysics()->ResetCollisionBodyToObjectMap();
 	engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.clear();
 	engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();

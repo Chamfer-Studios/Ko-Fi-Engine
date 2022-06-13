@@ -155,19 +155,21 @@ bool M_Renderer3D::PostUpdate(float dt)
 	OPTICK_EVENT();
 
 	//ShadowMap creation
-	GameObject* light = engine->GetSceneManager()->GetCurrentScene()->GetShadowCaster();
-	if (light)
-	{
-		if (reloadShadows) //optimization to make shadows less real time and more efficient ( timer is a #define )
+	if (engine->GetSceneManager()->GetCurrentScene() != nullptr) {
+		GameObject* light = engine->GetSceneManager()->GetCurrentScene()->GetShadowCaster();
+		if (light)
 		{
-			glViewport(0, 0, depthMapResolution, depthMapResolution);		//configure viewport
-			glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);		//bind framebuffer
-			glClear(GL_DEPTH_BUFFER_BIT);						//clear only the depth buffer
-			reloadShadows = false;
-			FillShadowMap();
-			glViewport(0, 0, engine->GetEditor()->lastViewportSize.x, engine->GetEditor()->lastViewportSize.y);
-			UnbindFrameBuffers();
-			PrepareFrameBuffers();
+			if (reloadShadows) //optimization to make shadows less real time and more efficient ( timer is a #define )
+			{
+				glViewport(0, 0, depthMapResolution, depthMapResolution);		//configure viewport
+				glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);		//bind framebuffer
+				glClear(GL_DEPTH_BUFFER_BIT);						//clear only the depth buffer
+				reloadShadows = false;
+				FillShadowMap();
+				glViewport(0, 0, engine->GetEditor()->lastViewportSize.x, engine->GetEditor()->lastViewportSize.y);
+				UnbindFrameBuffers();
+				PrepareFrameBuffers();
+			}
 		}
 	}
 
@@ -416,8 +418,10 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 {
 	OPTICK_EVENT();
 
-	if (engine->GetSceneManager()->GetCurrentScene()->drawSkybox == true)
-		RenderSkyBox(camera, engine->GetSceneManager()->GetCurrentScene()->skybox);
+	if (engine->GetSceneManager()->GetCurrentScene() != nullptr) {
+		if (engine->GetSceneManager()->GetCurrentScene()->drawSkybox == true)
+			RenderSkyBox(camera, engine->GetSceneManager()->GetCurrentScene()->skybox);
+	}
 
 	auto renderGo = [this, camera](GameObject* go) {
 		if (go->active && go->GetRenderGameObject())
@@ -451,31 +455,33 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 	}
 	RenderAllParticles();
 
-	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
-	{
-		if (go->active)
+	if (engine->GetSceneManager()->GetCurrentScene() != nullptr) {
+		for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 		{
-			C_RenderedUI* cRenderedUI = go->GetComponent<C_RenderedUI>();
-			if (cRenderedUI)
+			if (go->active)
 			{
-				RenderUI(go);
-			}
-
-			C_Camera* cCamera = go->GetComponent<C_Camera>();
-			if (cCamera) {
-				if (!engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.empty())
+				C_RenderedUI* cRenderedUI = go->GetComponent<C_RenderedUI>();
+				if (cRenderedUI)
 				{
-					int uid = engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.at(0);
+					RenderUI(go);
+				}
 
-					if (!cCamera->IsEngineCamera() /*&& cCamera->owner->GetUID() == uid*/)
+				C_Camera* cCamera = go->GetComponent<C_Camera>();
+				if (cCamera) {
+					if (!engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.empty())
 					{
-						if (cCamera->GetIsSphereCullingActive())
-						{
-							cCamera->DrawSphereCulling();
-						}
-						cCamera->DrawFrustum();
-					}
+						int uid = engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.at(0);
 
+						if (!cCamera->IsEngineCamera() /*&& cCamera->owner->GetUID() == uid*/)
+						{
+							if (cCamera->GetIsSphereCullingActive())
+							{
+								cCamera->DrawSphereCulling();
+							}
+							cCamera->DrawFrustum();
+						}
+
+					}
 				}
 			}
 		}

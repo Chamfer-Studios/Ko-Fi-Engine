@@ -165,10 +165,13 @@ bool M_Physics::LoadConfiguration(Json& configModule)
 				}
 			}
 		}
-		for (auto go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
-		{
-			if (go->GetComponent<C_BoxCollider>())
-				go->GetComponent<C_BoxCollider>()->UpdateFilter();
+
+		if (engine->GetSceneManager()->GetCurrentScene() != nullptr) {
+			for (auto go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+			{
+				if (go->GetComponent<C_BoxCollider>())
+					go->GetComponent<C_BoxCollider>()->UpdateFilter();
+			}
 		}
 	}
 

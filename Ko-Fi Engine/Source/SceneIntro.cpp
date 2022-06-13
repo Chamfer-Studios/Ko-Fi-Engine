@@ -56,6 +56,9 @@ SceneIntro::~SceneIntro()
 // Load assets
 bool SceneIntro::Start()
 {
+	if (hasStarted) return true;
+	hasStarted = true;
+
 	bool ret = true;
 	skybox.Start();
 #ifdef KOFI_GAME
@@ -63,16 +66,6 @@ bool SceneIntro::Start()
 	LOG("Mouse has changed: %d", mouseChanged);
 #endif // KOFI_GAME
 
-
-	// Load Default Screen (Can be changed from settings)
-	if (!engine->GetSceneManager()->GetDefaultScene().empty())
-	{
-		Importer::GetInstance()->sceneImporter->LoadScene(this, engine->GetSceneManager()->GetDefaultScene().c_str());
-	}
-	else
-	{
-		// TODO: Load a default scene, or create a new empty one
-	}
 	if (!engine->GetCamera3D()->gameCamera)
 	{
 		GameObject *camera = CreateEmptyGameObject("Main Camera");
@@ -258,8 +251,6 @@ bool SceneIntro::CleanUp()
 
 	CONSOLE_LOG("Unloading Intro scene");
 	appLog->AddLog("Unloading Intro scene\n");
-
-	Scene::CleanUp();
 
 	example::NodeEditorShutdown();
 

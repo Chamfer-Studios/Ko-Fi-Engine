@@ -331,28 +331,38 @@ bool I_Scene::SaveScene(Scene* scene, const char* customName)
 	return ret;
 }
 
-bool I_Scene::LoadScene(Scene* scene, const char* name)
+bool I_Scene::LoadScene(Scene* scene, const char* _name)
 {
 	bool ret = false;
+
+	std::string namecopy = _name;
 
 	JsonHandler* jsonHandler = new JsonHandler();
 	Json* jsonFile = new Json();
 	Json* jsonScene = nullptr;
 
-	std::string path = ASSETS_SCENES_DIR + std::string(name) + SCENE_EXTENSION;
+	std::string path = ASSETS_SCENES_DIR + namecopy + SCENE_EXTENSION;
 	ret = jsonHandler->LoadJson(*jsonFile, path.c_str());
 
 	if (ret && !jsonFile->is_null())
 	{
-		((SceneIntro*)scene)->CleanUp();
+		SceneIntro* si = (SceneIntro*)scene;
+		RELEASE(si);
+		scene = new SceneIntro(engine);
+		scene->name = std::string(namecopy).c_str();
+		engine->GetSceneManager()->currentScene = scene;
+		engine->GetSceneManager()->sceneIntro = (SceneIntro*)scene;
+		scene->Init();
+		scene->Awake();
+		scene->Start();
 
-		jsonScene = &jsonFile->at(name);
+		jsonScene = &jsonFile->at(namecopy);
 		scene->name = jsonScene->at("name");
 		if (jsonScene->contains("draw_skybox"))
 			scene->drawSkybox = jsonScene->at("draw_skybox");
-		scene->rootGo->SetName(scene->name.c_str());
+		scene->rootGo->SetName(namecopy.c_str());
 
-		engine->GetWindow()->SetTitle("Ko-Fi Engine - " + scene->name);
+		engine->GetWindow()->SetTitle("Ko-Fi Engine - " + namecopy);
 
 		scene->active = jsonScene->at("active");
 

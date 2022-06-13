@@ -346,6 +346,9 @@ void C_Camera::SphereCulling()
 	//If object is further from the sphere radius, we discard them.
 	//std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
 
+	if (owner->GetEngine()->GetSceneManager()->GetCurrentScene() == nullptr)
+		return;
+
 	for (int i = 0; i < owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList.size(); i++)
 	{
 		GameObject* gameObject = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList[i];

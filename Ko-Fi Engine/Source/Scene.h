@@ -35,12 +35,16 @@ public:
 
 	void Init()
 	{
+		if (hasInit) return;
+		hasInit = true;
 		active = true;
 	}
 
 	// Called before render is available
 	virtual bool Awake()
 	{
+		if (hasAwaken) return true;
+		hasAwaken = true;
 		return true;
 	}
 
@@ -134,6 +138,10 @@ public:
 	SkyBox skybox;
 
 	std::vector<C_LightSource*> lights;
+
+	bool hasInit = false;
+	bool hasAwaken = false;
+	bool hasStarted = false;
 };
 
 #endif // __SCENE_H__

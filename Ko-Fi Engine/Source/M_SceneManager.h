@@ -109,6 +109,8 @@ public:
 
 public:
 	bool active;
+	Scene* currentScene = nullptr;
+	SceneIntro* sceneIntro = nullptr;
 
 private:
 	// Pointer to the whole engine
@@ -116,8 +118,6 @@ private:
 
 	// Scenes
 	std::vector<Scene*> scenes;
-	Scene* currentScene = nullptr;
-	SceneIntro* sceneIntro = nullptr;
 	std::string defaultScene = "";
 
 	// Guizmo

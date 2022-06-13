@@ -58,6 +58,8 @@ bool PanelHierarchy::Update()
 
 	ImGui::Begin("Scene Hierarchy");
 
+	if (editor->engine->GetSceneManager()->GetCurrentScene() == nullptr) return true;
+
 	if (!editor->engine->GetSceneManager()->GetCurrentScene()->gameObjectList.empty())
 	{
 		editor->Markdown("# Game Objects");

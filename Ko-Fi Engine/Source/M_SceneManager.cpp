@@ -46,8 +46,9 @@ M_SceneManager::M_SceneManager(KoFiEngine* engine)
 	this->engine = engine;
 
 	sceneIntro = new SceneIntro(engine);
-	AddScene(sceneIntro);
 	currentScene = sceneIntro;
+
+	AddScene(sceneIntro);
 
 	gameTime = 0.0f;
 }
@@ -63,10 +64,11 @@ bool M_SceneManager::Awake(Json configModule)
 
 	ret = LoadConfiguration(configModule);
 
-
 	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
-		ret = (*scene)->Awake();
+		if (*scene != nullptr) {
+			ret = (*scene)->Awake();
+		}
 	}
 
 	return ret;
@@ -77,9 +79,21 @@ bool M_SceneManager::Start()
 {
 	bool ret = true;
 
+	// Load Default Screen (Can be changed from settings)
+	if (!engine->GetSceneManager()->GetDefaultScene().empty())
+	{
+		Importer::GetInstance()->sceneImporter->LoadScene(currentScene, engine->GetSceneManager()->GetDefaultScene().c_str());
+	}
+	else
+	{
+		// TODO: Load a default scene, or create a new empty one
+	}
+
 	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
-		ret = (*scene)->Start();
+		if (*scene != nullptr) {
+			ret = (*scene)->Start();
+		}
 	}
 	//Importer::GetInstance()->sceneImporter->Load(engine->GetSceneManager()->GetCurrentScene(), "SceneIntro");
 
@@ -100,7 +114,9 @@ bool M_SceneManager::PreUpdate(float dt)
 
 	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
-		ret = (*scene)->PreUpdate(gameDt);
+		if (*scene != nullptr) {
+			ret = (*scene)->PreUpdate(gameDt);
+		}
 	}
 
 	return ret;
@@ -114,7 +130,9 @@ bool M_SceneManager::Update(float dt)
 
 	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
-		ret = (*scene)->Update(dt);
+		if (*scene != nullptr) {
+			ret = (*scene)->Update(dt);
+		}
 	}
 
 	return ret;
@@ -128,7 +146,9 @@ bool M_SceneManager::PostUpdate(float dt)
 
 	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
-		ret = (*scene)->PostUpdate(dt);
+		if (*scene != nullptr) {
+			ret = (*scene)->PostUpdate(dt);
+		}
 	}
 
 	FinishUpdate();
@@ -210,7 +230,6 @@ bool M_SceneManager::FinishUpdate()
 
 void M_SceneManager::AddScene(Scene* scene)
 {
-	scene->Init();
 	scenes.push_back(scene);
 }
 
