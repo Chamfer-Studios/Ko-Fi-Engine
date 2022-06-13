@@ -9,7 +9,7 @@ class C_AudioSpacial : public C_Audio
 {
 public:
     C_AudioSpacial(GameObject* parent) : C_Audio(parent) {}
-    ~C_AudioSpacial() {}
+    virtual ~C_AudioSpacial() {}
 };
 
 #endif // !__C_AUDIO_SPACIAL_H__

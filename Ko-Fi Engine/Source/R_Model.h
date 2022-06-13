@@ -32,7 +32,7 @@ class R_Model : public Resource
 {
 public:
 	R_Model();
-	~R_Model();
+	~R_Model() override;
 
 	bool SaveMeta(Json& json) const override;
 

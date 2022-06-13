@@ -9,7 +9,7 @@ class C_Info : public Component
 {
 public:
 	C_Info(GameObject* parent);
-	~C_Info();
+	virtual ~C_Info();
 
 	bool Update(float dt) override;
 	bool CleanUp() override;

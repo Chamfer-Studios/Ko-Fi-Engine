@@ -80,7 +80,7 @@ class R_Mesh : public Resource
 {
 public:
 	R_Mesh(Shape shape = Shape::NONE);
-	~R_Mesh();
+	~R_Mesh() override;
 
 	// Mesh Functions
 	void SetUpMeshBuffers();

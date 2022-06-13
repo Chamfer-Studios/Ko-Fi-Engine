@@ -10,6 +10,10 @@ Component::Component(GameObject* parent) : owner(parent)
 		parent->PushBackComponent(this);
 }
 
+Component::~Component()
+{
+}
+
 const char* Component::GetNameByComponentType(ComponentType type)
 {
 	return componentTypeUtils::ComponentTypeToString(type);

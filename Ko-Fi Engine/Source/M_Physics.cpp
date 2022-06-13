@@ -526,7 +526,7 @@ void PhysicsEventListener::onContact(const reactphysics3d::CollisionCallback::Ca
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onCollisionEnter = sol::protected_function(script->s->handler->lua["OnCollisionEnter"]);
+						sol::protected_function onCollisionEnter = sol::protected_function((*script->s->handler->lua)["OnCollisionEnter"]);
 						if (onCollisionEnter.valid()) {
 							sol::protected_function_result result = onCollisionEnter(go2);
 							if (result.valid()) {
@@ -548,7 +548,7 @@ void PhysicsEventListener::onContact(const reactphysics3d::CollisionCallback::Ca
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onCollisionEnter = sol::protected_function(script->s->handler->lua["OnCollisionEnter"]);
+						sol::protected_function onCollisionEnter = sol::protected_function((*script->s->handler->lua)["OnCollisionEnter"]);
 						if (onCollisionEnter.valid()) {
 							sol::protected_function_result result = onCollisionEnter(go1);
 							if (result.valid()) 
@@ -575,7 +575,7 @@ void PhysicsEventListener::onContact(const reactphysics3d::CollisionCallback::Ca
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onCollisionRepeat = sol::protected_function(script->s->handler->lua["OnCollisionRepeat"]);
+						sol::protected_function onCollisionRepeat = sol::protected_function((*script->s->handler->lua)["OnCollisionRepeat"]);
 						if (onCollisionRepeat.valid()) {
 							sol::protected_function_result result = onCollisionRepeat(go2);
 							if (result.valid()) 
@@ -599,7 +599,7 @@ void PhysicsEventListener::onContact(const reactphysics3d::CollisionCallback::Ca
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onCollisionRepeat = sol::protected_function(script->s->handler->lua["OnCollisionRepeat"]);
+						sol::protected_function onCollisionRepeat = sol::protected_function((*script->s->handler->lua)["OnCollisionRepeat"]);
 						if (onCollisionRepeat.valid()) {
 							sol::protected_function_result result = onCollisionRepeat(go1);
 							if (result.valid())
@@ -626,7 +626,7 @@ void PhysicsEventListener::onContact(const reactphysics3d::CollisionCallback::Ca
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onCollisionExit = sol::protected_function(script->s->handler->lua["OnCollisionExit"]);
+						sol::protected_function onCollisionExit = sol::protected_function((*script->s->handler->lua)["OnCollisionExit"]);
 						if (onCollisionExit.valid()) {
 							sol::protected_function_result result = onCollisionExit(go2);
 							if (result.valid())
@@ -650,7 +650,7 @@ void PhysicsEventListener::onContact(const reactphysics3d::CollisionCallback::Ca
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onCollisionExit = sol::protected_function(script->s->handler->lua["OnCollisionExit"]);
+						sol::protected_function onCollisionExit = sol::protected_function((*script->s->handler->lua)["OnCollisionExit"]);
 						if (onCollisionExit.valid()) {
 							sol::protected_function_result result = onCollisionExit(go1);
 							if (result.valid())
@@ -711,7 +711,7 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onTriggerEnter = sol::protected_function(script->s->handler->lua["OnTriggerEnter"]);
+						sol::protected_function onTriggerEnter = sol::protected_function((*script->s->handler->lua)["OnTriggerEnter"]);
 						if (onTriggerEnter.valid()) {
 							sol::protected_function_result result = onTriggerEnter(go2);
 							if (result.valid())
@@ -735,7 +735,7 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onTriggerEnter = sol::protected_function(script->s->handler->lua["OnTriggerEnter"]);
+						sol::protected_function onTriggerEnter = sol::protected_function((*script->s->handler->lua)["OnTriggerEnter"]);
 						if (onTriggerEnter.valid()) {
 							sol::protected_function_result result = onTriggerEnter(go1);
 							if (result.valid())
@@ -762,7 +762,7 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onTriggerStay = sol::protected_function(script->s->handler->lua["OnTriggerStay"]);
+						sol::protected_function onTriggerStay = sol::protected_function((*script->s->handler->lua)["OnTriggerStay"]);
 						if (onTriggerStay.valid()) {
 							sol::protected_function_result result = onTriggerStay(go2);
 							if (result.valid())
@@ -786,7 +786,7 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onTriggerStay = sol::protected_function(script->s->handler->lua["OnTriggerStay"]);
+						sol::protected_function onTriggerStay = sol::protected_function((*script->s->handler->lua)["OnTriggerStay"]);
 						if (onTriggerStay.valid()) {
 							sol::protected_function_result result = onTriggerStay(go1);
 							if (result.valid())
@@ -813,7 +813,7 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onTriggerExit = sol::protected_function(script->s->handler->lua["OnTriggerExit"]);
+						sol::protected_function onTriggerExit = sol::protected_function((*script->s->handler->lua)["OnTriggerExit"]);
 						if (onTriggerExit.valid()) {
 							sol::protected_function_result result = onTriggerExit(go2);
 							if (result.valid())
@@ -837,7 +837,7 @@ void PhysicsEventListener::onTrigger(const reactphysics3d::OverlapCallback::Call
 					C_Script* script = (C_Script*)component;
 					if (!script->s->path.empty())
 					{
-						sol::protected_function onTriggerExit = sol::protected_function(script->s->handler->lua["OnTriggerExit"]);
+						sol::protected_function onTriggerExit = sol::protected_function((*script->s->handler->lua)["OnTriggerExit"]);
 						if (onTriggerExit.valid()) {
 							sol::protected_function_result result = onTriggerExit(go1);
 							if (result.valid())
@@ -877,9 +877,9 @@ reactphysics3d::decimal CustomRayCastCallback::notifyRaycastHit(const reactphysi
 			continue;
 		C_Script* script = (C_Script*)component;
 		if (!script->s->path.empty()) {
-			auto onRayCastHit = sol::protected_function(script->s->handler->lua["OnRayCastHit"]);
+			auto onRayCastHit = sol::protected_function((*script->s->handler->lua)["OnRayCastHit"]);
 			if (onRayCastHit.valid())
-				script->s->handler->lua["OnRayCastHit"]();
+				(*script->s->handler->lua)["OnRayCastHit"]();
 		}
 	}
 

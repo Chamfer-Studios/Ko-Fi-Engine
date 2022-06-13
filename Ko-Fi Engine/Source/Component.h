@@ -46,7 +46,7 @@ class Component
 {
 public:
 	Component(GameObject *parent);
-	virtual ~Component(){};
+	virtual ~Component();
 
 	virtual bool Start() { return true; }
 	virtual bool PreUpdate() { return true; }

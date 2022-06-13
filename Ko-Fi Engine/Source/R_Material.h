@@ -25,7 +25,7 @@ class R_Material : public Resource
 {
 public:
 	R_Material();
-	~R_Material();
+	~R_Material() override;
 
 	bool SaveMeta(Json& json) const override;
 

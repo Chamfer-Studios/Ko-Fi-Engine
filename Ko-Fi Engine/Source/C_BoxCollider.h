@@ -8,7 +8,7 @@ class C_BoxCollider : public Component
 public:
 	//constructors
 	C_BoxCollider(GameObject* parent);
-	~C_BoxCollider();
+	virtual ~C_BoxCollider();
 
 	//Game Loop
 	bool Start() override;

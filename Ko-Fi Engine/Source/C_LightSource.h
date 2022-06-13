@@ -79,7 +79,7 @@ class C_LightSource : public Component
 {
 public:
 	C_LightSource(GameObject* parent);
-	~C_LightSource();
+	virtual ~C_LightSource();
 
 	bool Start();
 	bool Update(float dt);

@@ -22,7 +22,7 @@ public:
 
 	// Constructors
 	C_Camera(GameObject* gameObject);
-	~C_Camera();
+	virtual ~C_Camera();
 
 	// Game Loop
 	bool Start() override;

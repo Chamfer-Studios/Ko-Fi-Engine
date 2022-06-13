@@ -14,13 +14,13 @@ class SceneIntro : public Scene
 {
 public:
 	SceneIntro(KoFiEngine* engine);
-	~SceneIntro();
+	~SceneIntro() override;
 
 	bool Start() override;
 	bool PreUpdate(float dt) override;
 	bool Update(float dt) override;
 	bool PostUpdate(float dt) override;
-	bool CleanUp() override;
+	bool CleanUp();
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 

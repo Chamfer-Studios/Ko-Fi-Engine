@@ -14,7 +14,7 @@ class C_Transform : public Component
 public:
 	// Constructors
 	C_Transform(GameObject* parent);
-	~C_Transform();
+	virtual ~C_Transform();
 
 	// Game Loop
 	bool Update(float dt) override;

@@ -9,7 +9,7 @@ class C_RigidBody : public Component
 public:
 	//constructors
 	C_RigidBody(GameObject* parent);
-	~C_RigidBody();
+	virtual ~C_RigidBody();
 
 	//Game Loop
 	bool Start() override;

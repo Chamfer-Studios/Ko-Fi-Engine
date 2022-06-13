@@ -335,31 +335,31 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 {
 	bool ret = false;
 
-	JsonHandler jsonHandler;
-	Json jsonFile;
-	Json jsonScene;
+	JsonHandler* jsonHandler = new JsonHandler();
+	Json* jsonFile = new Json();
+	Json* jsonScene = nullptr;
 
 	std::string path = ASSETS_SCENES_DIR + std::string(name) + SCENE_EXTENSION;
-	ret = jsonHandler.LoadJson(jsonFile, path.c_str());
+	ret = jsonHandler->LoadJson(*jsonFile, path.c_str());
 
-	if (ret && !jsonFile.is_null())
+	if (ret && !jsonFile->is_null())
 	{
-		scene->CleanUp();
+		((SceneIntro*)scene)->CleanUp();
 
-		jsonScene = jsonFile.at(name);
-		scene->name = jsonScene.at("name");
-		if (jsonScene.contains("draw_skybox"))
-			scene->drawSkybox = jsonScene.at("draw_skybox");
+		jsonScene = &jsonFile->at(name);
+		scene->name = jsonScene->at("name");
+		if (jsonScene->contains("draw_skybox"))
+			scene->drawSkybox = jsonScene->at("draw_skybox");
 		scene->rootGo->SetName(scene->name.c_str());
 
 		engine->GetWindow()->SetTitle("Ko-Fi Engine - " + scene->name);
 
-		scene->active = jsonScene.at("active");
+		scene->active = jsonScene->at("active");
 
 		engine->GetNavigation()->CleanUp();
 		// Create Root
-		if (jsonScene.find("navmesh") != jsonScene.end())
-			engine->GetNavigation()->Load(jsonScene.at("navmesh"));
+		if (jsonScene->find("navmesh") != jsonScene->end())
+			engine->GetNavigation()->Load(jsonScene->at("navmesh"));
 
 		//Json jsonModels = jsonScene.at("models_in_scene_list");
 		//for (const auto& modelIt : jsonModels.items())
@@ -378,43 +378,43 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 		//	}
 		//}
 
-		Json jsonGameObjects = jsonScene.at("game_objects_list");
+		Json* jsonGameObjects = &jsonScene->at("game_objects_list");
 		float startTime = (float)engine->GetEngineTime();
 
-		for (const auto& goIt : jsonGameObjects.items())
+		for (const auto& goIt : jsonGameObjects->items())
 		{
-			Json jsonGo = goIt.value();
-			uint uid = jsonGo.at("UID");
+			Json* jsonGo = &goIt.value();
+			uint uid = jsonGo->at("UID");
 
 			bool is3D = true;
-			if (jsonGo.find("is3D") != jsonGo.end())
-				is3D = jsonGo.at("is3D");
+			if (jsonGo->find("is3D") != jsonGo->end())
+				is3D = jsonGo->at("is3D");
 
 			TAG tag = TAG::TAG_UNTAGGED;
-			if (jsonGo.contains("tag"))
-				tag = jsonGo.at("tag");
+			if (jsonGo->contains("tag"))
+				tag = jsonGo->at("tag");
 
-			std::string name = jsonGo.at("name");
+			std::string name = jsonGo->at("name");
 			GameObject* go = new GameObject(uid, engine, name.c_str(), is3D);
 
 			bool newIsPrefab = false;
-			if (jsonGo.contains("isPrefab"))
-				go->isPrefab = jsonGo.at("isPrefab");
+			if (jsonGo->contains("isPrefab"))
+				go->isPrefab = jsonGo->at("isPrefab");
 
-			go->active = jsonGo.at("active");
+			go->active = jsonGo->at("active");
 			go->tag = tag;
-			uint parentUid = jsonGo.at("parent_UID");
+			uint parentUid = jsonGo->at("parent_UID");
 			go->SetParentUID(parentUid);
 
-			Json jsonCmps = jsonGo.at("components");
+			Json* jsonCmps = &jsonGo->at("components");
 
-			for (const auto& cmpIt : jsonCmps.items())
+			for (const auto& cmpIt : jsonCmps->items())
 			{
-				Json jsonCmp = cmpIt.value();
-				bool active = jsonCmp.at("active");
-				if (jsonCmp.contains("type"))
+				Json* jsonCmp = &cmpIt.value();
+				bool active = jsonCmp->at("active");
+				if (jsonCmp->contains("type"))
 				{
-					ComponentType type = (ComponentType)jsonCmp.at("type").get<int>();
+					ComponentType type = (ComponentType)jsonCmp->at("type").get<int>();
 					switch (type)
 					{
 					case ComponentType::SCRIPT:
@@ -425,9 +425,9 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 							if (c->type == ComponentType::SCRIPT)
 							{
 								int cID = ((C_Script*)c)->id;
-								if (jsonCmp.find("id") != jsonCmp.end())
+								if (jsonCmp->find("id") != jsonCmp->end())
 								{
-									if (cID == jsonCmp.at("id"))
+									if (cID == jsonCmp->at("id"))
 										scriptCmp = (C_Script*)c;
 								}
 							}
@@ -437,14 +437,14 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 							scriptCmp = (C_Script*)go->AddComponentByType(ComponentType::SCRIPT);
 
 						scriptCmp->active = active;
-						scriptCmp->Load(jsonCmp);
+						scriptCmp->Load(*jsonCmp);
 						break;
 					}
 					case ComponentType::TRANSFORM:
 					{
 						C_Transform* transformCmp = go->GetComponent<C_Transform>();
 						transformCmp->active = active;
-						transformCmp->Load(jsonCmp);
+						transformCmp->Load(*jsonCmp);
 						break;
 					}
 					case ComponentType::INFO:
@@ -466,7 +466,7 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 						if (component != nullptr)
 						{
 							component->active = active;
-							component->Load(jsonCmp);
+							component->Load(*jsonCmp);
 						}
 						break;
 					}
@@ -493,6 +493,9 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 	}
 	else
 		ret = false;
+
+	delete jsonHandler;
+	delete jsonFile;
 
 	return ret;
 }

@@ -18,7 +18,7 @@ class C_Particle : public Component
 {
 public:
 	C_Particle(GameObject* parent);
-	~C_Particle();
+	virtual ~C_Particle();
 
 	bool Start() override;
 	bool Update(float dt) override;

@@ -10,6 +10,8 @@
 #include "M_Editor.h"
 #include "M_Window.h"
 
+#include "M_ResourceManager.h"
+
 #include "PanelChooser.h"
 #include "SceneIntro.h"
 
@@ -122,13 +124,6 @@ void C_Image::Draw()
 void C_Image::FreeTextures()
 {
 	if (openGLTexture.GetTextureId() != TEXTUREID_DEFAULT) {
-		GLuint id = openGLTexture.GetTextureId();
-		glDeleteTextures(1, &id);
-
-		if (openGLTexture.data != nullptr)
-		{
-			stbi_image_free(openGLTexture.data);
-			openGLTexture.data = nullptr;
-		}
+		owner->GetEngine()->GetResourceManager()->FreeResource(openGLTexture.GetUID());
 	}
 }

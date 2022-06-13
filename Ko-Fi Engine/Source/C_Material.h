@@ -16,7 +16,7 @@ class C_Material : public Component
 {
 public:
 	C_Material(GameObject* parent);
-	~C_Material();
+	virtual ~C_Material();
 
 	bool Update(float dt) override;
 	bool CleanUp() override;

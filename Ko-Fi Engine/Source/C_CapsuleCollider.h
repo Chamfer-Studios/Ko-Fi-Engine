@@ -10,7 +10,7 @@ class C_CapsuleCollider : public Component
 public:
 	//constructors
 	C_CapsuleCollider(GameObject* parent);
-	~C_CapsuleCollider();
+	virtual ~C_CapsuleCollider();
 
 	//Game Loop
 	bool Start() override;

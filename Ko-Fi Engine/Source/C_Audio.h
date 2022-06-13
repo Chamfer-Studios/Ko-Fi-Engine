@@ -32,7 +32,7 @@ class C_Audio : public Component
 {
 public:
     C_Audio(GameObject* parent) : Component(parent), editorOffset(0.0f), openEditor(false) {}
-    ~C_Audio() {}
+    virtual ~C_Audio() {}
 
     virtual bool Start() { return true; }
     virtual bool Update(float dt) { return true; }

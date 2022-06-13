@@ -13,7 +13,7 @@ class R_Animation : public Resource
 {
 public:
 	R_Animation();
-	~R_Animation();
+	~R_Animation() override;
 
 	inline void SetName(std::string name) { this->name = name; }
 	inline void SetDuration(float duration) { this->duration = duration; }

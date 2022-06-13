@@ -24,7 +24,7 @@ class MyPlane;
 class C_Text : public C_RenderedUI {
 public:
 	C_Text(GameObject* parent);
-	~C_Text();
+	virtual ~C_Text();
 
 	void Save(Json& json) const override;
 	void Load(Json& json) override;

@@ -22,9 +22,10 @@ using Json = nlohmann::json;
 struct ScriptHandler
 {
 	ScriptHandler(GameObject* owner, C_Script* script);
+	~ScriptHandler();
 
 	sol::protected_function_result script; // Check if it can be private
-	Scripting* handler = nullptr;
+	std::unique_ptr<Scripting> handler;
 	std::string path = "";
 	std::vector<InspectorVariable*> inspectorVariables;
 	sol::protected_function lua_start;
@@ -55,7 +56,7 @@ class C_Script : public Component
 {
 public:
 	C_Script(GameObject* gameObject);
-	~C_Script();
+	virtual ~C_Script();
 
 	bool Start() override;
 	bool Update(float dt) override;

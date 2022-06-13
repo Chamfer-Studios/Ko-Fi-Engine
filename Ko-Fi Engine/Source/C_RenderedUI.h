@@ -5,7 +5,7 @@
 class C_RenderedUI : public Component {
 public:
 	C_RenderedUI(GameObject* parent) : Component(parent) {};
-	~C_RenderedUI() {};
+	virtual ~C_RenderedUI() {};
 
 	virtual void Save(Json& json) const {};
 	virtual void Load(Json& json) {};

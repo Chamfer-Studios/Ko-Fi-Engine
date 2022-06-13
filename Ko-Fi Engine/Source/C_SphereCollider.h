@@ -8,7 +8,7 @@ class C_SphereCollider : public Component
 public:
 	//constructors
 	C_SphereCollider(GameObject* parent);
-	~C_SphereCollider();
+	virtual ~C_SphereCollider();
 
 	//Game Loop
 	bool Start() override;

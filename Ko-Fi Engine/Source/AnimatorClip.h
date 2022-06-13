@@ -11,6 +11,8 @@ class AnimatorClip
 public:
 	AnimatorClip();
 	AnimatorClip(const R_Animation* animation, const std::string& name, uint start, uint end, float speed, bool loop);
+	~AnimatorClip();
+	
 
 	inline void SetName(const char* name) { this->name = name; }
 	inline void SetAnimation(const R_Animation* clipAnim) { this->clipAnim = clipAnim; }

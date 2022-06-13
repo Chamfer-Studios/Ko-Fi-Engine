@@ -12,7 +12,7 @@ class C_AudioSwitch : public C_Audio
 {
 public:
     C_AudioSwitch(GameObject* parent);
-    ~C_AudioSwitch();
+    virtual ~C_AudioSwitch();
 
     bool Start() override;
     bool Update(float dt) override;

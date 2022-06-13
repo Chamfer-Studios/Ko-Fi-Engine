@@ -23,7 +23,7 @@ class MyPlane;
 class C_Image : public C_RenderedUI {
 public:
 	C_Image(GameObject* parent);
-	~C_Image();
+	virtual ~C_Image();
 
 	void Save(Json& json) const override;
 	void Load(Json& json) override;

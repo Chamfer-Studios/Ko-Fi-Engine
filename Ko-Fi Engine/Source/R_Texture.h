@@ -12,7 +12,7 @@ class R_Texture : public Resource
 {
 public:
 	R_Texture();
-	~R_Texture();
+	~R_Texture() override;
 
 	bool SaveMeta(Json& json) const override;
 

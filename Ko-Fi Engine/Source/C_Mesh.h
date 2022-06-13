@@ -18,7 +18,7 @@ class C_Mesh : public Component
 {
 public:
 	C_Mesh(GameObject* parent);
-	~C_Mesh();
+	virtual ~C_Mesh();
 
 	// Game Loop
 	bool Start();

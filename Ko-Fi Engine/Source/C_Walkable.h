@@ -8,6 +8,7 @@ class C_Walkable : public Component
 {
 public:
 	C_Walkable(GameObject* parent);
+	virtual ~C_Walkable();
 
 	void Save(Json& json) const override;
 	void Load(Json& json) override;

@@ -13,7 +13,7 @@ class C_Canvas : public C_Transform2D
 {
 public:
 	C_Canvas(GameObject* parent);
-	~C_Canvas();
+	virtual ~C_Canvas();
 
 	void Save(Json& json) const override;
 	void Load(Json& json) override;

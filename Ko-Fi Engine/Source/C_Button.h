@@ -26,7 +26,7 @@ public:
 		PRESSED
 	};
 	C_Button(GameObject* parent);
-	~C_Button();
+	virtual ~C_Button();
 
 	void Save(Json& json) const override;
 	void Load(Json& json) override;

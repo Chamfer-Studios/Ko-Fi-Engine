@@ -27,7 +27,7 @@ class C_Animator : public Component
 {
 public:
 	C_Animator(GameObject* parent);
-	~C_Animator();
+	virtual ~C_Animator();
 
 	bool Start();
 	bool PreUpdate();

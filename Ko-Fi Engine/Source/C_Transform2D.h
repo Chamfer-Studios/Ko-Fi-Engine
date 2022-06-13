@@ -23,7 +23,7 @@ public:
 	};
 public:
 	C_Transform2D(GameObject* parent);
-	~C_Transform2D();
+	virtual ~C_Transform2D();
 
 	void Save(Json& json) const override;
 	void Load(Json& json) override;

@@ -56,14 +56,6 @@ bool C_Script::CleanUp()
 {
 	if (s != nullptr)
 	{
-		s->handler->CleanUp();
-
-		for (auto var : s->inspectorVariables)
-		{
-			RELEASE(var);
-		}
-		s->inspectorVariables.clear();
-		s->inspectorVariables.shrink_to_fit();
 		RELEASE(s);
 	}
 
@@ -305,7 +297,7 @@ bool C_Script::InspectorDraw(PanelChooser* chooser)
 				{
 					if (ImGui::DragInt((*variable)->name.c_str(), &std::get<int>((*variable)->value)))
 					{
-						s->handler->lua[(*variable)->name.c_str()] = std::get<int>((*variable)->value);
+						(*s->handler->lua)[(*variable)->name.c_str()] = std::get<int>((*variable)->value);
 					}
 					break;
 				}
@@ -313,7 +305,7 @@ bool C_Script::InspectorDraw(PanelChooser* chooser)
 				{
 					if (ImGui::DragFloat(label, &std::get<float>((*variable)->value))) // THIS CRASHES ON THE RELEASE
 					{
-						s->handler->lua[(*variable)->name.c_str()] = std::get<float>((*variable)->value);
+						(*s->handler->lua)[(*variable)->name.c_str()] = std::get<float>((*variable)->value);
 					}
 					break;
 				}
@@ -321,7 +313,7 @@ bool C_Script::InspectorDraw(PanelChooser* chooser)
 				{
 					if (ImGui::DragFloat2(label, std::get<float2>((*variable)->value).ptr()))
 					{
-						s->handler->lua[(*variable)->name.c_str()] = std::get<float2>((*variable)->value);
+						(*s->handler->lua)[(*variable)->name.c_str()] = std::get<float2>((*variable)->value);
 					}
 					break;
 				}
@@ -329,7 +321,7 @@ bool C_Script::InspectorDraw(PanelChooser* chooser)
 				{
 					if (ImGui::DragFloat3(label, std::get<float3>((*variable)->value).ptr()))
 					{
-						s->handler->lua[(*variable)->name.c_str()] = std::get<float3>((*variable)->value);
+						(*s->handler->lua)[(*variable)->name.c_str()] = std::get<float3>((*variable)->value);
 					}
 					break;
 				}
@@ -337,7 +329,7 @@ bool C_Script::InspectorDraw(PanelChooser* chooser)
 				{
 					if (ImGui::Checkbox(label, &std::get<bool>((*variable)->value)))
 					{
-						s->handler->lua[(*variable)->name.c_str()] = std::get<bool>((*variable)->value);
+						(*s->handler->lua)[(*variable)->name.c_str()] = std::get<bool>((*variable)->value);
 					}
 					break;
 				}
@@ -345,7 +337,7 @@ bool C_Script::InspectorDraw(PanelChooser* chooser)
 				{
 					if (ImGui::InputText(label, &std::get<std::string>((*variable)->value)))
 					{
-						s->handler->lua[(*variable)->name.c_str()] = std::get<std::string>((*variable)->value);
+						(*s->handler->lua)[(*variable)->name.c_str()] = std::get<std::string>((*variable)->value);
 					}
 					break;
 				}
@@ -369,7 +361,7 @@ bool C_Script::InspectorDraw(PanelChooser* chooser)
 						}
 
 						std::get<std::vector<float3>>((*variable)->value) = waypoints;
-						s->handler->lua[(*variable)->name.c_str()] = waypoints;
+						(*s->handler->lua)[(*variable)->name.c_str()] = waypoints;
 					}
 
 					ImGui::Text("Waypoints: ");
@@ -379,7 +371,7 @@ bool C_Script::InspectorDraw(PanelChooser* chooser)
 						if (ImGui::DragFloat3(_label.c_str(), &(waypoints[i][0]), 0.5f))
 						{
 							std::get<std::vector<float3>>((*variable)->value)[i] = waypoints[i];
-							s->handler->lua[(*variable)->name.c_str()] = waypoints;
+							(*s->handler->lua)[(*variable)->name.c_str()] = waypoints;
 						}
 						ImGui::SameLine();
 						if (ImGui::Button(("Transform " + _label).c_str())) {
@@ -387,7 +379,7 @@ bool C_Script::InspectorDraw(PanelChooser* chooser)
 							if (transform) {
 								waypoints[i] = transform->GetPosition();
 								std::get<std::vector<float3>>((*variable)->value)[i] = waypoints[i];
-								s->handler->lua[(*variable)->name.c_str()] = waypoints;
+								(*s->handler->lua)[(*variable)->name.c_str()] = waypoints;
 							}
 						}
 					}
@@ -405,7 +397,7 @@ bool C_Script::InspectorDraw(PanelChooser* chooser)
 						{
 							GameObject* go = owner->GetEngine()->GetEditor()->GetPanelHierarchy()->GetSelectedGameObject();
 							std::get<GameObject*>((*variable)->value) = go;
-							s->handler->lua[(*variable)->name.c_str()] = go;
+							(*s->handler->lua)[(*variable)->name.c_str()] = go;
 						}
 						ImGui::EndDragDropTarget();
 					}
@@ -442,22 +434,22 @@ void C_Script::ReloadScript(ScriptHandler* handler)
 	//script = handler->lua.load_file(path);
 	//script();
 
-	handler->script = handler->handler->lua.script_file(handler->path);
+	handler->script = handler->handler->lua->script_file(handler->path);
 	if (handler->script.valid()) {
 		// Call succeeded
-		s->lua_update = sol::protected_function(s->handler->lua["Update"]);
+		s->lua_update = sol::protected_function((*s->handler->lua)["Update"]);
 		if (s->lua_update.valid()) s->lua_update_is_valid = true;
 
-		s->lua_update_UI = sol::protected_function(s->handler->lua["UpdateUI"]);
+		s->lua_update_UI = sol::protected_function((*s->handler->lua)["UpdateUI"]);
 		if (s->lua_update_UI.valid()) s->lua_update_UI_is_valid = true;
 
-		s->lua_event_handler = sol::protected_function(s->handler->lua["EventHandler"]);
+		s->lua_event_handler = sol::protected_function((*s->handler->lua)["EventHandler"]);
 		if (s->lua_event_handler.valid()) s->lua_event_handler_is_valid = true;
 
-		s->lua_start = sol::protected_function(s->handler->lua["Start"]);
+		s->lua_start = sol::protected_function((*s->handler->lua)["Start"]);
 		if (s->lua_start.valid()) s->lua_start_is_valid = true;
 
-		s->lua_post_update = sol::protected_function(s->handler->lua["PostUpdate"]);
+		s->lua_post_update = sol::protected_function((*s->handler->lua)["PostUpdate"]);
 		if (s->lua_post_update.valid()) s->lua_post_update_is_valid = true;
 	}
 	else {
@@ -706,10 +698,26 @@ void C_Script::LoadInspectorVariables(Json& json)
 
 ScriptHandler::ScriptHandler(GameObject* owner, C_Script* script)
 {
-	handler = new Scripting(script);
+	handler = std::make_unique<Scripting>(script);
 	handler->gameObject = owner;
 	handler->componentTransform = owner->GetTransform();
 	handler->SetUpVariableTypes();
+}
+
+ScriptHandler::~ScriptHandler()
+{
+	for (auto var : inspectorVariables)
+	{
+		RELEASE(var);
+	}
+	inspectorVariables.clear();
+	inspectorVariables.shrink_to_fit();
+
+	handler->lua->collect_garbage();
+	handler->lua->collect_gc();
+
+	handler->lua.release();
+	handler.release();
 }
 
 void C_Script::RemoveOldVariables()
@@ -717,7 +725,7 @@ void C_Script::RemoveOldVariables()
 	for (std::vector<InspectorVariable*>::iterator var = s->inspectorVariables.begin(); var != s->inspectorVariables.end();)
 	{
 		std::string name = (*var)->name;
-		auto v = s->handler->lua[name.c_str()]; // Old Inspector Variables should not be loaded if they are not in lua
+		auto v = (*s->handler->lua)[name.c_str()]; // Old Inspector Variables should not be loaded if they are not in lua
 		if (!v.valid() && (*var)->type != INSPECTOR_GAMEOBJECT)
 		{
 			var = s->inspectorVariables.erase(var);

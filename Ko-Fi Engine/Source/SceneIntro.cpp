@@ -31,12 +31,9 @@
 
 #include "SDL_assert.h"
 
-SceneIntro::SceneIntro(KoFiEngine *engine) : Scene()
+SceneIntro::SceneIntro(KoFiEngine *engine) : Scene(engine)
 {
 	name = "SceneIntro";
-
-	// Needed modules
-	this->engine = engine;
 
 	jsonHandler.LoadJson(j, "EngineConfig/window_test.json");
 
@@ -124,7 +121,7 @@ bool SceneIntro::PreUpdate(float dt)
 
 			C_Script* script = (C_Script*)component;
 
-			auto start = sol::protected_function(script->s->handler->lua["Start"]);
+			auto start = sol::protected_function((*script->s->handler->lua)["Start"]);
 			if (engine->GetSceneManager()->GetGameState() == GameState::PLAYING && script->s->isScriptLoaded)
 			{
 				if (start.valid()) {
@@ -290,6 +287,8 @@ bool SceneIntro::PostUpdate(float dt)
 // Load assets
 bool SceneIntro::CleanUp()
 {
+	Scene::CleanUp();
+
 	CONSOLE_LOG("Unloading Intro scene");
 	appLog->AddLog("Unloading Intro scene\n");
 

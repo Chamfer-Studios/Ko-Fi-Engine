@@ -17,6 +17,36 @@
 #include "C_RigidBody.h"
 #include "M_Navigation.h"
 
+bool Scene::CleanUp()
+{
+	DeleteCurrentScene();
+	gameObjectListToDelete.clear();
+	gameObjectListToDelete.shrink_to_fit();
+	for (auto i : gameObjectListToCreate)
+	{
+		i.second.clear();
+		i.second.shrink_to_fit();
+	}
+	gameObjectListToCreate.clear();
+	//name.clear();
+	//name.shrink_to_fit();
+	//RELEASE(rootGo);
+	for (auto i : sceneModels)
+	{
+		i.second.second.clear();
+		i.second.second.shrink_to_fit();
+	}
+	sceneModels.clear();
+	tags.clear();
+	tags.shrink_to_fit();
+	lights.clear();
+	lights.shrink_to_fit();
+	shadowCaster = nullptr;
+	//currentCamera = nullptr;
+	//engine = nullptr;
+	return true;
+}
+
 GameObject* Scene::GetGameObject(int uid)
 {
 	for (GameObject* go : gameObjectList)
