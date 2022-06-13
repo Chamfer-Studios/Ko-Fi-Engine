@@ -68,6 +68,13 @@ MyPlane::MyPlane(GameObject* _owner) {
 
 MyPlane::~MyPlane()
 {
+	indices.clear();
+	indices.shrink_to_fit();
+	texCoords.clear();
+	texCoords.shrink_to_fit();
+	vertices.clear();
+	vertices.shrink_to_fit();
+	owner = nullptr;
 }
 
 void MyPlane::DrawPlane2D(R_Texture* texture, SDL_Color color)

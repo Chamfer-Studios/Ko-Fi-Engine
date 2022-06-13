@@ -56,6 +56,9 @@ bool C_SphereCollider::CleanUp()
 	if (sphereShape)
 		owner->GetEngine()->GetPhysics()->GetPhysicsCommon().destroySphereShape(sphereShape);
 
+	filter.clear();
+	filter.shrink_to_fit();
+
 	return true;
 }
 

@@ -52,14 +52,16 @@ C_AudioSwitch::~C_AudioSwitch()
 {
     for (R_Track* index : tracks)
     {
-        if (index->IsTrackLoaded())
-            StopAudio(index->source);
-
+        StopAudio(index->source);
         RELEASE(index);
     }
 
     tracks.clear();
     tracks.shrink_to_fit();
+
+    oldTrack = nullptr;
+    newTrack = nullptr;
+    playingTrack = nullptr;
 }
 
 bool C_AudioSwitch::Start()
