@@ -33,9 +33,7 @@ C_Button::C_Button(GameObject* parent) : C_RenderedUI(parent)
 
 C_Button::~C_Button()
 {
-	FreeTextures(BUTTON_STATE::IDLE);
-	FreeTextures(BUTTON_STATE::HOVER);
-	FreeTextures(BUTTON_STATE::PRESSED);
+	CleanUp();
 }
 
 bool C_Button::CleanUp()

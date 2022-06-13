@@ -344,7 +344,7 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 
 	if (ret && !jsonFile.is_null())
 	{
-		scene->DeleteCurrentScene();
+		scene->CleanUp();
 
 		jsonScene = jsonFile.at(name);
 		scene->name = jsonScene.at("name");

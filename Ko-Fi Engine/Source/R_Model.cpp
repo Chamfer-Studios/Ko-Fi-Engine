@@ -10,6 +10,10 @@ animationName("")
 
 R_Model::~R_Model()
 {
+	for (auto node : nodes)
+	{
+		node.~ModelNode();
+	}
 	nodes.clear();
 	nodes.shrink_to_fit();
 
@@ -128,4 +132,8 @@ scale(scale)
 
 ModelNode::~ModelNode()
 {
+	name.clear();
+	name.shrink_to_fit();
+	texturePath.clear();
+	texturePath.shrink_to_fit();
 }

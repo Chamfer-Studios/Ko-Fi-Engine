@@ -1320,9 +1320,6 @@
     <ClInclude Include="Source\I_Particles.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
-    <ClInclude Include="Source\R_Particle.h">
-      <Filter>External Libraries</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Quadtree.h">
       <Filter>External Libraries</Filter>
     </ClInclude>
@@ -1361,6 +1358,9 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>External Libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\R_Particle.h">
+      <Filter>Source\Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

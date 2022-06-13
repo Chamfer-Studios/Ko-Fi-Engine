@@ -36,12 +36,10 @@ bool Resource::CleanUp()
 	assetFile.clear();
 	libraryPath.clear();
 	libraryFile.clear();
-
 	assetPath.shrink_to_fit();
 	assetFile.shrink_to_fit();
 	libraryPath.shrink_to_fit();
 	libraryFile.shrink_to_fit();
-
 	return true;
 }
 

@@ -27,6 +27,10 @@ C_Text::C_Text(GameObject* parent) : C_RenderedUI(parent)
 C_Text::~C_Text()
 {
 	FreeTextures();
+	textValue.clear();
+	textValue.shrink_to_fit();
+	fontPath.clear();
+	fontPath.shrink_to_fit();
 }
 
 bool C_Text::CleanUp()
