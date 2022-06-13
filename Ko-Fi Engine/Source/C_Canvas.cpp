@@ -24,7 +24,6 @@ C_Canvas::~C_Canvas()
 
 bool C_Canvas::CleanUp()
 {
-	engine = nullptr;
 	return true;
 }
 
