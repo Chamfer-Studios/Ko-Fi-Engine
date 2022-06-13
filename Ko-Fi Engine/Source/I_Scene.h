@@ -11,7 +11,7 @@ class aiScene;
 class aiNode;
 class aiMesh;
 class aiMaterial;
-class Scene;
+class SceneIntro;
 class GameObject;
 class R_Model;
 class ModelNode;
@@ -27,12 +27,12 @@ public:
 	bool SaveModel(const R_Model* model, const char* path);
 	bool LoadModel(const char* path, R_Model* model);
 
-	bool SaveScene(Scene* scene, const char* name = nullptr);
-	bool LoadScene(Scene* scene, const char* name);
+	bool SaveScene(SceneIntro* scene, const char* name = nullptr);
+	bool LoadScene(SceneIntro* scene, const char* name);
 
 	bool Import(const char* path, bool isPrefab = false);
-	bool Save(Scene* scene, const char* customName = nullptr);
-	bool Load(Scene* scene, const char* name);
+	bool Save(SceneIntro* scene, const char* customName = nullptr);
+	bool Load(SceneIntro* scene, const char* name);
 
 private:
 	void ImportNode(const aiScene* assimpScene, const aiNode* assimpNode, R_Model* model, const ModelNode& parent, bool isPrefab = false);

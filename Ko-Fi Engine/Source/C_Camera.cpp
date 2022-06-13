@@ -26,6 +26,8 @@
 #include "MathGeoLib/Geometry/Plane.h"
 #include "MathGeoLib/Math/float3x3.h"
 
+#include "SceneIntro.h"
+
 #include "optick.h"
 
 C_Camera::C_Camera(GameObject* parent) : Component(parent)

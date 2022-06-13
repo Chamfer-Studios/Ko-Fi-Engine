@@ -25,6 +25,8 @@
 #include <queue>
 #include <tuple>
 
+#include "SceneIntro.h"
+
 #include "optick.h"
 
 M_Navigation::M_Navigation(KoFiEngine* engine) : Module()

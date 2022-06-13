@@ -8,6 +8,8 @@
 #include "M_Audio.h"
 #include "EngineConfig.h"
 #include "M_Editor.h"
+#include "SceneIntro.h"
+
 #include <imgui.h>
 #include "glew.h"
 

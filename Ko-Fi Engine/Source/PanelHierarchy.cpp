@@ -8,6 +8,9 @@
 
 #include "GameObject.h"
 #include "PanelChooser.h"
+
+#include "SceneIntro.h"
+
 #include "Log.h"
 
 // Helper to display a little (?) mark which shows a tooltip when hovered.

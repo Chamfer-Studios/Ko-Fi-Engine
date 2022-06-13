@@ -45,10 +45,9 @@ M_SceneManager::M_SceneManager(KoFiEngine* engine)
 	name = "SceneManager";
 	this->engine = engine;
 
-	sceneIntro = new SceneIntro(engine);
-	currentScene = sceneIntro;
+	currentScene = new SceneIntro(engine);
 
-	AddScene(sceneIntro);
+	AddScene(currentScene);
 
 	gameTime = 0.0f;
 }
@@ -64,7 +63,7 @@ bool M_SceneManager::Awake(Json configModule)
 
 	ret = LoadConfiguration(configModule);
 
-	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
+	for (auto scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
 		if (*scene != nullptr) {
 			ret = (*scene)->Awake();
@@ -79,7 +78,7 @@ bool M_SceneManager::Start()
 {
 	bool ret = true;
 
-	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
+	for (auto scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
 		if (*scene != nullptr) {
 			ret = (*scene)->Start();
@@ -102,7 +101,7 @@ bool M_SceneManager::PreUpdate(float dt)
 	PrepareUpdate();
 	UpdateGuizmo();
 
-	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
+	for (auto scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
 		if (*scene != nullptr) {
 			ret = (*scene)->PreUpdate(gameDt);
@@ -118,7 +117,7 @@ bool M_SceneManager::Update(float dt)
 
 	OPTICK_EVENT();
 
-	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
+	for (auto scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
 		if (*scene != nullptr) {
 			ret = (*scene)->Update(dt);
@@ -134,7 +133,7 @@ bool M_SceneManager::PostUpdate(float dt)
 
 	OPTICK_EVENT();
 
-	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
+	for (auto scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
 		if (*scene != nullptr) {
 			ret = (*scene)->PostUpdate(dt);
@@ -152,7 +151,7 @@ bool M_SceneManager::CleanUp()
 	bool ret = true;
 	ImGuizmo::Enable(false);
 
-	for (std::vector<Scene*>::iterator scene = scenes.begin(); scene != scenes.end(); scene++)
+	for (auto scene = scenes.begin(); scene != scenes.end(); scene++)
 	{
 		RELEASE((*scene));
 	}
@@ -218,12 +217,12 @@ bool M_SceneManager::FinishUpdate()
 	return ret;
 }
 
-void M_SceneManager::AddScene(Scene* scene)
+void M_SceneManager::AddScene(SceneIntro* scene)
 {
 	scenes.push_back(scene);
 }
 
-Scene* M_SceneManager::GetCurrentScene()
+SceneIntro* M_SceneManager::GetCurrentScene()
 {
 	return currentScene;
 }

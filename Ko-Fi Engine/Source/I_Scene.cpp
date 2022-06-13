@@ -249,7 +249,7 @@ bool I_Scene::LoadModel(const char* path, R_Model* model)
 	return ret;
 }
 
-bool I_Scene::SaveScene(Scene* scene, const char* customName)
+bool I_Scene::SaveScene(SceneIntro* scene, const char* customName)
 {
 	bool ret = false;
 
@@ -331,18 +331,18 @@ bool I_Scene::SaveScene(Scene* scene, const char* customName)
 	return ret;
 }
 
-bool I_Scene::LoadScene(Scene* scene, const char* name)
+bool I_Scene::LoadScene(SceneIntro* scene, const char* _name)
 {
 	bool ret = false;
 
-	JsonHandler* jsonHandler = new JsonHandler();
-	Json* jsonFile = new Json();
-	Json* jsonScene = nullptr;
+	JsonHandler jsonHandler;
+	Json jsonFile;
+	Json jsonScene;
 
-	std::string path = ASSETS_SCENES_DIR + std::string(name) + SCENE_EXTENSION;
-	ret = jsonHandler->LoadJson(*jsonFile, path.c_str());
+	std::string path = ASSETS_SCENES_DIR + std::string(_name) + SCENE_EXTENSION;
+	ret = jsonHandler.LoadJson(jsonFile, path.c_str());
 
-	if (ret && !jsonFile->is_null())
+	if (ret && !jsonFile.is_null())
 	{
 		((SceneIntro*)scene)->CleanUp();
 		//SceneIntro* si = (SceneIntro*)scene;
@@ -355,20 +355,20 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 		//scene->Awake();
 		//scene->Start();
 
-		jsonScene = &jsonFile->at(name);
-		scene->name = jsonScene->at("name");
-		if (jsonScene->contains("draw_skybox"))
-			scene->drawSkybox = jsonScene->at("draw_skybox");
-		scene->rootGo->SetName(name);
+		jsonScene = jsonFile.at(_name);
+		scene->name = jsonScene.at("name");
+		if (jsonScene.contains("draw_skybox"))
+			scene->drawSkybox = jsonScene.at("draw_skybox");
+		scene->rootGo->SetName(_name);
 
-		engine->GetWindow()->SetTitle("Ko-Fi Engine - " + std::string(name));
+		engine->GetWindow()->SetTitle("Ko-Fi Engine - " + std::string(_name));
 
-		scene->active = jsonScene->at("active");
+		scene->active = jsonScene.at("active");
 
 		engine->GetNavigation()->CleanUp();
 		// Create Root
-		if (jsonScene->find("navmesh") != jsonScene->end())
-			engine->GetNavigation()->Load(jsonScene->at("navmesh"));
+		if (jsonScene.find("navmesh") != jsonScene.end())
+			engine->GetNavigation()->Load(jsonScene.at("navmesh"));
 
 		//Json jsonModels = jsonScene.at("models_in_scene_list");
 		//for (const auto& modelIt : jsonModels.items())
@@ -387,35 +387,35 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 		//	}
 		//}
 
-		Json* jsonGameObjects = &jsonScene->at("game_objects_list");
+		Json jsonGameObjects = jsonScene.at("game_objects_list");
 		float startTime = (float)engine->GetEngineTime();
 
-		for (const auto& goIt : jsonGameObjects->items())
+		for (const auto& goIt : jsonGameObjects.items())
 		{
-			Json* jsonGo = &goIt.value();
-			uint uid = jsonGo->at("UID");
+			Json jsonGo = goIt.value();
+			uint uid = jsonGo.at("UID");
 
 			bool is3D = true;
-			if (jsonGo->find("is3D") != jsonGo->end())
-				is3D = jsonGo->at("is3D");
+			if (jsonGo.find("is3D") != jsonGo.end())
+				is3D = jsonGo.at("is3D");
 
 			TAG tag = TAG::TAG_UNTAGGED;
-			if (jsonGo->contains("tag"))
-				tag = jsonGo->at("tag");
+			if (jsonGo.contains("tag"))
+				tag = jsonGo.at("tag");
 
-			std::string name = jsonGo->at("name");
+			std::string name = jsonGo.at("name");
 			GameObject* go = new GameObject(uid, engine, name.c_str(), is3D);
 
 			bool newIsPrefab = false;
-			if (jsonGo->contains("isPrefab"))
-				go->isPrefab = jsonGo->at("isPrefab");
+			if (jsonGo.contains("isPrefab"))
+				go->isPrefab = jsonGo.at("isPrefab");
 
-			go->active = jsonGo->at("active");
+			go->active = jsonGo.at("active");
 			go->tag = tag;
-			uint parentUid = jsonGo->at("parent_UID");
+			uint parentUid = jsonGo.at("parent_UID");
 			go->SetParentUID(parentUid);
 
-			Json* jsonCmps = &jsonGo->at("components");
+			Json* jsonCmps = &jsonGo.at("components");
 
 			for (const auto& cmpIt : jsonCmps->items())
 			{
@@ -503,9 +503,6 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 	else
 		ret = false;
 
-	delete jsonHandler;
-	delete jsonFile;
-
 	return ret;
 }
 
@@ -537,7 +534,7 @@ bool I_Scene::Import(const char* path, bool isPrefab)
 	return true;
 }
 
-bool I_Scene::Save(Scene* scene, const char* customName)
+bool I_Scene::Save(SceneIntro* scene, const char* customName)
 {
 	bool ret = false;
 
@@ -745,7 +742,7 @@ bool I_Scene::Save(Scene* scene, const char* customName)
 	return ret;
 }
 
-bool I_Scene::Load(Scene* scene, const char* name)
+bool I_Scene::Load(SceneIntro* scene, const char* name)
 {
 	bool ret = false;
 

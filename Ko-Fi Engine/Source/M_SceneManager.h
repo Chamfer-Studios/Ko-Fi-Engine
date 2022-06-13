@@ -74,8 +74,8 @@ public:
 	bool PrepareUpdate();
 	bool FinishUpdate();
 
-	void AddScene(Scene* scene);
-	Scene* GetCurrentScene();
+	void AddScene(SceneIntro* scene);
+	SceneIntro* GetCurrentScene();
 
 	GameState GetGameState();
 	inline float const GetGameTime() { return time; }
@@ -109,15 +109,14 @@ public:
 
 public:
 	bool active;
-	Scene* currentScene = nullptr;
-	SceneIntro* sceneIntro = nullptr;
+	SceneIntro* currentScene = nullptr;
 
 private:
 	// Pointer to the whole engine
 	KoFiEngine* engine = nullptr;
 
 	// Scenes
-	std::vector<Scene*> scenes;
+	std::vector<SceneIntro*> scenes;
 	std::string defaultScene = "";
 
 	// Guizmo

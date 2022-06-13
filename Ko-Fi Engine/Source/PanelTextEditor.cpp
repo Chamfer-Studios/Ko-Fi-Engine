@@ -10,6 +10,8 @@
 #include "C_Material.h"
 
 #include "R_Material.h"
+
+#include "SceneIntro.h"
 #include "PanelChooser.h"
 #include "glew.h"
 #include <gl/GL.h>

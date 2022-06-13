@@ -13,6 +13,8 @@
 #include "C_SphereCollider.h"
 #include "C_CapsuleCollider.h"
 
+#include "SceneIntro.h"
+
 
 #include "PanelChooser.h"
 

@@ -12,6 +12,8 @@
 #include "C_Transform.h"
 #include "C_Animator.h"
 #include "C_LightSource.h"
+#include "SceneIntro.h"
+
 
 #include <queue>
 

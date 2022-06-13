@@ -32,6 +32,8 @@
 #include <imgui.h>
 #include <imgui_stdlib.h>
 
+#include "SceneIntro.h"
+
 MainBar::MainBar(M_Editor* editor)
 {
 

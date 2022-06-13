@@ -38,6 +38,9 @@
 #include "C_RigidBody.h"
 
 #include "R_Material.h"
+
+#include "SceneIntro.h"
+
 #include "PieShape.h"
 #include "AnimatorClip.h"
 #include "FSDefs.h"
