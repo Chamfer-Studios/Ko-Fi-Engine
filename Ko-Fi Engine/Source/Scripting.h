@@ -461,6 +461,7 @@ public:
 		(*lua).set_function("RNG", &Scripting::RNG, this);
 		(*lua).set_function("SaveGameState", &Scripting::SaveGameState, this);
 		(*lua).set_function("LoadGameState", &Scripting::LoadGameState, this);
+		(*lua).set_function("LoadGameStateDefault", &Scripting::LoadGameStateDefault, this);
 		(*lua).set_function("SetGameJsonInt", &Scripting::SetGameJsonInt, this);
 		(*lua).set_function("GetGameJsonInt", &Scripting::GetGameJsonInt, this);
 		(*lua).set_function("SetGameJsonBool", &Scripting::SetGameJsonBool, this);
@@ -469,13 +470,16 @@ public:
 		(*lua).set_function("GetGameJsonFloat3", &Scripting::GetGameJsonFloat3, this);
 		(*lua).set_function("ClearGameJsonArray", &Scripting::ClearGameJsonArray, this);
 		(*lua).set_function("GetGameJsonArraySize", &Scripting::GetGameJsonArraySize, this);
+		(*lua).set_function("GetGameJsonDefaultInt", &Scripting::GetGameJsonDefaultInt, this);
+		(*lua).set_function("GetGameJsonDefaultBool", &Scripting::GetGameJsonDefaultBool, this);
+		(*lua).set_function("SetGameJsonDefaultFloat3", &Scripting::GetGameJsonDefaultFloat3, this);
 		(*lua).set_function("ChangeMouseTexture", &Scripting::LuaChangeMouseTexture, this);
 		(*lua).set_function("AddGameJsonElement", &Scripting::AddGameJsonElement, this);
 		(*lua).set_function("GetGameJsonElement", &Scripting::GetGameJsonElement, this);
 		(*lua).set_function("ToggleRuntime", &Scripting::LuaToggleRuntime, this);
 		(*lua).set_function("SetRenderOutline", &Scripting::LuaSetRenderOutline, this);
 		(*lua).set_function("SetOutlineThickness", &Scripting::LuaSetOutlineThickness, this);
-		(* lua).set_function("SetOutlineColor", &Scripting::LuaSetOutlineColor, this);
+		(*lua).set_function("SetOutlineColor", &Scripting::LuaSetOutlineColor, this);
 	}
 
 	bool CleanUp()
@@ -1071,6 +1075,7 @@ public:
 	int GetDialogueTargetID(const char* key, int id);
 
 	bool LoadGameState();
+	bool LoadGameStateDefault();
 	bool SaveGameState();
 
 	void ClearGameJsonArray(const char* arrayKey)
@@ -1125,6 +1130,23 @@ public:
 		return ret;
 	}
 
+	int GetGameJsonDefaultInt(const char* key)
+	{
+		return gameJsonDefault.at(key);
+	}
+
+	bool GetGameJsonDefaultBool(const char* key)
+	{
+		return gameJsonDefault.at(key);
+	}
+
+	float3 GetGameJsonDefaultFloat3(const char* key)
+	{
+		std::vector<float> values = gameJsonDefault.at(key).get<std::vector<float>>();
+		float3 ret = float3(values[0], values[1], values[2]);
+		return ret;
+	}
+
 	std::vector<GameObject*> CustomRayCastQueryList(float3 startPoint, float3 endPoint, std::vector<TAG> tagList) {
 		return gameObject->GetEngine()->GetPhysics()->CustomRayCastQueryList(startPoint, endPoint, tagList);
 	}
@@ -1162,6 +1184,7 @@ public:
 	C_Script* script = nullptr;
 
 	Json gameJson;
+	Json gameJsonDefault;
 
 	std::map<std::string, Json> files;
 };

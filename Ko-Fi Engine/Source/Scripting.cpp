@@ -107,6 +107,23 @@ bool Scripting::LoadGameState()
 	return ret;
 }
 
+bool Scripting::LoadGameStateDefault()
+{
+	JsonHandler jsonHandler;
+
+	bool ret = jsonHandler.LoadJson(gameJsonDefault, "gamestate_default.json");
+
+	if (!ret)
+	{
+		KOFI_ERROR("Fatal error on LoadJSON(),scripting.h FILE DOES NOT EXIST");
+		return ret;
+	}
+
+	CONSOLE_LOG("gamestate_default.json loaded");
+
+	return ret;
+}
+
 bool Scripting::SaveGameState()
 {
 	JsonHandler jsonHandler;
