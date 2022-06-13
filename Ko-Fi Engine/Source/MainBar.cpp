@@ -86,7 +86,6 @@ bool MainBar::Update()
 			{
 				editor->engine->GetRenderer()->ResetFrustumCulling();
 				editor->engine->GetSceneManager()->GetCurrentScene()->DeleteCurrentScene();
-
 			}
 			if (ImGui::MenuItem("Quit"))
 			{
