@@ -177,7 +177,7 @@ unlocked = false;
 ----------------------- Methods -------------------------
 
 function Start()
-
+SetRenderOutline(true)
     -- Components
     componentRigidBody = gameObject:GetRigidBody()
     componentBoxCollider = gameObject:GetBoxCollider()

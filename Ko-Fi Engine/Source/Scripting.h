@@ -470,6 +470,9 @@ public:
 		lua.set_function("AddGameJsonElement", &Scripting::AddGameJsonElement, this);
 		lua.set_function("GetGameJsonElement", &Scripting::GetGameJsonElement, this);
 		lua.set_function("ToggleRuntime", &Scripting::LuaToggleRuntime, this);
+		lua.set_function("SetRenderOutline", &Scripting::LuaSetRenderOutline, this);
+		lua.set_function("SetOutlineThickness", &Scripting::LuaSetOutlineThickness, this);
+		lua.set_function("SetOutlineColor", &Scripting::LuaSetOutlineColor, this);
 	}
 
 	bool CleanUp()
@@ -1125,6 +1128,27 @@ public:
 	void LuaToggleRuntime()
 	{
 		gameObject->GetEngine()->GetSceneManager()->ToggleRuntime();
+	}
+
+	void LuaSetRenderOutline(const bool& setTo)
+	{
+		C_Mesh* cMesh = gameObject->GetComponent<C_Mesh>();
+		if (cMesh && cMesh->GetMesh())
+			cMesh->GetMesh()->SetRenderOutline(setTo);
+	}
+
+	void LuaSetOutlineThickness(const float& newThickness)
+	{
+		C_Mesh* cMesh = gameObject->GetComponent<C_Mesh>();
+		if (cMesh && cMesh->GetMesh())
+			cMesh->GetMesh()->SetOutlineThickness(newThickness);
+	}
+
+	void LuaSetOutlineColor(const float4& newColor)
+	{
+		C_Mesh* cMesh = gameObject->GetComponent<C_Mesh>();
+		if (cMesh && cMesh->GetMesh())
+			cMesh->GetMesh()->SetOutlineColor(newColor);
 	}
 
 public:

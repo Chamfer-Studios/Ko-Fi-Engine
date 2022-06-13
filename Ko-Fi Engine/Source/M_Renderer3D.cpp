@@ -637,7 +637,7 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 
 				glClear(GL_STENCIL_BUFFER_BIT);
 
-				if (mesh->renderOutline && std::string(go->GetName()) == std::string("Zhib"))
+				if (mesh->GetRenderOutline())
 				{
 					glStencilFunc(GL_ALWAYS, 1, 0xFF);
 					glStencilMask(0xFF);
@@ -736,7 +736,7 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 
 				glUseProgram(0);
 
-				if (mesh->renderOutline && std::string(go->GetName()) == std::string("Zhib"))
+				if (mesh->GetRenderOutline())
 					RenderOutline(mesh, camera, go);
 
 				glActiveTexture(GL_TEXTURE1);
@@ -1556,9 +1556,9 @@ void M_Renderer3D::RenderOutline(R_Mesh* rMesh, C_Camera* camera, GameObject* go
 
 			// Shader outline
 			GLuint uinformLoc = glGetUniformLocation(shaderProgram, "outlineThickness");
-			glUniform1f(uinformLoc, rMesh->outlineThickness);
+			glUniform1f(uinformLoc, rMesh->GetOutlineThickness());
 			GLint color = glGetUniformLocation(shaderProgram, "outlineColor");
-			glUniform4f(color, rMesh->outlineColor.x, rMesh->outlineColor.y, rMesh->outlineColor.z, rMesh->outlineColor.w);
+			glUniform4f(color, rMesh->GetOutlineColor().x, rMesh->GetOutlineColor().y, rMesh->GetOutlineColor().z, rMesh->GetOutlineColor().w);
 
 			// Animations
 			GLuint isAnimated = glGetUniformLocation(shaderProgram, "activeAnimation");

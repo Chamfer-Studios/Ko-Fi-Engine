@@ -28,17 +28,17 @@ void main()
         {
             if(boneIds[i] >= MAX_BONES)
             {
-                totalPosition = vec4(position + normals * 50.0f, 1.0f);
+                totalPosition = vec4(position + normals * outlineThickness, 1.0f);
                 break;
             }
 
-            localPosition = finalBonesMatrices[int(boneIds[i])] * vec4(position + normals * 50.0f, 1.0f);
+            localPosition = finalBonesMatrices[int(boneIds[i])] * vec4(position + normals * outlineThickness, 1.0f);
             totalPosition += localPosition * weights[i];
         }
     }
 
     if(isAnimated == false)
-        totalPosition = vec4(position + normals * 50.0f, 1.0f);
+        totalPosition = vec4(position + normals * outlineThickness, 1.0f);
 
     mat4 viewModel = view * model_matrix;
     gl_Position = projection * viewModel * totalPosition;
@@ -52,5 +52,5 @@ out vec4 color;
 
 void main()
 {
-    color = vec4(0.43f,0.89f,1.f,0.8f);
+    color = outlineColor;
 }

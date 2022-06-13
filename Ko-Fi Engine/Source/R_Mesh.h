@@ -127,6 +127,15 @@ public:
 
 	//float4x4 GetMatrixFromQuat(Quat quat);
 
+	inline void SetRenderOutline(const bool& setTo) { renderOutline = setTo; };
+	inline bool GetRenderOutline() { return renderOutline; };
+
+	inline void SetOutlineThickness(const float& newThickness) { outlineThickness = newThickness; };
+	inline float GetOutlineThickness() { return outlineThickness; };
+
+	inline void SetOutlineColor(const float4& newColor) { outlineColor = newColor; };
+	inline float4 GetOutlineColor() { return outlineColor; };
+
 	// Size in Bytes
 	unsigned indicesSizeBytes = 0;
 	unsigned verticesSizeBytes = 0;
@@ -162,10 +171,6 @@ public:
 
 	Shape meshType;
 
-	bool renderOutline = true;
-	float outlineThickness = 1.0f;
-	float4 outlineColor = float4(0.98f,0.95f,0.74f,1.f);
-
 private:
 	// Debug functions for drawing
 	void DrawVertexNormals() const;
@@ -179,6 +184,10 @@ private:
 	bool drawFaceNormals = false;
 
 	bool isAnimated = false;
+
+	bool renderOutline = false;
+	float outlineThickness = 50.0f;
+	float4 outlineColor = float4(0.43f, 0.89f, 1.f, 0.8f);
 
 	// Bone transforms
 	//const GameObject* rootNode = nullptr;
