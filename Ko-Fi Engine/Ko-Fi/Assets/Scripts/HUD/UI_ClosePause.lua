@@ -1,19 +1,14 @@
-name = "Pause Menu"
-
-local nameIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_STRING
-nameIV = InspectorVariable.new("name", nameIVT, name)
-NewVariable(nameIV)
-
 function Start()
-    child = Find(name)
+    pause = Find("Pause Menu")
+    settings = Find("Settings Menu")
 end
 
 -- Called each loop iteration
 function UpdateUI(dt)
     if (gameObject.active == true) then
-        if (gameObject:GetButton():IsPressed()) then
+        if (gameObject:GetButton():IsPressed() and settings.active == false) then
             ToggleRuntime()
-            child:Active(false)
+            pause:Active(false)
         end
     end
 end

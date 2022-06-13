@@ -2,10 +2,10 @@
     "active": true,
     "children": [
         {
-            "active": false,
+            "active": true,
             "children": [
                 {
-                    "active": false,
+                    "active": true,
                     "children": [],
                     "components": [
                         {
@@ -46,7 +46,7 @@
                     "tag": 0
                 },
                 {
-                    "active": false,
+                    "active": true,
                     "children": [],
                     "components": [
                         {
@@ -87,7 +87,7 @@
                     "tag": 0
                 },
                 {
-                    "active": false,
+                    "active": true,
                     "children": [],
                     "components": [
                         {
@@ -128,7 +128,7 @@
                     "tag": 0
                 },
                 {
-                    "active": false,
+                    "active": true,
                     "children": [],
                     "components": [
                         {
@@ -169,7 +169,7 @@
                     "tag": 0
                 },
                 {
-                    "active": false,
+                    "active": true,
                     "children": [],
                     "components": [
                         {
@@ -210,7 +210,7 @@
                     "tag": 0
                 },
                 {
-                    "active": false,
+                    "active": true,
                     "children": [],
                     "components": [
                         {
@@ -247,9 +247,9 @@
                                 44,
                                 255
                             ],
-                            "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
                             "type": 16,
-                            "value": "Pause"
+                            "value": "PAUSE"
                         }
                     ],
                     "is3D": false,
@@ -258,10 +258,10 @@
                     "tag": 0
                 },
                 {
-                    "active": false,
+                    "active": true,
                     "children": [
                         {
-                            "active": false,
+                            "active": true,
                             "children": [],
                             "components": [
                                 {
@@ -352,7 +352,7 @@
                                 {
                                     "name": "name",
                                     "type": "string",
-                                    "value": "SceneLoadingMainMenu"
+                                    "value": "SceneLoadingMaInMenu"
                                 }
                             ],
                             "type": 5
@@ -364,10 +364,10 @@
                     "tag": 0
                 },
                 {
-                    "active": false,
+                    "active": true,
                     "children": [
                         {
-                            "active": false,
+                            "active": true,
                             "children": [],
                             "components": [
                                 {
@@ -470,10 +470,10 @@
                     "tag": 0
                 },
                 {
-                    "active": false,
+                    "active": true,
                     "children": [
                         {
-                            "active": false,
+                            "active": true,
                             "children": [],
                             "components": [
                                 {
@@ -569,10 +569,10 @@
                     "tag": 0
                 },
                 {
-                    "active": false,
+                    "active": true,
                     "children": [
                         {
-                            "active": false,
+                            "active": true,
                             "children": [],
                             "components": [
                                 {
@@ -675,10 +675,10 @@
                     "tag": 0
                 },
                 {
-                    "active": false,
+                    "active": true,
                     "children": [
                         {
-                            "active": false,
+                            "active": true,
                             "children": [],
                             "components": [
                                 {
@@ -774,10 +774,10 @@
                     "tag": 0
                 },
                 {
-                    "active": false,
+                    "active": true,
                     "children": [
                         {
-                            "active": false,
+                            "active": true,
                             "children": [],
                             "components": [
                                 {
@@ -814,7 +814,7 @@
                                         255,
                                         255
                                     ],
-                                    "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                                    "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
                                     "type": 16,
                                     "value": "x"
                                 }
@@ -838,7 +838,7 @@
                                 0.5
                             ],
                             "position": [
-                                -106.0,
+                                -138.0,
                                 -71.0
                             ],
                             "rotation": [
@@ -864,13 +864,6 @@
                             "async": false,
                             "file_name": "Assets/Scripts/HUD/UI_ClosePause.lua",
                             "id": 2002854696,
-                            "inspector_variables": [
-                                {
-                                    "name": "name",
-                                    "type": "string",
-                                    "value": "Pause Menu"
-                                }
-                            ],
                             "type": 5
                         }
                     ],

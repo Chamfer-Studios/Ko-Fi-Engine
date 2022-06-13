@@ -1,14 +1,22 @@
-isOpened = false
 function Start()
-    child = Find("Background")
-    child:Active(isOpened)
+    pause = Find("Pause Menu")
+    settings = Find("Settings Menu")
+    pause:Active(false)
 end
+
 function UpdateUI(dt)
-    if (gameObject.active == true) then
-        if GetInput(25) == KEY_STATE.KEY_DOWN then
-            isOpened = not isOpened
-            child:Active(isOpened)
-            ToggleRuntime()
+    if GetInput(25) == KEY_STATE.KEY_DOWN then
+        if settings.active == true then
+            settings:Active(false)
+            pause:Active(true)
+        else
+            if pause.active == false then
+                pause:Active(true)
+                ToggleRuntime()
+            else
+                pause:Active(false)
+                ToggleRuntime()
+            end
         end
     end
 end

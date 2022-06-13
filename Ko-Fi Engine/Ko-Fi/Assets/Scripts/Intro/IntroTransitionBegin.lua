@@ -6,11 +6,12 @@ NewVariable(transitionToIV)
 function Start()
     timer = 0.0
 end
-
+once = false
 function Update(dt)
     timer = timer + dt
-    if timer >= 4 then
+    if timer >= 4 and once == false then
         if (GetInput(1) == KEY_STATE.KEY_DOWN or GetInput(43) == KEY_STATE.KEY_DOWN) then
+            once = true
             gameObject:ChangeScene(true, transitionTo)
         end
     end

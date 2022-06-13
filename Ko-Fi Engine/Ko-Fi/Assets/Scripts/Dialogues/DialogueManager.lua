@@ -30,10 +30,7 @@ function Update(dt)
         end
     end
     if (openFeedback == true) then
-        if (Find("UnlockFeedbackAvatar")) then
-            OpenFeedback()
-        end
-
+        OpenFeedback()
     end
 
     CheckIfSkipped()
@@ -74,8 +71,8 @@ function CloseDialogue()
     DeleteGameObjectByUID(Find("Dialogue"):GetUID())
     if (isUnlocking) then
         Log("Unlocking character " .. unlockedCharId .. "\n")
-        -- InstantiatePrefab(characterUnlockPrefab) -- Create Char Unlock Feedback Prefab
-        -- openFeedback = true;
+        InstantiatePrefab(characterUnlockPrefab) -- Create Char Unlock Feedback Prefab
+        openFeedback = true;
         DispatchGlobalEvent("Enable_Character", {unlockedCharId})
         isUnlocking = false;
     end
@@ -107,12 +104,17 @@ end
 function SetUnlockFeedbackValues()
     -- Get Dialogue Values From JSON
     -- print("settin Values")
-    char = GetDialogueString("char", id)
-    srcUnlock = GetDialogueString("srcUnlock", id)
-    -- Set Values To The Prefab
+    unlockFeedbackAvatar = Find("UnlockFeedbackAvatar")
 
-    Find("UnlockFeedbackAvatar"):GetImage():SetTexture(srcUnlock)
-    Find("UnlockText"):GetText():SetTextValue(char .. " Unlocked")
+    -- Set Values To The Prefab
+    if unlockedCharId == 2 then
+        unlockFeedbackAvatar:GetImage():SetTexture("Assets/New UI/Nerala_Image.png")
+        Find("UnlockText"):GetText():SetTextValue("Nerala Unlocked")
+    elseif unlockedCharId == 3 then
+        unlockFeedbackAvatar:GetImage():SetTexture("Assets/New UI/Omozra_Image.png")
+        Find("UnlockText"):GetText():SetTextValue("Omozra Unlocked")
+    end
+    
 
     src = ""
     char = ""

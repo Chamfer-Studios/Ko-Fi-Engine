@@ -1,0 +1,2934 @@
+{
+    "active": true,
+    "children": [
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        963.8983764648438,
+                        -0.4592365622520447,
+                        -499.0481872558594
+                    ],
+                    "rotation": [
+                        -0.007194524630904198,
+                        0.7070702910423279,
+                        0.7070701122283936,
+                        0.007196121849119663
+                    ],
+                    "scale": [
+                        10.972564697265625,
+                        9.530881881713867,
+                        19.96944808959961
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "mesh": {
+                        "asset_path": "Assets/Models/Environments/Spice Sacks/Plane.002.sugar",
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "is_animated": false,
+                        "shape_type": 0,
+                        "uid": 1858871869
+                    },
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "color": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "shader": {
+                        "asset_path": "Assets/Shaders/default_shader.glsl",
+                        "uniforms": null
+                    },
+                    "texture": {
+                        "asset_path": "Assets/Textures/Environments/Spice Sacks/lvl_1_group_3_base_color.png"
+                    },
+                    "type": 2
+                },
+                {
+                    "active": true,
+                    "body_type": "Static",
+                    "freeze_position_x": false,
+                    "freeze_position_y": false,
+                    "freeze_position_z": false,
+                    "freeze_rotation_x": false,
+                    "freeze_rotation_y": false,
+                    "freeze_rotation_z": false,
+                    "mass": 1.0,
+                    "type": 6,
+                    "use_gravity": true
+                },
+                {
+                    "active": true,
+                    "center": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "filter": "Interactuable",
+                    "is_trigger": true,
+                    "scale_factor": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/SpiceSpot.lua",
+                    "id": 527611184,
+                    "inspector_variables": [
+                        {
+                            "name": "spiceSpot",
+                            "type": "int",
+                            "value": 1000
+                        }
+                    ],
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "resource": [
+                        {
+                            "emitters": [
+                                {
+                                    "loop": true,
+                                    "maxParticles": 500,
+                                    "modules": [
+                                        {
+                                            "maxParticleLife": 3.0,
+                                            "minParticleLife": 2.5,
+                                            "particlesPerSpawn": 5,
+                                            "randomParticleLife": false,
+                                            "spawnTime": 0.30000001192092896,
+                                            "type": 1
+                                        },
+                                        {
+                                            "billboardingType": 2,
+                                            "frontAxis": true,
+                                            "maxDegrees": 360,
+                                            "minDegrees": 0,
+                                            "sideAxis": false,
+                                            "topAxis": false,
+                                            "type": 5
+                                        },
+                                        {
+                                            "maxFinalSize": [
+                                                5.0,
+                                                5.0,
+                                                5.0
+                                            ],
+                                            "minFinalSize": [
+                                                2.5,
+                                                2.5,
+                                                2.5
+                                            ],
+                                            "minInitialSize": [
+                                                3.0,
+                                                3.0,
+                                                3.0
+                                            ],
+                                            "type": 4
+                                        },
+                                        {
+                                            "followForward": false,
+                                            "maxAcceleration": [
+                                                0.25,
+                                                0.25,
+                                                0.25
+                                            ],
+                                            "maxDirection": [
+                                                0.10000000149011612,
+                                                1.0,
+                                                0.10000000149011612
+                                            ],
+                                            "maxPosition": [
+                                                15.0,
+                                                23.0,
+                                                10.0
+                                            ],
+                                            "maxVelocity": 5.0,
+                                            "minAcceleration": [
+                                                0.0,
+                                                -0.03500000014901161,
+                                                0.0
+                                            ],
+                                            "minDirection": [
+                                                -0.10000000149011612,
+                                                1.0,
+                                                -0.10000000149011612
+                                            ],
+                                            "minPosition": [
+                                                -15.0,
+                                                0.0,
+                                                -10.0
+                                            ],
+                                            "minVelocity": 4.0,
+                                            "randAcceleration": false,
+                                            "randDirection": true,
+                                            "randPosition": true,
+                                            "randVelocity": true,
+                                            "type": 2
+                                        },
+                                        {
+                                            "colors": [
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        1.0
+                                                    ],
+                                                    "position": 0.0
+                                                },
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "position": 1.0
+                                                }
+                                            ],
+                                            "type": 3
+                                        }
+                                    ],
+                                    "name": "Spark",
+                                    "texture_path": "Assets/Textures/Particles/dust_1.png"
+                                }
+                            ],
+                            "name": "Spice"
+                        }
+                    ],
+                    "type": 3
+                }
+            ],
+            "is3D": true,
+            "isPrefab": true,
+            "name": "SpiceSpot",
+            "tag": 5
+        },
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        789.13623046875,
+                        -0.459245890378952,
+                        -511.8153076171875
+                    ],
+                    "rotation": [
+                        -0.007194525562226772,
+                        0.7070702910423279,
+                        0.7070701122283936,
+                        0.007196123246103525
+                    ],
+                    "scale": [
+                        10.972567558288574,
+                        9.5308837890625,
+                        19.969451904296875
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "mesh": {
+                        "asset_path": "Assets/Models/Environments/Spice Sacks/Plane.002.sugar",
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "is_animated": false,
+                        "shape_type": 0,
+                        "uid": 1858871869
+                    },
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "color": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "shader": {
+                        "asset_path": "Assets/Shaders/default_shader.glsl",
+                        "uniforms": null
+                    },
+                    "texture": {
+                        "asset_path": "Assets/Textures/Environments/Spice Sacks/lvl_1_group_3_base_color.png"
+                    },
+                    "type": 2
+                },
+                {
+                    "active": true,
+                    "body_type": "Static",
+                    "freeze_position_x": false,
+                    "freeze_position_y": false,
+                    "freeze_position_z": false,
+                    "freeze_rotation_x": false,
+                    "freeze_rotation_y": false,
+                    "freeze_rotation_z": false,
+                    "mass": 1.0,
+                    "type": 6,
+                    "use_gravity": true
+                },
+                {
+                    "active": true,
+                    "center": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "filter": "Interactuable",
+                    "is_trigger": true,
+                    "scale_factor": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/SpiceSpot.lua",
+                    "id": 527611184,
+                    "inspector_variables": [
+                        {
+                            "name": "spiceSpot",
+                            "type": "int",
+                            "value": 1000
+                        }
+                    ],
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "resource": [
+                        {
+                            "emitters": [
+                                {
+                                    "loop": true,
+                                    "maxParticles": 500,
+                                    "modules": [
+                                        {
+                                            "maxParticleLife": 3.0,
+                                            "minParticleLife": 2.5,
+                                            "particlesPerSpawn": 5,
+                                            "randomParticleLife": false,
+                                            "spawnTime": 0.30000001192092896,
+                                            "type": 1
+                                        },
+                                        {
+                                            "billboardingType": 2,
+                                            "frontAxis": true,
+                                            "maxDegrees": 360,
+                                            "minDegrees": 0,
+                                            "sideAxis": false,
+                                            "topAxis": false,
+                                            "type": 5
+                                        },
+                                        {
+                                            "maxFinalSize": [
+                                                5.0,
+                                                5.0,
+                                                5.0
+                                            ],
+                                            "minFinalSize": [
+                                                2.5,
+                                                2.5,
+                                                2.5
+                                            ],
+                                            "minInitialSize": [
+                                                3.0,
+                                                3.0,
+                                                3.0
+                                            ],
+                                            "type": 4
+                                        },
+                                        {
+                                            "followForward": false,
+                                            "maxAcceleration": [
+                                                0.25,
+                                                0.25,
+                                                0.25
+                                            ],
+                                            "maxDirection": [
+                                                0.10000000149011612,
+                                                1.0,
+                                                0.10000000149011612
+                                            ],
+                                            "maxPosition": [
+                                                15.0,
+                                                23.0,
+                                                10.0
+                                            ],
+                                            "maxVelocity": 5.0,
+                                            "minAcceleration": [
+                                                0.0,
+                                                -0.03500000014901161,
+                                                0.0
+                                            ],
+                                            "minDirection": [
+                                                -0.10000000149011612,
+                                                1.0,
+                                                -0.10000000149011612
+                                            ],
+                                            "minPosition": [
+                                                -15.0,
+                                                0.0,
+                                                -10.0
+                                            ],
+                                            "minVelocity": 4.0,
+                                            "randAcceleration": false,
+                                            "randDirection": true,
+                                            "randPosition": true,
+                                            "randVelocity": true,
+                                            "type": 2
+                                        },
+                                        {
+                                            "colors": [
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        1.0
+                                                    ],
+                                                    "position": 0.0
+                                                },
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "position": 1.0
+                                                }
+                                            ],
+                                            "type": 3
+                                        }
+                                    ],
+                                    "name": "Spark",
+                                    "texture_path": "Assets/Textures/Particles/dust_1.png"
+                                }
+                            ],
+                            "name": "Spice"
+                        }
+                    ],
+                    "type": 3
+                }
+            ],
+            "is3D": true,
+            "isPrefab": true,
+            "name": "SpiceSpot (1)",
+            "tag": 5
+        },
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        808.7889404296875,
+                        -0.4583064913749695,
+                        -818.5947265625
+                    ],
+                    "rotation": [
+                        0.488611102104187,
+                        0.5111362934112549,
+                        0.5111351013183594,
+                        -0.4886101186275482
+                    ],
+                    "scale": [
+                        10.972569465637207,
+                        9.53088092803955,
+                        19.969451904296875
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "mesh": {
+                        "asset_path": "Assets/Models/Environments/Spice Sacks/Plane.002.sugar",
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "is_animated": false,
+                        "shape_type": 0,
+                        "uid": 1858871869
+                    },
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "color": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "shader": {
+                        "asset_path": "Assets/Shaders/default_shader.glsl",
+                        "uniforms": null
+                    },
+                    "texture": {
+                        "asset_path": "Assets/Textures/Environments/Spice Sacks/lvl_1_group_3_base_color.png"
+                    },
+                    "type": 2
+                },
+                {
+                    "active": true,
+                    "body_type": "Static",
+                    "freeze_position_x": false,
+                    "freeze_position_y": false,
+                    "freeze_position_z": false,
+                    "freeze_rotation_x": false,
+                    "freeze_rotation_y": false,
+                    "freeze_rotation_z": false,
+                    "mass": 1.0,
+                    "type": 6,
+                    "use_gravity": true
+                },
+                {
+                    "active": true,
+                    "center": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "filter": "Interactuable",
+                    "is_trigger": true,
+                    "scale_factor": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/SpiceSpot.lua",
+                    "id": 527611184,
+                    "inspector_variables": [
+                        {
+                            "name": "spiceSpot",
+                            "type": "int",
+                            "value": 1000
+                        }
+                    ],
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "resource": [
+                        {
+                            "emitters": [
+                                {
+                                    "loop": true,
+                                    "maxParticles": 500,
+                                    "modules": [
+                                        {
+                                            "maxParticleLife": 3.0,
+                                            "minParticleLife": 2.5,
+                                            "particlesPerSpawn": 5,
+                                            "randomParticleLife": false,
+                                            "spawnTime": 0.30000001192092896,
+                                            "type": 1
+                                        },
+                                        {
+                                            "billboardingType": 2,
+                                            "frontAxis": true,
+                                            "maxDegrees": 360,
+                                            "minDegrees": 0,
+                                            "sideAxis": false,
+                                            "topAxis": false,
+                                            "type": 5
+                                        },
+                                        {
+                                            "maxFinalSize": [
+                                                5.0,
+                                                5.0,
+                                                5.0
+                                            ],
+                                            "minFinalSize": [
+                                                2.5,
+                                                2.5,
+                                                2.5
+                                            ],
+                                            "minInitialSize": [
+                                                3.0,
+                                                3.0,
+                                                3.0
+                                            ],
+                                            "type": 4
+                                        },
+                                        {
+                                            "followForward": false,
+                                            "maxAcceleration": [
+                                                0.25,
+                                                0.25,
+                                                0.25
+                                            ],
+                                            "maxDirection": [
+                                                0.10000000149011612,
+                                                1.0,
+                                                0.10000000149011612
+                                            ],
+                                            "maxPosition": [
+                                                15.0,
+                                                23.0,
+                                                10.0
+                                            ],
+                                            "maxVelocity": 5.0,
+                                            "minAcceleration": [
+                                                0.0,
+                                                -0.03500000014901161,
+                                                0.0
+                                            ],
+                                            "minDirection": [
+                                                -0.10000000149011612,
+                                                1.0,
+                                                -0.10000000149011612
+                                            ],
+                                            "minPosition": [
+                                                -15.0,
+                                                0.0,
+                                                -10.0
+                                            ],
+                                            "minVelocity": 4.0,
+                                            "randAcceleration": false,
+                                            "randDirection": true,
+                                            "randPosition": true,
+                                            "randVelocity": true,
+                                            "type": 2
+                                        },
+                                        {
+                                            "colors": [
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        1.0
+                                                    ],
+                                                    "position": 0.0
+                                                },
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "position": 1.0
+                                                }
+                                            ],
+                                            "type": 3
+                                        }
+                                    ],
+                                    "name": "Spark",
+                                    "texture_path": "Assets/Textures/Particles/dust_1.png"
+                                }
+                            ],
+                            "name": "Spice"
+                        }
+                    ],
+                    "type": 3
+                }
+            ],
+            "is3D": true,
+            "isPrefab": true,
+            "name": "SpiceSpot (2)",
+            "tag": 5
+        },
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        881.8280029296875,
+                        -0.45806142687797546,
+                        912.6996459960938
+                    ],
+                    "rotation": [
+                        -0.007194525562226772,
+                        0.7070702910423279,
+                        0.7070701122283936,
+                        0.007196123246103525
+                    ],
+                    "scale": [
+                        10.972567558288574,
+                        9.5308837890625,
+                        19.969451904296875
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "mesh": {
+                        "asset_path": "Assets/Models/Environments/Spice Sacks/Plane.002.sugar",
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "is_animated": false,
+                        "shape_type": 0,
+                        "uid": 1858871869
+                    },
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "color": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "shader": {
+                        "asset_path": "Assets/Shaders/default_shader.glsl",
+                        "uniforms": null
+                    },
+                    "texture": {
+                        "asset_path": "Assets/Textures/Environments/Spice Sacks/lvl_1_group_3_base_color.png"
+                    },
+                    "type": 2
+                },
+                {
+                    "active": true,
+                    "body_type": "Static",
+                    "freeze_position_x": false,
+                    "freeze_position_y": false,
+                    "freeze_position_z": false,
+                    "freeze_rotation_x": false,
+                    "freeze_rotation_y": false,
+                    "freeze_rotation_z": false,
+                    "mass": 1.0,
+                    "type": 6,
+                    "use_gravity": true
+                },
+                {
+                    "active": true,
+                    "center": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "filter": "Interactuable",
+                    "is_trigger": true,
+                    "scale_factor": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/SpiceSpot.lua",
+                    "id": 527611184,
+                    "inspector_variables": [
+                        {
+                            "name": "spiceSpot",
+                            "type": "int",
+                            "value": 1000
+                        }
+                    ],
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "resource": [
+                        {
+                            "emitters": [
+                                {
+                                    "loop": true,
+                                    "maxParticles": 500,
+                                    "modules": [
+                                        {
+                                            "maxParticleLife": 3.0,
+                                            "minParticleLife": 2.5,
+                                            "particlesPerSpawn": 5,
+                                            "randomParticleLife": false,
+                                            "spawnTime": 0.30000001192092896,
+                                            "type": 1
+                                        },
+                                        {
+                                            "billboardingType": 2,
+                                            "frontAxis": true,
+                                            "maxDegrees": 360,
+                                            "minDegrees": 0,
+                                            "sideAxis": false,
+                                            "topAxis": false,
+                                            "type": 5
+                                        },
+                                        {
+                                            "maxFinalSize": [
+                                                5.0,
+                                                5.0,
+                                                5.0
+                                            ],
+                                            "minFinalSize": [
+                                                2.5,
+                                                2.5,
+                                                2.5
+                                            ],
+                                            "minInitialSize": [
+                                                3.0,
+                                                3.0,
+                                                3.0
+                                            ],
+                                            "type": 4
+                                        },
+                                        {
+                                            "followForward": false,
+                                            "maxAcceleration": [
+                                                0.25,
+                                                0.25,
+                                                0.25
+                                            ],
+                                            "maxDirection": [
+                                                0.10000000149011612,
+                                                1.0,
+                                                0.10000000149011612
+                                            ],
+                                            "maxPosition": [
+                                                15.0,
+                                                23.0,
+                                                10.0
+                                            ],
+                                            "maxVelocity": 5.0,
+                                            "minAcceleration": [
+                                                0.0,
+                                                -0.03500000014901161,
+                                                0.0
+                                            ],
+                                            "minDirection": [
+                                                -0.10000000149011612,
+                                                1.0,
+                                                -0.10000000149011612
+                                            ],
+                                            "minPosition": [
+                                                -15.0,
+                                                0.0,
+                                                -10.0
+                                            ],
+                                            "minVelocity": 4.0,
+                                            "randAcceleration": false,
+                                            "randDirection": true,
+                                            "randPosition": true,
+                                            "randVelocity": true,
+                                            "type": 2
+                                        },
+                                        {
+                                            "colors": [
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        1.0
+                                                    ],
+                                                    "position": 0.0
+                                                },
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "position": 1.0
+                                                }
+                                            ],
+                                            "type": 3
+                                        }
+                                    ],
+                                    "name": "Spark",
+                                    "texture_path": "Assets/Textures/Particles/dust_1.png"
+                                }
+                            ],
+                            "name": "Spice"
+                        }
+                    ],
+                    "type": 3
+                }
+            ],
+            "is3D": true,
+            "isPrefab": true,
+            "name": "SpiceSpot (3)",
+            "tag": 5
+        },
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        135.43084716796875,
+                        -0.4578021466732025,
+                        774.9937744140625
+                    ],
+                    "rotation": [
+                        -0.3446078598499298,
+                        0.6174500584602356,
+                        0.6174506545066833,
+                        0.3446093201637268
+                    ],
+                    "scale": [
+                        10.972566604614258,
+                        9.530879020690918,
+                        19.969451904296875
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "mesh": {
+                        "asset_path": "Assets/Models/Environments/Spice Sacks/Plane.002.sugar",
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "is_animated": false,
+                        "shape_type": 0,
+                        "uid": 1858871869
+                    },
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "color": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "shader": {
+                        "asset_path": "Assets/Shaders/default_shader.glsl",
+                        "uniforms": null
+                    },
+                    "texture": {
+                        "asset_path": "Assets/Textures/Environments/Spice Sacks/lvl_1_group_3_base_color.png"
+                    },
+                    "type": 2
+                },
+                {
+                    "active": true,
+                    "body_type": "Static",
+                    "freeze_position_x": false,
+                    "freeze_position_y": false,
+                    "freeze_position_z": false,
+                    "freeze_rotation_x": false,
+                    "freeze_rotation_y": false,
+                    "freeze_rotation_z": false,
+                    "mass": 1.0,
+                    "type": 6,
+                    "use_gravity": true
+                },
+                {
+                    "active": true,
+                    "center": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "filter": "Interactuable",
+                    "is_trigger": true,
+                    "scale_factor": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/SpiceSpot.lua",
+                    "id": 527611184,
+                    "inspector_variables": [
+                        {
+                            "name": "spiceSpot",
+                            "type": "int",
+                            "value": 1000
+                        }
+                    ],
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "resource": [
+                        {
+                            "emitters": [
+                                {
+                                    "loop": true,
+                                    "maxParticles": 500,
+                                    "modules": [
+                                        {
+                                            "maxParticleLife": 3.0,
+                                            "minParticleLife": 2.5,
+                                            "particlesPerSpawn": 5,
+                                            "randomParticleLife": false,
+                                            "spawnTime": 0.30000001192092896,
+                                            "type": 1
+                                        },
+                                        {
+                                            "billboardingType": 2,
+                                            "frontAxis": true,
+                                            "maxDegrees": 360,
+                                            "minDegrees": 0,
+                                            "sideAxis": false,
+                                            "topAxis": false,
+                                            "type": 5
+                                        },
+                                        {
+                                            "maxFinalSize": [
+                                                5.0,
+                                                5.0,
+                                                5.0
+                                            ],
+                                            "minFinalSize": [
+                                                2.5,
+                                                2.5,
+                                                2.5
+                                            ],
+                                            "minInitialSize": [
+                                                3.0,
+                                                3.0,
+                                                3.0
+                                            ],
+                                            "type": 4
+                                        },
+                                        {
+                                            "followForward": false,
+                                            "maxAcceleration": [
+                                                0.25,
+                                                0.25,
+                                                0.25
+                                            ],
+                                            "maxDirection": [
+                                                0.10000000149011612,
+                                                1.0,
+                                                0.10000000149011612
+                                            ],
+                                            "maxPosition": [
+                                                15.0,
+                                                23.0,
+                                                10.0
+                                            ],
+                                            "maxVelocity": 5.0,
+                                            "minAcceleration": [
+                                                0.0,
+                                                -0.03500000014901161,
+                                                0.0
+                                            ],
+                                            "minDirection": [
+                                                -0.10000000149011612,
+                                                1.0,
+                                                -0.10000000149011612
+                                            ],
+                                            "minPosition": [
+                                                -15.0,
+                                                0.0,
+                                                -10.0
+                                            ],
+                                            "minVelocity": 4.0,
+                                            "randAcceleration": false,
+                                            "randDirection": true,
+                                            "randPosition": true,
+                                            "randVelocity": true,
+                                            "type": 2
+                                        },
+                                        {
+                                            "colors": [
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        1.0
+                                                    ],
+                                                    "position": 0.0
+                                                },
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "position": 1.0
+                                                }
+                                            ],
+                                            "type": 3
+                                        }
+                                    ],
+                                    "name": "Spark",
+                                    "texture_path": "Assets/Textures/Particles/dust_1.png"
+                                }
+                            ],
+                            "name": "Spice"
+                        }
+                    ],
+                    "type": 3
+                }
+            ],
+            "is3D": true,
+            "isPrefab": true,
+            "name": "SpiceSpot (4)",
+            "tag": 5
+        },
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        -299.0508117675781,
+                        -0.45774176716804504,
+                        766.9078979492188
+                    ],
+                    "rotation": [
+                        -0.27091410756111145,
+                        0.6531499028205872,
+                        0.6531504988670349,
+                        0.27091559767723083
+                    ],
+                    "scale": [
+                        10.97256851196289,
+                        9.5308837890625,
+                        19.969451904296875
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "mesh": {
+                        "asset_path": "Assets/Models/Environments/Spice Sacks/Plane.002.sugar",
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "is_animated": false,
+                        "shape_type": 0,
+                        "uid": 1858871869
+                    },
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "color": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "shader": {
+                        "asset_path": "Assets/Shaders/default_shader.glsl",
+                        "uniforms": null
+                    },
+                    "texture": {
+                        "asset_path": "Assets/Textures/Environments/Spice Sacks/lvl_1_group_3_base_color.png"
+                    },
+                    "type": 2
+                },
+                {
+                    "active": true,
+                    "body_type": "Static",
+                    "freeze_position_x": false,
+                    "freeze_position_y": false,
+                    "freeze_position_z": false,
+                    "freeze_rotation_x": false,
+                    "freeze_rotation_y": false,
+                    "freeze_rotation_z": false,
+                    "mass": 1.0,
+                    "type": 6,
+                    "use_gravity": true
+                },
+                {
+                    "active": true,
+                    "center": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "filter": "Interactuable",
+                    "is_trigger": true,
+                    "scale_factor": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/SpiceSpot.lua",
+                    "id": 527611184,
+                    "inspector_variables": [
+                        {
+                            "name": "spiceSpot",
+                            "type": "int",
+                            "value": 1000
+                        }
+                    ],
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "resource": [
+                        {
+                            "emitters": [
+                                {
+                                    "loop": true,
+                                    "maxParticles": 500,
+                                    "modules": [
+                                        {
+                                            "maxParticleLife": 3.0,
+                                            "minParticleLife": 2.5,
+                                            "particlesPerSpawn": 5,
+                                            "randomParticleLife": false,
+                                            "spawnTime": 0.30000001192092896,
+                                            "type": 1
+                                        },
+                                        {
+                                            "billboardingType": 2,
+                                            "frontAxis": true,
+                                            "maxDegrees": 360,
+                                            "minDegrees": 0,
+                                            "sideAxis": false,
+                                            "topAxis": false,
+                                            "type": 5
+                                        },
+                                        {
+                                            "maxFinalSize": [
+                                                5.0,
+                                                5.0,
+                                                5.0
+                                            ],
+                                            "minFinalSize": [
+                                                2.5,
+                                                2.5,
+                                                2.5
+                                            ],
+                                            "minInitialSize": [
+                                                3.0,
+                                                3.0,
+                                                3.0
+                                            ],
+                                            "type": 4
+                                        },
+                                        {
+                                            "followForward": false,
+                                            "maxAcceleration": [
+                                                0.25,
+                                                0.25,
+                                                0.25
+                                            ],
+                                            "maxDirection": [
+                                                0.10000000149011612,
+                                                1.0,
+                                                0.10000000149011612
+                                            ],
+                                            "maxPosition": [
+                                                15.0,
+                                                23.0,
+                                                10.0
+                                            ],
+                                            "maxVelocity": 5.0,
+                                            "minAcceleration": [
+                                                0.0,
+                                                -0.03500000014901161,
+                                                0.0
+                                            ],
+                                            "minDirection": [
+                                                -0.10000000149011612,
+                                                1.0,
+                                                -0.10000000149011612
+                                            ],
+                                            "minPosition": [
+                                                -15.0,
+                                                0.0,
+                                                -10.0
+                                            ],
+                                            "minVelocity": 4.0,
+                                            "randAcceleration": false,
+                                            "randDirection": true,
+                                            "randPosition": true,
+                                            "randVelocity": true,
+                                            "type": 2
+                                        },
+                                        {
+                                            "colors": [
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        1.0
+                                                    ],
+                                                    "position": 0.0
+                                                },
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "position": 1.0
+                                                }
+                                            ],
+                                            "type": 3
+                                        }
+                                    ],
+                                    "name": "Spark",
+                                    "texture_path": "Assets/Textures/Particles/dust_1.png"
+                                }
+                            ],
+                            "name": "Spice"
+                        }
+                    ],
+                    "type": 3
+                }
+            ],
+            "is3D": true,
+            "isPrefab": true,
+            "name": "SpiceSpot (5)",
+            "tag": 5
+        },
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        -747.4259033203125,
+                        -0.39777708053588867,
+                        666.5243530273438
+                    ],
+                    "rotation": [
+                        0.2809855043888092,
+                        0.6488821506500244,
+                        0.6488813757896423,
+                        -0.280984103679657
+                    ],
+                    "scale": [
+                        10.972567558288574,
+                        9.5308837890625,
+                        19.969451904296875
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "mesh": {
+                        "asset_path": "Assets/Models/Environments/Spice Sacks/Plane.002.sugar",
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "is_animated": false,
+                        "shape_type": 0,
+                        "uid": 1858871869
+                    },
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "color": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "shader": {
+                        "asset_path": "Assets/Shaders/default_shader.glsl",
+                        "uniforms": null
+                    },
+                    "texture": {
+                        "asset_path": "Assets/Textures/Environments/Spice Sacks/lvl_1_group_3_base_color.png"
+                    },
+                    "type": 2
+                },
+                {
+                    "active": true,
+                    "body_type": "Static",
+                    "freeze_position_x": false,
+                    "freeze_position_y": false,
+                    "freeze_position_z": false,
+                    "freeze_rotation_x": false,
+                    "freeze_rotation_y": false,
+                    "freeze_rotation_z": false,
+                    "mass": 1.0,
+                    "type": 6,
+                    "use_gravity": true
+                },
+                {
+                    "active": true,
+                    "center": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "filter": "Interactuable",
+                    "is_trigger": true,
+                    "scale_factor": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/SpiceSpot.lua",
+                    "id": 527611184,
+                    "inspector_variables": [
+                        {
+                            "name": "spiceSpot",
+                            "type": "int",
+                            "value": 1000
+                        }
+                    ],
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "resource": [
+                        {
+                            "emitters": [
+                                {
+                                    "loop": true,
+                                    "maxParticles": 500,
+                                    "modules": [
+                                        {
+                                            "maxParticleLife": 3.0,
+                                            "minParticleLife": 2.5,
+                                            "particlesPerSpawn": 5,
+                                            "randomParticleLife": false,
+                                            "spawnTime": 0.30000001192092896,
+                                            "type": 1
+                                        },
+                                        {
+                                            "billboardingType": 2,
+                                            "frontAxis": true,
+                                            "maxDegrees": 360,
+                                            "minDegrees": 0,
+                                            "sideAxis": false,
+                                            "topAxis": false,
+                                            "type": 5
+                                        },
+                                        {
+                                            "maxFinalSize": [
+                                                5.0,
+                                                5.0,
+                                                5.0
+                                            ],
+                                            "minFinalSize": [
+                                                2.5,
+                                                2.5,
+                                                2.5
+                                            ],
+                                            "minInitialSize": [
+                                                3.0,
+                                                3.0,
+                                                3.0
+                                            ],
+                                            "type": 4
+                                        },
+                                        {
+                                            "followForward": false,
+                                            "maxAcceleration": [
+                                                0.25,
+                                                0.25,
+                                                0.25
+                                            ],
+                                            "maxDirection": [
+                                                0.10000000149011612,
+                                                1.0,
+                                                0.10000000149011612
+                                            ],
+                                            "maxPosition": [
+                                                15.0,
+                                                23.0,
+                                                10.0
+                                            ],
+                                            "maxVelocity": 5.0,
+                                            "minAcceleration": [
+                                                0.0,
+                                                -0.03500000014901161,
+                                                0.0
+                                            ],
+                                            "minDirection": [
+                                                -0.10000000149011612,
+                                                1.0,
+                                                -0.10000000149011612
+                                            ],
+                                            "minPosition": [
+                                                -15.0,
+                                                0.0,
+                                                -10.0
+                                            ],
+                                            "minVelocity": 4.0,
+                                            "randAcceleration": false,
+                                            "randDirection": true,
+                                            "randPosition": true,
+                                            "randVelocity": true,
+                                            "type": 2
+                                        },
+                                        {
+                                            "colors": [
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        1.0
+                                                    ],
+                                                    "position": 0.0
+                                                },
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "position": 1.0
+                                                }
+                                            ],
+                                            "type": 3
+                                        }
+                                    ],
+                                    "name": "Spark",
+                                    "texture_path": "Assets/Textures/Particles/dust_1.png"
+                                }
+                            ],
+                            "name": "Spice"
+                        }
+                    ],
+                    "type": 3
+                }
+            ],
+            "is3D": true,
+            "isPrefab": true,
+            "name": "SpiceSpot (6)",
+            "tag": 5
+        },
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        -749.30078125,
+                        -0.4600256383419037,
+                        1073.9886474609375
+                    ],
+                    "rotation": [
+                        -0.21999166905879974,
+                        0.6720142960548401,
+                        0.6720145344734192,
+                        0.2199932485818863
+                    ],
+                    "scale": [
+                        10.972567558288574,
+                        9.530881881713867,
+                        19.969451904296875
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "mesh": {
+                        "asset_path": "Assets/Models/Environments/Spice Sacks/Plane.002.sugar",
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "is_animated": false,
+                        "shape_type": 0,
+                        "uid": 1858871869
+                    },
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "color": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "shader": {
+                        "asset_path": "Assets/Shaders/default_shader.glsl",
+                        "uniforms": null
+                    },
+                    "texture": {
+                        "asset_path": "Assets/Textures/Environments/Spice Sacks/lvl_1_group_3_base_color.png"
+                    },
+                    "type": 2
+                },
+                {
+                    "active": true,
+                    "body_type": "Static",
+                    "freeze_position_x": false,
+                    "freeze_position_y": false,
+                    "freeze_position_z": false,
+                    "freeze_rotation_x": false,
+                    "freeze_rotation_y": false,
+                    "freeze_rotation_z": false,
+                    "mass": 1.0,
+                    "type": 6,
+                    "use_gravity": true
+                },
+                {
+                    "active": true,
+                    "center": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "filter": "Interactuable",
+                    "is_trigger": true,
+                    "scale_factor": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/SpiceSpot.lua",
+                    "id": 527611184,
+                    "inspector_variables": [
+                        {
+                            "name": "spiceSpot",
+                            "type": "int",
+                            "value": 1000
+                        }
+                    ],
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "resource": [
+                        {
+                            "emitters": [
+                                {
+                                    "loop": true,
+                                    "maxParticles": 500,
+                                    "modules": [
+                                        {
+                                            "maxParticleLife": 3.0,
+                                            "minParticleLife": 2.5,
+                                            "particlesPerSpawn": 5,
+                                            "randomParticleLife": false,
+                                            "spawnTime": 0.30000001192092896,
+                                            "type": 1
+                                        },
+                                        {
+                                            "billboardingType": 2,
+                                            "frontAxis": true,
+                                            "maxDegrees": 360,
+                                            "minDegrees": 0,
+                                            "sideAxis": false,
+                                            "topAxis": false,
+                                            "type": 5
+                                        },
+                                        {
+                                            "maxFinalSize": [
+                                                5.0,
+                                                5.0,
+                                                5.0
+                                            ],
+                                            "minFinalSize": [
+                                                2.5,
+                                                2.5,
+                                                2.5
+                                            ],
+                                            "minInitialSize": [
+                                                3.0,
+                                                3.0,
+                                                3.0
+                                            ],
+                                            "type": 4
+                                        },
+                                        {
+                                            "followForward": false,
+                                            "maxAcceleration": [
+                                                0.25,
+                                                0.25,
+                                                0.25
+                                            ],
+                                            "maxDirection": [
+                                                0.10000000149011612,
+                                                1.0,
+                                                0.10000000149011612
+                                            ],
+                                            "maxPosition": [
+                                                15.0,
+                                                23.0,
+                                                10.0
+                                            ],
+                                            "maxVelocity": 5.0,
+                                            "minAcceleration": [
+                                                0.0,
+                                                -0.03500000014901161,
+                                                0.0
+                                            ],
+                                            "minDirection": [
+                                                -0.10000000149011612,
+                                                1.0,
+                                                -0.10000000149011612
+                                            ],
+                                            "minPosition": [
+                                                -15.0,
+                                                0.0,
+                                                -10.0
+                                            ],
+                                            "minVelocity": 4.0,
+                                            "randAcceleration": false,
+                                            "randDirection": true,
+                                            "randPosition": true,
+                                            "randVelocity": true,
+                                            "type": 2
+                                        },
+                                        {
+                                            "colors": [
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        1.0
+                                                    ],
+                                                    "position": 0.0
+                                                },
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "position": 1.0
+                                                }
+                                            ],
+                                            "type": 3
+                                        }
+                                    ],
+                                    "name": "Spark",
+                                    "texture_path": "Assets/Textures/Particles/dust_1.png"
+                                }
+                            ],
+                            "name": "Spice"
+                        }
+                    ],
+                    "type": 3
+                }
+            ],
+            "is3D": true,
+            "isPrefab": true,
+            "name": "SpiceSpot (7)",
+            "tag": 5
+        },
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        -343.2739562988281,
+                        -0.4592754542827606,
+                        -756.9223022460938
+                    ],
+                    "rotation": [
+                        -0.007194525562226772,
+                        0.7070702910423279,
+                        0.7070701122283936,
+                        0.007196123246103525
+                    ],
+                    "scale": [
+                        10.972567558288574,
+                        9.5308837890625,
+                        19.969451904296875
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "mesh": {
+                        "asset_path": "Assets/Models/Environments/Spice Sacks/Plane.002.sugar",
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "is_animated": false,
+                        "shape_type": 0,
+                        "uid": 1858871869
+                    },
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "color": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "shader": {
+                        "asset_path": "Assets/Shaders/default_shader.glsl",
+                        "uniforms": null
+                    },
+                    "texture": {
+                        "asset_path": "Assets/Textures/Environments/Spice Sacks/lvl_1_group_3_base_color.png"
+                    },
+                    "type": 2
+                },
+                {
+                    "active": true,
+                    "body_type": "Static",
+                    "freeze_position_x": false,
+                    "freeze_position_y": false,
+                    "freeze_position_z": false,
+                    "freeze_rotation_x": false,
+                    "freeze_rotation_y": false,
+                    "freeze_rotation_z": false,
+                    "mass": 1.0,
+                    "type": 6,
+                    "use_gravity": true
+                },
+                {
+                    "active": true,
+                    "center": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "filter": "Interactuable",
+                    "is_trigger": true,
+                    "scale_factor": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/SpiceSpot.lua",
+                    "id": 527611184,
+                    "inspector_variables": [
+                        {
+                            "name": "spiceSpot",
+                            "type": "int",
+                            "value": 1000
+                        }
+                    ],
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "resource": [
+                        {
+                            "emitters": [
+                                {
+                                    "loop": true,
+                                    "maxParticles": 500,
+                                    "modules": [
+                                        {
+                                            "maxParticleLife": 3.0,
+                                            "minParticleLife": 2.5,
+                                            "particlesPerSpawn": 5,
+                                            "randomParticleLife": false,
+                                            "spawnTime": 0.30000001192092896,
+                                            "type": 1
+                                        },
+                                        {
+                                            "billboardingType": 2,
+                                            "frontAxis": true,
+                                            "maxDegrees": 360,
+                                            "minDegrees": 0,
+                                            "sideAxis": false,
+                                            "topAxis": false,
+                                            "type": 5
+                                        },
+                                        {
+                                            "maxFinalSize": [
+                                                5.0,
+                                                5.0,
+                                                5.0
+                                            ],
+                                            "minFinalSize": [
+                                                2.5,
+                                                2.5,
+                                                2.5
+                                            ],
+                                            "minInitialSize": [
+                                                3.0,
+                                                3.0,
+                                                3.0
+                                            ],
+                                            "type": 4
+                                        },
+                                        {
+                                            "followForward": false,
+                                            "maxAcceleration": [
+                                                0.25,
+                                                0.25,
+                                                0.25
+                                            ],
+                                            "maxDirection": [
+                                                0.10000000149011612,
+                                                1.0,
+                                                0.10000000149011612
+                                            ],
+                                            "maxPosition": [
+                                                15.0,
+                                                23.0,
+                                                10.0
+                                            ],
+                                            "maxVelocity": 5.0,
+                                            "minAcceleration": [
+                                                0.0,
+                                                -0.03500000014901161,
+                                                0.0
+                                            ],
+                                            "minDirection": [
+                                                -0.10000000149011612,
+                                                1.0,
+                                                -0.10000000149011612
+                                            ],
+                                            "minPosition": [
+                                                -15.0,
+                                                0.0,
+                                                -10.0
+                                            ],
+                                            "minVelocity": 4.0,
+                                            "randAcceleration": false,
+                                            "randDirection": true,
+                                            "randPosition": true,
+                                            "randVelocity": true,
+                                            "type": 2
+                                        },
+                                        {
+                                            "colors": [
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        1.0
+                                                    ],
+                                                    "position": 0.0
+                                                },
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "position": 1.0
+                                                }
+                                            ],
+                                            "type": 3
+                                        }
+                                    ],
+                                    "name": "Spark",
+                                    "texture_path": "Assets/Textures/Particles/dust_1.png"
+                                }
+                            ],
+                            "name": "Spice"
+                        }
+                    ],
+                    "type": 3
+                }
+            ],
+            "is3D": true,
+            "isPrefab": true,
+            "name": "SpiceSpot (8)",
+            "tag": 5
+        },
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        281.3596496582031,
+                        -0.4572168290615082,
+                        -247.41278076171875
+                    ],
+                    "rotation": [
+                        -0.5034026503562927,
+                        0.49657294154167175,
+                        0.49657392501831055,
+                        0.5034037828445435
+                    ],
+                    "scale": [
+                        10.972569465637207,
+                        9.53089427947998,
+                        19.969451904296875
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "mesh": {
+                        "asset_path": "Assets/Models/Environments/Spice Sacks/Plane.002.sugar",
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "is_animated": false,
+                        "shape_type": 0,
+                        "uid": 1858871869
+                    },
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "color": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "shader": {
+                        "asset_path": "Assets/Shaders/default_shader.glsl",
+                        "uniforms": null
+                    },
+                    "texture": {
+                        "asset_path": "Assets/Textures/Environments/Spice Sacks/lvl_1_group_3_base_color.png"
+                    },
+                    "type": 2
+                },
+                {
+                    "active": true,
+                    "body_type": "Static",
+                    "freeze_position_x": false,
+                    "freeze_position_y": false,
+                    "freeze_position_z": false,
+                    "freeze_rotation_x": false,
+                    "freeze_rotation_y": false,
+                    "freeze_rotation_z": false,
+                    "mass": 1.0,
+                    "type": 6,
+                    "use_gravity": true
+                },
+                {
+                    "active": true,
+                    "center": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "filter": "Interactuable",
+                    "is_trigger": true,
+                    "scale_factor": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/SpiceSpot.lua",
+                    "id": 527611184,
+                    "inspector_variables": [
+                        {
+                            "name": "spiceSpot",
+                            "type": "int",
+                            "value": 1000
+                        }
+                    ],
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "resource": [
+                        {
+                            "emitters": [
+                                {
+                                    "loop": true,
+                                    "maxParticles": 500,
+                                    "modules": [
+                                        {
+                                            "maxParticleLife": 3.0,
+                                            "minParticleLife": 2.5,
+                                            "particlesPerSpawn": 5,
+                                            "randomParticleLife": false,
+                                            "spawnTime": 0.30000001192092896,
+                                            "type": 1
+                                        },
+                                        {
+                                            "billboardingType": 2,
+                                            "frontAxis": true,
+                                            "maxDegrees": 360,
+                                            "minDegrees": 0,
+                                            "sideAxis": false,
+                                            "topAxis": false,
+                                            "type": 5
+                                        },
+                                        {
+                                            "maxFinalSize": [
+                                                5.0,
+                                                5.0,
+                                                5.0
+                                            ],
+                                            "minFinalSize": [
+                                                2.5,
+                                                2.5,
+                                                2.5
+                                            ],
+                                            "minInitialSize": [
+                                                3.0,
+                                                3.0,
+                                                3.0
+                                            ],
+                                            "type": 4
+                                        },
+                                        {
+                                            "followForward": false,
+                                            "maxAcceleration": [
+                                                0.25,
+                                                0.25,
+                                                0.25
+                                            ],
+                                            "maxDirection": [
+                                                0.10000000149011612,
+                                                1.0,
+                                                0.10000000149011612
+                                            ],
+                                            "maxPosition": [
+                                                15.0,
+                                                23.0,
+                                                10.0
+                                            ],
+                                            "maxVelocity": 5.0,
+                                            "minAcceleration": [
+                                                0.0,
+                                                -0.03500000014901161,
+                                                0.0
+                                            ],
+                                            "minDirection": [
+                                                -0.10000000149011612,
+                                                1.0,
+                                                -0.10000000149011612
+                                            ],
+                                            "minPosition": [
+                                                -15.0,
+                                                0.0,
+                                                -10.0
+                                            ],
+                                            "minVelocity": 4.0,
+                                            "randAcceleration": false,
+                                            "randDirection": true,
+                                            "randPosition": true,
+                                            "randVelocity": true,
+                                            "type": 2
+                                        },
+                                        {
+                                            "colors": [
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        1.0
+                                                    ],
+                                                    "position": 0.0
+                                                },
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "position": 1.0
+                                                }
+                                            ],
+                                            "type": 3
+                                        }
+                                    ],
+                                    "name": "Spark",
+                                    "texture_path": "Assets/Textures/Particles/dust_1.png"
+                                }
+                            ],
+                            "name": "Spice"
+                        }
+                    ],
+                    "type": 3
+                }
+            ],
+            "is3D": true,
+            "isPrefab": true,
+            "name": "SpiceSpot (9)",
+            "tag": 5
+        },
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        131.37046813964844,
+                        -0.46121546626091003,
+                        -386.4521179199219
+                    ],
+                    "rotation": [
+                        -0.4991549551486969,
+                        0.5008425116539001,
+                        0.5008435845375061,
+                        0.49915623664855957
+                    ],
+                    "scale": [
+                        10.972564697265625,
+                        9.5308837890625,
+                        19.969451904296875
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "mesh": {
+                        "asset_path": "Assets/Models/Environments/Spice Sacks/Plane.002.sugar",
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "is_animated": false,
+                        "shape_type": 0,
+                        "uid": 1858871869
+                    },
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "color": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "shader": {
+                        "asset_path": "Assets/Shaders/default_shader.glsl",
+                        "uniforms": null
+                    },
+                    "texture": {
+                        "asset_path": "Assets/Textures/Environments/Spice Sacks/lvl_1_group_3_base_color.png"
+                    },
+                    "type": 2
+                },
+                {
+                    "active": true,
+                    "body_type": "Static",
+                    "freeze_position_x": false,
+                    "freeze_position_y": false,
+                    "freeze_position_z": false,
+                    "freeze_rotation_x": false,
+                    "freeze_rotation_y": false,
+                    "freeze_rotation_z": false,
+                    "mass": 1.0,
+                    "type": 6,
+                    "use_gravity": true
+                },
+                {
+                    "active": true,
+                    "center": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "filter": "Interactuable",
+                    "is_trigger": true,
+                    "scale_factor": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/SpiceSpot.lua",
+                    "id": 527611184,
+                    "inspector_variables": [
+                        {
+                            "name": "spiceSpot",
+                            "type": "int",
+                            "value": 1000
+                        }
+                    ],
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "resource": [
+                        {
+                            "emitters": [
+                                {
+                                    "loop": true,
+                                    "maxParticles": 500,
+                                    "modules": [
+                                        {
+                                            "maxParticleLife": 3.0,
+                                            "minParticleLife": 2.5,
+                                            "particlesPerSpawn": 5,
+                                            "randomParticleLife": false,
+                                            "spawnTime": 0.30000001192092896,
+                                            "type": 1
+                                        },
+                                        {
+                                            "billboardingType": 2,
+                                            "frontAxis": true,
+                                            "maxDegrees": 360,
+                                            "minDegrees": 0,
+                                            "sideAxis": false,
+                                            "topAxis": false,
+                                            "type": 5
+                                        },
+                                        {
+                                            "maxFinalSize": [
+                                                5.0,
+                                                5.0,
+                                                5.0
+                                            ],
+                                            "minFinalSize": [
+                                                2.5,
+                                                2.5,
+                                                2.5
+                                            ],
+                                            "minInitialSize": [
+                                                3.0,
+                                                3.0,
+                                                3.0
+                                            ],
+                                            "type": 4
+                                        },
+                                        {
+                                            "followForward": false,
+                                            "maxAcceleration": [
+                                                0.25,
+                                                0.25,
+                                                0.25
+                                            ],
+                                            "maxDirection": [
+                                                0.10000000149011612,
+                                                1.0,
+                                                0.10000000149011612
+                                            ],
+                                            "maxPosition": [
+                                                15.0,
+                                                23.0,
+                                                10.0
+                                            ],
+                                            "maxVelocity": 5.0,
+                                            "minAcceleration": [
+                                                0.0,
+                                                -0.03500000014901161,
+                                                0.0
+                                            ],
+                                            "minDirection": [
+                                                -0.10000000149011612,
+                                                1.0,
+                                                -0.10000000149011612
+                                            ],
+                                            "minPosition": [
+                                                -15.0,
+                                                0.0,
+                                                -10.0
+                                            ],
+                                            "minVelocity": 4.0,
+                                            "randAcceleration": false,
+                                            "randDirection": true,
+                                            "randPosition": true,
+                                            "randVelocity": true,
+                                            "type": 2
+                                        },
+                                        {
+                                            "colors": [
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        1.0
+                                                    ],
+                                                    "position": 0.0
+                                                },
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "position": 1.0
+                                                }
+                                            ],
+                                            "type": 3
+                                        }
+                                    ],
+                                    "name": "Spark",
+                                    "texture_path": "Assets/Textures/Particles/dust_1.png"
+                                }
+                            ],
+                            "name": "Spice"
+                        }
+                    ],
+                    "type": 3
+                }
+            ],
+            "is3D": true,
+            "isPrefab": true,
+            "name": "SpiceSpot (10)",
+            "tag": 5
+        },
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        339.4148254394531,
+                        -0.4601798951625824,
+                        205.64132690429688
+                    ],
+                    "rotation": [
+                        -0.007194525562226772,
+                        0.7070702910423279,
+                        0.7070701122283936,
+                        0.007196123246103525
+                    ],
+                    "scale": [
+                        10.972567558288574,
+                        9.5308837890625,
+                        19.969451904296875
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "mesh": {
+                        "asset_path": "Assets/Models/Environments/Spice Sacks/Plane.002.sugar",
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "is_animated": false,
+                        "shape_type": 0,
+                        "uid": 1858871869
+                    },
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "color": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "shader": {
+                        "asset_path": "Assets/Shaders/default_shader.glsl",
+                        "uniforms": null
+                    },
+                    "texture": {
+                        "asset_path": "Assets/Textures/Environments/Spice Sacks/lvl_1_group_3_base_color.png"
+                    },
+                    "type": 2
+                },
+                {
+                    "active": true,
+                    "body_type": "Static",
+                    "freeze_position_x": false,
+                    "freeze_position_y": false,
+                    "freeze_position_z": false,
+                    "freeze_rotation_x": false,
+                    "freeze_rotation_y": false,
+                    "freeze_rotation_z": false,
+                    "mass": 1.0,
+                    "type": 6,
+                    "use_gravity": true
+                },
+                {
+                    "active": true,
+                    "center": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "filter": "Interactuable",
+                    "is_trigger": true,
+                    "scale_factor": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/SpiceSpot.lua",
+                    "id": 527611184,
+                    "inspector_variables": [
+                        {
+                            "name": "spiceSpot",
+                            "type": "int",
+                            "value": 1000
+                        }
+                    ],
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "resource": [
+                        {
+                            "emitters": [
+                                {
+                                    "loop": true,
+                                    "maxParticles": 500,
+                                    "modules": [
+                                        {
+                                            "maxParticleLife": 3.0,
+                                            "minParticleLife": 2.5,
+                                            "particlesPerSpawn": 5,
+                                            "randomParticleLife": false,
+                                            "spawnTime": 0.30000001192092896,
+                                            "type": 1
+                                        },
+                                        {
+                                            "billboardingType": 2,
+                                            "frontAxis": true,
+                                            "maxDegrees": 360,
+                                            "minDegrees": 0,
+                                            "sideAxis": false,
+                                            "topAxis": false,
+                                            "type": 5
+                                        },
+                                        {
+                                            "maxFinalSize": [
+                                                5.0,
+                                                5.0,
+                                                5.0
+                                            ],
+                                            "minFinalSize": [
+                                                2.5,
+                                                2.5,
+                                                2.5
+                                            ],
+                                            "minInitialSize": [
+                                                3.0,
+                                                3.0,
+                                                3.0
+                                            ],
+                                            "type": 4
+                                        },
+                                        {
+                                            "followForward": false,
+                                            "maxAcceleration": [
+                                                0.25,
+                                                0.25,
+                                                0.25
+                                            ],
+                                            "maxDirection": [
+                                                0.10000000149011612,
+                                                1.0,
+                                                0.10000000149011612
+                                            ],
+                                            "maxPosition": [
+                                                15.0,
+                                                23.0,
+                                                10.0
+                                            ],
+                                            "maxVelocity": 5.0,
+                                            "minAcceleration": [
+                                                0.0,
+                                                -0.03500000014901161,
+                                                0.0
+                                            ],
+                                            "minDirection": [
+                                                -0.10000000149011612,
+                                                1.0,
+                                                -0.10000000149011612
+                                            ],
+                                            "minPosition": [
+                                                -15.0,
+                                                0.0,
+                                                -10.0
+                                            ],
+                                            "minVelocity": 4.0,
+                                            "randAcceleration": false,
+                                            "randDirection": true,
+                                            "randPosition": true,
+                                            "randVelocity": true,
+                                            "type": 2
+                                        },
+                                        {
+                                            "colors": [
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        1.0
+                                                    ],
+                                                    "position": 0.0
+                                                },
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "position": 1.0
+                                                }
+                                            ],
+                                            "type": 3
+                                        }
+                                    ],
+                                    "name": "Spark",
+                                    "texture_path": "Assets/Textures/Particles/dust_1.png"
+                                }
+                            ],
+                            "name": "Spice"
+                        }
+                    ],
+                    "type": 3
+                }
+            ],
+            "is3D": true,
+            "isPrefab": true,
+            "name": "SpiceSpot (11)",
+            "tag": 5
+        },
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        339.17333984375,
+                        -0.45889806747436523,
+                        221.90240478515625
+                    ],
+                    "rotation": [
+                        -0.007194525562226772,
+                        0.7070702910423279,
+                        0.7070701122283936,
+                        0.007196123246103525
+                    ],
+                    "scale": [
+                        10.972567558288574,
+                        9.5308837890625,
+                        19.969451904296875
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "mesh": {
+                        "asset_path": "Assets/Models/Environments/Spice Sacks/Plane.002.sugar",
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "is_animated": false,
+                        "shape_type": 0,
+                        "uid": 1858871869
+                    },
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "color": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "shader": {
+                        "asset_path": "Assets/Shaders/default_shader.glsl",
+                        "uniforms": null
+                    },
+                    "texture": {
+                        "asset_path": "Assets/Textures/Environments/Spice Sacks/lvl_1_group_3_base_color.png"
+                    },
+                    "type": 2
+                },
+                {
+                    "active": true,
+                    "body_type": "Static",
+                    "freeze_position_x": false,
+                    "freeze_position_y": false,
+                    "freeze_position_z": false,
+                    "freeze_rotation_x": false,
+                    "freeze_rotation_y": false,
+                    "freeze_rotation_z": false,
+                    "mass": 1.0,
+                    "type": 6,
+                    "use_gravity": true
+                },
+                {
+                    "active": true,
+                    "center": [
+                        0.0,
+                        0.0,
+                        10.0
+                    ],
+                    "filter": "Interactuable",
+                    "is_trigger": true,
+                    "scale_factor": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/SpiceSpot.lua",
+                    "id": 527611184,
+                    "inspector_variables": [
+                        {
+                            "name": "spiceSpot",
+                            "type": "int",
+                            "value": 1000
+                        }
+                    ],
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "resource": [
+                        {
+                            "emitters": [
+                                {
+                                    "loop": true,
+                                    "maxParticles": 500,
+                                    "modules": [
+                                        {
+                                            "maxParticleLife": 3.0,
+                                            "minParticleLife": 2.5,
+                                            "particlesPerSpawn": 5,
+                                            "randomParticleLife": false,
+                                            "spawnTime": 0.30000001192092896,
+                                            "type": 1
+                                        },
+                                        {
+                                            "billboardingType": 2,
+                                            "frontAxis": true,
+                                            "maxDegrees": 360,
+                                            "minDegrees": 0,
+                                            "sideAxis": false,
+                                            "topAxis": false,
+                                            "type": 5
+                                        },
+                                        {
+                                            "maxFinalSize": [
+                                                5.0,
+                                                5.0,
+                                                5.0
+                                            ],
+                                            "minFinalSize": [
+                                                2.5,
+                                                2.5,
+                                                2.5
+                                            ],
+                                            "minInitialSize": [
+                                                3.0,
+                                                3.0,
+                                                3.0
+                                            ],
+                                            "type": 4
+                                        },
+                                        {
+                                            "followForward": false,
+                                            "maxAcceleration": [
+                                                0.25,
+                                                0.25,
+                                                0.25
+                                            ],
+                                            "maxDirection": [
+                                                0.10000000149011612,
+                                                1.0,
+                                                0.10000000149011612
+                                            ],
+                                            "maxPosition": [
+                                                15.0,
+                                                23.0,
+                                                10.0
+                                            ],
+                                            "maxVelocity": 5.0,
+                                            "minAcceleration": [
+                                                0.0,
+                                                -0.03500000014901161,
+                                                0.0
+                                            ],
+                                            "minDirection": [
+                                                -0.10000000149011612,
+                                                1.0,
+                                                -0.10000000149011612
+                                            ],
+                                            "minPosition": [
+                                                -15.0,
+                                                0.0,
+                                                -10.0
+                                            ],
+                                            "minVelocity": 4.0,
+                                            "randAcceleration": false,
+                                            "randDirection": true,
+                                            "randPosition": true,
+                                            "randVelocity": true,
+                                            "type": 2
+                                        },
+                                        {
+                                            "colors": [
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        1.0
+                                                    ],
+                                                    "position": 0.0
+                                                },
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.5882353186607361,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "position": 1.0
+                                                }
+                                            ],
+                                            "type": 3
+                                        }
+                                    ],
+                                    "name": "Spark",
+                                    "texture_path": "Assets/Textures/Particles/dust_1.png"
+                                }
+                            ],
+                            "name": "Spice"
+                        }
+                    ],
+                    "type": 3
+                }
+            ],
+            "is3D": true,
+            "isPrefab": true,
+            "name": "SpiceSpot (12)",
+            "tag": 5
+        }
+    ],
+    "components": [
+        {
+            "active": true,
+            "type": 23
+        },
+        {
+            "active": true,
+            "position": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "type": 21
+        }
+    ],
+    "is3D": true,
+    "isPrefab": true,
+    "name": "Spice Spots Lvl 2",
+    "tag": 0
+}
