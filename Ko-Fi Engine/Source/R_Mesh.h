@@ -162,6 +162,10 @@ public:
 
 	Shape meshType;
 
+	bool renderOutline = true;
+	float outlineThickness = 1.0f;
+	float4 outlineColor = float4(0.98f,0.95f,0.74f,1.f);
+
 private:
 	// Debug functions for drawing
 	void DrawVertexNormals() const;
