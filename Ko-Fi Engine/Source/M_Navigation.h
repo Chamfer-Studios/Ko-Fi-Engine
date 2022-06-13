@@ -21,18 +21,18 @@ class M_Navigation : public Module
 public:
 	struct NavMeshConfig {
 		float cs = 6.f;
-		float ch = 6.f;
+		float ch = 0.5f;
 		float walkableSlopeAngle = 45;
 		float walkableClimb = 1.0f;
 		int walkableHeight = 2;
-		float walkableRadius = 2.f;
+		float walkableRadius = 0.5f;
 		float minRegionArea = 2.f;
-		float mergeRegionArea = 2.f;
+		float mergeRegionArea = 4.f;
 		float borderSize = 0.5f;
 		float maxEdgeLen = 30.f;
 		int maxVertsPerPoly = 6;
-		float detailSampleMaxError = 5.f;
-		float detailSampleDist = 10.0f;
+		float detailSampleMaxError = 3.f;
+		float detailSampleDist = 6.0f;
 		float extents[3] = { 5, 5, 5 };
 	};
 
