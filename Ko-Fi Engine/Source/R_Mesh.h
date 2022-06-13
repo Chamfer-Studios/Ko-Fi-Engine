@@ -164,7 +164,7 @@ public:
 
 	bool renderOutline = true;
 	float outlineThickness = 1.0f;
-	float4 outlineColor = float4(1.f,0.f,0.f,1.f);
+	float4 outlineColor = float4(0.98f,0.95f,0.74f,1.f);
 
 private:
 	// Debug functions for drawing

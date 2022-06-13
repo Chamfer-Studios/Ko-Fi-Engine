@@ -618,6 +618,22 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 			uint shader = cMat->GetMaterial()->shaderProgramID;
 			if (shader != 0)
 			{
+				glEnable(GL_BLEND);
+				glEnable(GL_STENCIL_TEST);
+				glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+
+				glClear(GL_STENCIL_BUFFER_BIT);
+
+				if (mesh->renderOutline && std::string(go->GetName()) == std::string("Zhib"))
+				{
+					glStencilFunc(GL_ALWAYS, 1, 0xFF);
+					glStencilMask(0xFF);
+				}
+				else
+				{
+					glStencilMask(0x00);
+				}
+
 				glUseProgram(shader);
 
 				// Passing Shader Uniforms
@@ -701,18 +717,21 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				GLint depthMap = glGetUniformLocation(shader, "shadowMap");
 				glUniform1i(depthMap, 3);
 				
+			
 				//Draw Mesh
 				mesh->Draw();
 
 				glUseProgram(0);
+
+				if (mesh->renderOutline && std::string(go->GetName()) == std::string("Zhib"))
+					RenderOutline(mesh, camera, go);
 
 				glActiveTexture(GL_TEXTURE1);
 				glBindTexture(GL_TEXTURE_2D, 0);
 				glActiveTexture(GL_TEXTURE3);
 				glBindTexture(GL_TEXTURE_2D, 0);
 
-				if (mesh->renderOutline && std::string(go->GetName()) == std::string("Zhib"))
-					RenderOutline(mesh, camera, go);
+				
 			}
 		}
 	}
