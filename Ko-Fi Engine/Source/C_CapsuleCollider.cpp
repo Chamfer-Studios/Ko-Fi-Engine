@@ -62,6 +62,9 @@ bool C_CapsuleCollider::CleanUp()
 	if (capsuleShape)
 		owner->GetEngine()->GetPhysics()->GetPhysicsCommon().destroyCapsuleShape(capsuleShape);
 
+	filter.clear();
+	filter.shrink_to_fit();
+
 	return true;
 }
 

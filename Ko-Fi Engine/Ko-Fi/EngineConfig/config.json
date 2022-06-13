@@ -89,7 +89,7 @@
     },
     "ResourceManager": null,
     "SceneManager": {
-        "DefaultScene": "aaaSergi"
+        "DefaultScene": "Level1"
     },
     "UI": null,
     "Window": {

@@ -206,20 +206,19 @@ bool GameObject::CleanUp()
 		RELEASE(component);
 	}
 
-	//for (std::vector<Component*>::iterator component = components.begin(); component != components.end();)
-	//{
-	//	(*component)->CleanUp();
-	//	RELEASE(*component);
-	//	component = components.erase(component);
-	//}
-
 	components.clear();
 	components.shrink_to_fit();
+
+	componentsToBeDeleted.clear();
+	componentsToBeDeleted.shrink_to_fit();
 
 	children.clear();
 	children.shrink_to_fit();
 
 	parent = nullptr;
+	engine = nullptr;
+	transform = nullptr;
+	mesh = nullptr;
 
 	return true;
 }

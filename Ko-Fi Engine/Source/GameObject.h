@@ -160,7 +160,7 @@ public:
 	std::string prefabPath;
 	TAG tag;
 
-	std::vector<GameObject *> children;
+	std::vector<GameObject*> children;
 
 	bool isCulled = false;
 
@@ -175,8 +175,8 @@ private:
 	UID parentUid;
 	bool renderGameObject = true;
 
-	KoFiEngine *engine = nullptr;
-	C_Transform *transform = nullptr;
+	KoFiEngine* engine = nullptr;
+	C_Transform* transform = nullptr;
 	C_Mesh* mesh = nullptr;
 };
 

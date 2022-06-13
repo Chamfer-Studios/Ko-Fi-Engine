@@ -29,7 +29,7 @@ C_Transform2D::C_Transform2D(GameObject* parent) : Component(parent)
 
 C_Transform2D::~C_Transform2D()
 {
-	delete drawablePlane;
+	RELEASE(drawablePlane);
 }
 
 bool C_Transform2D::CleanUp()

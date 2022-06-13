@@ -18,10 +18,13 @@ C_Canvas::C_Canvas(GameObject* parent) : C_Transform2D(parent)
 }
 
 C_Canvas::~C_Canvas()
-{}
+{
+	CleanUp();
+}
 
 bool C_Canvas::CleanUp()
 {
+	engine = nullptr;
 	return true;
 }
 
