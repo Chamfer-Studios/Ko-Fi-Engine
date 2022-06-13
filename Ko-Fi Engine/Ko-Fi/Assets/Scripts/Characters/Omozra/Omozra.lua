@@ -62,25 +62,27 @@ iFramesTimer = nil
 
 -- Globals --
 characterID = 3
-speed = 2000
-crouchMultiplierPercentage = 66
-runMultiplierPercentage = 150
-staminaSeconds = 5
-recoveryTime = 5
+speed = 1600
+crouchMultiplierPercentage = 67
+runMultiplierPercentage = 133
+staminaSeconds = 6
+recoveryTime = 7
 staminaTimer = staminaSeconds
+standingStaminaMultiplier = 1.5
 isTired = false
 
 -- Passive -- 
 passiveRange = 100
+maxCharges = 6
+currentCharges = maxCharges
 
 -- Primary ability --
-primaryCastRange = 100
-maxCharges = 6
+primaryCastRange = 225
 primaryChargeCost = 3
-secondaryChargeCost = 4
+primaryHealAmount = 1
 
 -- Secondary ability --
-secondaryCastRange = 75
+secondaryCastRange = 225
 secondaryCooldown = 2
 unawareChanceHarkSecondary = 100
 awareChanceHarkSecondary = 100
@@ -88,10 +90,11 @@ aggroChanceHarkSecondary = 100
 unawareChanceSardSecondary = 100
 awareChanceSardSecondary = 100
 aggroChanceSardSecondary = 100
+secondaryChargeCost = 6
 
 -- Ultimate ability --
-ultimateCastRange = 75
-ultimateCooldown = 30
+ultimateCastRange = 150
+ultimateCooldown = 2
 ultimateSpiceCost = 1000
 ultimateRecastRange = 100
 ---------------------------------------------------------
@@ -175,6 +178,8 @@ function Start()
     end
 
     -- Particles
+    characterSelectedParticle = Find("Selected Particle")
+    characterSelectedParticle:GetComponentParticle():SetColor(23, 168, 176, 255)
     mouseParticles = Find("Mouse Particle")
     if (mouseParticles ~= nil) then
         mouseParticles:GetComponentParticle():StopParticleSpawn()
@@ -184,7 +189,6 @@ function Start()
     if (bloodParticle ~= nil) then
         bloodParticle:GetComponentParticle():StopParticleSpawn()
     end
-    swooshParticle = Find("Omozra Swoosh Particle") -- not used currently
     footstepsParticle = Find("Omozra Footstep Particle")
 
     -- Audio
@@ -196,12 +200,25 @@ function Start()
 
     -- Abilities
     InstantiatePrefab("Worm")
-    currentCharges = maxCharges
     DispatchGlobalEvent("Omozra_Charges", {currentCharges, maxCharges})
+
+    -- Stamina Bar Blue
+    staminaBar = Find("Stamina Bar Fill")
+    staminaDefaultPath = "Assets/New UI/spice_bar_fill_default.png"
+    staminaRedPath = "Assets/New UI/spice_bar_fill_red.png"
+    staminaWhitePath = "Assets/New UI/spice_bar_fill_white.png"
+    staminaBar:GetImage():SetTexture(staminaDefaultPath)
+
+    isAvailable = GetVariable("GameState.lua", "omozraAvailable", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL)
 end
 
 -- Called each loop iteration
 function Update(dt)
+    if isDialogueOpen == true or currentState == State.DEAD then
+        StopMovement()
+    end
+
+    isSelected = IsSelected()
 
     DrawActiveAbilities()
     DrawHoverParticle()
@@ -211,7 +228,7 @@ function Update(dt)
             componentTransform:GetPosition().y + 23, componentTransform:GetPosition().z + 12))
     end
 
-    if GetVariable("GameState.lua", "omozraAvailable", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL) == true then
+    if isAvailable == true then
         if (smokebombPosition == nil) then
             DispatchGlobalEvent("Player_Position", {componentTransform:GetPosition(), gameObject})
         elseif (Distance3D(componentTransform:GetPosition(), smokebombPosition) > smokebombRadius) then
@@ -230,108 +247,95 @@ function Update(dt)
     end
 
     -- States
-    if (currentState == State.PASSIVE and target ~= nil) then
-        if (Distance3D(componentTransform:GetPosition(), target:GetTransform():GetPosition()) <= passiveRange) then
-            Passive()
-        else
-            destination = target:GetTransform():GetPosition()
-            hasToMove = true
+    if (currentMovement ~= Movement.IDLE and currentMovement ~= Movement.IDLE_CROUCH and target ~= nil) then
+        if (currentState == State.PASSIVE) then
+            if (math.abs(Distance3D(componentTransform:GetPosition(), target:GetTransform():GetPosition())) <=
+                passiveRange) then
+                Passive()
+            else
+                hasToMove = true
+            end
+        elseif (currentState == State.AIM_PRIMARY) then
+            if (math.abs(Distance3D(componentTransform:GetPosition(), target:GetTransform():GetPosition())) <=
+                primaryCastRange) then
+                if (componentAnimator ~= nil) then
+                    CastPrimary()
+                end
+            else
+                if (math.abs(Distance3D(destination, target:GetTransform():GetPosition())) >= 5) then
+                    destination = target:GetTransform():GetPosition()
+                    DispatchEvent("Pathfinder_UpdatePath", {{destination}, false, componentTransform:GetPosition()})
+                end
+                hasToMove = true
+            end
+        elseif (currentState == State.AIM_SECONDARY) then
+            if (math.abs(Distance3D(componentTransform:GetPosition(), target:GetTransform():GetPosition())) <=
+                secondaryCastRange) then
+                if (componentAnimator ~= nil) then
+                    CastSecondary()
+                end
+            else
+                if (math.abs(Distance3D(destination, target:GetTransform():GetPosition())) >= 5) then
+                    destination = target:GetTransform():GetPosition()
+                    DispatchEvent("Pathfinder_UpdatePath", {{destination}, false, componentTransform:GetPosition()})
+                end
+                hasToMove = true
+            end
+        elseif (currentState == State.AIM_ULTIMATE) then
+            if (math.abs(Distance3D(componentTransform:GetPosition(), target:GetTransform():GetPosition())) <=
+                ultimateCastRange) then
+                if (componentAnimator ~= nil) then
+                    CastUltimate()
+                end
+            else
+                if (math.abs(Distance3D(destination, target:GetTransform():GetPosition())) >= 5) then
+                    destination = target:GetTransform():GetPosition()
+                    DispatchEvent("Pathfinder_UpdatePath", {{destination}, false, componentTransform:GetPosition()})
+                end
+                hasToMove = true
+            end
+        elseif currentState == State.AIM_ULTIMATE_RECAST then
+            if (math.abs(Distance3D(componentTransform:GetPosition(), target)) <= ultimateRecastRange) then
+                if (componentAnimator ~= nil) then
+                    RecastUltimate(true)
+                end
+            else
+                hasToMove = true
+            end
         end
     elseif (currentState == State.AIM_PRIMARY or currentState == State.AIM_SECONDARY or currentState ==
         State.AIM_ULTIMATE) then
         StopMovement()
-        componentAnimator:SetSelectedClip("Idle")
+        if (currentMovement == Movement.IDLE_CROUCH) then
+            componentAnimator:SetSelectedClip("IdleCrouch")
+        else
+            componentAnimator:SetSelectedClip("Idle")
+        end
     elseif (destination ~= nil) then
         hasToMove = true
     end
 
     -- Gather Inputs
-    if (IsSelected() == true) then
+    if (isSelected == true and isDialogueOpen == false) then
 
-        if staminaBarBlue == nil then
-            ConfigStaminaBars()
-        else
-            UpdateStaminaBar()
-        end
+        UpdateStamina()
 
         -- Left Click
         if (GetInput(1) == KEY_STATE.KEY_DOWN) then
 
             -- Primary ability (spit heal)
             if (currentState == State.AIM_PRIMARY) then
-                target = GetGameObjectHovered()
-                if (target.tag ~= Tag.PLAYER) then
-                    Log("[FAIL] Ability Primary: You have to select a player first!\n")
-                    target = nil
-                else
-                    if (Distance3D(target:GetTransform():GetPosition(), componentTransform:GetPosition()) >
-                        primaryCastRange) then
-                        Log("[FAIL] Ability Primary: Ability out of range!\n")
-                        target = nil
-                    else
-                        if (componentAnimator ~= nil) then
-                            CastPrimary(target)
-                        end
-                    end
-                end
+                CastPrimary()
 
                 -- Secondary ability
             elseif (currentState == State.AIM_SECONDARY) then
-                if (secondaryTimer ~= nil) then
-                    Log("[FAIL] Ability Secondary: Ability in cooldown!\n")
-                else
-                    target = GetGameObjectHovered()
-                    if (target.tag == Tag.ENEMY or target.tag == Tag.CORPSE) then
-                        if (Distance3D(target:GetTransform():GetPosition(), componentTransform:GetPosition()) >
-                            secondaryCastRange) then
-                            Log("[FAIL] Ability Secondary: Ability out of range!\n")
-                            target = nil
-                        else
-                            if (componentAnimator ~= nil) then
-                                CastSecondary(target:GetTransform():GetPosition())
-                            end
-                        end
-                    else
-                        Log("[FAIL] Ability Secondary: You have to select an enemy or a corpse first!\n")
-                        target = nil
-                    end
-                end
+                CastSecondary()
 
                 -- Ultimate ability (needs to be refactored a bit :D)
             elseif (ultimateTimer == nil and currentState == State.AIM_ULTIMATE) then
-                target = GetGameObjectHovered()
-                if (target.tag ~= Tag.PLAYER) then
-                    Log("[FAIL] Ability Ultimate: You have to select an ally first!\n")
-                    target = nil
-                else
-                    if (Distance3D(target:GetTransform():GetPosition(), componentTransform:GetPosition()) >
-                        ultimateCastRange) then
-                        Log("[FAIL] Ability Ultimate: Ability out of range!\n")
-                        target = nil
-                    else
-                        if (componentAnimator ~= nil and target ~= gameObject) then
-                            CastUltimate(target:GetTransform():GetPosition())
-                        end
-                    end
-                end
+                CastUltimate()
             elseif (currentState == State.AIM_ULTIMATE_RECAST) then
-                target = GetGameObjectHovered() -- This is for the ability to go to the mouse Pos (it uses the target var)
-                local mouse = GetLastMouseClick()
-                if (Distance3D(mouse, componentTransform:GetPosition()) > ultimateRecastRange) then
-                    Log("[FAIL] Ability Ultimate Recast: Ability out of range!\n")
-                    target = nil
-                else
-                    if (target.tag ~= Tag.FLOOR) then
-                        Log("[FAIL] Ability Ultimate: You have to select floor!\n")
-                        target = nil
-                    else
-                        target = mouse
-                        if (componentAnimator ~= nil) then
-                            RecastUltimate(mouse) -- Ult step 6
-                        end
-                    end
-                end
-
+                RecastUltimate(false)
             end
         end
 
@@ -354,7 +358,8 @@ function Update(dt)
                             Passive()
                         else
                             if (footstepsParticle ~= nil) then
-                                footstepsParticle:GetComponentParticle():ResumeParticleSpawn()
+                                feetTimer = 0.5
+                                FootstepMovement()
                             end
                             destination = target:GetTransform():GetPosition()
                             if (currentMovement == Movement.IDLE and isMoving == true) then
@@ -369,7 +374,8 @@ function Update(dt)
                             SetState(State.IDLE)
                         end
                         if (footstepsParticle ~= nil) then
-                            footstepsParticle:GetComponentParticle():ResumeParticleSpawn()
+                            feetTimer = 0.5
+                            FootstepMovement()
                         end
                         destination = goHit:GetTransform():GetPosition()
                         DispatchEvent("Pathfinder_UpdatePath", {{destination}, false, componentTransform:GetPosition()})
@@ -379,7 +385,8 @@ function Update(dt)
                             SetState(State.IDLE)
                         end
                         if (footstepsParticle ~= nil) then
-                            footstepsParticle:GetComponentParticle():ResumeParticleSpawn()
+                            feetTimer = 0.5
+                            FootstepMovement()
                         end
                         destination = GetLastMouseClick()
                         DispatchEvent("Pathfinder_UpdatePath", {{destination}, false, componentTransform:GetPosition()})
@@ -408,7 +415,8 @@ function Update(dt)
                     end
 
                     if (footstepsParticle ~= nil and destination ~= nil) then
-                        footstepsParticle:GetComponentParticle():ResumeParticleSpawn()
+                        feetTimer = 0.5
+                        FootstepMovement()
                     end
 
                     if (mouseParticles ~= nil and destination ~= nil) then
@@ -433,13 +441,6 @@ function Update(dt)
         -- 3
         if (GetInput(23) == KEY_STATE.KEY_DOWN and currentState ~= State.AIM_ULTIMATE_RECAST) then
             ActiveUltimate()
-        end
-
-        -- T
-        if (GetInput(13) == KEY_STATE.KEY_DOWN) then
-            currentHP = 0
-            DispatchGlobalEvent("Player_Health", {characterID, currentHP, maxHP})
-            Die()
         end
 
         -- LSHIFT -> Toggle crouch
@@ -467,18 +468,6 @@ function Update(dt)
     if (hasToMove == true and destination ~= nil) then
         MoveToDestination(dt)
         hasToMove = false
-    end
-
-    if abilities.AbilityPrimary == AbilityStatus.Using then
-        isUsingQ = true
-    elseif abilities.AbilitySecondary == AbilityStatus.Using then
-        isUsingW = true
-    elseif abilities.AbilityUltimate == AbilityStatus.Using then
-        isUsingE = true
-    else
-        isUsingQ = false
-        isUsingW = false
-        isUsingE = false
     end
 end
 
@@ -524,14 +513,14 @@ function SetMovement(newMovement)
         if (componentAnimator ~= nil) then
             componentAnimator:SetSelectedClip("Walk")
         end
-        trackList = {0}
+        trackList = {9}
         ChangeTrack(trackList)
     elseif (newMovement == Movement.RUN) then
         currentMovement = Movement.RUN
         if (componentAnimator ~= nil) then
             componentAnimator:SetSelectedClip("Run")
         end
-        trackList = {1}
+        trackList = {10}
         ChangeTrack(trackList)
     elseif (newMovement == Movement.IDLE_CROUCH) then
         currentMovement = Movement.IDLE_CROUCH
@@ -546,7 +535,7 @@ function SetMovement(newMovement)
         end
     elseif (newMovement == Movement.CROUCH) then
         currentMovement = Movement.CROUCH
-        trackList = {0}
+        trackList = {9}
         ChangeTrack(trackList)
         if (componentAnimator ~= nil) then
             componentAnimator:SetSelectedClip("Crouch")
@@ -569,9 +558,18 @@ function CancelAbilities(onlyAbilities)
     end
 
     if (onlyAbilities == nil) then
+        if componentAnimator ~= nil then
+            if (currentMovement == Movement.IDLE_CROUCH) then
+                componentAnimator:SetSelectedClip("IdleCrouch")
+            else
+                componentAnimator:SetSelectedClip("Idle")
+            end
+        end
+
         if (currentState ~= State.AIM_ULTIMATE_RECAST) then
             SetState(State.IDLE)
         end
+        StopMovement()
     end
 end
 
@@ -582,7 +580,7 @@ function DrawHoverParticle()
         end
     end
 
-    if (IsSelected() == true) then
+    if (isSelected == true) then
         local drawingTarget = GetGameObjectHovered()
         local finalPosition
         if ((currentState == State.AIM_PRIMARY or currentState == State.AIM_SECONDARY or currentState ==
@@ -640,7 +638,7 @@ function DrawActiveAbilities()
         componentLight = gameObject:GetLight()
     end
     if componentLight ~= nil then
-        if (IsSelected() == true) then
+        if (isSelected == true) then
             if (abilities.AbilityPrimary == AbilityStatus.Active) then
                 componentLight:SetRange(primaryCastRange)
                 componentLight:SetAngle(360 / 2)
@@ -666,44 +664,23 @@ function DrawActiveAbilities()
     end
 end
 
-function UpdateStaminaBar()
+function UpdateStamina()
     local proportion = staminaTimer / staminaSeconds
     local recoveryProportion = staminaTimer / recoveryTime
 
-    local pos = componentTransform:GetPosition()
+    -- if proportion >= 0.5 then -- From Green to Yellow
+    --     characterSelectedParticle:GetComponentParticle():SetColor((2 - (proportion * 2)) * 255, 255, 0, 255)
+    -- else -- From Yellow to Red
+    --     characterSelectedParticle:GetComponentParticle():SetColor(255, (proportion * 2) * 255, 0, 255)
+    -- end
 
-    staminaBarGreen:GetTransform():SetPosition(float3.new(pos.x, pos.y + 30, pos.z))
-    staminaBarYellow:GetTransform():SetPosition(float3.new(pos.x, pos.y + 30, pos.z))
-    staminaBarRed:GetTransform():SetPosition(float3.new(pos.x, pos.y + 30, pos.z))
-    staminaBarBlue:GetTransform():SetPosition(float3.new(pos.x, pos.y + 30, pos.z))
-
-    -- NEW
-    if isTired == false then
-        if proportion >= 0.66 then
-            staminaBarGreen:GetTransform():SetScale(float3.new(staminaBarSizeX, staminaBarSizeY * (proportion),
-                staminaBarSizeZ))
-            staminaBarYellow:GetTransform():SetScale(float3.new(0, 0, 0))
-            staminaBarRed:GetTransform():SetScale(float3.new(0, 0, 0))
-            staminaBarBlue:GetTransform():SetScale(float3.new(0, 0, 0))
-        elseif proportion >= 0.33 and proportion < 0.66 then
-            staminaBarGreen:GetTransform():SetScale(float3.new(0, 0, 0))
-            staminaBarYellow:GetTransform():SetScale(float3.new(staminaBarSizeX, staminaBarSizeY * (proportion),
-                staminaBarSizeZ))
-            staminaBarRed:GetTransform():SetScale(float3.new(0, 0, 0))
-            staminaBarBlue:GetTransform():SetScale(float3.new(0, 0, 0))
+    if staminaBar ~= nil then
+        staminaBar:GetTransform2D():SetMask(float2.new(proportion, 1))
+        if proportion <= 0.3 or isTired == true then
+            staminaBar:GetImage():SetTexture(staminaRedPath)
         else
-            staminaBarGreen:GetTransform():SetScale(float3.new(0, 0, 0))
-            staminaBarYellow:GetTransform():SetScale(float3.new(0, 0, 0))
-            staminaBarRed:GetTransform():SetScale(float3.new(staminaBarSizeX, staminaBarSizeY * (proportion),
-                staminaBarSizeZ))
-            staminaBarBlue:GetTransform():SetScale(float3.new(0, 0, 0))
+            staminaBar:GetImage():SetTexture(staminaDefaultPath)
         end
-    else
-        staminaBarGreen:GetTransform():SetScale(float3.new(0, 0, 0))
-        staminaBarYellow:GetTransform():SetScale(float3.new(0, 0, 0))
-        staminaBarRed:GetTransform():SetScale(float3.new(0, 0, 0))
-        staminaBarBlue:GetTransform():SetScale(float3.new(staminaBarSizeX, staminaBarSizeY * (recoveryProportion),
-            staminaBarSizeZ))
     end
 end
 
@@ -711,7 +688,7 @@ function ManageTimers(dt)
     local ret = true
 
     if (isDialogueOpen == true) then
-        ret = false
+        -- ret = false
     end
     if (currentMovement == Movement.RUN and
         GetVariable("GameState.lua", "GodMode", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL) == false) then
@@ -725,14 +702,16 @@ function ManageTimers(dt)
             -- Log("Stamina timer: " .. staminaTimer .. "\n")
         end
     else
-        staminaTimer = staminaTimer + dt
-        if (staminaTimer > recoveryTime) then
+        if (currentMovement == Movement.IDLE or currentMovement == Movement.IDLE_CROUCH) then
+            staminaTimer = staminaTimer + dt * standingStaminaMultiplier
+        else
+            staminaTimer = staminaTimer + dt
+        end
+        if staminaTimer / staminaSeconds >= 1 then
             staminaTimer = staminaSeconds
             isTired = false
-            -- Log("I am recovered! :) \n")
-        else
-            -- Log("Stamina timer: " .. staminaTimer .. "\n")
         end
+        -- Log("Stamina timer: " .. staminaTimer .. "\n")
     end
 
     -- Running state logic
@@ -755,7 +734,7 @@ function ManageTimers(dt)
     end
 
     if (currentState == State.AIM_PRIMARY) then
-        DispatchGlobalEvent("Omozra_Primary", {})
+        SetVariable(true, "GameState.lua", "omozraPrimary", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL)
     end
 
     -- Secondary ability cooldown
@@ -778,7 +757,7 @@ function ManageTimers(dt)
         end
     end
     if (currentState == State.AIM_ULTIMATE) then
-        DispatchGlobalEvent("Omozra_Ultimate", {})
+        SetVariable(true, "GameState.lua", "omozraUltimate", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL)
     end
 
     -- Animation timer
@@ -800,7 +779,11 @@ function ManageTimers(dt)
                         DoUltimateRecast()
                     end
                 elseif (currentState ~= State.DEAD) then
-                    componentAnimator:SetSelectedClip("Idle") -- Comment this line to test animations in-game
+                    if (currentMovement == Movement.IDLE_CROUCH) then
+                        componentAnimator:SetSelectedClip("IdleCrouch")
+                    else
+                        componentAnimator:SetSelectedClip("Idle")
+                    end
                 end
             end
         end
@@ -812,6 +795,27 @@ function ManageTimers(dt)
     end
 
     return ret
+end
+
+feetTimer = 0.0
+leftFoot = true
+function FootstepMovement()
+    if (footstepsParticle ~= nil) then
+        if (feetTimer > 0.5) then
+            feetTimer = 0.0
+            leftFoot = not leftFoot
+            footstepsParticle:GetComponentParticle():ResumeParticleSpawn()
+        end
+
+        if (leftFoot == true) then
+            footstepsParticle:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x - 2,
+                componentTransform:GetPosition().y + 1, componentTransform:GetPosition().z))
+        else
+            footstepsParticle:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x + 2,
+                componentTransform:GetPosition().y + 1, componentTransform:GetPosition().z))
+        end
+
+    end
 end
 
 function MoveToDestination(dt)
@@ -847,8 +851,8 @@ function MoveToDestination(dt)
         end
 
         if (footstepsParticle ~= nil) then
-            footstepsParticle:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x,
-                componentTransform:GetPosition().y + 1, componentTransform:GetPosition().z))
+            feetTimer = feetTimer + dt
+            FootstepMovement()
         end
 
         -- Movement
@@ -871,9 +875,13 @@ end
 
 function StopMovement(resetTarget)
 
-    if (currentMovement == Movement.CROUCH) then
-        SetMovement(Movement.IDLE_CROUCH)
-    else
+    if (currentMovement == Movement.CROUCH or currentMovement == Movement.IDLE_CROUCH) then
+        if resetTarget == nil then
+            SetMovement(Movement.IDLE_CROUCH)
+        else
+            SetMovement(Movement.IDLE)
+        end
+    elseif (currentMovement ~= Movement.IDLE_CROUCH) then
         SetMovement(Movement.IDLE)
     end
 
@@ -946,18 +954,49 @@ function ActivePrimary()
     end
 end
 
-function CastPrimary(thisTarget)
-    abilities.AbilityPrimary = AbilityStatus.Using
-    DispatchGlobalEvent("Player_Ability", {characterID, Ability.Primary, abilities.AbilityPrimary})
+function CastPrimary()
+    if (primaryTimer ~= nil) then
+        Log("[FAIL] Ability Primary: Ability in cooldown!\n")
+        do
+            return
+        end
+    else
+        if (target == nil) then
+            target = GetGameObjectHovered()
+        end
+        if (target.tag ~= Tag.PLAYER) then
+            Log("[FAIL] Ability Primary: You have to select an enemy first!\n")
+            target = nil
+            do
+                return
+            end
+        else
+            if (math.abs(Distance3D(target:GetTransform():GetPosition(), componentTransform:GetPosition())) <=
+                primaryCastRange) then
+                if (componentAnimator ~= nil) then
+                    abilities.AbilityPrimary = AbilityStatus.Using
+                    DispatchGlobalEvent("Player_Ability", {characterID, Ability.Primary, abilities.AbilityPrimary})
 
-    componentAnimator:SetSelectedClip("Point")
-    StopMovement(false)
+                    componentAnimator:SetSelectedClip("Point")
+                    StopMovement(false)
 
-    trackList = {4}
-    ChangeTrack(trackList)
+                    trackList = {4, 5, 6}
+                    ChangeTrack(trackList)
 
-    if (thisTarget ~= gameObject) then
-        LookAtTarget(thisTarget:GetTransform():GetPosition())
+                    if (target ~= gameObject) then
+                        LookAtTarget(target:GetTransform():GetPosition())
+                    end
+                end
+            else
+                if (footstepsParticle ~= nil) then
+                    feetTimer = 0.5
+                    FootstepMovement()
+                end
+                destination = target:GetTransform():GetPosition()
+                SetMovement(Movement.WALK)
+                DispatchEvent("Pathfinder_UpdatePath", {{destination}, false, componentTransform:GetPosition()})
+            end
+        end
     end
 end
 
@@ -965,7 +1004,7 @@ function DoPrimary()
     currentCharges = currentCharges - primaryChargeCost
     DispatchGlobalEvent("Omozra_Charges", {currentCharges, maxCharges})
 
-    DispatchGlobalEvent("Sadiq_Heal", {target, componentTransform:GetPosition()}) -- fields[1] -> target; fields[2] -> pos;
+    DispatchGlobalEvent("Sadiq_Heal", {target, componentTransform:GetPosition(), primaryHealAmount}) -- fields[1] -> target; fields[2] -> pos;
 
     componentAnimator:SetSelectedClip("PointToIdle")
     SetState(State.IDLE)
@@ -987,18 +1026,47 @@ function ActiveSecondary()
     end
 end
 
-function CastSecondary(position)
-    abilities.AbilitySecondary = AbilityStatus.Using
-    DispatchGlobalEvent("Player_Ability", {characterID, Ability.Secondary, abilities.AbilitySecondary})
+function CastSecondary()
+    if (secondaryTimer ~= nil) then
+        Log("[FAIL] Ability Secondary: Ability in cooldown!\n")
+        do
+            return
+        end
+    else
+        if (target == nil) then
+            target = GetGameObjectHovered()
+        end
+        if (target.tag ~= Tag.ENEMY and target.tag ~= Tag.CORPSE) then
+            Log("[FAIL] Ability Secondary: You have to select an enemy first!\n")
+            target = nil
+            do
+                return
+            end
+        end
+        if (math.abs(Distance3D(target:GetTransform():GetPosition(), componentTransform:GetPosition())) <=
+            secondaryCastRange) then
+            if (componentAnimator ~= nil) then
+                abilities.AbilitySecondary = AbilityStatus.Using
+                DispatchGlobalEvent("Player_Ability", {characterID, Ability.Secondary, abilities.AbilitySecondary})
 
-    componentAnimator:SetSelectedClip("Point")
-    StopMovement(false)
+                componentAnimator:SetSelectedClip("Point")
+                StopMovement(false)
 
-    trackList = {4}
-    ChangeTrack(trackList)
+                trackList = {4, 5, 6}
+                ChangeTrack(trackList)
 
-    LookAtTarget(position)
-
+                LookAtTarget(target:GetTransform():GetPosition())
+            end
+        else
+            if (footstepsParticle ~= nil) then
+                feetTimer = 0.5
+                FootstepMovement()
+            end
+            destination = target:GetTransform():GetPosition()
+            SetMovement(Movement.WALK)
+            DispatchEvent("Pathfinder_UpdatePath", {{destination}, false, componentTransform:GetPosition()})
+        end
+    end
 end
 
 function DoSecondary()
@@ -1036,7 +1104,53 @@ function ActiveUltimate()
     end
 end
 
-function CastUltimate(position) -- Ult step 3
+function CastUltimate()
+    if (ultimateTimer ~= nil) then
+        Log("[FAIL] Ability Ultimate: Ability in cooldown!\n")
+        do
+            return
+        end
+    else
+        if (target == nil) then
+            target = GetGameObjectHovered()
+        end
+        if (target.tag ~= Tag.PLAYER) then
+            Log("[FAIL] Ability Ultimate: You have to select an enemy first!\n")
+            target = nil
+            do
+                return
+            end
+        end
+        if (math.abs(Distance3D(target:GetTransform():GetPosition(), componentTransform:GetPosition())) <=
+            ultimateCastRange) then
+            if (componentAnimator ~= nil) then
+                abilities.AbilityUltimate = AbilityStatus.Using
+                DispatchGlobalEvent("Player_Ability", {characterID, Ability.Ultimate, abilities.AbilityUltimate})
+
+                componentAnimator:SetSelectedClip("Point")
+
+                StopMovement(false)
+
+                LookAtTarget(target:GetTransform():GetPosition())
+
+                trackList = {4, 5, 6}
+                ChangeTrack(trackList)
+            end
+        else
+            if (footstepsParticle ~= nil) then
+                feetTimer = 0.5
+                FootstepMovement()
+            end
+            destination = target:GetTransform():GetPosition()
+            SetMovement(Movement.WALK)
+            DispatchEvent("Pathfinder_UpdatePath", {{destination}, false, componentTransform:GetPosition()})
+        end
+    end
+end
+
+function DoUltimate()
+    DispatchGlobalEvent("Used_Ultimate", {ultimateSpiceCost})
+
     if (GetVariable("GameState.lua", "GodMode", INSPECTOR_VARIABLE_TYPE.INSPECTOR_BOOL) == false) then
         -- Subtracts spice cost when using ultimate ability
         OGSpice = GetVariable("GameState.lua", "spiceAmount", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
@@ -1050,20 +1164,6 @@ function CastUltimate(position) -- Ult step 3
     abilities.AbilityUltimate = AbilityStatus.Using
     DispatchGlobalEvent("Player_Ability", {characterID, Ability.Ultimate, abilities.AbilityUltimate})
 
-    componentAnimator:SetSelectedClip("Point")
-
-    StopMovement(false)
-
-    LookAtTarget(target:GetTransform():GetPosition())
-
-    trackList = {4}
-    ChangeTrack(trackList)
-end
-
-function DoUltimate() -- Ult step 4
-    abilities.AbilityUltimate = AbilityStatus.Using
-    DispatchGlobalEvent("Player_Ability", {characterID, Ability.Ultimate, abilities.AbilityUltimate})
-
     DispatchGlobalEvent("Sadiq_Update_Target", {target, 1}) -- fields[1] -> target; fields[2] -> targeted for (1 -> warning; 2 -> eat; 3 -> spit)
     StopMovement()
     componentAnimator:SetSelectedClip("PointToIdle")
@@ -1072,24 +1172,52 @@ function DoUltimate() -- Ult step 4
     abilities.AbilityUltimateRecast = AbilityStatus.Active -- Used this only for drawing
 end
 
-function RecastUltimate(position)
-    abilities.AbilityUltimateRecast = AbilityStatus.Casting -- Used this only for drawing
+function RecastUltimate(isAlreadyCasted)
 
-    componentAnimator:SetSelectedClip("Point")
+    local goHovered = GetGameObjectHovered()
+    if (isAlreadyCasted == false) then
+        -- GetGameObjectHovered() updates the last mouse click
+        target = goHovered
+        mouse = GetLastMouseClick()
+        if (target.tag ~= Tag.FLOOR) then
+            Log("[FAIL] Ability Ultimate: You have to select floor!\n")
+            target = nil
+            do
+                return
+            end
+        end
+        target = mouse
+    end
+    if (math.abs(Distance3D(target, componentTransform:GetPosition())) <= ultimateRecastRange) then
+        if (componentAnimator ~= nil) then
+            abilities.AbilityUltimateRecast = AbilityStatus.Casting -- Used this only for drawing
 
-    StopMovement(false)
+            componentAnimator:SetSelectedClip("Point")
 
-    LookAtTarget(position)
+            StopMovement(false)
 
-    trackList = {4}
-    ChangeTrack(trackList)
+            LookAtTarget(target)
 
-    ultimateTimer = 0.0
-    abilities.AbilityUltimate = AbilityStatus.Cooldown
-    DispatchGlobalEvent("Player_Ability", {characterID, Ability.Ultimate, abilities.AbilityUltimate, ultimateCooldown})
+            trackList = {4, 5, 6}
+            ChangeTrack(trackList)
+
+            ultimateTimer = 0.0
+            abilities.AbilityUltimate = AbilityStatus.Cooldown
+            DispatchGlobalEvent("Player_Ability",
+                {characterID, Ability.Ultimate, abilities.AbilityUltimate, ultimateCooldown})
+        end
+    else
+        if (footstepsParticle ~= nil) then
+            feetTimer = 0.5
+            FootstepMovement()
+        end
+        destination = target
+        SetMovement(Movement.WALK)
+        DispatchEvent("Pathfinder_UpdatePath", {{destination}, false, componentTransform:GetPosition()})
+    end
 end
 
-function DoUltimateRecast() -- Ult step 7
+function DoUltimateRecast()
     DispatchGlobalEvent("Sadiq_Update_Target", {target, 3}) -- fields[1] -> target; fields[2] -> targeted for (1 -> warning; 2 -> eat; 3 -> spit)
 
     abilities.AbilityUltimateRecast = AbilityStatus.Normal -- Used this only for drawing
@@ -1113,14 +1241,17 @@ function TakeDamage(damage)
         damage = 1
     end
 
-    if (currentHP > 1) then
-        currentHP = currentHP - damage
+    currentHP = currentHP - damage
+    if (currentHP > 0) then
+        Log("Omozra: Taking " .. damage .. " damage, current HP = " .. currentHP .. "\n")
+
         DispatchGlobalEvent("Player_Health", {characterID, currentHP, maxHP})
 
-        trackList = {2}
+        trackList = {0, 1, 2}
         ChangeTrack(trackList)
     else
         currentHP = 0
+        Log("Omozra: Dying\n")
         DispatchGlobalEvent("Player_Health", {characterID, currentHP, maxHP})
         Die()
     end
@@ -1138,7 +1269,7 @@ function Die()
         ChangeTrack(trackList)
     end
 
-    DispatchGlobalEvent("Player_Death", {characterID})
+    SetVariable(0, "GameState.lua", "gameOverTimer", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
 end
 --------------------------------------------------
 
@@ -1156,6 +1287,8 @@ function EventHandler(key, fields)
                 TakeDamage(1)
             elseif (fields[2] == "Sardaukar") then
                 TakeDamage(2)
+            elseif (fields[2] == "Rabban") then
+                TakeDamage(666)
             end
         end
     elseif (key == "Active_Primary") then
@@ -1180,8 +1313,7 @@ function EventHandler(key, fields)
             -- If game changed to omozra, update HUD events depending on Abilities
             DispatchGlobalEvent("Player_Ability", {characterID, Ability.Primary, abilities.AbilityPrimary})
             -- Log("Omozra: Primary = " .. abilities.AbilityPrimary .. "\n")
-            DispatchGlobalEvent("Player_Ability",
-                {characterID, Ability.Secondary, abilities.AbilitySecondary, secondaryTimer})
+            DispatchGlobalEvent("Player_Ability", {characterID, Ability.Secondary, abilities.AbilitySecondary})
             -- Log("Omozra: Secondary = " .. abilities.AbilitySecondary .. "\n")
             DispatchGlobalEvent("Player_Ability",
                 {characterID, Ability.Ultimate, abilities.AbilityUltimate, ultimateTimer})
@@ -1196,7 +1328,7 @@ function EventHandler(key, fields)
     elseif (key == "Dialogue_Closed") then
         isDialogueOpen = false
     elseif (key == "Spice_Reward") then
-        trackList = {5}
+        trackList = {7, 8}
         ChangeTrack(trackList)
     elseif (key == "Spit_Heal_Hit") then
         if (currentCharges >= primaryChargeCost) then
@@ -1207,9 +1339,20 @@ function EventHandler(key, fields)
             DispatchGlobalEvent("Player_Ability", {characterID, Ability.Primary, abilities.AbilityPrimary})
         end
 
+        if currentCharges >= secondaryChargeCost then
+            abilities.AbilitySecondary = AbilityStatus.Normal
+            DispatchGlobalEvent("Player_Ability", {characterID, Ability.Secondary, abilities.AbilitySecondary})
+        else
+            abilities.AbilitySecondary = AbilityStatus.Disabled
+            DispatchGlobalEvent("Player_Ability", {characterID, Ability.Secondary, abilities.AbilitySecondary})
+        end
+
         if (fields[1] == gameObject) then
             if (currentHP < maxHP) then
-                currentHP = currentHP + fields[2]
+                currentHP = currentHP + primaryHealAmount
+                if currentHP > maxHP then
+                    currentHP = maxHP
+                end
                 DispatchGlobalEvent("Player_Health", {characterID, currentHP, maxHP})
                 Log("Sadiq has healed Omozra. Current HP = " .. currentHP .. "\n")
 
@@ -1218,12 +1361,20 @@ function EventHandler(key, fields)
             end
         end
     elseif key == "Sadiq_Update_Target" then
-        if fields[2] == 2 then
-            if (currentCharges >= secondaryChargeCost) then
+        if fields[2] == 2 or fields[2] == 4 then
+            if (currentCharges >= primaryChargeCost) then
+                abilities.AbilityPrimary = AbilityStatus.Normal
+                DispatchGlobalEvent("Player_Ability", {characterID, Ability.Primary, abilities.AbilityPrimary})
+            else
+                abilities.AbilityPrimary = AbilityStatus.Disabled
+                DispatchGlobalEvent("Player_Ability", {characterID, Ability.Primary, abilities.AbilityPrimary})
+            end
+
+            if currentCharges >= secondaryChargeCost then
                 abilities.AbilitySecondary = AbilityStatus.Normal
                 DispatchGlobalEvent("Player_Ability", {characterID, Ability.Secondary, abilities.AbilitySecondary})
             else
-                abilities.AbilityPrimary = AbilityStatus.Disabled
+                abilities.AbilitySecondary = AbilityStatus.Disabled
                 DispatchGlobalEvent("Player_Ability", {characterID, Ability.Secondary, abilities.AbilitySecondary})
             end
         end
@@ -1233,9 +1384,53 @@ function EventHandler(key, fields)
     elseif (key == "Smokebomb_End") then
         smokebombPosition = nil
         smokebombRadius = nil
-    elseif (key == "Update_Omozra_Position") then
-        Log("Receiving Omozra Position \n")
+    elseif (key == "Update_Omozra_State") then -- fields 1 to 3: position
+        -- fields 4 to 7: (primary, secondary, ultimate, passive)
+        -- fields 8 and 9: health and charges
+
         componentRigidBody:SetRigidBodyPos(float3.new(fields[1], fields[2], fields[3]))
+
+        if (fields[4] == 1) then
+            primaryCastRange = 265
+        elseif (fields[4] == 2) then
+            primaryChargeCost = 5
+        elseif (fields[4] == 3) then
+            primaryHealAmount = 2
+        end
+
+        if (fields[5] == 1) then
+            secondaryCastRange = 265
+        elseif (fields[5] == 2) then
+
+        elseif (fields[5] == 3) then
+
+        end
+
+        if (fields[6] == 1) then
+            ultimateCastRange = 190
+        elseif (fields[6] == 2) then
+            ultimateCastRange = 225
+        elseif (fields[6] == 3) then
+            ultimateSpiceCost = 750
+        end
+
+        if (fields[7] == 1) then
+            staminaSeconds = 7
+            staminaTimer = staminaSeconds
+        elseif (fields[7] == 2) then
+            runMultiplierPercentage = 144
+        elseif (fields[7] == 3) then
+            maxHP = 4
+        end
+
+        currentHP = fields[8]
+        DispatchGlobalEvent("Player_Health", {characterID, currentHP, maxHP})
+
+        currentCharges = fields[9]
+        DispatchGlobalEvent("Omozra_Charges", {currentCharges, maxCharges})
+
+        Log("OMOZRA HEALTH POINTS: " .. currentHP .. "\n")
+
     elseif (key == "Omozra_Primary_Bugged") then
         currentCharges = currentCharges + primaryChargeCost
         abilities.AbilityPrimary = AbilityStatus.Normal
@@ -1254,19 +1449,15 @@ function EventHandler(key, fields)
         local NewSpice = OGSpice + ultimateSpiceCost
         SetVariable(NewSpice, "GameState.lua", "spiceAmount", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
         Log("TP bugged, correction applied.\n")
+    elseif key == "Enable_Character" then
+        if characterID == fields[1] then
+            isAvailable = true
+        end
+    elseif key == "Disable_Character" then
+        if characterID == fields[1] then
+            isAvailable = false
+        end
     end
-end
-
-function ConfigStaminaBars()
-    Log("Configuring stamina bars\n")
-    staminaBarYellow = Find("Stamina Bar Yellow")
-    staminaBarGreen = Find("Stamina Bar Green")
-    staminaBarRed = Find("Stamina Bar Red")
-    staminaBarBlue = Find("Stamina Bar Blue")
-
-    staminaBarSizeX = staminaBarGreen:GetTransform():GetScale().x
-    staminaBarSizeY = staminaBarGreen:GetTransform():GetScale().y
-    staminaBarSizeZ = staminaBarGreen:GetTransform():GetScale().z
 end
 --------------------------------------------------
 

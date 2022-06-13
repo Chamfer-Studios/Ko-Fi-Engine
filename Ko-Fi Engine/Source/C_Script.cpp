@@ -28,6 +28,10 @@
 
 #include <fstream>
 #include <vector>
+#include <thread>
+
+
+
 
 C_Script::C_Script(GameObject* parent) : Component(parent)
 {
@@ -53,6 +57,11 @@ bool C_Script::CleanUp()
 	if (s != nullptr)
 	{
 		s->handler->CleanUp();
+
+		for (auto var : s->inspectorVariables)
+		{
+			RELEASE(var);
+		}
 		s->inspectorVariables.clear();
 		s->inspectorVariables.shrink_to_fit();
 		RELEASE(s);
@@ -63,83 +72,109 @@ bool C_Script::CleanUp()
 
 bool C_Script::Update(float dt)
 {
-	if (s != nullptr)
-	{
-		for (auto v : s->inspectorVariables) {
-			if (v->type == INSPECTOR_GAMEOBJECT) {
-				try {
-					GameObject* go = std::get<GameObject*>(v->value);
-				}
-				catch (...) {
-					v->value = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(std::get<unsigned int>(v->value));
-				}
-			}
-		}
+	OPTICK_EVENT();
 
-		while (eventQueue.size() != 0) {
-			auto e = eventQueue.front();
-			eventQueue.pop();
+	InnerUpdate(dt);
 
-			auto receiver = sol::protected_function(s->handler->lua["EventHandler"]);
-
-			if (receiver.valid()) {
-				sol::protected_function_result result = receiver(e.key, e.fields);
-				if (result.valid()) {
-					// Call succeeded
-				}
-				else {
-					// Call failed
-					sol::error err = result;
-					std::string what = err.what();
-					appLog->AddLog("%s\n", what.c_str());
-				}
-			}
-		}
-
-		s->lua_update = sol::protected_function(s->handler->lua["Update"]);
-		if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
-		{
-			if (s->lua_update.valid()) {
-				sol::protected_function_result result = s->lua_update(dt);
-				if (result.valid()) {
-					// Call succeeded
-				}
-				else {
-					// Call failed
-					sol::error err = result;
-					std::string what = err.what();
-					appLog->AddLog("%s\n", what.c_str());
-				}
-			}
-		}
-	}
+	//if (worker != nullptr) worker->join();
+	//worker = std::make_shared<std::thread>(std::bind(&C_Script::InnerUpdate, this, std::ref(dt)));
+	//worker->detach();
 
 	return true;
+}
+
+void C_Script::InnerUpdate(float dt)
+{
+	OPTICK_EVENT();
 }
 
 bool C_Script::PostUpdate(float dt)
 {
 	if (s != nullptr)
 	{
-		auto post_update = sol::protected_function(s->handler->lua["PostUpdate"]);
 		if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
 		{
-			if (post_update.valid()) {
-				sol::protected_function_result result = post_update(dt);
-				if (result.valid()) {
-					// Call succeeded
-				}
-				else {
-					// Call failed
-					sol::error err = result;
-					std::string what = err.what();
-					appLog->AddLog("%s\n", what.c_str());
-				}
-			}
+			PostUpdateScript(dt);
 		}
 	}
 
 	return true;
+}
+
+void C_Script::UpdateInspectorVariables(float dt) 
+{
+	OPTICK_EVENT();
+
+	for (auto v : s->inspectorVariables) {
+		if (v->type == INSPECTOR_GAMEOBJECT) {
+			try {
+				GameObject* go = std::get<GameObject*>(v->value);
+			}
+			catch (...) {
+				v->value = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->GetGameObject(std::get<unsigned int>(v->value));
+			}
+		}
+	}
+}
+void C_Script::UpdateEventHandler(float dt)
+{
+	OPTICK_EVENT();
+
+	if (s->lua_event_handler_is_valid) {
+		while (eventQueue.size() != 0) {
+			auto e = eventQueue.front();
+			eventQueue.pop();
+
+			ProcessResult(s->lua_event_handler(e.key, e.fields));
+		}
+	}
+}
+void C_Script::UpdateScript(float dt)
+{
+	OPTICK_EVENT();
+	OPTICK_TAG("Script Name: ", s->path.c_str());
+
+	if (s->lua_update_is_valid) {
+		ProcessResult(s->lua_update(dt));
+	}
+}
+void C_Script::UpdateUIPlay(float dt)
+{
+	OPTICK_EVENT();
+
+	if (s->lua_update_UI_is_valid) {
+		ProcessResult(s->lua_update_UI(dt));
+	}
+}
+void C_Script::UpdateUIPause(float dt)
+{
+	OPTICK_EVENT();
+
+	if (s->lua_update_UI_is_valid) {
+		ProcessResult(s->lua_update_UI(dt));
+	}
+}
+void C_Script::PostUpdateScript(float dt)
+{
+	OPTICK_EVENT();
+
+	if (s->lua_post_update_is_valid) {
+		ProcessResult(s->lua_post_update(dt));
+	}
+}
+
+void C_Script::ProcessResult(sol::protected_function_result result)
+{
+	return;
+	if (result.valid()) {
+		// Call succeeded
+	}
+	else {
+		// Call failed
+		sol::error err = result;
+		std::string what = err.what();
+		appLog->AddLog("%s\n", what.c_str());
+	}
 }
 
 bool C_Script::OnPlay()
@@ -148,11 +183,10 @@ bool C_Script::OnPlay()
 
 	if (s != nullptr)
 	{
-		auto start = sol::protected_function(s->handler->lua["Start"]);
 		if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
 		{
-			if (start.valid()) {
-				sol::protected_function_result result = start();
+			if (s->lua_start_is_valid) {
+				sol::protected_function_result result = s->lua_start();
 				if (result.valid()) {
 					// Call succeeded
 				}
@@ -175,11 +209,10 @@ bool C_Script::OnSceneSwitch()
 
 	if (s != nullptr)
 	{
-		auto start = sol::protected_function(s->handler->lua["Start"]);
 		if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
 		{
-			if (start.valid()) {
-				sol::protected_function_result result = start();
+			if (s->lua_start_is_valid) {
+				sol::protected_function_result result = s->lua_start();
 				if (result.valid()) {
 					// Call succeeded
 				}
@@ -239,6 +272,8 @@ bool C_Script::InspectorDraw(PanelChooser* chooser)
 		}
 
 		bool isSeparatorNeeded = true;
+
+		ImGui::Checkbox("ASYNC", &isAsync);
 
 		if (s != nullptr)
 		{
@@ -410,6 +445,20 @@ void C_Script::ReloadScript(ScriptHandler* handler)
 	handler->script = handler->handler->lua.script_file(handler->path);
 	if (handler->script.valid()) {
 		// Call succeeded
+		s->lua_update = sol::protected_function(s->handler->lua["Update"]);
+		if (s->lua_update.valid()) s->lua_update_is_valid = true;
+
+		s->lua_update_UI = sol::protected_function(s->handler->lua["UpdateUI"]);
+		if (s->lua_update_UI.valid()) s->lua_update_UI_is_valid = true;
+
+		s->lua_event_handler = sol::protected_function(s->handler->lua["EventHandler"]);
+		if (s->lua_event_handler.valid()) s->lua_event_handler_is_valid = true;
+
+		s->lua_start = sol::protected_function(s->handler->lua["Start"]);
+		if (s->lua_start.valid()) s->lua_start_is_valid = true;
+
+		s->lua_post_update = sol::protected_function(s->handler->lua["PostUpdate"]);
+		if (s->lua_post_update.valid()) s->lua_post_update_is_valid = true;
 	}
 	else {
 		// Call failed
@@ -418,6 +467,8 @@ void C_Script::ReloadScript(ScriptHandler* handler)
 		appLog->AddLog("%s\n", what.c_str());
 	}
 	handler->isScriptLoaded = true;
+
+
 }
 
 void C_Script::Save(Json& json) const
@@ -426,6 +477,7 @@ void C_Script::Save(Json& json) const
 
 	json["id"] = id;
 	json["file_name"] = s->path;
+	json["async"] = isAsync;
 	Json jsonIV;
 	for (InspectorVariable* variable : s->inspectorVariables)
 	{
@@ -529,6 +581,14 @@ void C_Script::Load(Json& json)
 	else {
 		SetId(RNG::GetRandomUint());
 	}
+
+	if (json.find("async") != json.end()) {
+		isAsync = json.at("async");
+	}
+	else {
+		isAsync = false;
+	}
+
 	LoadInspectorVariables(json);
 	ReloadScript(s);
 	RemoveOldVariables();
@@ -537,6 +597,34 @@ void C_Script::Load(Json& json)
 void C_Script::SetId(int id)
 {
 	this->id = id;
+}
+
+void C_Script::InitScriptUpdate(float dt)
+{
+	if (s != nullptr)
+	{
+
+		UpdateInspectorVariables(dt);
+
+		//if (RNG::GetBoundedRandomUint(0, 10) == 1)
+		UpdateEventHandler(dt);
+	}
+}
+
+void C_Script::DoScriptUpdate(float dt)
+{
+	if (s != nullptr)
+	{
+		if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PLAYING && s->isScriptLoaded)
+		{
+			UpdateScript(dt);
+			UpdateUIPlay(dt);
+		}
+		else if (owner->GetEngine()->GetSceneManager()->GetGameState() == GameState::PAUSED && s->isScriptLoaded)
+		{
+			UpdateUIPause(dt);
+		}
+	}
 }
 
 

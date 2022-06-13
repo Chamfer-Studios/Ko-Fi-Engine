@@ -1,254 +1,324 @@
 {
   "dialogues": [
     {
-      "id": 11,
-      "targetID": -1,
-      "src": "Assets/UI/HUD/blank_asset_v1.0.png",
-      "char": " ",
-      "line1": "You can move by right clicking where you want to go.              ",
-      "line2": "To take a better look around with Q and E.                        "
-    },
-    {
       "id": 1,
-      "targetID": 11,
+      "targetID": 2,
       "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
-      "char": " ",
+      "char": "Zhib             ",
       "line1": "I hope it is not too late. I need to find Nerala as soon as possible ",
-      "line2": "and reunite with Omozrra.                                            "
+      "line2": "and reunite with Omozra.                                            "
     },
     {
       "id": 2,
       "targetID": 3,
-      "src": "Assets/UI/HUD/blank_asset_v1.0.png",
+      "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "An enemy! You can attack by right clicking on them",
-      "line2": "be careful though, if they detect you, they will strike back!"
+      "line1": "You can move by right clicking where you want to go.              ",
+      "line2": "You can run by double clicking but only for a short period of time."
     },
     {
       "id": 3,
       "targetID": -1,
-      "src": "Assets/UI/HUD/blank_asset_v1.0.png",
+      "src": "Assets/UI/HUD/logo_dialogs.png",
+      "char": " ",
+      "line1": "You can move the camera by approaching your mouse to the edges of the screen",
+      "line2": "OR with WASD. You can rotate it by clicking the mouse wheel and dragging.    "
+    },
+    {
+      "id": 4,
+      "targetID": -1,
+      "src": "Assets/UI/HUD/logo_dialogs.png",
+      "char": " ",
+      "line1": "Spice is used to cast and upgrade your abilities.                    ",
+      "line2": "Your character will automatically pick it if you move close to it.   "
+    },
+    {
+      "id": 5,
+      "targetID": -1,
+      "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
       "line1": "To better avoid being detected, you can enter stealth ",
       "line2": "by pressing shift.                                    "
     },
     {
-      "id": 4,
-      "targetID": 5,
-      "src": "Assets/UI/HUD/blank_asset_v1.0.png",
-      "char": " ",
-      "line1": "To deal with this encounter you will have to use your knife,",
-      "line2": "Press 1 then left click on the enemy to use it."
-    },
-    {
-      "id": 5,
-      "targetID": -1,
-      "src": "Assets/UI/HUD/blank_asset_v1.0.png",
-      "char": " ",
-      "line1": "You have three skills that can be use with the numbers 1, 2 and 3.",
-      "line2": "Your ultimate (ability 3) consumes spice to cast. So think before using it"
-    },
-    {
       "id": 6,
-      "targetID": 12,
-      "src": "Assets/UI/HUD/blank_asset_v1.0.png",
-      "char": " ",
-      "line1": "You have access to a new character.                             ",
-      "line2": "Press Z to select Zhib and X to select Nerala.                  "
-    },
-    {
-      "id": 12,
-      "targetID": 13,
-      "src": "Assets/UI/HUD/blank_asset_v1.0.png",
-      "char": " ",
-      "line1": "Her Abilities focus on infiltration (Ability 1, Sleeping Dart) and",
-      "line2": "stealth (ability 2, Smoke Bomb), her ultimate allows a long distance kill"
-    },
-    {
-      "id": 13,
       "targetID": -1,
-      "src": "Assets/UI/HUD/blank_asset_v1.0.png",
+      "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "Sleeping Dart Snoozes its target, making it easy to get around them.",
-      "line2": "Smoke bomb creates an area that makes it much more difficult to be detected."
+      "line1": "Carefull! Enemies will detect you visually and auditory.            ",
+      "line2": " "
     },
     {
       "id": 7,
       "targetID": -1,
-      "src": "Assets/UI/HUD/blank_asset_v1.0.png",
+      "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "Enemies drop spice when defeated. Pick it up by right clicking on it",
-      "line2": "Spice will be directly added to your inventory               "
+      "line1": "You can eliminate enemies with a basic attack or with abilities.          ",
+      "line2": "Zhib's first ability is a throwable knife, use it to kill the Harkonnen.   "
     },
     {
       "id": 8,
       "targetID": 9,
-      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "I see we require a different type of movement here,",
-      "line2": "go ahead and do your thing.                        "
+      "line1": "Zhib's second ability is a Decoy                                        ",
+      "line2": "You can throw it to distract enemies.                                   "
     },
     {
       "id": 9,
-      "targetID": 10,
-      "src": "Assets/UI/HUD/Portraits/nebala_v1.0.png",
+      "targetID": -1,
+      "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "(Nods in agreement).                               ",
-      "line2": " "
+      "line1": "Zhib's ultimate ability can kill entire groups of enemies.                ",
+      "line2": "Be careful to not abuse it, spice is scarce.                             "
     },
     {
       "id": 10,
       "targetID": -1,
-      "src": "Assets/UI/HUD/blank_asset_v1.0.png",
+      "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "These types of walls can be climbed by Nerala",
-      "line2": "simply click on the wall and she will climb to the top."
+      "line1": "Nerala's first ability is a sleeping dart.                               ",
+      "line2": "Enemies under its effects will have a harder time detecting you.         "
+    },
+    {
+      "id": 11,
+      "targetID": -1,
+      "src": "Assets/UI/HUD/logo_dialogs.png",
+      "char": " ",
+      "line1": "Nerala's second ability is a smoke bomb.                                 ",
+      "line2": "Enemies will not detect you inside the smoke.                            "
+    },
+    {
+      "id": 12,
+      "targetID": 13,
+      "src": "Assets/UI/HUD/logo_dialogs.png",
+      "char": " ",
+      "line1": "Nerala's ultimate ability is the Hunter Seeker.                          ",
+      "line2": "It can kill enemies on contact, and also scout large areas.              "
+    },
+    {
+      "id": 13,
+      "targetID": -1,
+      "src": "Assets/UI/HUD/logo_dialogs.png",
+      "char": " ",
+      "line1": "But be carefull, enemies should not detect it or it will be destroyed. ",
+      "line2": " "
     },
     {
       "id": 14,
-      "targetID": -1,
-      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "targetID": 15,
+      "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "Probably Shouldn't engage these enemies head on without some backup.",
-      "line2": " "
+      "line1": "Omozra's first ability is a heal.                                      ",
+      "line2": "It consumes charges.                                                   "
     },
     {
       "id": 15,
       "targetID": -1,
-      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "There are sounds of a struggle going on coming from there, I think",
-      "line2": "Nerala finally got angry with her captors, better go find her quickly."
+      "line1": "You can get more charges by eating corpses with the worm.              ",
+      "line2": "To do so, right click a corpse with Omozra                             "
     },
     {
       "id": 16,
-      "targetID": 17,
-      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "targetID": -1,
+      "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": " *Nerala Appears from behind Zhib, aiming at him with her crossbow* ",
-      "line2": "To be on this side of the fight is as scary as always."
+      "line1": "Omozra's second ability will let you kill enemies safely.             ",
+      "line2": "Keep it mind that it also needs charges to be used.                   "
     },
     {
       "id": 17,
-      "targetID": 18,
-      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "targetID": -1,
+      "src": "Assets/UI/HUD/logo_dialogs.png",
       "char": " ",
-      "line1": "What happened here? We have to liberate these men,",
-      "line2": "we cannot leave them here.                        "
-    },
-    {
-      "id": 18,
-      "targetID": 19,
-      "src": "Assets/UI/HUD/Portraits/nebala_v1.0.png",
-      "char": " ",
-      "line1": "(Through the speaking device) It's too late, when I arrived they",
-      "line2": "were already dead. We need to move, Rabaan is still in the camp."
-    },
-    {
-      "id": 19,
-      "targetID": 20,
-      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
-      "char": " ",
-      "line1": "This is unacceptable, two of our men are dead because of some outburst",
-      "line2": "of bravery. This can not be overlooked Nerala, not at a time like this."
+      "line1": "Omozra's ultimate ability will will let you teleport Zhib or Nerala. ",
+      "line2": "It can be very useful to catch enemies off guard.                    "
     },
     {
       "id": 20,
-      "targetID": 21,
-      "src": "Assets/UI/HUD/Portraits/nebala_v1.0.png",
-      "char": " ",
-      "line1": "There are necessary sacrifices in a war. I will take full responsibility",
-      "line2": "for my actions.                                                         "
-    },
-    {
-      "id": 21,
-      "targetID": 22,
-      "src": "Assets/UI/HUD/Portraits/nebala_v1.0.png",
-      "char": " ",
-      "line1": "But I will finish what I came to do, I wont let the death of these men ",
-      "line2": "be in vain."
-    },
-    {
-      "id": 22,
-      "targetID": 23,
+      "targetID": -1,
       "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
-      "char": " ",
-      "line1": "We will finish what you started. Give me all the intel.            ",
+      "char": "Zhib             ",
+      "line1": "Probably shouldn't engage these enemies head on without some backup.",
       "line2": " "
     },
     {
-      "id": 23,
+      "id": 21,
       "targetID": -1,
       "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
-      "char": " ",
-      "line1": "Putting it simply, Rabban was sighted nearby supervising the reconnaissance",
-      "line2": "mission himself, they are too close to our home, now is the time to end this."
+      "char": "Zhib             ",
+      "line1": "There are sounds of a struggle going on coming from there.           ",
+      "line2": "That could be Nerala!                                                "
+    },
+    {
+      "id": 22,
+      "targetID": 24,
+      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "char": "Zhib             ",
+      "line1": "What happened here?                                               ",
+      "line2": " "
     },
     {
       "id": 24,
-      "targetID": -1,
+      "targetID": 25,
+      "src": "Assets/UI/HUD/Portraits/nerala_v1.0.png",
+      "char": "Nerala           ",
+      "line1": "(Through the speaking device) It's too late, when I arrived they",
+      "line2": "ambushed me. We need to move, Rabban is still in the camp.      "
+    },
+    {
+      "id": 25,
+      "targetID": 26,
       "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
-      "char": " ",
-      "line1": "Hmm,  don't think we can face these enemies head on, follow me,    ",
-      "line2": "I saw something from the thopter, I think I know a way around them."
+      "char": "Zhib             ",
+      "line1": "This is unacceptable, you can't put the sietch in danger because of an outburst",
+      "line2": "of bravery. This can not be overlooked Nerala, not at a time like this."
     },
     {
       "id": 26,
       "targetID": 27,
-      "src": "Assets/UI/HUD/Portraits/blank_asset_v1.0.png",
-      "char": " ",
-      "line1": "I thought that after all those attacks, your kind you would be a force",
-      "line2": "to be reckoned. But you are nothing more than insects. Rats trying to steal"
+      "src": "Assets/UI/HUD/Portraits/nerala_v1.0.png",
+      "char": "Nerala           ",
+      "line1": "I understand, but sometimes you have to take risks.               ",
+      "line2": "I will take full responsibility for my actions.                   "
     },
     {
       "id": 27,
       "targetID": 28,
-      "src": "Assets/UI/HUD/Portraits/blank_asset_v1.0.png",
-      "char": " ",
-      "line1": "the food from us, the great harkonnen. I will enjoy killing every single",
-      "line2": "ant in that filthy burrow of yours.                                     "
+      "src": "Assets/UI/HUD/Portraits/nerala_v1.0.png",
+      "char": "Nerala           ",
+      "line1": "But I will finish what I came here to do.                          ",
+      "line2": "           "
     },
     {
       "id": 28,
       "targetID": 29,
       "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
-      "char": " ",
-      "line1": "No... It's a trap! Make haste! we are in serious problems. We should have ",
-      "line2": "thought about this, now due to our own stupidity we led them straight to our home."
+      "char": "Zhib             ",
+      "line1": "WE will finish what you started. Give me all the intel.            ",
+      "line2": " "
     },
     {
       "id": 29,
-      "targetID": 30,
-      "src": "Assets/UI/HUD/Portraits/nebala_v1.0.png",
-      "char": " ",
-      "line1": "That is not possible, they would have to follow us to find Sannara, or ",
-      "line2": "get the information from the source... oh no, our man.                 "
+      "targetID": 36,
+      "src": "Assets/UI/HUD/Portraits/nerala_v1.0.png",
+      "char": "Nerala           ",
+      "line1": "Putting it simply, Rabban was sighted nearby supervising the reconnaissance",
+      "line2": "mission himself, they are too close to our home, now is the time to end this."
     },
     {
       "id": 30,
       "targetID": -1,
       "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "char": "Zhib             ",
+      "line1": "Hmm, that must be the camp entrance, come on, follow me, Omozra shouldn't be",
+      "line2": "too far from here, and I dont belive he would be so naive as to enter alone"
+    },
+    {
+      "id": 31,
+      "targetID": 32,
+      "src": "Assets/UI/HUD/Portraits/rabban_icon.png",
       "char": " ",
+      "line1": "I thought that after all those attacks, your kind you would be a force",
+      "line2": "to be reckoned. But you are nothing more than insects. Rats trying to steal"
+    },
+    {
+      "id": 32,
+      "targetID": 33,
+      "src": "Assets/UI/HUD/Portraits/rabban_icon.png",
+      "char": " ",
+      "line1": "the food from us, the great harkonnen. I will enjoy killing every single",
+      "line2": "ant in that filthy burrow of yours.                                     "
+    },
+    {
+      "id": 33,
+      "targetID": 34,
+      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "char": "Zhib             ",
+      "line1": "No... It's a trap! Make haste! we are in serious problems. We should have ",
+      "line2": "thought about this, now due to our own stupidity we led them straight to our home."
+    },
+    {
+      "id": 34,
+      "targetID": 35,
+      "src": "Assets/UI/HUD/Portraits/nerala_v1.0.png",
+      "char": "Nerala           ",
+      "line1": "That is not possible, they would have to follow us to find Sannara, or ",
+      "line2": "get the information from the source... oh no, our man.                 "
+    },
+    {
+      "id": 35,
+      "targetID": -1,
+      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "char": "Zhib             ",
       "line1": "They just needed directions and few indications. They tortured our brothers,",
       "line2": "and they plan to do the same thing to our families. To the thopter, now!  "
     },
     {
-      "id": 31,
+      "id": 36,
       "targetID": -1,
-      "src": "Assets/UI/HUD/Portraits/omozra_v1.0.png",
-      "srcUnlock": "Assets/New UI/Omozra_Image.png",
-      "char": "Omozra",
-      "line1": "I find you a good dude",
-      "line2": "I can help you..."
+      "src": "Assets/UI/HUD/logo_dialogs.png",
+      "char": " ",
+      "line1": "You just unlocked a new character! Nerala is now available                ",
+      "line2": "You can switch between her and Zhib by pressing X and Z respectively      "
     },
     {
-      "id": 32,
+      "id": 37,
+      "targetID": 38,
+      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "char": "Zhib             ",
+      "line1": "Good to see you, I managed to find Nerala, have you and Sadiq gathered new info?",
+      "line2": " "
+    },
+    {
+      "id": 38,
+      "targetID": 39,
+      "src": "Assets/UI/HUD/Portraits/omozra_v1.0.png",
+      "char": "Omozra           ",
+      "line1": "How have you have you been brother? Ah, Nerala, sister, glad you didn't get killed",
+      "line2": "Did you cause a mess as always?                                               "
+    },
+    {
+      "id": 39,
+      "targetID": 40,
+      "src": "Assets/UI/HUD/Portraits/nerala_v1.0.png",
+      "char": "Nerala           ",
+      "line1": "Anoying as always, wurm lover, I am ok, thanks for asking                         ",
+      "line2": " "
+    },
+    {
+      "id": 40,
+      "targetID": 41,
+      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "char": "Zhib             ",
+      "line1": "Focus both of you, can you tell us anything about the camp, Omozra?               ",
+      "line2": " "
+    },
+    {
+      "id": 41,
+      "targetID": 42,
+      "src": "Assets/UI/HUD/Portraits/omozra_v1.0.png",
+      "char": "Omozra           ",
+      "line1": "You passed through a camp entrance that was heavily guarded on your way here, no? ",
+      "line2": "Well, Sadiq tells me that ogre is there, preparing his ship to leave somewhere.   "
+    },
+    {
+      "id": 42,
+      "targetID": 43,
+      "src": "Assets/UI/HUD/Portraits/zhib_v1.1.png",
+      "char": "Zhib             ",
+      "line1": "Let's go, focus and be ready!                                             ",
+      "line2": " "
+    },
+    {
+      "id": 43,
       "targetID": -1,
-      "src": "Assets/UI/HUD/Portraits/nebala_v1.0.png",
-      "srcUnlock": "Assets/New UI/Nerala_Image.png",
-      "char": "Nerala",
-      "line1": "I find you a good dude",
-      "line2": "I can help you..."
+      "src": "Assets/UI/HUD/logo_dialogs.png",
+      "char": " ",
+      "line1": "You just unlocked a new character! Omozra is now available                ",
+      "line2": "His designed key is C, to switch to him                                   "
     }
   ]
 }

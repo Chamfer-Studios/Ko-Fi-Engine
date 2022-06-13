@@ -6,8 +6,8 @@ function Update(dt)
     end
 
     if isOpened == true then
-        gameObject:GetTransform2D():SetPosition(float2.new(-193,-363))
+        gameObject:GetTransform2D():SetPosition(float2.new(196, -363))
     else
-        gameObject:GetTransform2D():SetPosition(float2.new(92,-363))
+        gameObject:GetTransform2D():SetPosition(float2.new(-95, -363))
     end
 end

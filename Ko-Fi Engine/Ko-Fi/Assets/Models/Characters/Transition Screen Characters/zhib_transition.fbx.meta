@@ -1,0 +1,30 @@
+{
+    "asset_file": "zhib_transition.fbx",
+    "asset_path": "Assets/Models/Characters/Transition Screen Characters/zhib_transition.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "zhib_high.sugar",
+            "library_path": "Library/Meshes/643110706.sugar",
+            "type": 0,
+            "uid": 643110706
+        },
+        {
+            "asset_file": "zhib_base_color.png",
+            "asset_path": "Assets/Textures/Characters/Zhib/zhib_base_color.png",
+            "library_path": "Library/Textures/1431981454.cacao",
+            "type": 1,
+            "uid": 1431981454
+        },
+        {
+            "asset_file": "zhib_armature_h|zhib_transition_animation.cake",
+            "library_path": "Library/Animations/1123906123.cake",
+            "type": 5,
+            "uid": 1123906123
+        }
+    ],
+    "hash": "7491d99ae8561d9d718f81bca1970d3e",
+    "library_file": "1123614255.tea",
+    "library_path": "Library/Models/1123614255.tea",
+    "type": 3,
+    "uid": 1123614255
+}

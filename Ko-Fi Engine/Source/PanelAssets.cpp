@@ -31,6 +31,10 @@ bool PanelAssets::Update()
 {
 	OPTICK_EVENT();
 
+#ifdef KOFI_GAME
+	return true;
+#endif
+
 	ImGui::Begin("Assets");
 	float padding = 16.0f;
 	float iconSize = 96.0f;

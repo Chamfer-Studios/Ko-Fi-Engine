@@ -117,15 +117,15 @@
                                                                                                         0.000171661376953125
                                                                                                     ],
                                                                                                     "rotation": [
-                                                                                                        0.318131685256958,
-                                                                                                        -0.06115569546818733,
-                                                                                                        -0.011443430557847023,
-                                                                                                        0.9460029006004333
+                                                                                                        0.31813159584999084,
+                                                                                                        -0.06115604192018509,
+                                                                                                        -0.011443553492426872,
+                                                                                                        0.9460027813911438
                                                                                                     ],
                                                                                                     "scale": [
-                                                                                                        1.0,
-                                                                                                        0.9999998211860657,
-                                                                                                        0.9999998211860657
+                                                                                                        0.9999961256980896,
+                                                                                                        1.0000001192092896,
+                                                                                                        0.9999992847442627
                                                                                                     ],
                                                                                                     "type": 21
                                                                                                 }
@@ -526,8 +526,8 @@
                                                                                 0.00011451449245214462
                                                                             ],
                                                                             "rotation": [
-                                                                                0.02199684828519821,
-                                                                                -0.007851417176425457,
+                                                                                0.02199690230190754,
+                                                                                -0.007851422764360905,
                                                                                 0.10048642754554749,
                                                                                 0.9946642518043518
                                                                             ],
@@ -662,10 +662,10 @@
                                                                         5.265894889831543
                                                                     ],
                                                                     "rotation": [
-                                                                        -0.1500478833913803,
+                                                                        -0.15004786849021912,
                                                                         -0.04944562911987305,
-                                                                        0.03920349106192589,
-                                                                        0.9866629838943481
+                                                                        0.03920348733663559,
+                                                                        0.9866631031036377
                                                                     ],
                                                                     "scale": [
                                                                         1.0,
@@ -726,14 +726,14 @@
                                                         0.00012150406837463379
                                                     ],
                                                     "rotation": [
-                                                        0.07360386848449707,
-                                                        0.048509225249290466,
-                                                        -0.0373951718211174,
+                                                        0.07360364496707916,
+                                                        0.04850948229432106,
+                                                        -0.037395305931568146,
                                                         0.9954048991203308
                                                     ],
                                                     "scale": [
-                                                        0.9999999403953552,
-                                                        0.9999999403953552,
+                                                        0.9999960660934448,
+                                                        0.9999977946281433,
                                                         0.9999980330467224
                                                     ],
                                                     "type": 21
@@ -760,7 +760,7 @@
                                             "rotation": [
                                                 0.07342226058244705,
                                                 0.047554273158311844,
-                                                -0.03889922425150871,
+                                                -0.03889928385615349,
                                                 0.9954067468643188
                                             ],
                                             "scale": [
@@ -790,15 +790,15 @@
                                         -2.5163190364837646
                                     ],
                                     "rotation": [
-                                        0.017294378951191902,
-                                        0.021305419504642487,
-                                        -0.027649879455566406,
+                                        0.017293887212872505,
+                                        0.021305803209543228,
+                                        -0.027649639174342155,
                                         0.9992409348487854
                                     ],
                                     "scale": [
-                                        1.0,
-                                        0.9999979138374329,
-                                        1.0
+                                        0.9999893307685852,
+                                        0.999985933303833,
+                                        0.9999911189079285
                                     ],
                                     "type": 21
                                 }
@@ -933,12 +933,12 @@
                                             ],
                                             "rotation": [
                                                 -0.4585501551628113,
-                                                -0.06069570779800415,
+                                                -0.060695700347423553,
                                                 -0.04608287289738655,
                                                 0.8853949308395386
                                             ],
                                             "scale": [
-                                                0.9999977350234985,
+                                                0.9999973773956299,
                                                 1.0,
                                                 1.0
                                             ],
@@ -964,15 +964,15 @@
                                         -4.967075347900391
                                     ],
                                     "rotation": [
-                                        0.08292003720998764,
-                                        0.36043182015419006,
+                                        0.08292002230882645,
+                                        0.36043187975883484,
                                         0.9287818074226379,
-                                        -0.024031516164541245
+                                        -0.024030810222029686
                                     ],
                                     "scale": [
-                                        1.0000042915344238,
-                                        1.0000003576278687,
-                                        1.0
+                                        1.0000067949295044,
+                                        1.0000213384628296,
+                                        0.9999998807907104
                                     ],
                                     "type": 21
                                 }
@@ -1075,14 +1075,14 @@
                                                     ],
                                                     "rotation": [
                                                         0.5476602911949158,
-                                                        0.07208885252475739,
-                                                        0.013152203522622585,
+                                                        0.07208886742591858,
+                                                        0.013152450323104858,
                                                         0.8334857225418091
                                                     ],
                                                     "scale": [
-                                                        0.9999997019767761,
+                                                        0.9999993443489075,
                                                         1.0,
-                                                        0.9999999403953552
+                                                        1.0
                                                     ],
                                                     "type": 21
                                                 }
@@ -1139,14 +1139,14 @@
                                     ],
                                     "rotation": [
                                         -0.05605757609009743,
-                                        0.028339626267552376,
+                                        0.02833963744342327,
                                         0.9870210289955139,
                                         0.14779692888259888
                                     ],
                                     "scale": [
                                         0.9999998807907104,
                                         1.0000020265579224,
-                                        0.9999977350234985
+                                        0.999997079372406
                                     ],
                                     "type": 21
                                 }
@@ -1222,6 +1222,277 @@
         },
         {
             "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        -1732.72998046875,
+                        0.0010128021240234375,
+                        -174.70941162109375
+                    ],
+                    "rotation": [
+                        6.491138293540644e-09,
+                        0.9880689978599548,
+                        4.164403577533449e-08,
+                        -0.15401190519332886
+                    ],
+                    "scale": [
+                        0.030000215396285057,
+                        0.029999999329447746,
+                        0.030000215396285057
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "mesh": {
+                        "asset_path": "",
+                        "draw_face_normals": false,
+                        "draw_vertex_normals": false,
+                        "is_animated": true,
+                        "shape_type": 0,
+                        "uid": 821724498
+                    },
+                    "type": 1
+                },
+                {
+                    "active": true,
+                    "color": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "shader": {
+                        "asset_path": "Assets/Shaders/default_shader.glsl",
+                        "uniforms": null
+                    },
+                    "texture": {
+                        "asset_path": "Assets/Textures/Characters/Enemies/Harkonnen/harkonnen_base_color.png"
+                    },
+                    "type": 2
+                },
+                {
+                    "active": true,
+                    "body_type": "Static",
+                    "freeze_position_x": false,
+                    "freeze_position_y": true,
+                    "freeze_position_z": false,
+                    "freeze_rotation_x": true,
+                    "freeze_rotation_y": true,
+                    "freeze_rotation_z": true,
+                    "mass": 1.0,
+                    "type": 6,
+                    "use_gravity": true
+                },
+                {
+                    "active": true,
+                    "center": [
+                        0.0,
+                        11.0,
+                        0.0
+                    ],
+                    "filter": "enemy",
+                    "is_trigger": false,
+                    "scale_factor": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 7
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/Pathfinder.lua",
+                    "id": 1844698021,
+                    "inspector_variables": [
+                        {
+                            "name": "minRetargetingDistance",
+                            "type": "int",
+                            "value": 20
+                        },
+                        {
+                            "name": "standByTime",
+                            "type": "int",
+                            "value": 3
+                        }
+                    ],
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "async": true,
+                    "file_name": "Assets/Scripts/Enemies/EnemyController.lua",
+                    "id": 1608894853,
+                    "inspector_variables": [
+                        {
+                            "name": "static",
+                            "type": "bool",
+                            "value": true
+                        },
+                        {
+                            "name": "speed",
+                            "type": "int",
+                            "value": 20
+                        },
+                        {
+                            "name": "chaseSpeed",
+                            "type": "int",
+                            "value": 30
+                        },
+                        {
+                            "name": "attackRange",
+                            "type": "int",
+                            "value": 35
+                        },
+                        {
+                            "name": "visionConeAngle",
+                            "type": "int",
+                            "value": 70
+                        },
+                        {
+                            "name": "visionConeRadius",
+                            "type": "int",
+                            "value": 170
+                        },
+                        {
+                            "name": "hearingRange",
+                            "type": "int",
+                            "value": 140
+                        },
+                        {
+                            "name": "awarenessOffset",
+                            "type": "float3",
+                            "value": {
+                                "x": 0.0,
+                                "y": 30.0,
+                                "z": 0.0
+                            }
+                        },
+                        {
+                            "name": "awarenessSize",
+                            "type": "float3",
+                            "value": {
+                                "x": 0.10000000149011612,
+                                "y": 0.10000000149011612,
+                                "z": 0.10000000149011612
+                            }
+                        },
+                        {
+                            "name": "pingpong",
+                            "type": "bool",
+                            "value": false
+                        },
+                        {
+                            "name": "loop",
+                            "type": "bool",
+                            "value": false
+                        },
+                        {
+                            "name": "patrolWaypoints",
+                            "type": "float3_array",
+                            "value": []
+                        }
+                    ],
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/Enemies/Harkonnen.lua",
+                    "id": 121533193,
+                    "type": 5
+                },
+                {
+                    "active": true,
+                    "ambientValue": 0.0,
+                    "castShadows": false,
+                    "constantAttenuationValue": 1.0,
+                    "cutOffAngle": 0.8660253882408142,
+                    "diffuseValue": 0.6000000238418579,
+                    "lightColor": [
+                        0.10000000149011612,
+                        0.6000000238418579,
+                        1.0
+                    ],
+                    "lightDirection": [
+                        0.0,
+                        0.0,
+                        -1.0
+                    ],
+                    "lightPosition": [
+                        -1732.72998046875,
+                        0.0010128021240234375,
+                        -174.70941162109375
+                    ],
+                    "linearAttenuationValue": 0.0,
+                    "quadraticAttenuationValue": 0.0,
+                    "sourceType": 2,
+                    "specularValue": 0.0,
+                    "type": 19
+                },
+                {
+                    "active": true,
+                    "fade_time": 2.0,
+                    "offset_sync": false,
+                    "total_tracks": 3,
+                    "tracks": [
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Harkonnen/harkonnen_attack_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Harkonnen/harkonnen_death_1_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Generic/generic_enemy_aware_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        }
+                    ],
+                    "type": 11
+                }
+            ],
+            "is3D": true,
+            "isPrefab": false,
+            "name": "harkonnen_mesh",
+            "tag": 2
+        },
+        {
+            "active": true,
             "children": [
                 {
                     "active": true,
@@ -1262,10 +1533,10 @@
                                             "modules": [
                                                 {
                                                     "maxParticleLife": 3.0,
-                                                    "minParticleLife": 0.20000000298023224,
+                                                    "minParticleLife": 0.004999999888241291,
                                                     "particlesPerSpawn": 1,
                                                     "randomParticleLife": false,
-                                                    "spawnTime": 0.17499999701976776,
+                                                    "spawnTime": 0.0,
                                                     "type": 1
                                                 },
                                                 {
@@ -1276,6 +1547,28 @@
                                                     "sideAxis": false,
                                                     "topAxis": false,
                                                     "type": 5
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        15.0,
+                                                        15.0,
+                                                        15.0
+                                                    ],
+                                                    "type": 4
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                1.0,
+                                                                0.3921568691730499
+                                                            ],
+                                                            "position": 0.0
+                                                        }
+                                                    ],
+                                                    "type": 3
                                                 }
                                             ],
                                             "name": "Debuff",
@@ -1551,10 +1844,10 @@
                                             "modules": [
                                                 {
                                                     "maxParticleLife": 3.0,
-                                                    "minParticleLife": 0.75,
+                                                    "minParticleLife": 0.004999999888241291,
                                                     "particlesPerSpawn": 1,
                                                     "randomParticleLife": false,
-                                                    "spawnTime": 0.699999988079071,
+                                                    "spawnTime": 0.0,
                                                     "type": 1
                                                 },
                                                 {
@@ -1570,12 +1863,12 @@
                                                     "colors": [
                                                         {
                                                             "color": [
-                                                                0.0,
-                                                                0.7843137383460999,
                                                                 1.0,
+                                                                0.0,
+                                                                0.0,
                                                                 1.0
                                                             ],
-                                                            "position": 0.5
+                                                            "position": 0.0
                                                         }
                                                     ],
                                                     "type": 3
@@ -1613,218 +1906,28 @@
                 {
                     "active": true,
                     "position": [
-                        -1503.78662109375,
-                        -0.00029936060309410095,
-                        479.6020812988281
+                        0.0,
+                        0.0,
+                        0.0
                     ],
                     "rotation": [
-                        -4.214685134229512e-08,
-                        -1.7763568394002505e-15,
-                        7.486784764107157e-23,
+                        0.0,
+                        0.0,
+                        0.0,
                         1.0
                     ],
                     "scale": [
-                        0.029999999329447746,
-                        0.029999999329447746,
-                        0.029999999329447746
+                        1.0,
+                        1.0,
+                        1.0
                     ],
                     "type": 21
-                },
-                {
-                    "active": true,
-                    "mesh": {
-                        "asset_path": "",
-                        "draw_face_normals": false,
-                        "draw_vertex_normals": false,
-                        "is_animated": true,
-                        "shape_type": 0,
-                        "uid": 821724498
-                    },
-                    "type": 1
-                },
-                {
-                    "active": true,
-                    "color": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "shader": {
-                        "asset_path": "Assets/Shaders/default_shader.glsl",
-                        "uniforms": null
-                    },
-                    "texture": {
-                        "asset_path": "Assets/Textures/Characters/Enemies/Harkonnen/harkonnen_base_color.png"
-                    },
-                    "type": 2
-                },
-                {
-                    "active": true,
-                    "body_type": "Static",
-                    "freeze_position_x": false,
-                    "freeze_position_y": true,
-                    "freeze_position_z": false,
-                    "freeze_rotation_x": true,
-                    "freeze_rotation_y": true,
-                    "freeze_rotation_z": true,
-                    "mass": 1.0,
-                    "type": 6,
-                    "use_gravity": true
-                },
-                {
-                    "active": true,
-                    "center": [
-                        0.0,
-                        11.0,
-                        0.0
-                    ],
-                    "filter": "enemy",
-                    "is_trigger": false,
-                    "scale_factor": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 7
-                },
-                {
-                    "active": true,
-                    "file_name": "Assets/Scripts/Pathfinder.lua",
-                    "id": 1844698021,
-                    "inspector_variables": [
-                        {
-                            "name": "minRetargetingDistance",
-                            "type": "int",
-                            "value": 20
-                        }
-                    ],
-                    "type": 5
-                },
-                {
-                    "active": true,
-                    "file_name": "Assets/Scripts/Enemies/EnemyController.lua",
-                    "id": 1608894853,
-                    "inspector_variables": [
-                        {
-                            "name": "static",
-                            "type": "bool",
-                            "value": false
-                        },
-                        {
-                            "name": "speed",
-                            "type": "int",
-                            "value": 20
-                        },
-                        {
-                            "name": "chaseSpeed",
-                            "type": "int",
-                            "value": 30
-                        },
-                        {
-                            "name": "attackRange",
-                            "type": "int",
-                            "value": 20
-                        },
-                        {
-                            "name": "visionConeAngle",
-                            "type": "int",
-                            "value": 30
-                        },
-                        {
-                            "name": "visionConeRadius",
-                            "type": "int",
-                            "value": 170
-                        },
-                        {
-                            "name": "hearingRange",
-                            "type": "int",
-                            "value": 140
-                        },
-                        {
-                            "name": "awarenessOffset",
-                            "type": "float3",
-                            "value": {
-                                "x": 0.0,
-                                "y": 30.0,
-                                "z": 0.0
-                            }
-                        },
-                        {
-                            "name": "awarenessSize",
-                            "type": "float3",
-                            "value": {
-                                "x": 0.029999999329447746,
-                                "y": 0.05999999865889549,
-                                "z": 0.029999999329447746
-                            }
-                        },
-                        {
-                            "name": "pingpong",
-                            "type": "bool",
-                            "value": true
-                        },
-                        {
-                            "name": "loop",
-                            "type": "bool",
-                            "value": true
-                        },
-                        {
-                            "name": "patrolWaypoints",
-                            "type": "float3_array",
-                            "value": [
-                                -1509.7198486328125,
-                                -0.00029951101168990135,
-                                479.2803955078125,
-                                -1571.9818115234375,
-                                -0.0002771676518023014,
-                                563.3463745117188,
-                                -1449.1297607421875,
-                                -0.00028671801555901766,
-                                523.7583618164063
-                            ]
-                        }
-                    ],
-                    "type": 5
-                },
-                {
-                    "active": true,
-                    "file_name": "Assets/Scripts/Enemies/Harkonnen.lua",
-                    "id": 121533193,
-                    "type": 5
-                },
-                {
-                    "active": true,
-                    "ambientValue": 0.0,
-                    "constantAttenuationValue": 1.0,
-                    "cutOffAngle": 0.8660253882408142,
-                    "diffuseValue": 0.800000011920929,
-                    "lightColor": [
-                        0.0,
-                        1.0,
-                        0.0
-                    ],
-                    "lightDirection": [
-                        0.0,
-                        0.0,
-                        -1.0
-                    ],
-                    "lightPosition": [
-                        -1503.78662109375,
-                        -0.00029936060309410095,
-                        479.6020812988281
-                    ],
-                    "linearAttenuationValue": 0.0,
-                    "quadraticAttenuationValue": 0.0,
-                    "sourceType": 2,
-                    "specularValue": 0.0,
-                    "type": 19
                 }
             ],
             "is3D": true,
-            "isPrefab": false,
-            "name": "harkonnen_mesh",
-            "tag": 2
+            "isPrefab": true,
+            "name": "Enemy Particles",
+            "tag": 0
         }
     ],
     "components": [
@@ -1913,20 +2016,20 @@
                     "clipDuration": 97.0,
                     "clipDurationInSeconds": 4.041666507720947,
                     "clipEndFrame": 97.0,
-                    "clipFinished": false,
+                    "clipFinished": true,
                     "clipLoop": true,
                     "clipName": "Idle",
                     "clipStartFrame": 0.0,
                     "mapString": "Idle"
                 },
                 {
-                    "clipDuration": 31.0,
-                    "clipDurationInSeconds": 1.2916666269302368,
-                    "clipEndFrame": 313.0,
+                    "clipDuration": 22.0,
+                    "clipDurationInSeconds": 0.9166666865348816,
+                    "clipEndFrame": 312.0,
                     "clipFinished": false,
                     "clipLoop": true,
                     "clipName": "Run",
-                    "clipStartFrame": 282.0,
+                    "clipStartFrame": 290.0,
                     "mapString": "Run"
                 },
                 {

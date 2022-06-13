@@ -14,6 +14,10 @@ R_Material::~R_Material()
 {
 	glDeleteProgram(shaderProgramID);
 
+	for (std::vector<Uniform*>::iterator it = uniforms.begin(); it != uniforms.end(); it++)
+	{
+		delete *it;
+	}
 	uniforms.clear();
 	uniforms.shrink_to_fit();
 }

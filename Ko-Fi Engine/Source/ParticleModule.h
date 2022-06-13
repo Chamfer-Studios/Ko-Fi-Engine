@@ -23,14 +23,13 @@ class ParticleModule
 public:
 
 	ParticleModule();
-	~ParticleModule();
+	virtual ~ParticleModule();
 	virtual void Spawn(Particle* particle, EmitterInstance* emitter);
 	virtual bool Update(float dt, EmitterInstance* emitter);
 	float GetPercentage(Particle* p);
 
 public:
 	ParticleModuleType type = ParticleModuleType::NONE;
-	//Emitter* emitter = nullptr;
 	bool disable = false;
 };
 
@@ -40,6 +39,7 @@ class EmitterDefault : public ParticleModule
 {
 public:
 	EmitterDefault();
+	~EmitterDefault();
 
 	void Spawn(Particle* particle, EmitterInstance* emitter);
 	bool Update(float dt, EmitterInstance* emitter);
@@ -52,7 +52,6 @@ public:
 	float minParticleLife = 1.0f;
 	float maxParticleLife = 3.0f;
 	uint particlesPerSpawn = 1;
-	EmitterInstance* instance = nullptr;
 };
 
 class EmitterMovement : public ParticleModule

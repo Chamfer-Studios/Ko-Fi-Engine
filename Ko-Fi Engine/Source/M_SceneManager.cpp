@@ -545,6 +545,14 @@ void M_SceneManager::OnClick(SDL_Event event)
 
 }
 
+void M_SceneManager::ToggleRuntime()
+{
+	if (runtimeState == GameState::PLAYING)
+		OnPause();
+	else if (runtimeState == GameState::PAUSED)
+		OnPlay();
+}
+
 void M_SceneManager::GuizmoTransformation()
 {
 #ifndef KOFI_GAME

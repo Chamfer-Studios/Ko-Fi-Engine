@@ -1,3 +1,12 @@
+#ifndef KOFI_GAME
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+#endif // !KOFI_GAME
+
+
+
+
 #include "Engine.h"
 
 #include "M_Window.h"
@@ -27,12 +36,18 @@
 // Constructor
 KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 {
+#ifndef KOFI_GAME
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	_CrtSetReportMode(_CRT_WARN | _CRT_ERROR , _CRTDBG_MODE_DEBUG);
+#endif // !KOFI_GAME
+
 	engineConfig = new EngineConfig();
 	PERF_START(ptimer);
 	Importer::GetInstance(this);
 	window = new M_Window(this);
 	fileSystem = new M_FileSystem(this);
 	input = new M_Input(this);
+	audio = new M_Audio(this);
 	camera = new M_Camera3D(this);
 	renderer = new M_Renderer3D(this);
 	editor = new M_Editor(this);
@@ -41,7 +56,6 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	//viewportBuffer = new ViewportFrameBuffer(this);
 	physics = new M_Physics(this);
 	resourceManager = new M_ResourceManager(this);
-	audio = new M_Audio(this);
 	navigation = new M_Navigation(this);
 
 	// Ordered for awake / Start / Update
@@ -49,8 +63,8 @@ KoFiEngine::KoFiEngine(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(window);
 	AddModule(physics);
 	AddModule(input);
-	AddModule(camera);
 	AddModule(audio);
+	AddModule(camera);
 	AddModule(fileSystem);
 	AddModule(resourceManager);
 	AddModule(ui);
@@ -140,6 +154,8 @@ bool KoFiEngine::Start()
 
 	// Setting hardware info
 	SetHardwareInfo();
+
+
 
 	std::list<Module*>::iterator item = modules.begin();;
 

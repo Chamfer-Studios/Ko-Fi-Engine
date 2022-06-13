@@ -393,6 +393,7 @@ void M_Physics::RayCastHits(float3 startPoint, float3 endPoint, std::string filt
 
 std::vector<GameObject*> M_Physics::CustomRayCastQueryList(float3 startPoint, float3 endPoint, std::vector<TAG> tagList)
 {
+	
 	std::vector<GameObject*> gameObjects = engine->GetSceneManager()->GetCurrentScene()->gameObjectList;
 
 	std::vector<GameObject*> candidates;

@@ -30,6 +30,7 @@ C_Transform::C_Transform(GameObject *parent) : Component(parent)
 
 C_Transform::~C_Transform()
 {
+	CleanUp();
 }
 
 bool C_Transform::Update(float dt)
@@ -118,6 +119,8 @@ bool C_Transform::InspectorDraw(PanelChooser *chooser)
 
 void C_Transform::SetPosition(const float3 &newPosition)
 {
+	OPTICK_EVENT();
+
 	transformMatrixLocal = float4x4::FromTRS(newPosition, GetRotationQuat(), GetScale());
 	owner->GetEngine()->GetSceneManager()->GetCurrentScene()->sceneTreeIsDirty = true;
 	isDirty = true;
@@ -222,7 +225,8 @@ float3 C_Transform::GetRotationEuler() const
 	float3 scale = float3::zero;
 	Quat rotation = Quat::identity;
 	transformMatrixLocal.Decompose(position, rotation, scale);
-	return rotation.ToEulerXYZ();
+	float3 ret = rotation.ToEulerXYZ();
+	return ret;
 }
 
 Quat C_Transform::GetRotationQuat() const
@@ -295,10 +299,12 @@ void C_Transform::Load(Json &json)
 	std::vector<float> values = json.at("position").get<std::vector<float>>();
 	SetPosition(float3(values[0], values[1], values[2]));
 	values.clear();
+	values.shrink_to_fit();;
 
 	values = json.at("rotation").get<std::vector<float>>();
 	SetRotationQuat(Quat(values[0], values[1], values[2], values[3]));
 	values.clear();
+	values.shrink_to_fit();;
 
 	values = json.at("scale").get<std::vector<float>>();
 	SetScale(float3(values[0], values[1], values[2]));

@@ -1,6 +1,7 @@
 {
     "CutsceneIntro": {
         "active": true,
+        "draw_skybox": true,
         "game_objects_amount": 38,
         "game_objects_list": [
             {
@@ -33,10 +34,13 @@
                     },
                     {
                         "active": true,
+                        "cameraType": 0,
                         "far_plane_distance": 500.0,
                         "frustum_culling": false,
                         "isMainCamera": true,
                         "near_plane_distance": 0.009999999776482582,
+                        "orthoHeight": 1000.0,
+                        "orthoWidth": 1000.0,
                         "sCullingRadius": 249,
                         "sphere_culling": false,
                         "type": 4,
@@ -80,6 +84,7 @@
                     {
                         "active": true,
                         "ambientValue": 0.5,
+                        "castShadows": false,
                         "diffuseValue": 0.800000011920929,
                         "lightColor": [
                             1.0,
@@ -102,17 +107,21 @@
                     },
                     {
                         "active": true,
+                        "cameraType": 1,
                         "far_plane_distance": 1000.0,
                         "frustum_culling": false,
                         "isMainCamera": false,
                         "near_plane_distance": 0.30000001192092896,
+                        "orthoHeight": 1000.0,
+                        "orthoWidth": 1000.0,
                         "sCullingRadius": 499,
                         "sphere_culling": false,
                         "type": 4,
-                        "vertical_fov": 378.0
+                        "vertical_fov": 1000.0
                     },
                     {
                         "active": true,
+                        "async": false,
                         "file_name": "Assets/Scripts/ChangeSceneDebugKey.lua",
                         "id": 1588478319,
                         "inspector_variables": [
@@ -167,6 +176,7 @@
                     },
                     {
                         "active": true,
+                        "async": false,
                         "file_name": "Assets/Scripts/HUD/UI_CutsceneIntro.lua",
                         "id": 1411300524,
                         "type": 5
@@ -509,7 +519,7 @@
             },
             {
                 "UID": 752630075,
-                "active": false,
+                "active": true,
                 "components": [
                     {
                         "active": true,
@@ -551,7 +561,7 @@
             },
             {
                 "UID": 2056582413,
-                "active": false,
+                "active": true,
                 "components": [
                     {
                         "active": true,
@@ -589,7 +599,7 @@
                         ],
                         "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
-                        "value": "On of the only Fremen cities that escaped the Harkonnen control is Sannara,"
+                        "value": "One of the only Fremen cities that escaped the Harkonnen control is Sannara,"
                     }
                 ],
                 "is3D": false,
@@ -600,7 +610,7 @@
             },
             {
                 "UID": 2146979042,
-                "active": false,
+                "active": true,
                 "components": [
                     {
                         "active": true,
@@ -733,7 +743,7 @@
             },
             {
                 "UID": 707661581,
-                "active": false,
+                "active": true,
                 "components": [
                     {
                         "active": true,
@@ -775,7 +785,7 @@
             },
             {
                 "UID": 1104294419,
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "active": true,
@@ -1146,7 +1156,7 @@
             },
             {
                 "UID": 1235969954,
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "active": true,
@@ -1664,7 +1674,7 @@
             },
             {
                 "UID": 860861081,
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "active": true,
@@ -1706,7 +1716,7 @@
             },
             {
                 "UID": 2126748913,
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "active": true,
@@ -1755,7 +1765,7 @@
             },
             {
                 "UID": 1683578617,
-                "active": true,
+                "active": false,
                 "components": [
                     {
                         "active": true,

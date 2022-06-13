@@ -99,13 +99,13 @@
                 {
                     "bypass": false,
                     "custom_loop": false,
-                    "loop": false,
+                    "loop": true,
                     "loop_offset": 0.0,
                     "mute": false,
                     "offset": 0.0,
                     "pan": 0.0,
                     "play_on_start": false,
-                    "track_path": "Assets/Audio/SFX/Zhib/test_decoy_fx.wav",
+                    "track_path": "Assets/Audio/SFX/Zhib/zhib_decoy_active_fx.wav",
                     "transpose": 1.0,
                     "volume": 100.0
                 }
@@ -115,6 +115,7 @@
         {
             "active": true,
             "ambientValue": 0.0,
+            "castShadows": false,
             "constantAttenuationValue": 0.0,
             "cutOffAngle": 1.0,
             "diffuseValue": 0.20000000298023224,

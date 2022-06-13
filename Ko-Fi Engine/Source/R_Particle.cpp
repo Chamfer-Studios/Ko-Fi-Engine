@@ -15,11 +15,9 @@ R_Particle::~R_Particle()
 
 bool R_Particle::CleanUp()
 {
-	for (std::vector<Emitter*>::iterator it = emitters.begin(); it != emitters.end(); ++it)
+	for (auto it : emitters)
 	{
-		emitters.erase(it);
-		if (emitters.empty())
-			break;
+		RELEASE(it);
 	}
 	emitters.clear();
 	emitters.shrink_to_fit();

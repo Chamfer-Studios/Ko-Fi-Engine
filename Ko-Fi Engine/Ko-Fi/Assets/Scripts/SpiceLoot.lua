@@ -18,10 +18,11 @@ end
 function Update(dt)
 
 end
-
+once = false
 -------------------- Events -----------------------------
 function EventHandler(key, fields)
-    if key == "Spice_Drop" then
+    if key == "Spice_Drop" and once == false then
+        once = true
         math.randomseed(os.time())
         randomOffsetX = 10
         randomOffsetZ = 10

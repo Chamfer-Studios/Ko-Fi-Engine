@@ -262,6 +262,7 @@ bool I_Scene::SaveScene(Scene* scene, const char* customName)
 
 	jsonFile[name];
 	jsonFile[name]["name"] = name;
+	jsonFile[name]["draw_skybox"] = scene->drawSkybox;
 	jsonFile[name]["active"] = scene->active;
 	jsonFile[name]["navmesh"] = Json::object();
 	engine->GetNavigation()->Save(jsonFile[name]["navmesh"]);
@@ -347,12 +348,15 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 
 		jsonScene = jsonFile.at(name);
 		scene->name = jsonScene.at("name");
+		if (jsonScene.contains("draw_skybox"))
+			scene->drawSkybox = jsonScene.at("draw_skybox");
 		scene->rootGo->SetName(scene->name.c_str());
 
 		engine->GetWindow()->SetTitle("Ko-Fi Engine - " + scene->name);
 
 		scene->active = jsonScene.at("active");
 
+		engine->GetNavigation()->CleanUp();
 		// Create Root
 		if (jsonScene.find("navmesh") != jsonScene.end())
 			engine->GetNavigation()->Load(jsonScene.at("navmesh"));
@@ -376,7 +380,7 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 
 		Json jsonGameObjects = jsonScene.at("game_objects_list");
 		float startTime = (float)engine->GetEngineTime();
-#pragma omp parallel for
+
 		for (const auto& goIt : jsonGameObjects.items())
 		{
 			Json jsonGo = goIt.value();
@@ -403,7 +407,7 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 			go->SetParentUID(parentUid);
 
 			Json jsonCmps = jsonGo.at("components");
-#pragma omp parallel for
+
 			for (const auto& cmpIt : jsonCmps.items())
 			{
 				Json jsonCmp = cmpIt.value();
@@ -476,7 +480,6 @@ bool I_Scene::LoadScene(Scene* scene, const char* name)
 		appLog->AddLog("Time to load: %f\n", endTime);
 
 		// Reparenting
-#pragma omp parallel for
 		for (std::vector<GameObject*>::iterator goIt = scene->gameObjectList.begin(); goIt < scene->gameObjectList.end(); ++goIt)
 		{
 			for (std::vector<GameObject*>::iterator childrenIt = scene->gameObjectList.begin(); childrenIt < scene->gameObjectList.end(); ++childrenIt)
@@ -760,7 +763,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 
 		Json jsonGameObjects = jsonScene.at("game_objects_list");
 		float startTime = (float)engine->GetEngineTime();
-#pragma omp parallel for
+
 		for (const auto& goIt : jsonGameObjects.items())
 		{
 			Json jsonGo = goIt.value();
@@ -783,7 +786,7 @@ bool I_Scene::Load(Scene* scene, const char* name)
 			go->SetParentUID(parentUid);
 
 			Json jsonCmps = jsonGo.at("components");
-#pragma omp parallel for
+			
 			for (const auto& cmpIt : jsonCmps.items())
 			{
 				Json jsonCmp = cmpIt.value();
@@ -989,7 +992,6 @@ bool I_Scene::Load(Scene* scene, const char* name)
 		float endTime = (float)engine->GetEngineTime();
 		appLog->AddLog("Time to load: %f\n", endTime - startTime);
 
-#pragma omp parallel for
 		for (std::vector<GameObject*>::iterator goIt = scene->gameObjectList.begin(); goIt < scene->gameObjectList.end(); ++goIt)
 		{
 			for (std::vector<GameObject*>::iterator childrenIt = scene->gameObjectList.begin(); childrenIt < scene->gameObjectList.end(); ++childrenIt)

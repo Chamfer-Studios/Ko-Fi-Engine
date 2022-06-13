@@ -39,7 +39,7 @@ C_Particle::C_Particle(GameObject* parent) : Component(parent)
 
 C_Particle::~C_Particle()
 {
-
+	CleanUp();
 }
 
 bool C_Particle::Start()
@@ -68,8 +68,11 @@ bool C_Particle::Start()
 
 bool C_Particle::Update(float dt)
 {
-	for (auto it : emitterInstances)
+	OPTICK_EVENT();
+
+	for (int i = 0; i < emitterInstances.size(); i++)
 	{
+		auto it = emitterInstances[i];
 		it->Update(dt); //kill inactive and update emitter instances
 		//CONSOLE_LOG("active particles: %d", it->activeParticles);
 
@@ -94,18 +97,29 @@ bool C_Particle::PostUpdate(float dt)
 
 bool C_Particle::CleanUp()
 {
-	for (std::vector<EmitterInstance*>::const_iterator it = emitterInstances.begin(); it != emitterInstances.end();++it)
+	for (auto it : resourcesList)
 	{
-		emitterInstances.erase(it);
-		if (emitterInstances.empty())
-			break;
+		it.clear();
+		it.shrink_to_fit();
+	}
+	resourcesList.clear();
+
+	if (resource != nullptr)
+	{
+		for (auto emitter : resource->emitters)
+		{
+			owner->GetEngine()->GetResourceManager()->FreeResource(emitter->texture->GetUID());
+		}
+		RELEASE(resource);
+	}
+
+	for (auto emInst : emitterInstances)
+	{
+		RELEASE(emInst);
 	}
 	emitterInstances.clear();
 	emitterInstances.shrink_to_fit();
 
-	if (resource != nullptr)
-		owner->GetEngine()->GetResourceManager()->FreeResource(resource->GetUID());
-	resource = nullptr;
 	return true;
 }
 
@@ -317,9 +331,18 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 										e->minParticleLife = particleLife;
 								}
 
-								if (e->instance)
+								EmitterInstance* ei = nullptr;
+								for (std::vector<EmitterInstance*>::iterator yt = emitterInstances.begin(); yt < emitterInstances.end(); ++yt)
 								{
-									std::string activeParticlesName = "ActiveParticles: " + std::to_string(e->instance->activeParticles);
+									if ((*yt)->emitter == (Emitter*)e)
+									{
+										ei = (*yt);
+										break;
+									}
+								}
+								if (ei != nullptr)
+								{
+									std::string activeParticlesName = "ActiveParticles: " + std::to_string(ei->activeParticles);
 									ImGui::Text(activeParticlesName.c_str());
 								}
 
@@ -718,6 +741,7 @@ void C_Particle::DeleteModule(Emitter* e, ParticleModuleType t)
 	{
 		if ((*it)->type == t)
 		{
+			RELEASE(*it);
 			e->modules.erase(it);
 			return;
 		}
@@ -795,6 +819,27 @@ void C_Particle::SetColor(double r, double g, double b, double a)
 	}
 }
 
+void C_Particle::SetAngle(double angle)
+{
+	for (auto e : resource->emitters)
+	{
+		for (auto m : e->modules)
+		{
+			if (m->type == ParticleModuleType::BILLBOARDING)
+			{
+				ParticleBillboarding* eBill = (ParticleBillboarding*)m;
+				if (angle >= 360)
+				{
+					eBill->minDegrees = 0;
+				}
+				else
+				{
+					eBill->minDegrees = angle;
+				}
+			}
+		}
+	}
+}
 void C_Particle::NewEmitterName(std::string& name, int n)
 {
 	for (auto emitter : resource->emitters)
@@ -946,11 +991,12 @@ void C_Particle::Load(Json& json)
 				ei->Init();
 				ei->loop = emitter.value().at("loop");
 				e->maxParticles = emitter.value().at("maxParticles");
-				e->texture = new R_Texture();
+
+				e->texture = nullptr;
 				if (emitter.value().contains("texture_path"))
-					e->texture->SetAssetPath(emitter.value().at("texture_path").get<std::string>().c_str());
-				if (e->texture->GetAssetPath() != "")
-					Importer::GetInstance()->textureImporter->Import(e->texture->GetAssetPath(), e->texture);
+					e->texture = (R_Texture*)owner->GetEngine()->GetResourceManager()->GetResourceFromLibrary(emitter.value().at("texture_path").get<std::string>().c_str());
+				else
+					e->texture = Importer::GetInstance()->textureImporter->GetCheckerTexture();
 
 				e->modules.clear();
 				e->modules.shrink_to_fit();

@@ -1,0 +1,77 @@
+{
+    "active": true,
+    "children": [],
+    "components": [
+        {
+            "active": true,
+            "type": 23
+        },
+        {
+            "active": true,
+            "position": [
+                1076.1182861328125,
+                36.62047576904297,
+                592.7979736328125
+            ],
+            "rotation": [
+                0.0,
+                0.32474184036254883,
+                0.0,
+                0.9458026885986328
+            ],
+            "scale": [
+                1.2830045223236084,
+                1.0,
+                0.9996523261070251
+            ],
+            "type": 21
+        },
+        {
+            "active": true,
+            "body_type": "Static",
+            "freeze_position_x": false,
+            "freeze_position_y": false,
+            "freeze_position_z": false,
+            "freeze_rotation_x": false,
+            "freeze_rotation_y": false,
+            "freeze_rotation_z": false,
+            "mass": 1.0,
+            "type": 6,
+            "use_gravity": true
+        },
+        {
+            "active": true,
+            "center": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "filter": "",
+            "is_trigger": true,
+            "scale_factor": [
+                51.0,
+                15.829999923706055,
+                21.799999237060547
+            ],
+            "type": 7
+        },
+        {
+            "active": true,
+            "async": false,
+            "file_name": "Assets/Scripts/WinTrigger.lua",
+            "id": 1154345430,
+            "inspector_variables": [
+                {
+                    "name": "sceneName",
+                    "type": "string",
+                    "value": "SceneWin"
+                }
+            ],
+            "type": 5
+        }
+    ],
+    "is3D": true,
+    "isPrefab": true,
+    "name": "WinTrigger",
+    "tag": 0
+}

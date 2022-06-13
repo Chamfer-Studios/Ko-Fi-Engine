@@ -128,7 +128,8 @@ private:
 
 	// DON'T USE, USE GETFOV INSTEAD
 	float hFov, vFov = 0.0f;
-	float orthoWidth, orthoHeight = 1.0f;
+	float orthoWidth = 1000.0f;
+	float orthoHeight = 1000.0f;
 	int sCullingRadius = 500.0f;
 	
 };

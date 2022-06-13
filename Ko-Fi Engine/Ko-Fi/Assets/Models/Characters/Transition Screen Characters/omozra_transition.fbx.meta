@@ -1,0 +1,30 @@
+{
+    "asset_file": "omozra_transition.fbx",
+    "asset_path": "Assets/Models/Characters/Transition Screen Characters/omozra_transition.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "omozra_high.sugar",
+            "library_path": "Library/Meshes/37182815.sugar",
+            "type": 0,
+            "uid": 37182815
+        },
+        {
+            "asset_file": "omozra_base_color.png",
+            "asset_path": "Assets/Textures/Characters/Omozra/omozra_base_color.png",
+            "library_path": "Library/Textures/1894755667.cacao",
+            "type": 1,
+            "uid": 1894755667
+        },
+        {
+            "asset_file": "omozra_armature_h|omozra_transition_animation.cake",
+            "library_path": "Library/Animations/986968480.cake",
+            "type": 5,
+            "uid": 986968480
+        }
+    ],
+    "hash": "84e2d80bedb00646c1fa6e78b3fb5591",
+    "library_file": "1917933411.tea",
+    "library_path": "Library/Models/1917933411.tea",
+    "type": 3,
+    "uid": 1917933411
+}

@@ -223,8 +223,9 @@ bool M_Editor::PreUpdate(float dt)
 
 	if ((engine->GetInput()->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN))
 	{
-		if(engine->GetSceneManager()->GetGameState() != GameState::PLAYING)
-		toggleCloseAppPopUpPanel = !toggleCloseAppPopUpPanel;
+		if (engine->GetSceneManager()->GetGameState() != GameState::PLAYING &&
+			engine->GetSceneManager()->GetGameState() != GameState::PAUSED)
+			toggleCloseAppPopUpPanel = !toggleCloseAppPopUpPanel;
 	}
 
 	// Panels PreUpdate

@@ -12,46 +12,7 @@ Component::Component(GameObject* parent) : owner(parent)
 
 const char* Component::GetNameByComponentType(ComponentType type)
 {
-	switch (type)
-	{
-	case ComponentType::NONE:
-		return "None";
-	case ComponentType::MESH:
-		return "Mesh";
-	case ComponentType::MATERIAL:
-		return "Material";
-	case ComponentType::CAMERA:
-		return "Camera";
-	case ComponentType::BOX_COLLIDER:
-		return "Box Collider";
-	case ComponentType::SPHERE_COLLIDER:
-		return "Sphere Collider";
-	case ComponentType::CAPSULE_COLLIDER:
-		return "Capsule Collider";
-	case ComponentType::SCRIPT:
-		return "Script";
-	case ComponentType::RIGID_BODY:
-		return "Rigid Body";
-	case ComponentType::TRANSFORM2D:
-		return "Transform 2D";
-	case ComponentType::CANVAS:
-		return "Canvas";
-	case ComponentType::IMAGE:
-		return "Image";
-	case ComponentType::BUTTON:
-		return "Button";
-	case ComponentType::TEXT:
-		return "Text";
-	case ComponentType::TRANSFORM:
-		return "Transform";
-	case ComponentType::INFO:
-		return "INFO";
-	case ComponentType::ANIMATOR:
-		return "ANIMATOR";
-	default:
-		return "[ERROR] Component: Unable to return name.";
-	}
-	return "[ERROR] Component: No component type detected!";
+	return componentTypeUtils::ComponentTypeToString(type);
 }
 
 bool Component::DrawDeleteButton(GameObject* owner, Component* component)

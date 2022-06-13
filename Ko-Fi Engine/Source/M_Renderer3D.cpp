@@ -53,6 +53,8 @@
 #pragma comment (lib, "glu32.lib")    /* link OpenGL Utility lib     */
 #pragma comment (lib, "opengl32.lib") /* link Microsoft OpenGL lib   */
 
+#define RELOAD_SHADOWS_TIMER 1
+
 M_Renderer3D::M_Renderer3D(KoFiEngine* engine) : Module()
 {
 	name = "Renderer3D";
@@ -134,6 +136,16 @@ bool M_Renderer3D::Update(float dt)
 	/*std::sort(gameObejctsToRenderDistanceOrdered.begin(),
 		gameObejctsToRenderDistanceOrdered.end(), 
 		[&cameraPosition](const GameObject* lhs, const GameObject* rhs) {return cameraPosition.DistanceSq(lhs->GetTransform()->GetPosition()) < cameraPosition.DistanceSq(rhs->GetTransform()->GetPosition()); });*/
+	
+	if (!reloadShadows) 
+	{
+		timerShadowsReload += dt;
+		if (timerShadowsReload > RELOAD_SHADOWS_TIMER)
+		{
+			timerShadowsReload = 0.0f;
+			reloadShadows = true;
+		}
+	}
 	return true;
 }
 
@@ -146,17 +158,18 @@ bool M_Renderer3D::PostUpdate(float dt)
 	GameObject* light = engine->GetSceneManager()->GetCurrentScene()->GetShadowCaster();
 	if (light)
 	{
-		glViewport(0, 0, depthMapResolution, depthMapResolution);		//configure viewport
-		glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);		//bind framebuffer
-		glClear(GL_DEPTH_BUFFER_BIT);						//clear only the depth buffer
-		//glCullFace(GL_FRONT);
-		FillShadowMap();
-		//glCullFace(GL_BACK);
-		glViewport(0, 0, engine->GetEditor()->lastViewportSize.x, engine->GetEditor()->lastViewportSize.y);
-		UnbindFrameBuffers();
+		if (reloadShadows) //optimization to make shadows less real time and more efficient ( timer is a #define )
+		{
+			glViewport(0, 0, depthMapResolution, depthMapResolution);		//configure viewport
+			glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);		//bind framebuffer
+			glClear(GL_DEPTH_BUFFER_BIT);						//clear only the depth buffer
+			reloadShadows = false;
+			FillShadowMap();
+			glViewport(0, 0, engine->GetEditor()->lastViewportSize.x, engine->GetEditor()->lastViewportSize.y);
+			UnbindFrameBuffers();
+			PrepareFrameBuffers();
+		}
 	}
-
-	PrepareFrameBuffers();
 
 	PassProjectionAndViewToRenderer();
 
@@ -211,6 +224,7 @@ bool M_Renderer3D::SaveConfiguration(Json& configModule) const
 bool M_Renderer3D::LoadConfiguration(Json& configModule)
 {
 	vsync = configModule["Vsync"];
+
 	return true;
 }
 
@@ -231,6 +245,7 @@ bool M_Renderer3D::InspectorDraw()
 			ResetFrustumCulling();
 			engine->GetCamera3D()->currentCamera->ApplyCullings();
 		}
+		
 
 		ImGui::Text("Objects in sphere %d", gameObejctsToRenderDistanceSphere.size());
 		ImGui::Text("Objects in frustrum %d", gameObejctsToRenderDistance.size());
@@ -401,7 +416,8 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 {
 	OPTICK_EVENT();
 
-	RenderSkyBox(camera, engine->GetSceneManager()->GetCurrentScene()->skybox);
+	if (engine->GetSceneManager()->GetCurrentScene()->drawSkybox == true)
+		RenderSkyBox(camera, engine->GetSceneManager()->GetCurrentScene()->skybox);
 
 	auto renderGo = [this, camera](GameObject* go) {
 		if (go->active && go->GetRenderGameObject())
@@ -421,21 +437,20 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 	};
 
 	if (gameObejctsToRenderDistanceOrdered.size() != 0) {
-#pragma omp parallel for
+
 		for (GameObject* go : gameObejctsToRenderDistanceOrdered)
 		{
 			renderGo(go);
 		}
 	}
 	else {
-#pragma omp parallel for
-		for (GameObject* go : gameObejctsToRenderDistance)
-		{
+
+		for (GameObject* go : gameObejctsToRenderDistance) {
 			renderGo(go);
 		}
 	}
 	RenderAllParticles();
-#pragma omp parallel for
+
 	for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
 	{
 		if (go->active)
@@ -443,9 +458,7 @@ void M_Renderer3D::RenderScene(C_Camera* camera)
 			C_RenderedUI* cRenderedUI = go->GetComponent<C_RenderedUI>();
 			if (cRenderedUI)
 			{
-				stopRenderingShadows = true;
 				RenderUI(go);
-				stopRenderingShadows = false;
 			}
 
 			C_Camera* cCamera = go->GetComponent<C_Camera>();
@@ -608,7 +621,7 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 				glBindTexture(GL_TEXTURE_2D, cMat->texture->GetTextureId());
 			}
 
-			if (engine->GetSceneManager()->GetCurrentScene()->GetShadowCaster() && !stopRenderingShadows)
+			if (engine->GetSceneManager()->GetCurrentScene()->GetShadowCaster())
 			{
 				glActiveTexture(GL_TEXTURE3);
 				glBindTexture(GL_TEXTURE_2D, depthMapTexture);
@@ -698,7 +711,7 @@ void M_Renderer3D::RenderMeshes(C_Camera* camera, GameObject* go)
 						break;
 					}
 				}
-				LightUniforms(shader);
+				LightUniforms(shader, go);
 				
 				GameObject* light = engine->GetSceneManager()->GetCurrentScene()->GetShadowCaster();
 				if (light)
@@ -765,6 +778,7 @@ void M_Renderer3D::RenderSkyBox(C_Camera* camera, SkyBox& skybox)
 		GLint projection_location = glGetUniformLocation(shader, "projection");
 
 		glUniformMatrix4fv(projection_location, 1, GL_FALSE, proj.Transposed().ptr());
+		
 		skybox.DrawSkyBox();
 		glUseProgram(0); // Always Last!
 
@@ -773,7 +787,7 @@ void M_Renderer3D::RenderSkyBox(C_Camera* camera, SkyBox& skybox)
 
 }
 
-void M_Renderer3D::LightUniforms(uint shader)
+void M_Renderer3D::LightUniforms(uint shader, GameObject* go)
 {
 	OPTICK_EVENT();
 
@@ -904,6 +918,8 @@ void M_Renderer3D::LightUniforms(uint shader)
 					continue;
 				// --- basic light parameters ---
 				auto lightSource = (FocalLight*)c_light->GetLightSource();
+
+				if (!lightSource->GOInRange(go)) continue;
 
 				// -- basic light parameters --
 				//fill the first variable of the focalLights struct: vec3 color
@@ -1306,14 +1322,15 @@ uint M_Renderer3D::GetPreviewTextureBuffer()
 void M_Renderer3D::AddParticle(R_Texture& tex, Color color, const float4x4 transform, float distanceToCamera)
 {
 	ParticleRenderer pRenderer = ParticleRenderer(tex, color, transform);
-	particles.insert(std::map<float, ParticleRenderer>::value_type(distanceToCamera, pRenderer));
+	particles.insert(std::make_pair(distanceToCamera, pRenderer));
 }
 
 void M_Renderer3D::RenderAllParticles()
 {
-	for (std::map<float,ParticleRenderer>::reverse_iterator particle = particles.rbegin();particle != particles.rend();++particle)
-	{
-		RenderParticle(&particle->second);
+	OPTICK_EVENT();
+
+	for (auto it = particles.rbegin(); it != particles.rend(); ++it) {
+		RenderParticle(&it->second);
 	}
 
 	particles.clear();
@@ -1350,6 +1367,7 @@ void M_Renderer3D::InitDepthMapFramebufferAndTexture()
 
 void M_Renderer3D::FillShadowMap()
 {
+	OPTICK_EVENT();
 	//skip filling the shadow map if there are no lights in the scene
 	//std::vector<GameObject*> directionalLights = engine->GetSceneManager()->GetCurrentScene()->GetLights(SourceType::DIRECTIONAL);
 	GameObject* light = engine->GetSceneManager()->GetCurrentScene()->GetShadowCaster();
@@ -1358,8 +1376,8 @@ void M_Renderer3D::FillShadowMap()
 		C_Material* lightMat = light->GetComponent<C_Material>();
 		if (!lightMat)
 			return;
-
-		for (GameObject* go : engine->GetSceneManager()->GetCurrentScene()->gameObjectList)
+		
+		for (auto go : gameObejctsToRenderDistanceSphere)
 		{
 			if (!go->active)
 				continue;
@@ -1407,8 +1425,13 @@ void M_Renderer3D::ShadowMapUniforms(C_Mesh* cMesh, uint shader, GameObject* lig
 	glUniformMatrix4fv(lightSpaceMatrix, 1, GL_FALSE, dirLight->lightSpaceMatrix.Transposed().ptr());
 }
 
+ParticleRenderer::ParticleRenderer()
+{
+	tex = nullptr;
+}
+
 ParticleRenderer::ParticleRenderer(R_Texture& tex, Color color, const float4x4 transform):
-tex(tex),
+tex(&tex),
 color(color),
 transform(transform)
 {
@@ -1426,11 +1449,11 @@ void M_Renderer3D::RenderParticle(ParticleRenderer* particle)
 	glDisable(GL_TEXTURE_2D);
 	//glColor3f(1.0f, 1.0f, 1.0f);
 
-	if (particle->tex.GetTextureId() != TEXTUREID_DEFAULT)
+	if (particle->tex->GetTextureId() != TEXTUREID_DEFAULT)
 	{
 		glEnable(GL_TEXTURE_2D);
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, particle->tex.GetTextureId());
+		glBindTexture(GL_TEXTURE_2D, particle->tex->GetTextureId());
 	}
 	
 	glColor4f(particle->color.r, particle->color.g, particle->color.b, particle->color.a);

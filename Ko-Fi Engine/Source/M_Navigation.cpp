@@ -68,6 +68,9 @@ bool M_Navigation::PostUpdate(float dt)
 
 bool M_Navigation::CleanUp()
 {
+	if (navMesh != nullptr) rcFreePolyMesh(navMesh);
+	if (navMeshDetail != nullptr) rcFreePolyMeshDetail(navMeshDetail);
+	
 	return true;
 }
 
@@ -162,8 +165,7 @@ rcPolyMeshDetail* M_Navigation::ComputeNavmesh(R_Mesh* mesh)
 	// https://wiki.jmonkeyengine.org/docs/3.4/contributions/ai/recast.html
 	// https://github.com/recastnavigation/recastnavigation/blob/c5cbd53024c8a9d8d097a4371215e3342d2fdc87/RecastDemo/Source/Sample_SoloMesh.cpp
 
-	if (navMesh != nullptr) rcFreePolyMesh(navMesh);
-	if (navMeshDetail != nullptr) rcFreePolyMeshDetail(navMeshDetail);
+	CleanUp();
 
 	rcConfig* config = new rcConfig();
 

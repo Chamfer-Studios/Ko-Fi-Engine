@@ -76,7 +76,7 @@
                     "offset": 0.0,
                     "pan": 0.0,
                     "play_on_start": false,
-                    "track_path": "Assets/Audio/SFX/Nerala/temp_smoke_detonation_fx.wav",
+                    "track_path": "Assets/Audio/SFX/Nerala/nerala_bomb_activation_fx.wav",
                     "transpose": 1.0,
                     "volume": 100.0
                 },
@@ -89,9 +89,9 @@
                     "offset": 0.0,
                     "pan": 0.0,
                     "play_on_start": false,
-                    "track_path": "Assets/Audio/SFX/Nerala/temp_smoke_active_fx.wav",
+                    "track_path": "Assets/Audio/SFX/Nerala/nerala_bomb_smoke_fx.wav",
                     "transpose": 1.0,
-                    "volume": 23.0
+                    "volume": 100.0
                 }
             ],
             "type": 11
@@ -99,6 +99,7 @@
         {
             "active": true,
             "ambientValue": 0.0,
+            "castShadows": false,
             "constantAttenuationValue": 0.0,
             "cutOffAngle": 1.0,
             "diffuseValue": 0.20000000298023224,

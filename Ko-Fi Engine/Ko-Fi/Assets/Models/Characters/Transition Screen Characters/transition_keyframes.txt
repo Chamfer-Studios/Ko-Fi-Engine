@@ -1,0 +1,4 @@
+Transition Models Keyframes
+- Zhib: 168
+- Nerala: 96
+- Omozra: 176

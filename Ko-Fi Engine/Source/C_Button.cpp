@@ -9,6 +9,7 @@
 #include "M_Input.h"
 #include "M_SceneManager.h"
 #include "M_Camera3d.h"
+#include "M_Editor.h"
 
 // GameObject
 #include "GameObject.h"
@@ -321,4 +322,9 @@ void C_Button::OnStoped()
 	M_Camera3D* camera = owner->GetEngine()->GetCamera3D();
 	sceneManager->OnStop();
 	camera->OnStop();
+}
+
+float C_Button::GetMouseXPos()
+{
+	return owner->GetEngine()->GetEditor()->mouseScenePosition.x;
 }

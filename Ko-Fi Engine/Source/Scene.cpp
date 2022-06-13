@@ -15,6 +15,7 @@
 #include "M_Camera3D.h" 
 #include "C_Camera.h"
 #include "C_RigidBody.h"
+#include "M_Navigation.h"
 
 GameObject* Scene::GetGameObject(int uid)
 {
@@ -177,33 +178,31 @@ void Scene::DeleteGameObject(GameObject* gameObject)
 	
 	auto position = std::find(gameObjectList.begin(), gameObjectList.end(), gameObject);
 
-	gameObjectList.erase(position);
-	if (gameObject != nullptr)
+	//Re organize children into the top parent so that they are not hanging, plus it deletes the parent's children
+	GameObject* parent = gameObject->GetParent();
+	std::vector<GameObject*> children = gameObject->GetChildren();
+	if (children.size() > 0)
 	{
-		//Re organize children into the top parent so that they are not hanging, plus it deletes the parent's children
-		GameObject* parent = gameObject->GetParent();
-		std::vector<GameObject*> children = gameObject->GetChildren();
-		if (children.size() > 0)
+		for (std::vector<GameObject*>::iterator ch = children.begin(); ch != children.end(); ch++)
 		{
-			for (std::vector<GameObject*>::iterator ch = children.begin(); ch != children.end(); ch++)
-			{
-				GameObject* child = (*ch);
-				parent->AttachChild(child);
-			}
+			GameObject* child = (*ch);
+			parent->AttachChild(child);
 		}
-		
-		parent->RemoveChild(gameObject);
-
-		if (gameObject->GetComponent<C_LightSource>() != nullptr)
-		{
-			RemoveLight(gameObject);
-		}
-		if (gameObject->GetComponent<C_RigidBody>() != nullptr)
-		{
-			engine->GetPhysics()->DeleteBodyFromObjectMap(gameObject);
-		}
-		RELEASE(gameObject);
 	}
+		
+	parent->RemoveChild(gameObject);
+
+	if (gameObject->GetComponent<C_LightSource>() != nullptr)
+	{
+		RemoveLight(gameObject);
+	}
+	if (gameObject->GetComponent<C_RigidBody>() != nullptr)
+	{
+		engine->GetPhysics()->DeleteBodyFromObjectMap(gameObject);
+	}
+
+	gameObjectList.erase(position);
+	RELEASE(gameObject);
 
 	engine->GetRenderer()->ResetFrustumCulling();
 	engine->GetCamera3D()->currentCamera->ApplyCullings();
@@ -280,7 +279,7 @@ std::vector<GameObject*> Scene::GetLights(SourceType type)
 	std::vector<GameObject*> ret;
 
 	for (auto light : lights) {
-		if (light->GetSourceType() == type && !light->owner->isCulled)
+		if (light->GetSourceType() == type  /*&& !light->owner->isCulled*/)
 		{
 			ret.push_back(light->owner);
 		}
@@ -291,8 +290,6 @@ std::vector<GameObject*> Scene::GetLights(SourceType type)
 
 void Scene::SetShadowCaster(GameObject* shadowCaster)
 {
-	//if there is a shadow caster active maybe do smthng
-
 	this->shadowCaster = shadowCaster;
 }
 

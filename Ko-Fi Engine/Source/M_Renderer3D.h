@@ -31,11 +31,12 @@ class SkyBox;
 
 struct ParticleRenderer
 {
-	ParticleRenderer(R_Texture &tex, Color color, const float4x4 transform);
+	ParticleRenderer();
+	ParticleRenderer(R_Texture& tex, Color color, const float4x4 transform);
 
 	// void Render();
 
-	R_Texture &tex;
+	R_Texture* tex;
 	Color color;
 	float4x4 transform;
 };
@@ -137,7 +138,7 @@ public:
 	void RenderAllParticles();
 
 	void InitDepthMapFramebufferAndTexture();
-	void LightUniforms(uint shader);
+	void LightUniforms(uint shader, GameObject* go);
 
 	void ShadowMapUniforms(C_Mesh *cMesh, uint shader, GameObject *light);
 	void FillShadowMap();
@@ -165,6 +166,7 @@ private:
 	// Debug ray for mouse picking
 	LineSegment ray;
 	float timeWaterShader = 0;
+	float timerShadowsReload = 0.0;
 
 	// Viewport frame buffer
 	uint frameBuffer = 0;
@@ -182,7 +184,7 @@ private:
 	R_Material *occlusionMat = nullptr;
 	R_Material* outlineShader = nullptr;
 
-	bool stopRenderingShadows = false;
+	bool reloadShadows = true;
 
 	std::vector<float4x4> transformsAnim;
 

@@ -43,7 +43,7 @@ C_Camera::C_Camera(GameObject* parent) : Component(parent)
 	cameraFrustum.SetPerspective(DegToRad(44.0f), DegToRad(72.57f));
 	cameraFrustum.SetHorizontalFovAndAspectRatio(DegToRad(44.0f), 1.778);
 	cameraFrustum.SetViewPlaneDistances(0.3f, 1000.0f);
-	cameraFrustum.SetFrame(float3(0.0f, 0.0f, 0.0f), float3(0.0f, 0.0f, 1.0f), float3(0.0f, 1.0f, 0.0f));
+	cameraFrustum.SetFrame(parent->GetTransform()->GetPosition(), float3(0.0f, 0.0f, 1.0f), float3(0.0f, 1.0f, 0.0f));
 	LookAt(cameraFrustum.Front());
 	SetIsSphereCullingActive(false);
 	SetIsFrustumActive(false);
@@ -51,6 +51,7 @@ C_Camera::C_Camera(GameObject* parent) : Component(parent)
 
 C_Camera::~C_Camera()
 {
+	CleanUp();
 }
 
 bool C_Camera::Start()
@@ -197,6 +198,10 @@ bool C_Camera::InspectorDraw(PanelChooser* chooser)
 			cameraFrustum.SetViewPlaneDistances(planeDistances.x, planeDistances.y);
 			sCullingRadius = (planeDistances.y - planeDistances.x) / 2.0f;
 		}
+		ImGui::Separator();
+		bool drawSkybox = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->drawSkybox;
+		if (ImGui::Checkbox("Draw Skybox", &drawSkybox))
+			owner->GetEngine()->GetSceneManager()->GetCurrentScene()->drawSkybox = drawSkybox;
 	}
 	else
 		DrawDeleteButton(owner, this);
@@ -215,6 +220,9 @@ void C_Camera::Save(Json& json) const
 	json["frustum_culling"] = isFrustumCullingActive;
 	json["sCullingRadius"] = sCullingRadius;
 	json["isMainCamera"] = isMainCamera;
+	json["cameraType"] = (int)cameraType;
+	json["orthoWidth"] = orthoWidth;
+	json["orthoHeight"] = orthoHeight;
 }
 
 void C_Camera::Load(Json& json)
@@ -228,6 +236,20 @@ void C_Camera::Load(Json& json)
 	}
 	isFrustumCullingActive = json.at("frustum_culling");
 	isMainCamera = json.at("isMainCamera");
+	if (json.contains("cameraType"))
+	{
+		cameraType = (CameraType)json.at("cameraType");
+	}
+	if (json.contains("orthoWidth"))
+	{
+		orthoWidth = json.at("orthoWidth");
+		orthoHeight = json.at("orthoHeight");
+		if (cameraType == CameraType::KOFI_ORTHOGRAPHIC)
+		{
+			SetProjectionType(cameraType);
+			ApplyOrthoWidthAndHeight();
+		}
+	}
 	if (isMainCamera)
 		owner->GetEngine()->GetCamera3D()->SetGameCamera(this);
 }
@@ -322,11 +344,11 @@ void C_Camera::SphereCulling()
 	OPTICK_EVENT();
 	//1st culling iteration where we check the distance of the game object to a middle point between the near and far plane,
 	//If object is further from the sphere radius, we discard them.
-	std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
+	//std::vector<GameObject*> gameObjects = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList;
 
-	for (std::vector<GameObject*>::iterator go = gameObjects.begin(); go != gameObjects.end(); go++)
+	for (int i = 0; i < owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList.size(); i++)
 	{
-		GameObject* gameObject = (*go);
+		GameObject* gameObject = owner->GetEngine()->GetSceneManager()->GetCurrentScene()->gameObjectList[i];
 		C_Mesh* cMesh = gameObject->GetComponent<C_Mesh>();
 		if (!cMesh || gameObject == owner)
 			continue;
@@ -366,9 +388,15 @@ void C_Camera::FrustumCulling()
 
 	std::unordered_set<GameObject*>::iterator it;
 
-	for (it = owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.begin(); it != owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.end(); it++)
+	std::vector<GameObject*> gos;
+
+	for (it = owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.begin(); it != owner->GetEngine()->GetRenderer()->gameObejctsToRenderDistanceSphere.end(); it++) {
+		gos.push_back(*it);
+	}
+
+	for (int i = 0; i < gos.size(); i++)
 	{
-		GameObject* go = (*it);
+		GameObject* go = gos[i];
 	/*	if (!gameObject->GetRenderGameObject())
 			continue;*/
 		C_Mesh* componentMesh = go->GetComponent<C_Mesh>();

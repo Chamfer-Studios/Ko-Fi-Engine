@@ -6,6 +6,8 @@ lifeTimer = 0
 destination = nil
 target = nil
 attackRange = 20.0 -- Maybe too big
+isDead = false
+poisonCount = 1
 -------------------- Methods ---------------------
 
 function Start()
@@ -15,6 +17,8 @@ function Start()
     maxTetherRange = GetVariable("Nerala.lua", "ultimateMaxDistance", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
     destination = GetVariable("Nerala.lua", "target", INSPECTOR_VARIABLE_TYPE.INSPECTOR_FLOAT3) -- float 3
     if (destination ~= nil) then
+        lifeTime = GetVariable("Nerala.lua", "ultimateLifeTime", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
+        poisonCount = GetVariable("Nerala.lua", "ultimateKills", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
         player = GetVariable("Nerala.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT) -- player = Find("Nerala")
         neralaPosition = player:GetTransform():GetPosition()
         local targetPos2D = {destination.x, destination.z}
@@ -35,25 +39,28 @@ function Start()
         if (mouseParticles ~= nil) then
             mouseParticles:GetComponentParticle():StopParticleSpawn()
         end
-
-        poisonCount = 2 -- Number of kills left
+        deathParticle = Find("Nerala Mosquito Death Particle")
+        if (deathParticle ~= nil) then
+            deathParticle:GetComponentParticle():StopParticleSpawn()
+        end
 
         DispatchGlobalEvent("Mosquito_Spawn", {gameObject}) -- fields[1] -> gameObject
     else
         DispatchGlobalEvent("Nerala_Ultimate_Bugged", {})
+        if (deathParticle ~= nil) then
+            deathParticle:GetComponentParticle():ResumeParticleSpawn()
+        end
         DeleteGameObject()
     end
 end
 
 -- Called each loop iteration
 function Update(dt)
-
-    if (lifeTimer >= lifeTime) then
-        Die()
+    if (isDead == true) then
         do
             return
         end
-    elseif (Distance3D(componentTransform:GetPosition(), neralaPosition) > maxTetherRange) then
+    elseif (lifeTimer >= lifeTime or Distance3D(componentTransform:GetPosition(), neralaPosition) > maxTetherRange) then
         Die()
         do
             return
@@ -65,6 +72,11 @@ function Update(dt)
         if (poisonTimer >= 1) then
             poisonTimer = nil
         end
+    end
+
+    if (deathParticle ~= nil) then
+        deathParticle:GetTransform():SetPosition(float3.new(componentTransform:GetPosition().x,
+            componentTransform:GetPosition().y + 15, componentTransform:GetPosition().z + 10))
     end
 
     DispatchGlobalEvent("Auditory_Trigger", {componentTransform:GetPosition(), 100, "repeated", player}) -- TODO: Check range
@@ -197,21 +209,31 @@ function StopMovement()
 end
 
 function Die()
+    if (isDead == true) then
+        do
+            return
+        end
+    end
+    if (deathParticle ~= nil) then
+        deathParticle:GetComponentParticle():ResumeParticleSpawn()
+    end
     DeleteGameObject()
     DispatchGlobalEvent("Mosquito_Death", {})
+    isDead = true
 end
 
 function EventHandler(key, fields)
     if (key == "Stop_Movement") then
         StopMovement()
+    elseif (key == "Mosquito_Detected") then
+        Die()
     end
 end
 
 function OnTriggerEnter(go)
     if (go.tag == Tag.ENEMY and go == target and poisonTimer == nil) then
         DispatchGlobalEvent("Mosquito_Hit", {go})
-        trackList = {2, 3}
-        ChangeTrack(trackList)
+        ChangeTrack({2})
         if (poisonCount == 1) then
             Die()
         end

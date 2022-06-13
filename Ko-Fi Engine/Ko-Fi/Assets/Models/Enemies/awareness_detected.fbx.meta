@@ -1,0 +1,17 @@
+{
+    "asset_file": "awareness_detected.fbx",
+    "asset_path": "Assets/Models/Enemies/awareness_detected.fbx",
+    "contained_resources": [
+        {
+            "asset_file": "TextPlus001.sugar",
+            "library_path": "Library/Meshes/419856457.sugar",
+            "type": 0,
+            "uid": 419856457
+        }
+    ],
+    "hash": "09e154a8c0806973a7d845f0f2d09d4b",
+    "library_file": "1835994858.tea",
+    "library_path": "Library/Models/1835994858.tea",
+    "type": 3,
+    "uid": 1835994858
+}

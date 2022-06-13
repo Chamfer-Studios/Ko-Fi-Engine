@@ -86,6 +86,7 @@
         },
         {
             "active": true,
+            "async": false,
             "file_name": "Assets/Scripts/Characters/Nerala/Dart.lua",
             "id": 1042231396,
             "type": 5
@@ -94,7 +95,7 @@
             "active": true,
             "fade_time": 2.0,
             "offset_sync": false,
-            "total_tracks": 2,
+            "total_tracks": 1,
             "tracks": [
                 {
                     "bypass": false,
@@ -106,19 +107,6 @@
                     "pan": 0.0,
                     "play_on_start": false,
                     "track_path": "Assets/Audio/SFX/Nerala/nerala_poison_hit_1_fx.wav",
-                    "transpose": 1.0,
-                    "volume": 100.0
-                },
-                {
-                    "bypass": false,
-                    "custom_loop": false,
-                    "loop": false,
-                    "loop_offset": 0.0,
-                    "mute": false,
-                    "offset": 0.0,
-                    "pan": 0.0,
-                    "play_on_start": false,
-                    "track_path": "Assets/Audio/SFX/Nerala/nerala_poison_hit_2_fx.wav",
                     "transpose": 1.0,
                     "volume": 100.0
                 }

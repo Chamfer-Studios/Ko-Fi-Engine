@@ -142,11 +142,13 @@ void C_CapsuleCollider::Load(Json& json)
 	std::vector<float> values = json.at("scale_factor").get<std::vector<float>>();
 	scaleFactor = float2(values[0], values[1]);
 	values.clear();
+	values.shrink_to_fit();;
 	UpdateScaleFactor();
 
 	values = json.at("center").get<std::vector<float>>();
 	center = float3(values[0], values[1], values[2]);
 	values.clear();
+	values.shrink_to_fit();
 	UpdateCenter();
 }
 

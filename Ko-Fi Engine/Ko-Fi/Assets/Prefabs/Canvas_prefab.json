@@ -21,7 +21,7 @@
                             ],
                             "position": [
                                 0.0,
-                                25.0
+                                35.0
                             ],
                             "rotation": [
                                 0.0,
@@ -29,22 +29,15 @@
                                 0.0
                             ],
                             "size": [
-                                40.0,
-                                40.0
+                                60.0,
+                                60.0
                             ],
                             "type": 22
                         },
                         {
                             "active": true,
-                            "color": [
-                                255,
-                                255,
-                                255,
-                                255
-                            ],
-                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
-                            "type": 16,
-                            "value": "Z"
+                            "texture": "Assets/New UI/Controls/Z_Key_Light.png",
+                            "type": 14
                         }
                     ],
                     "is3D": false,
@@ -111,7 +104,7 @@
                             ],
                             "position": [
                                 0.0,
-                                25.0
+                                35.0
                             ],
                             "rotation": [
                                 0.0,
@@ -119,22 +112,15 @@
                                 0.0
                             ],
                             "size": [
-                                40.0,
-                                40.0
+                                60.0,
+                                60.0
                             ],
                             "type": 22
                         },
                         {
                             "active": true,
-                            "color": [
-                                255,
-                                255,
-                                255,
-                                255
-                            ],
-                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
-                            "type": 16,
-                            "value": "X"
+                            "texture": "Assets/New UI/Controls/X_Key_Light.png",
+                            "type": 14
                         }
                     ],
                     "is3D": false,
@@ -201,7 +187,7 @@
                             ],
                             "position": [
                                 0.0,
-                                25.0
+                                35.0
                             ],
                             "rotation": [
                                 0.0,
@@ -209,22 +195,15 @@
                                 0.0
                             ],
                             "size": [
-                                40.0,
-                                40.0
+                                60.0,
+                                60.0
                             ],
                             "type": 22
                         },
                         {
                             "active": true,
-                            "color": [
-                                255,
-                                255,
-                                255,
-                                255
-                            ],
-                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
-                            "type": 16,
-                            "value": "C"
+                            "texture": "Assets/New UI/Controls/C_Key_Light.png",
+                            "type": 14
                         }
                     ],
                     "is3D": false,
@@ -969,6 +948,7 @@
                         },
                         {
                             "active": true,
+                            "async": false,
                             "file_name": "Assets/Scripts/New HUD Scripts/primary_skill_button.lua",
                             "id": 29862008,
                             "type": 5
@@ -1018,6 +998,7 @@
                         },
                         {
                             "active": true,
+                            "async": false,
                             "file_name": "Assets/Scripts/New HUD Scripts/secondary_skill_button.lua",
                             "id": 258688672,
                             "type": 5
@@ -1067,6 +1048,7 @@
                         },
                         {
                             "active": true,
+                            "async": false,
                             "file_name": "Assets/Scripts/New HUD Scripts/ultimate_skill_button.lua",
                             "id": 1366169570,
                             "type": 5
@@ -1667,13 +1649,13 @@
                 },
                 {
                     "active": true,
-                    "anchor": 2,
+                    "anchor": 0,
                     "pivot": [
                         0.5,
                         0.5
                     ],
                     "position": [
-                        92.0,
+                        -95.0,
                         -363.0
                     ],
                     "rotation": [
@@ -1696,6 +1678,7 @@
                 },
                 {
                     "active": true,
+                    "async": false,
                     "file_name": "Assets/Scripts/New HUD Scripts/quest_button.lua",
                     "id": 473691346,
                     "type": 5
@@ -2218,7 +2201,7 @@
                             ],
                             "position": [
                                 -150.0,
-                                90.0
+                                82.0
                             ],
                             "rotation": [
                                 0.0,
@@ -2226,22 +2209,15 @@
                                 0.0
                             ],
                             "size": [
-                                30.0,
-                                30.0
+                                45.0,
+                                45.0
                             ],
                             "type": 22
                         },
                         {
                             "active": true,
-                            "color": [
-                                255,
-                                255,
-                                255,
-                                255
-                            ],
-                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
-                            "type": 16,
-                            "value": "1"
+                            "texture": "Assets/New UI/Controls/1_Key_Light.png",
+                            "type": 14
                         }
                     ],
                     "is3D": false,
@@ -2266,7 +2242,7 @@
                             ],
                             "position": [
                                 0.0,
-                                90.0
+                                82.0
                             ],
                             "rotation": [
                                 0.0,
@@ -2274,22 +2250,15 @@
                                 0.0
                             ],
                             "size": [
-                                30.0,
-                                30.0
+                                45.0,
+                                45.0
                             ],
                             "type": 22
                         },
                         {
                             "active": true,
-                            "color": [
-                                255,
-                                255,
-                                255,
-                                255
-                            ],
-                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
-                            "type": 16,
-                            "value": "2"
+                            "texture": "Assets/New UI/Controls/2_Key_Light.png",
+                            "type": 14
                         }
                     ],
                     "is3D": false,
@@ -2314,7 +2283,7 @@
                             ],
                             "position": [
                                 150.0,
-                                90.0
+                                82.0
                             ],
                             "rotation": [
                                 0.0,
@@ -2322,22 +2291,15 @@
                                 0.0
                             ],
                             "size": [
-                                30.0,
-                                30.0
+                                45.0,
+                                45.0
                             ],
                             "type": 22
                         },
                         {
                             "active": true,
-                            "color": [
-                                255,
-                                255,
-                                255,
-                                255
-                            ],
-                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
-                            "type": 16,
-                            "value": "3"
+                            "texture": "Assets/New UI/Controls/3_Key_Light.png",
+                            "type": 14
                         }
                     ],
                     "is3D": false,
@@ -2403,7 +2365,7 @@
                             ],
                             "position": [
                                 0.0,
-                                50.0
+                                40.0
                             ],
                             "rotation": [
                                 0.0,
@@ -2420,17 +2382,11 @@
                             "active": true,
                             "texture": "Assets/New UI/spice_bar_fill_default.png",
                             "type": 14
-                        },
-                        {
-                            "active": true,
-                            "file_name": "Assets/Scripts/New HUD Scripts/spice_bar.lua",
-                            "id": 2040907340,
-                            "type": 5
                         }
                     ],
                     "is3D": false,
                     "isPrefab": false,
-                    "name": "Spice bar fill",
+                    "name": "Stamina Bar Fill",
                     "tag": 0
                 },
                 {
@@ -2450,7 +2406,7 @@
                             ],
                             "position": [
                                 0.0,
-                                50.0
+                                40.0
                             ],
                             "rotation": [
                                 0.0,
@@ -2471,61 +2427,7 @@
                     ],
                     "is3D": false,
                     "isPrefab": false,
-                    "name": "Spice Bar Frame",
-                    "tag": 0
-                },
-                {
-                    "active": true,
-                    "children": [],
-                    "components": [
-                        {
-                            "active": true,
-                            "type": 23
-                        },
-                        {
-                            "active": true,
-                            "anchor": 7,
-                            "pivot": [
-                                0.5,
-                                0.5
-                            ],
-                            "position": [
-                                0.0,
-                                50.0
-                            ],
-                            "rotation": [
-                                0.0,
-                                0.0,
-                                0.0
-                            ],
-                            "size": [
-                                60.0,
-                                30.0
-                            ],
-                            "type": 22
-                        },
-                        {
-                            "active": true,
-                            "color": [
-                                255,
-                                255,
-                                255,
-                                255
-                            ],
-                            "fontPath": "Assets/Fonts/Inter/Inter-Black.otf",
-                            "type": 16,
-                            "value": "0"
-                        },
-                        {
-                            "active": true,
-                            "file_name": "Assets/Scripts/New HUD Scripts/spice_text.lua",
-                            "id": 1443486017,
-                            "type": 5
-                        }
-                    ],
-                    "is3D": false,
-                    "isPrefab": false,
-                    "name": "Spice Text",
+                    "name": "Stamina Bar Frame",
                     "tag": 0
                 }
             ],
@@ -2563,7 +2465,7 @@
             ],
             "is3D": false,
             "isPrefab": false,
-            "name": "Spice",
+            "name": "Stamina",
             "tag": 0
         },
         {
@@ -3059,6 +2961,3632 @@
             "isPrefab": false,
             "name": "HP Frame 4",
             "tag": 0
+        },
+        {
+            "active": false,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 4,
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        1920.0,
+                        1080.0
+                    ],
+                    "type": 22
+                },
+                {
+                    "active": true,
+                    "texture": "Assets/New UI/blood_screen.png",
+                    "type": 14
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "Take Damage Border",
+            "tag": 0
+        },
+        {
+            "active": true,
+            "children": [
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 8,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -80.0,
+                                80.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                75.0,
+                                75.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/spice_mask_default.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Spice Mask Default",
+                    "tag": 0
+                },
+                {
+                    "active": false,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 8,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -80.0,
+                                80.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                75.0,
+                                75.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/spice_mask_using.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Spice Mask Blink",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 8,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -80.0,
+                                80.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                80.0,
+                                80.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/spice_frame.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Spice Frame",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        76.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        150.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        255,
+                                        255,
+                                        255,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                                    "type": 16,
+                                    "value": "+1000"
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Spice Text Additional",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 8,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -150.0,
+                                78.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                60.0,
+                                70.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "color": [
+                                255,
+                                255,
+                                255,
+                                255
+                            ],
+                            "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                            "type": 16,
+                            "value": "10"
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Spice Text New",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 4,
+                    "logicalSize": [
+                        1920.0,
+                        1080.0
+                    ],
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        200.0,
+                        200.0
+                    ],
+                    "type": 13
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "Spice",
+            "tag": 0
+        },
+        {
+            "active": true,
+            "children": [
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_active.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Blink 3",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_frame.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Frame 3",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 5,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -80.0,
+                                -40.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                70.0,
+                                70.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/omozra_charge_full.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Omozra Charge Full 3",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_active.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Blink 4",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_frame.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Frame 4",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 5,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -80.0,
+                                40.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                70.0,
+                                70.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/omozra_charge_full.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Omozra Charge Full 4",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_active.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Blink 5",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_frame.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Frame 5",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 5,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -80.0,
+                                120.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                70.0,
+                                70.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/omozra_charge_full.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Omozra Charge Full 5",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_active.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Blink 6",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_frame.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Frame 6",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 5,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -80.0,
+                                200.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                70.0,
+                                70.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/omozra_charge_full.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Omozra Charge Full 6",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_active.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Blink 2",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_frame.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Frame 2",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 5,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -80.0,
+                                -120.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                70.0,
+                                70.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/omozra_charge_full.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Omozra Charge Full 2",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_active.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Blink 1",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        70.0,
+                                        70.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/omozra_charge_frame.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Omozra Charge Frame 1",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 5,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -80.0,
+                                -200.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                70.0,
+                                70.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/omozra_charge_full.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Omozra Charge Full 1",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 4,
+                    "logicalSize": [
+                        1920.0,
+                        1080.0
+                    ],
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        200.0,
+                        200.0
+                    ],
+                    "type": 13
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "Omozra Charges",
+            "tag": 0
+        },
+        {
+            "active": false,
+            "children": [
+                {
+                    "active": false,
+                    "children": [
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 0,
+                                    "pivot": [
+                                        0.0,
+                                        1.0
+                                    ],
+                                    "position": [
+                                        31.0,
+                                        -22.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        85.0,
+                                        60.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/frame_corner.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Top Left",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 2,
+                                    "pivot": [
+                                        0.0,
+                                        1.0
+                                    ],
+                                    "position": [
+                                        -31.0,
+                                        -22.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        3.1415927410125732,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        85.0,
+                                        60.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/frame_corner.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Top Right",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 6,
+                                    "pivot": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "position": [
+                                        31.0,
+                                        84.0
+                                    ],
+                                    "rotation": [
+                                        3.1415927410125732,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        85.0,
+                                        60.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/frame_corner.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Bottom Left",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 8,
+                                    "pivot": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "position": [
+                                        -31.0,
+                                        85.0
+                                    ],
+                                    "rotation": [
+                                        3.1415927410125732,
+                                        3.1415927410125732,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        85.0,
+                                        60.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/frame_corner.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Bottom Right",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 1,
+                                    "pivot": [
+                                        0.5,
+                                        1.0
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        -22.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        261.0,
+                                        28.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/decorative_vector.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Top Piece",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        300.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        284.0,
+                                        113.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        207,
+                                        100,
+                                        44,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                                    "type": 16,
+                                    "value": "Pause"
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Pause Text",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                0.0,
+                                                3.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                259.0,
+                                                59.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "color": [
+                                                255,
+                                                255,
+                                                255,
+                                                255
+                                            ],
+                                            "fontPath": "Assets/Fonts/Lato/Lato-Bold.ttf",
+                                            "type": 16,
+                                            "value": "Main Menu"
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "Main Menu Text",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        185.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        460.0,
+                                        112.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "hoverTexture": "Assets/New UI/button_a_hover.png",
+                                    "idleTexture": "Assets/New UI/button_a_default.png",
+                                    "pressedTexture": "Assets/New UI/button_a_pressed.png",
+                                    "type": 15
+                                },
+                                {
+                                    "active": true,
+                                    "async": false,
+                                    "file_name": "Assets/Scripts/HUD/UI_ChangeScenes.lua",
+                                    "id": 228072993,
+                                    "inspector_variables": [
+                                        {
+                                            "name": "name",
+                                            "type": "string",
+                                            "value": "SceneMainMenu"
+                                        }
+                                    ],
+                                    "type": 5
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Main Menu Button",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                -2.0,
+                                                4.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                185.0,
+                                                64.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "color": [
+                                                255,
+                                                255,
+                                                255,
+                                                255
+                                            ],
+                                            "fontPath": "Assets/Fonts/Lato/Lato-Bold.ttf",
+                                            "type": 16,
+                                            "value": "Restart"
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "Restart Text",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        25.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        460.0,
+                                        112.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "hoverTexture": "Assets/New UI/button_a_hover.png",
+                                    "idleTexture": "Assets/New UI/button_a_default.png",
+                                    "pressedTexture": "Assets/New UI/button_a_pressed.png",
+                                    "type": 15
+                                },
+                                {
+                                    "active": true,
+                                    "async": false,
+                                    "file_name": "Assets/Scripts/HUD/UI_ChangeScenes.lua",
+                                    "id": 802331395,
+                                    "inspector_variables": [
+                                        {
+                                            "name": "name",
+                                            "type": "string",
+                                            "value": "SceneLoading"
+                                        }
+                                    ],
+                                    "type": 5
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Restart Button",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                -3.0,
+                                                3.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                246.0,
+                                                69.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "color": [
+                                                255,
+                                                255,
+                                                255,
+                                                255
+                                            ],
+                                            "fontPath": "Assets/Fonts/Lato/Lato-Bold.ttf",
+                                            "type": 16,
+                                            "value": "Checkpoint"
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "Checkpoint Text",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        -135.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        460.0,
+                                        112.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "hoverTexture": "Assets/New UI/button_a_hover.png",
+                                    "idleTexture": "Assets/New UI/button_a_default.png",
+                                    "pressedTexture": "Assets/New UI/button_a_pressed.png",
+                                    "type": 15
+                                },
+                                {
+                                    "active": true,
+                                    "async": false,
+                                    "file_name": "Assets/Scripts/HUD/UI_LastCheckpoint.lua",
+                                    "id": 1619882673,
+                                    "type": 5
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Checkpoint Button",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                -2.0,
+                                                2.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                183.0,
+                                                52.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "color": [
+                                                255,
+                                                255,
+                                                255,
+                                                255
+                                            ],
+                                            "fontPath": "Assets/Fonts/Lato/Lato-Bold.ttf",
+                                            "type": 16,
+                                            "value": "Settings"
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "Settings Text",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 3,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        375.0,
+                                        -288.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        380.0,
+                                        85.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "hoverTexture": "Assets/New UI/button_a_hover.png",
+                                    "idleTexture": "Assets/New UI/button_a_default.png",
+                                    "pressedTexture": "Assets/New UI/button_a_pressed.png",
+                                    "type": 15
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Settings Button",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                -8.0,
+                                                3.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                106.0,
+                                                49.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "color": [
+                                                255,
+                                                255,
+                                                255,
+                                                255
+                                            ],
+                                            "fontPath": "Assets/Fonts/Lato/Lato-Bold.ttf",
+                                            "type": 16,
+                                            "value": "Quit"
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "Quit Text",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 5,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        -375.0,
+                                        -288.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        380.0,
+                                        85.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "hoverTexture": "Assets/New UI/button_a_hover.png",
+                                    "idleTexture": "Assets/New UI/button_a_default.png",
+                                    "pressedTexture": "Assets/New UI/button_a_pressed.png",
+                                    "type": 15
+                                },
+                                {
+                                    "active": true,
+                                    "async": false,
+                                    "file_name": "Assets/Scripts/HUD/UI_Quit.lua",
+                                    "id": 175759735,
+                                    "type": 5
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Quit Button",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                38.0,
+                                                28.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "color": [
+                                                255,
+                                                255,
+                                                255,
+                                                255
+                                            ],
+                                            "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                                            "type": 16,
+                                            "value": "x"
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "x Text",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 2,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        -137.0,
+                                        -71.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        45.0,
+                                        33.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                                    "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                                    "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                                    "type": 15
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "x Button",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                1477.0,
+                                841.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/MainMenuRightBar.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Background",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 4,
+                    "logicalSize": [
+                        1920.0,
+                        1080.0
+                    ],
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        200.0,
+                        200.0
+                    ],
+                    "type": 13
+                },
+                {
+                    "active": true,
+                    "async": false,
+                    "file_name": "Assets/Scripts/New HUD Scripts/toggle_menu.lua",
+                    "id": 200020161,
+                    "type": 5
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "Pause Menu",
+            "tag": 0
+        },
+        {
+            "active": false,
+            "children": [
+                {
+                    "active": false,
+                    "children": [
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 0,
+                                    "pivot": [
+                                        0.0,
+                                        1.0
+                                    ],
+                                    "position": [
+                                        31.0,
+                                        -22.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        85.0,
+                                        60.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/frame_corner.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Top Left (1)",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 2,
+                                    "pivot": [
+                                        0.0,
+                                        1.0
+                                    ],
+                                    "position": [
+                                        -31.0,
+                                        -22.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        3.1415927410125732,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        85.0,
+                                        60.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/frame_corner.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Top Right (1)",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 6,
+                                    "pivot": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "position": [
+                                        31.0,
+                                        84.0
+                                    ],
+                                    "rotation": [
+                                        3.1415927410125732,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        85.0,
+                                        60.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/frame_corner.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Bottom Left (1)",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 8,
+                                    "pivot": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "position": [
+                                        -31.0,
+                                        84.0
+                                    ],
+                                    "rotation": [
+                                        3.1415927410125732,
+                                        3.1415927410125732,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        85.0,
+                                        60.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/frame_corner.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Bottom Right (1)",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 1,
+                                    "pivot": [
+                                        0.5,
+                                        1.0
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        -22.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        261.0,
+                                        28.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/decorative_vector.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Top Piece (1)",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        300.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        351.0,
+                                        113.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        230,
+                                        131,
+                                        63,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                                    "type": 16,
+                                    "value": "Settings"
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Settings Text (1)",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                0.0,
+                                                72.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                324.0,
+                                                50.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "color": [
+                                                255,
+                                                255,
+                                                255,
+                                                255
+                                            ],
+                                            "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                            "type": 16,
+                                            "value": "Master Volume"
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "MV Text",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 3,
+                                    "pivot": [
+                                        0.0,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        45.0,
+                                        97.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        390.0,
+                                        27.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/slider_bar.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "MV Bar",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                0.0,
+                                                72.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                370.0,
+                                                50.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "color": [
+                                                255,
+                                                255,
+                                                255,
+                                                255
+                                            ],
+                                            "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                            "type": 16,
+                                            "value": "Screen Brightness"
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "SB Text",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 5,
+                                    "pivot": [
+                                        1.0,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        -45.0,
+                                        97.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        390.0,
+                                        27.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "texture": "Assets/New UI/slider_bar.png",
+                                    "type": 14
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "SB Bar",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 3,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        1247.0,
+                                        98.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        33.0,
+                                        65.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "hoverTexture": "Assets/New UI/slider_button_hover.png",
+                                    "idleTexture": "Assets/New UI/slider_button_default.png",
+                                    "pressedTexture": "Assets/New UI/slider_button_pressed.png",
+                                    "type": 15
+                                },
+                                {
+                                    "active": true,
+                                    "async": false,
+                                    "file_name": "Assets/Scripts/HUD/UI_ScreenBrightness.lua",
+                                    "id": 1914436183,
+                                    "inspector_variables": [
+                                        {
+                                            "name": "rightPos",
+                                            "type": "int",
+                                            "value": 1400
+                                        },
+                                        {
+                                            "name": "leftPos",
+                                            "type": "int",
+                                            "value": 1100
+                                        }
+                                    ],
+                                    "type": 5
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "SB Button",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                0.0,
+                                                -135.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                151.0,
+                                                122.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                                            "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                                            "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                                            "type": 15
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "60 Button",
+                                    "tag": 0
+                                },
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                72.0,
+                                                -80.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                151.0,
+                                                122.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                                            "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                                            "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                                            "type": 15
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "120 Button",
+                                    "tag": 0
+                                },
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                -72.0,
+                                                -80.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                151.0,
+                                                122.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                                            "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                                            "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                                            "type": 15
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "30 Button",
+                                    "tag": 0
+                                },
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                0.0,
+                                                -207.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                58.0,
+                                                40.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "color": [
+                                                255,
+                                                255,
+                                                255,
+                                                255
+                                            ],
+                                            "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                            "type": 16,
+                                            "value": "60"
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "60 Text",
+                                    "tag": 0
+                                },
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                -179.0,
+                                                -77.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                61.0,
+                                                40.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "color": [
+                                                255,
+                                                255,
+                                                255,
+                                                255
+                                            ],
+                                            "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                            "type": 16,
+                                            "value": "30"
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "30 Text",
+                                    "tag": 0
+                                },
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                187.0,
+                                                -77.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                86.0,
+                                                40.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "color": [
+                                                255,
+                                                255,
+                                                255,
+                                                255
+                                            ],
+                                            "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                            "type": 16,
+                                            "value": "120"
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "120 Text",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        169.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        107.0,
+                                        50.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        255,
+                                        255,
+                                        255,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                    "type": 16,
+                                    "value": "FPS"
+                                },
+                                {
+                                    "active": true,
+                                    "async": false,
+                                    "file_name": "Assets/Scripts/HUD/UI_FPS.lua",
+                                    "id": 844645124,
+                                    "type": 5
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "FPS Text",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                0.0,
+                                                -95.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                151.0,
+                                                122.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                                            "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                                            "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                                            "type": 15
+                                        },
+                                        {
+                                            "active": true,
+                                            "async": false,
+                                            "file_name": "Assets/Scripts/HUD/UI_Vsync.lua",
+                                            "id": 1106885570,
+                                            "type": 5
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "Vsync Button",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        -520.0,
+                                        -132.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        161.0,
+                                        50.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        255,
+                                        255,
+                                        255,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                    "type": 16,
+                                    "value": "V-Sync"
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Vsync Text",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                0.0,
+                                                -135.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                151.0,
+                                                122.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                                            "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                                            "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                                            "type": 15
+                                        },
+                                        {
+                                            "active": true,
+                                            "async": false,
+                                            "file_name": "Assets/Scripts/HUD/UI_Borderless.lua",
+                                            "id": 1496512952,
+                                            "type": 5
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "Borderless Button",
+                                    "tag": 0
+                                },
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                -72.0,
+                                                -81.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                151.0,
+                                                122.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                                            "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                                            "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                                            "type": 15
+                                        },
+                                        {
+                                            "active": true,
+                                            "async": false,
+                                            "file_name": "Assets/Scripts/HUD/UI_Fullscreen.lua",
+                                            "id": 268692700,
+                                            "type": 5
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "FS Button",
+                                    "tag": 0
+                                },
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                73.0,
+                                                -82.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                151.0,
+                                                122.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                                            "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                                            "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                                            "type": 15
+                                        },
+                                        {
+                                            "active": true,
+                                            "async": false,
+                                            "file_name": "Assets/Scripts/HUD/UI_Windowed.lua",
+                                            "id": 1305222561,
+                                            "type": 5
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "Windowed Button",
+                                    "tag": 0
+                                },
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                0.0,
+                                                -203.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                208.0,
+                                                40.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "color": [
+                                                255,
+                                                255,
+                                                255,
+                                                255
+                                            ],
+                                            "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                            "type": 16,
+                                            "value": "Borderless"
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "Borderless Text",
+                                    "tag": 0
+                                },
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                -256.0,
+                                                -77.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                213.0,
+                                                40.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "color": [
+                                                255,
+                                                255,
+                                                255,
+                                                255
+                                            ],
+                                            "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                            "type": 16,
+                                            "value": "Full Screen"
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "FS Text",
+                                    "tag": 0
+                                },
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                255.0,
+                                                -81.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                213.0,
+                                                40.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "color": [
+                                                255,
+                                                255,
+                                                255,
+                                                255
+                                            ],
+                                            "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                            "type": 16,
+                                            "value": "Windowed"
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "Windowed Text",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        -132.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        476.0,
+                                        50.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        255,
+                                        255,
+                                        255,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                    "type": 16,
+                                    "value": "Window Screen Mode"
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "WSM Text",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                0.0,
+                                                -100.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                151.0,
+                                                122.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                                            "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                                            "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                                            "type": 15
+                                        },
+                                        {
+                                            "active": true,
+                                            "async": false,
+                                            "file_name": "Assets/Scripts/HUD/UI_FullscreenDesktop.lua",
+                                            "id": 129396576,
+                                            "type": 5
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "WS Button",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        500.0,
+                                        -130.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        284.0,
+                                        50.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        255,
+                                        255,
+                                        255,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                    "type": 16,
+                                    "value": "Window Size"
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "WS Text",
+                            "tag": 0
+                        },
+                        {
+                            "active": false,
+                            "children": [
+                                {
+                                    "active": false,
+                                    "children": [],
+                                    "components": [
+                                        {
+                                            "active": true,
+                                            "type": 23
+                                        },
+                                        {
+                                            "active": true,
+                                            "anchor": 4,
+                                            "pivot": [
+                                                0.5,
+                                                0.5
+                                            ],
+                                            "position": [
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "rotation": [
+                                                0.0,
+                                                0.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                39.0,
+                                                51.0
+                                            ],
+                                            "type": 22
+                                        },
+                                        {
+                                            "active": true,
+                                            "color": [
+                                                255,
+                                                255,
+                                                255,
+                                                255
+                                            ],
+                                            "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                                            "type": 16,
+                                            "value": "x"
+                                        }
+                                    ],
+                                    "is3D": false,
+                                    "isPrefab": false,
+                                    "name": "x Text (2)",
+                                    "tag": 0
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        620.0,
+                                        330.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        38.0,
+                                        45.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                                    "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                                    "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                                    "type": 15
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "x Button (2)",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                1473.0,
+                                841.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/MainMenuRightBar.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Background ",
+                    "tag": 0
+                },
+                {
+                    "active": false,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 3,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                306.0,
+                                98.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                33.0,
+                                65.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "hoverTexture": "Assets/New UI/slider_button_hover.png",
+                            "idleTexture": "Assets/New UI/slider_button_default.png",
+                            "pressedTexture": "Assets/New UI/slider_button_pressed.png",
+                            "type": 15
+                        },
+                        {
+                            "active": true,
+                            "async": false,
+                            "file_name": "Assets/Scripts/HUD/UI_MasterAudio.lua",
+                            "id": 489075817,
+                            "inspector_variables": [
+                                {
+                                    "name": "rightPos",
+                                    "type": "int",
+                                    "value": 460
+                                },
+                                {
+                                    "name": "leftPos",
+                                    "type": "int",
+                                    "value": 160
+                                }
+                            ],
+                            "type": 5
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "MV Button",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 4,
+                    "logicalSize": [
+                        1920.0,
+                        1080.0
+                    ],
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        200.0,
+                        200.0
+                    ],
+                    "type": 13
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "Settings Menu",
+            "tag": 0
         }
     ],
     "components": [
@@ -3094,6 +6622,7 @@
         },
         {
             "active": true,
+            "async": false,
             "file_name": "Assets/Scripts/New HUD Scripts/hud_selected_character.lua",
             "id": 187694343,
             "type": 5

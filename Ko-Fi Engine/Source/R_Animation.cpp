@@ -12,5 +12,5 @@ R_Animation::R_Animation() : Resource(ResourceType::ANIMATION)
 
 R_Animation::~R_Animation()
 {
-
+	channels.clear();
 }

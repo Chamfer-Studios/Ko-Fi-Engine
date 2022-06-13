@@ -10,7 +10,7 @@
                         "minParticleLife": 6.0,
                         "particlesPerSpawn": 50,
                         "randomParticleLife": true,
-                        "spawnTime": 3.0,
+                        "spawnTime": 3.5,
                         "type": 1
                     },
                     {
@@ -29,7 +29,7 @@
                                     1.0,
                                     1.0,
                                     1.0,
-                                    0.4901960790157318
+                                    0.7843137383460999
                                 ],
                                 "position": 0.0
                             },
@@ -62,7 +62,7 @@
                             0.0,
                             0.0
                         ],
-                        "maxVelocity": 13.0,
+                        "maxVelocity": 11.0,
                         "minAcceleration": [
                             -0.004999999888241291,
                             -0.004999999888241291,
@@ -78,7 +78,7 @@
                             0.0,
                             0.0
                         ],
-                        "minVelocity": 11.0,
+                        "minVelocity": 9.0,
                         "randAcceleration": true,
                         "randDirection": true,
                         "randPosition": false,

@@ -40,10 +40,10 @@
                                     "modules": [
                                         {
                                             "maxParticleLife": 3.0,
-                                            "minParticleLife": 0.20000000298023224,
+                                            "minParticleLife": 0.004999999888241291,
                                             "particlesPerSpawn": 1,
                                             "randomParticleLife": false,
-                                            "spawnTime": 0.17499999701976776,
+                                            "spawnTime": 0.0,
                                             "type": 1
                                         },
                                         {
@@ -54,6 +54,28 @@
                                             "sideAxis": false,
                                             "topAxis": false,
                                             "type": 5
+                                        },
+                                        {
+                                            "minInitialSize": [
+                                                15.0,
+                                                15.0,
+                                                15.0
+                                            ],
+                                            "type": 4
+                                        },
+                                        {
+                                            "colors": [
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0,
+                                                        0.3921568691730499
+                                                    ],
+                                                    "position": 0.0
+                                                }
+                                            ],
+                                            "type": 3
                                         }
                                     ],
                                     "name": "Debuff",
@@ -69,147 +91,6 @@
             "is3D": true,
             "isPrefab": false,
             "name": "Enemy Debuff Particle",
-            "tag": 0
-        },
-        {
-            "active": true,
-            "children": [],
-            "components": [
-                {
-                    "active": true,
-                    "type": 23
-                },
-                {
-                    "active": true,
-                    "position": [
-                        0.0,
-                        0.0,
-                        0.0
-                    ],
-                    "rotation": [
-                        0.0,
-                        0.0,
-                        0.0,
-                        1.0
-                    ],
-                    "scale": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "type": 21
-                },
-                {
-                    "active": true,
-                    "resource": [
-                        {
-                            "emitters": [
-                                {
-                                    "loop": true,
-                                    "maxParticles": 500,
-                                    "modules": [
-                                        {
-                                            "maxParticleLife": 3.0,
-                                            "minParticleLife": 2.5,
-                                            "particlesPerSpawn": 2,
-                                            "randomParticleLife": false,
-                                            "spawnTime": 0.32499998807907104,
-                                            "type": 1
-                                        },
-                                        {
-                                            "billboardingType": 1,
-                                            "frontAxis": true,
-                                            "maxDegrees": 360,
-                                            "minDegrees": 0,
-                                            "sideAxis": false,
-                                            "topAxis": false,
-                                            "type": 5
-                                        },
-                                        {
-                                            "minInitialSize": [
-                                                1.5,
-                                                1.5,
-                                                1.5
-                                            ],
-                                            "type": 4
-                                        },
-                                        {
-                                            "followForward": false,
-                                            "maxAcceleration": [
-                                                0.25,
-                                                0.25,
-                                                0.25
-                                            ],
-                                            "maxDirection": [
-                                                0.20000000298023224,
-                                                1.0,
-                                                0.20000000298023224
-                                            ],
-                                            "maxPosition": [
-                                                1.0,
-                                                1.0,
-                                                1.0
-                                            ],
-                                            "maxVelocity": 6.0,
-                                            "minAcceleration": [
-                                                0.0,
-                                                -0.03500000014901161,
-                                                0.0
-                                            ],
-                                            "minDirection": [
-                                                -0.20000000298023224,
-                                                1.0,
-                                                -0.20000000298023224
-                                            ],
-                                            "minPosition": [
-                                                -1.0,
-                                                -1.0,
-                                                -1.0
-                                            ],
-                                            "minVelocity": 5.0,
-                                            "randAcceleration": false,
-                                            "randDirection": true,
-                                            "randPosition": true,
-                                            "randVelocity": true,
-                                            "type": 2
-                                        },
-                                        {
-                                            "colors": [
-                                                {
-                                                    "color": [
-                                                        1.0,
-                                                        1.0,
-                                                        1.0,
-                                                        1.0
-                                                    ],
-                                                    "position": 0.0
-                                                },
-                                                {
-                                                    "color": [
-                                                        1.0,
-                                                        1.0,
-                                                        1.0,
-                                                        0.0
-                                                    ],
-                                                    "position": 1.0
-                                                }
-                                            ],
-                                            "type": 3
-                                        }
-                                    ],
-                                    "name": "Spark",
-                                    "texture_path": "Assets/Textures/Particles/light_2.png"
-                                }
-                            ],
-                            "name": "Lootable Corpses"
-                        }
-                    ],
-                    "type": 3
-                }
-            ],
-            "is3D": true,
-            "isPrefab": false,
-            "name": "Enemy Lootable Particle",
             "tag": 0
         },
         {
@@ -429,6 +310,98 @@
             "is3D": true,
             "isPrefab": false,
             "name": "Enemy Blood Particle",
+            "tag": 0
+        },
+        {
+            "active": true,
+            "children": [],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 21
+                },
+                {
+                    "active": true,
+                    "resource": [
+                        {
+                            "emitters": [
+                                {
+                                    "loop": true,
+                                    "maxParticles": 500,
+                                    "modules": [
+                                        {
+                                            "maxParticleLife": 3.0,
+                                            "minParticleLife": 0.004999999888241291,
+                                            "particlesPerSpawn": 1,
+                                            "randomParticleLife": false,
+                                            "spawnTime": 0.0,
+                                            "type": 1
+                                        },
+                                        {
+                                            "billboardingType": 2,
+                                            "frontAxis": true,
+                                            "maxDegrees": 360,
+                                            "minDegrees": 0,
+                                            "sideAxis": false,
+                                            "topAxis": false,
+                                            "type": 5
+                                        },
+                                        {
+                                            "colors": [
+                                                {
+                                                    "color": [
+                                                        1.0,
+                                                        0.0,
+                                                        0.0,
+                                                        1.0
+                                                    ],
+                                                    "position": 0.0
+                                                }
+                                            ],
+                                            "type": 3
+                                        },
+                                        {
+                                            "minInitialSize": [
+                                                20.0,
+                                                20.0,
+                                                20.0
+                                            ],
+                                            "type": 4
+                                        }
+                                    ],
+                                    "name": "Emitter",
+                                    "texture_path": "Assets/Textures/Particles/slash.png"
+                                }
+                            ],
+                            "name": "Slash"
+                        }
+                    ],
+                    "type": 3
+                }
+            ],
+            "is3D": true,
+            "isPrefab": false,
+            "name": "Enemy Slash Particle",
             "tag": 0
         }
     ],

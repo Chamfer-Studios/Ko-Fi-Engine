@@ -7,10 +7,10 @@
                 "modules": [
                     {
                         "maxParticleLife": 3.0,
-                        "minParticleLife": 0.20000000298023224,
+                        "minParticleLife": 0.004999999888241291,
                         "particlesPerSpawn": 1,
                         "randomParticleLife": false,
-                        "spawnTime": 0.17499999701976776,
+                        "spawnTime": 0.0,
                         "type": 1
                     },
                     {
@@ -21,6 +21,28 @@
                         "sideAxis": false,
                         "topAxis": false,
                         "type": 5
+                    },
+                    {
+                        "minInitialSize": [
+                            15.0,
+                            15.0,
+                            15.0
+                        ],
+                        "type": 4
+                    },
+                    {
+                        "colors": [
+                            {
+                                "color": [
+                                    1.0,
+                                    1.0,
+                                    1.0,
+                                    0.3921568691730499
+                                ],
+                                "position": 0.0
+                            }
+                        ],
+                        "type": 3
                     }
                 ],
                 "name": "Debuff",

@@ -171,7 +171,7 @@ function UpdatePath(wp, pingpong, currentPos)
         end
     end
 
-    if (#_finalPath == 0) then
+    if (#_finalPath <= 0) then
         DispatchEvent("Stop_Movement", {})
     end
     currentPathIndex = closestIndex

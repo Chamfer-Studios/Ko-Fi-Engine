@@ -86,6 +86,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>false</TreatWarningAsError>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -114,6 +115,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,6 +146,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -336,6 +339,7 @@
     <ClCompile Include="Source\M_Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Source\AdditionNode.h" />
     <ClInclude Include="Source\C_Walkable.h" />
     <ClInclude Include="Source\C_BoxCollider.h" />
@@ -615,6 +619,7 @@
     <None Include="Ko-Fi\Assets\Scripts\HUD\UI_Timer.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Enemies\Harkonnen.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Knife.lua" />
+    <None Include="Ko-Fi\Assets\Scripts\New HUD Scripts\sceneTransitionManager.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Pathfinder.lua" />
     <None Include="Ko-Fi\Assets\Scripts\TextScript.lua" />
     <None Include="Ko-Fi\Assets\Scripts\Triggers\WinTrigger.lua" />
@@ -626,6 +631,12 @@
     <None Include="Source\External\MathGeoLib\MathGeoLib\Geometry\TriangleMesh_IntersectRay_SSE.inl" />
     <None Include="Source\External\MathGeoLib\MathGeoLib\Math\float2.inl" />
     <None Include="Source\External\MathGeoLib\MathGeoLib\Math\Matrix.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Ko-Fi Engine.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Ko-Fi\EngineConfig\Icons\logo_exe.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

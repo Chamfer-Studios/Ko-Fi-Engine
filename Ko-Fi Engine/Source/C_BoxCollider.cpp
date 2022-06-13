@@ -45,6 +45,8 @@ bool C_BoxCollider::Start()
 
 bool C_BoxCollider::Update(float dt)
 {
+	OPTICK_EVENT();
+
 	if (!owner->GetComponent<C_RigidBody>())
 	{
 		owner->DeleteComponent(this);
@@ -142,11 +144,13 @@ void C_BoxCollider::Load(Json &json)
 	std::vector<float> values = json.at("scale_factor").get<std::vector<float>>();
 	scaleFactor = float3(values[0], values[1], values[2]);
 	values.clear();
+	values.shrink_to_fit();;
 	UpdateScaleFactor();
 
 	values = json.at("center").get<std::vector<float>>();
 	center = float3(values[0], values[1], values[2]);
 	values.clear();
+	values.shrink_to_fit();;
 	UpdateCenter();
 }
 

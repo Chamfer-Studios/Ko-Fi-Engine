@@ -20,21 +20,21 @@
                 1.0
             ],
             "scale": [
-                1.0,
-                1.0,
-                1.0
+                2.0,
+                2.0,
+                2.0
             ],
             "type": 21
         },
         {
             "active": true,
             "mesh": {
-                "asset_path": "Assets/Models/Enemies/Cylinder.sugar",
+                "asset_path": "Assets/Models/Enemies/TextPlus002.sugar",
                 "draw_face_normals": false,
                 "draw_vertex_normals": false,
                 "is_animated": false,
                 "shape_type": 0,
-                "uid": 1380662996
+                "uid": 1596643032
             },
             "type": 1
         },

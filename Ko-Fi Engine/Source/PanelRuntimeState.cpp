@@ -68,6 +68,8 @@ void PanelRuntimeState::DrawRuntimePanel()
             if (ImGui::Button("STOP", ImVec2(120, 22)) || input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
             {
                 sceneManager->OnStop();
+                _CrtDumpMemoryLeaks();
+                _CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
                 camera->OnStop();
             }
         }

@@ -136,9 +136,9 @@
                                                                 -8.08376693725586
                                                             ],
                                                             "rotation": [
-                                                                -0.01439841091632843,
+                                                                -0.014398433268070221,
                                                                 -0.002675354015082121,
-                                                                -0.0006793668144382536,
+                                                                -0.0006793678621761501,
                                                                 0.99989253282547
                                                             ],
                                                             "scale": [
@@ -205,15 +205,15 @@
                                                                 -4.149487495422363
                                                             ],
                                                             "rotation": [
-                                                                -0.024417316541075706,
-                                                                -0.16866199672222137,
+                                                                -0.024417320266366005,
+                                                                -0.16866202652454376,
                                                                 0.03681963309645653,
                                                                 0.9846833348274231
                                                             ],
                                                             "scale": [
                                                                 0.9999998807907104,
                                                                 1.0,
-                                                                0.9999997615814209
+                                                                0.999999463558197
                                                             ],
                                                             "type": 21
                                                         }
@@ -274,9 +274,9 @@
                                                                 0.1800231635570526
                                                             ],
                                                             "rotation": [
-                                                                -0.007257422432303429,
+                                                                -0.007257439661771059,
                                                                 0.22233296930789948,
-                                                                -0.08245580643415451,
+                                                                -0.08245581388473511,
                                                                 0.971450686454773
                                                             ],
                                                             "scale": [
@@ -343,15 +343,15 @@
                                                                 8.412137985229492
                                                             ],
                                                             "rotation": [
-                                                                0.2721167802810669,
-                                                                0.01935313642024994,
-                                                                -0.0062013911083340645,
-                                                                0.9620496034622192
+                                                                0.2721167504787445,
+                                                                0.01935315690934658,
+                                                                -0.006201399955898523,
+                                                                0.9620497226715088
                                                             ],
                                                             "scale": [
                                                                 1.0,
-                                                                0.9999998211860657,
-                                                                0.9999998807907104
+                                                                0.9999997615814209,
+                                                                0.9999997615814209
                                                             ],
                                                             "type": 21
                                                         }
@@ -412,14 +412,14 @@
                                                                 -7.263060092926025
                                                             ],
                                                             "rotation": [
-                                                                -0.021602636203169823,
+                                                                -0.021602654829621315,
                                                                 -0.08305614441633224,
                                                                 0.012442432343959808,
                                                                 0.9962329864501953
                                                             ],
                                                             "scale": [
                                                                 0.9999998807907104,
-                                                                0.9999997615814209,
+                                                                0.9999990463256836,
                                                                 1.0
                                                             ],
                                                             "type": 21
@@ -758,12 +758,12 @@
                                                             ],
                                                             "rotation": [
                                                                 -0.019774341955780983,
-                                                                0.16505753993988037,
-                                                                -0.037646930664777756,
+                                                                0.1650574952363968,
+                                                                -0.037646934390068054,
                                                                 0.9853668212890625
                                                             ],
                                                             "scale": [
-                                                                0.9999999403953552,
+                                                                0.999999463558197,
                                                                 1.0,
                                                                 1.0
                                                             ],
@@ -1071,7 +1071,7 @@
                     "active": true,
                     "fade_time": 2.0,
                     "offset_sync": false,
-                    "total_tracks": 5,
+                    "total_tracks": 6,
                     "tracks": [
                         {
                             "bypass": false,
@@ -1083,6 +1083,19 @@
                             "pan": 0.0,
                             "play_on_start": false,
                             "track_path": "Assets/Audio/SFX/Sadiq/sadiq_ground_unburrow_1_fx.wav",
+                            "transpose": 1.0,
+                            "volume": 100.0
+                        },
+                        {
+                            "bypass": false,
+                            "custom_loop": false,
+                            "loop": false,
+                            "loop_offset": 0.0,
+                            "mute": false,
+                            "offset": 0.0,
+                            "pan": 0.0,
+                            "play_on_start": false,
+                            "track_path": "Assets/Audio/SFX/Sadiq/sadiq_ground_unburrow_2_fx.wav",
                             "transpose": 1.0,
                             "volume": 100.0
                         },
@@ -1134,7 +1147,7 @@
                             "offset": 0.0,
                             "pan": 0.0,
                             "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Sadiq/sadiq_ground_unburrow_2_fx.wav",
+                            "track_path": "Assets/Audio/SFX/Sadiq/sadiq_heal_fx.wav",
                             "transpose": 1.0,
                             "volume": 100.0
                         }
@@ -1145,6 +1158,333 @@
             "is3D": true,
             "isPrefab": false,
             "name": "Worm.002",
+            "tag": 0
+        },
+        {
+            "active": true,
+            "children": [
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 1.0,
+                                                    "particlesPerSpawn": 12,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 1.0,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                0.0,
+                                                                1.0,
+                                                                0.0,
+                                                                0.5882353186607361
+                                                            ],
+                                                            "position": 0.0
+                                                        },
+                                                        {
+                                                            "color": [
+                                                                0.0,
+                                                                1.0,
+                                                                0.0,
+                                                                0.0
+                                                            ],
+                                                            "position": 1.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                },
+                                                {
+                                                    "minInitialSize": [
+                                                        6.0,
+                                                        6.0,
+                                                        6.0
+                                                    ],
+                                                    "type": 4
+                                                },
+                                                {
+                                                    "followForward": false,
+                                                    "maxAcceleration": [
+                                                        0.25,
+                                                        0.25,
+                                                        0.25
+                                                    ],
+                                                    "maxDirection": [
+                                                        -1.0,
+                                                        -1.0,
+                                                        -1.0
+                                                    ],
+                                                    "maxPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "maxVelocity": 5.0,
+                                                    "minAcceleration": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minDirection": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "minPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "minVelocity": 4.0,
+                                                    "randAcceleration": false,
+                                                    "randDirection": true,
+                                                    "randPosition": false,
+                                                    "randVelocity": false,
+                                                    "type": 2
+                                                }
+                                            ],
+                                            "name": "Small Heal Emitter",
+                                            "texture_path": "Assets/Textures/Particles/healing.png"
+                                        }
+                                    ],
+                                    "name": "Healing"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Heal Particle",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "position": [
+                                0.0,
+                                0.0,
+                                -111.92444610595703
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0,
+                                1.0
+                            ],
+                            "scale": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ],
+                            "type": 21
+                        },
+                        {
+                            "active": true,
+                            "resource": [
+                                {
+                                    "emitters": [
+                                        {
+                                            "loop": true,
+                                            "maxParticles": 500,
+                                            "modules": [
+                                                {
+                                                    "maxParticleLife": 3.0,
+                                                    "minParticleLife": 2.5,
+                                                    "particlesPerSpawn": 50,
+                                                    "randomParticleLife": false,
+                                                    "spawnTime": 0.15000000596046448,
+                                                    "type": 1
+                                                },
+                                                {
+                                                    "billboardingType": 2,
+                                                    "frontAxis": true,
+                                                    "maxDegrees": 360,
+                                                    "minDegrees": 0,
+                                                    "sideAxis": false,
+                                                    "topAxis": false,
+                                                    "type": 5
+                                                },
+                                                {
+                                                    "maxFinalSize": [
+                                                        1.0,
+                                                        1.0,
+                                                        1.0
+                                                    ],
+                                                    "minFinalSize": [
+                                                        0.5,
+                                                        0.5,
+                                                        0.5
+                                                    ],
+                                                    "minInitialSize": [
+                                                        5.0,
+                                                        5.0,
+                                                        5.0
+                                                    ],
+                                                    "type": 4
+                                                },
+                                                {
+                                                    "followForward": false,
+                                                    "maxAcceleration": [
+                                                        0.25,
+                                                        0.25,
+                                                        0.25
+                                                    ],
+                                                    "maxDirection": [
+                                                        1.0,
+                                                        0.5,
+                                                        1.0
+                                                    ],
+                                                    "maxPosition": [
+                                                        0.0,
+                                                        0.0,
+                                                        0.0
+                                                    ],
+                                                    "maxVelocity": 5.0,
+                                                    "minAcceleration": [
+                                                        0.0,
+                                                        -0.03500000014901161,
+                                                        0.0
+                                                    ],
+                                                    "minDirection": [
+                                                        -1.0,
+                                                        0.0,
+                                                        -1.0
+                                                    ],
+                                                    "minPosition": [
+                                                        0.0,
+                                                        1.0,
+                                                        0.0
+                                                    ],
+                                                    "minVelocity": 2.0,
+                                                    "randAcceleration": false,
+                                                    "randDirection": true,
+                                                    "randPosition": false,
+                                                    "randVelocity": true,
+                                                    "type": 2
+                                                },
+                                                {
+                                                    "colors": [
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                0.7843137383460999,
+                                                                0.47058823704719543,
+                                                                1.0
+                                                            ],
+                                                            "position": 0.0
+                                                        },
+                                                        {
+                                                            "color": [
+                                                                1.0,
+                                                                1.0,
+                                                                0.7058823704719543,
+                                                                0.0
+                                                            ],
+                                                            "position": 1.0
+                                                        }
+                                                    ],
+                                                    "type": 3
+                                                }
+                                            ],
+                                            "name": "Spark",
+                                            "texture_path": "Assets/Textures/Particles/dust_1.png"
+                                        }
+                                    ],
+                                    "name": "Sand Worm"
+                                }
+                            ],
+                            "type": 3
+                        }
+                    ],
+                    "is3D": true,
+                    "isPrefab": false,
+                    "name": "Sand Particle",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "position": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0,
+                        1.0
+                    ],
+                    "scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "type": 21
+                }
+            ],
+            "is3D": true,
+            "isPrefab": false,
+            "name": "Worm Particles",
             "tag": 0
         }
     ],
@@ -1184,7 +1524,7 @@
                     "clipDuration": 205.0,
                     "clipDurationInSeconds": 8.541666984558105,
                     "clipEndFrame": 205.0,
-                    "clipFinished": false,
+                    "clipFinished": true,
                     "clipLoop": true,
                     "clipName": "Default clip",
                     "clipStartFrame": 0.0,

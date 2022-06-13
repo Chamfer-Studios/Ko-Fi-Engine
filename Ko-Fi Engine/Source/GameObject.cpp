@@ -108,6 +108,7 @@ bool GameObject::PreUpdate()
 	}
 
 	componentsToBeDeleted.clear();
+	componentsToBeDeleted.shrink_to_fit();;
 
 	for (Component* component : components)
 		ret = component->PreUpdate();
@@ -120,10 +121,65 @@ bool GameObject::Update(float dt)
 	OPTICK_EVENT();
 
 	bool ret = true;
-	for (Component* component : components)
+
+	for (int i = 0; i < components.size(); i++)
 	{
-		if (component)
+		Component* component = components[i];
+		if (component && component->type != ComponentType::SCRIPT)
 			ret = component->Update(dt);
+	}
+
+	return ret;
+}
+
+bool GameObject::InitUpdateScripts(float dt)
+{
+	OPTICK_EVENT();
+
+	bool ret = true;
+
+	for (int i = 0; i < components.size(); i++)
+	{
+		Component* component = components[i];
+		if (component && component->type == ComponentType::SCRIPT)
+			static_cast<C_Script*>(component)->InitScriptUpdate(dt);
+	}
+
+	return ret;
+}
+
+bool GameObject::DoUpdateScripts(float dt)
+{
+	OPTICK_EVENT();
+
+	bool ret = true;
+
+	for (int i = 0; i < components.size(); i++)
+	{
+		Component* component = components[i];
+		if (component && component->type == ComponentType::SCRIPT) {
+			if (!(static_cast<C_Script*>(component)->isAsync))
+				static_cast<C_Script*>(component)->DoScriptUpdate(dt);
+		}
+	}
+
+	return ret;
+}
+
+bool GameObject::DoUpdateAsyncScripts(float dt)
+{
+	OPTICK_EVENT();
+
+	bool ret = true;
+
+	for (int i = 0; i < components.size(); i++)
+	{
+		Component* component = components[i];
+		if (component && component->type == ComponentType::SCRIPT)
+		{
+			if (static_cast<C_Script*>(component)->isAsync)
+				static_cast<C_Script*>(component)->DoScriptUpdate(dt);
+		}
 	}
 
 	return ret;
@@ -452,6 +508,7 @@ GameObject* GameObject::GetParent() const
 
 C_Transform* GameObject::GetTransform() const
 {
+	OPTICK_EVENT();
 	return this->transform;
 }
 

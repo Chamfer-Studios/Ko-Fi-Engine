@@ -16,7 +16,9 @@ Emitter::Emitter(const char* newName)
 }
 
 Emitter::~Emitter()
-{}
+{
+	Cleanup();
+}
 
 bool Emitter::Update(float dt)
 {
@@ -25,6 +27,16 @@ bool Emitter::Update(float dt)
 
 bool Emitter::Cleanup()
 {
+	for (auto it : modules)
+	{
+		RELEASE(it);
+	}
+	modules.clear();
+	modules.shrink_to_fit();
+
+	name.clear();
+	name.shrink_to_fit();
+
 	return true;
 }
 
@@ -39,6 +51,7 @@ void Emitter::DeleteModule(ParticleModule* m)
 	{
 		if ((*it) == m)
 		{
+			RELEASE(*it);
 			modules.erase(it);
 			modules.shrink_to_fit();
 		}

@@ -1,0 +1,2370 @@
+{
+    "active": true,
+    "children": [
+        {
+            "active": true,
+            "children": [
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 0,
+                            "pivot": [
+                                0.0,
+                                1.0
+                            ],
+                            "position": [
+                                31.0,
+                                -22.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                85.0,
+                                60.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/frame_corner.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Top Left (1)",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 2,
+                            "pivot": [
+                                0.0,
+                                1.0
+                            ],
+                            "position": [
+                                -31.0,
+                                -22.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                3.1415927410125732,
+                                0.0
+                            ],
+                            "size": [
+                                85.0,
+                                60.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/frame_corner.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Top Right (1)",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 6,
+                            "pivot": [
+                                0.0,
+                                0.0
+                            ],
+                            "position": [
+                                31.0,
+                                84.0
+                            ],
+                            "rotation": [
+                                3.1415927410125732,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                85.0,
+                                60.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/frame_corner.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Bottom Left (1)",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 8,
+                            "pivot": [
+                                0.0,
+                                0.0
+                            ],
+                            "position": [
+                                -31.0,
+                                84.0
+                            ],
+                            "rotation": [
+                                3.1415927410125732,
+                                3.1415927410125732,
+                                0.0
+                            ],
+                            "size": [
+                                85.0,
+                                60.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/frame_corner.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Bottom Right (1)",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 1,
+                            "pivot": [
+                                0.5,
+                                1.0
+                            ],
+                            "position": [
+                                0.0,
+                                -22.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                261.0,
+                                28.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/decorative_vector.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Top Piece (1)",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                300.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                351.0,
+                                113.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "color": [
+                                230,
+                                131,
+                                63,
+                                255
+                            ],
+                            "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                            "type": 16,
+                            "value": "Settings"
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Settings Text (1)",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        72.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        324.0,
+                                        50.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        255,
+                                        255,
+                                        255,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                    "type": 16,
+                                    "value": "Master Volume"
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "MV Text",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 3,
+                            "pivot": [
+                                0.0,
+                                0.5
+                            ],
+                            "position": [
+                                45.0,
+                                97.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                390.0,
+                                27.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/slider_bar.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "MV Bar",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 3,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                235.0,
+                                98.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                33.0,
+                                65.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "hoverTexture": "Assets/New UI/slider_button_hover.png",
+                            "idleTexture": "Assets/New UI/slider_button_default.png",
+                            "pressedTexture": "Assets/New UI/slider_button_pressed.png",
+                            "type": 15
+                        },
+                        {
+                            "active": true,
+                            "async": false,
+                            "file_name": "Assets/Scripts/HUD/UI_MasterAudio.lua",
+                            "id": 489075817,
+                            "inspector_variables": [
+                                {
+                                    "name": "rightPos",
+                                    "type": "int",
+                                    "value": 400
+                                },
+                                {
+                                    "name": "leftPos",
+                                    "type": "int",
+                                    "value": 75
+                                }
+                            ],
+                            "type": 5
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "MV Button",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        72.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        370.0,
+                                        50.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        255,
+                                        255,
+                                        255,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                    "type": 16,
+                                    "value": "Screen Brightness"
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "SB Text",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 5,
+                            "pivot": [
+                                1.0,
+                                0.5
+                            ],
+                            "position": [
+                                -45.0,
+                                97.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                390.0,
+                                27.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "texture": "Assets/New UI/slider_bar.png",
+                            "type": 14
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "SB Bar",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 3,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                1247.0,
+                                98.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                33.0,
+                                65.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "hoverTexture": "Assets/New UI/slider_button_hover.png",
+                            "idleTexture": "Assets/New UI/slider_button_default.png",
+                            "pressedTexture": "Assets/New UI/slider_button_pressed.png",
+                            "type": 15
+                        },
+                        {
+                            "active": true,
+                            "async": false,
+                            "file_name": "Assets/Scripts/HUD/UI_ScreenBrightness.lua",
+                            "id": 1914436183,
+                            "inspector_variables": [
+                                {
+                                    "name": "rightPos",
+                                    "type": "int",
+                                    "value": 1400
+                                },
+                                {
+                                    "name": "leftPos",
+                                    "type": "int",
+                                    "value": 1100
+                                }
+                            ],
+                            "type": 5
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "SB Button",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        -135.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        151.0,
+                                        122.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                                    "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                                    "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                                    "type": 15
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "60 Button",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        72.0,
+                                        -80.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        151.0,
+                                        122.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                                    "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                                    "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                                    "type": 15
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "120 Button",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        -72.0,
+                                        -80.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        151.0,
+                                        122.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                                    "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                                    "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                                    "type": 15
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "30 Button",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        -207.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        58.0,
+                                        40.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        255,
+                                        255,
+                                        255,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                    "type": 16,
+                                    "value": "60"
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "60 Text",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        -179.0,
+                                        -77.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        61.0,
+                                        40.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        255,
+                                        255,
+                                        255,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                    "type": 16,
+                                    "value": "30"
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "30 Text",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        187.0,
+                                        -77.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        86.0,
+                                        40.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        255,
+                                        255,
+                                        255,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                    "type": 16,
+                                    "value": "120"
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "120 Text",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                169.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                107.0,
+                                50.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "color": [
+                                255,
+                                255,
+                                255,
+                                255
+                            ],
+                            "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                            "type": 16,
+                            "value": "FPS"
+                        },
+                        {
+                            "active": true,
+                            "async": false,
+                            "file_name": "Assets/Scripts/HUD/UI_FPS.lua",
+                            "id": 844645124,
+                            "type": 5
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "FPS Text",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        -95.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        151.0,
+                                        122.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                                    "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                                    "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                                    "type": 15
+                                },
+                                {
+                                    "active": true,
+                                    "async": false,
+                                    "file_name": "Assets/Scripts/HUD/UI_Vsync.lua",
+                                    "id": 1106885570,
+                                    "type": 5
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Vsync Button",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -520.0,
+                                -132.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                161.0,
+                                50.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "color": [
+                                255,
+                                255,
+                                255,
+                                255
+                            ],
+                            "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                            "type": 16,
+                            "value": "V-Sync"
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "Vsync Text",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        -72.0,
+                                        -81.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        151.0,
+                                        122.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                                    "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                                    "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                                    "type": 15
+                                },
+                                {
+                                    "active": true,
+                                    "async": false,
+                                    "file_name": "Assets/Scripts/HUD/UI_Fullscreen.lua",
+                                    "id": 268692700,
+                                    "type": 5
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "FS Button",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        73.0,
+                                        -82.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        151.0,
+                                        122.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                                    "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                                    "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                                    "type": 15
+                                },
+                                {
+                                    "active": true,
+                                    "async": false,
+                                    "file_name": "Assets/Scripts/HUD/UI_Borderless.lua",
+                                    "id": 1305222561,
+                                    "type": 5
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Borderless Button",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        -218.0,
+                                        -77.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        145.0,
+                                        40.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        255,
+                                        255,
+                                        255,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                    "type": 16,
+                                    "value": "Full Screen"
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "FS Text",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        212.0,
+                                        -81.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        143.0,
+                                        40.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        255,
+                                        255,
+                                        255,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                    "type": 16,
+                                    "value": "Borderless"
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "Borderless Text",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                0.0,
+                                -132.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                476.0,
+                                50.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "color": [
+                                255,
+                                255,
+                                255,
+                                255
+                            ],
+                            "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                            "type": 16,
+                            "value": "Window Screen Mode"
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "WSM Text",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        -135.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        151.0,
+                                        122.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                                    "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                                    "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                                    "type": 15
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "WS Button 2",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        -72.0,
+                                        -81.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        151.0,
+                                        122.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                                    "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                                    "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                                    "type": 15
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "WS Button 1",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        72.0,
+                                        -81.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        151.0,
+                                        122.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "hoverTexture": "Assets/New UI/checkbox_a_hover.png",
+                                    "idleTexture": "Assets/New UI/checkbox_a_default.png",
+                                    "pressedTexture": "Assets/New UI/checkbox_a_pressed.png",
+                                    "type": 15
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "WS Button 3",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        -203.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        155.0,
+                                        40.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        255,
+                                        255,
+                                        255,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                    "type": 16,
+                                    "value": "960 x 540"
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "WS Text 2",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        -167.0,
+                                        -54.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        69.0,
+                                        40.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        255,
+                                        255,
+                                        255,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                    "type": 16,
+                                    "value": "1024"
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "WS Text 1 1",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        167.0,
+                                        -55.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        67.0,
+                                        40.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        255,
+                                        255,
+                                        255,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                    "type": 16,
+                                    "value": "1280"
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "WS Text 3 1",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        167.0,
+                                        -79.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        19.0,
+                                        31.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        255,
+                                        255,
+                                        255,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                    "type": 16,
+                                    "value": "x"
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "WS Text 3 2",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        166.0,
+                                        -107.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        44.0,
+                                        40.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        255,
+                                        255,
+                                        255,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                    "type": 16,
+                                    "value": "720"
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "WS Text 3 3",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        -167.0,
+                                        -79.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        19.0,
+                                        31.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        255,
+                                        255,
+                                        255,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                    "type": 16,
+                                    "value": "x"
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "WS Text 1 2",
+                            "tag": 0
+                        },
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        -168.0,
+                                        -106.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        46.0,
+                                        40.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        255,
+                                        255,
+                                        255,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                                    "type": 16,
+                                    "value": "768"
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "WS Text 1 3",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                500.0,
+                                -130.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                284.0,
+                                50.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "color": [
+                                255,
+                                255,
+                                255,
+                                255
+                            ],
+                            "fontPath": "Assets/Fonts/Lato/Lato-Regular.ttf",
+                            "type": 16,
+                            "value": "Window Size"
+                        },
+                        {
+                            "active": true,
+                            "async": false,
+                            "file_name": "Assets/Scripts/HUD/UI_WindowSize.lua",
+                            "id": 511167204,
+                            "type": 5
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "WS Text",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -670.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                17.0,
+                                1023.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "type": 15
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "MV1",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -587.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                17.0,
+                                1022.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "type": 15
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "MV2",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -507.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                17.0,
+                                1024.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "type": 15
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "MV3",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -421.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                17.0,
+                                1025.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "type": 15
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "MV4",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -337.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                17.0,
+                                1023.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "type": 15
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "MV5",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                335.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                17.0,
+                                1000.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "type": 15
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "SB1",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                414.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                17.0,
+                                1000.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "type": 15
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "SB2",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                506.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                17.0,
+                                1000.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "type": 15
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "SB3",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                586.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                17.0,
+                                1000.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "type": 15
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "SB4",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 4,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                662.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                17.0,
+                                1000.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "type": 15
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "SB5",
+                    "tag": 0
+                },
+                {
+                    "active": true,
+                    "children": [
+                        {
+                            "active": true,
+                            "children": [],
+                            "components": [
+                                {
+                                    "active": true,
+                                    "type": 23
+                                },
+                                {
+                                    "active": true,
+                                    "anchor": 4,
+                                    "pivot": [
+                                        0.5,
+                                        0.5
+                                    ],
+                                    "position": [
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "rotation": [
+                                        0.0,
+                                        0.0,
+                                        0.0
+                                    ],
+                                    "size": [
+                                        38.0,
+                                        28.0
+                                    ],
+                                    "type": 22
+                                },
+                                {
+                                    "active": true,
+                                    "color": [
+                                        255,
+                                        255,
+                                        255,
+                                        255
+                                    ],
+                                    "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                                    "type": 16,
+                                    "value": "x"
+                                }
+                            ],
+                            "is3D": false,
+                            "isPrefab": false,
+                            "name": "xText",
+                            "tag": 0
+                        }
+                    ],
+                    "components": [
+                        {
+                            "active": true,
+                            "type": 23
+                        },
+                        {
+                            "active": true,
+                            "anchor": 2,
+                            "pivot": [
+                                0.5,
+                                0.5
+                            ],
+                            "position": [
+                                -182.0,
+                                -71.0
+                            ],
+                            "rotation": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "size": [
+                                45.0,
+                                33.0
+                            ],
+                            "type": 22
+                        },
+                        {
+                            "active": true,
+                            "hoverTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "idleTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "pressedTexture": "Assets/UI/HUD/blank_asset_v1.0.png",
+                            "type": 15
+                        },
+                        {
+                            "active": true,
+                            "async": false,
+                            "file_name": "Assets/Scripts/HUD/UI_CloseSettings.lua",
+                            "id": 1751664496,
+                            "inspector_variables": [
+                                {
+                                    "name": "name",
+                                    "type": "string",
+                                    "value": "Settings Menu"
+                                }
+                            ],
+                            "type": 5
+                        }
+                    ],
+                    "is3D": false,
+                    "isPrefab": false,
+                    "name": "xButton",
+                    "tag": 0
+                }
+            ],
+            "components": [
+                {
+                    "active": true,
+                    "type": 23
+                },
+                {
+                    "active": true,
+                    "anchor": 4,
+                    "pivot": [
+                        0.5,
+                        0.5
+                    ],
+                    "position": [
+                        -2.0,
+                        0.0
+                    ],
+                    "rotation": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "size": [
+                        1484.0,
+                        841.0
+                    ],
+                    "type": 22
+                },
+                {
+                    "active": true,
+                    "texture": "Assets/New UI/MainMenuRightBar.png",
+                    "type": 14
+                }
+            ],
+            "is3D": false,
+            "isPrefab": false,
+            "name": "Background Settings",
+            "tag": 0
+        }
+    ],
+    "components": [
+        {
+            "active": true,
+            "type": 23
+        },
+        {
+            "active": true,
+            "anchor": 4,
+            "logicalSize": [
+                1920.0,
+                1080.0
+            ],
+            "pivot": [
+                0.5,
+                0.5
+            ],
+            "position": [
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "size": [
+                200.0,
+                200.0
+            ],
+            "type": 13
+        }
+    ],
+    "is3D": false,
+    "isPrefab": true,
+    "name": "Settings Menu",
+    "tag": 0
+}

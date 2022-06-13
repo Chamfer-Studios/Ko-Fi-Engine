@@ -41,15 +41,19 @@ public:
 
 	void Draw() override;
 
+	inline float GetOpacity() const { return (float)col.a; }
+	inline void SetOpacity(const float opacity) { col.a = opacity; }
+
 	GLuint openGLTexture = 0;
 
+	void SetColor(SDL_Color color);
+	inline void SetColorRGB(const int r, const int g, const int b) { col.r = (unsigned int)r; col.g = (unsigned int)g; col.b = (unsigned int)b; }
 private:
 	GLuint SurfaceToOpenGLTexture(SDL_Surface* surface);
 	void FreeTextures();
 
 	SDL_Color GetColor();
 
-	void SetColor(SDL_Color color);
 
 	bool ColorPicker(const char* label);
 
