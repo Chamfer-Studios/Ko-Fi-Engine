@@ -103,13 +103,14 @@ bool C_Animator::CleanUp()
 
 	for (auto it : meshesInfo)
 	{
-		if(it.first != nullptr)
-			owner->GetEngine()->GetResourceManager()->FreeResource(it.first->GetUID());
+		owner->GetEngine()->GetResourceManager()->FreeResource(it.first->GetUID());
 	}
 
 	meshesInfo.clear();
 
-	selectedClip = nullptr;	
+	clips.clear();
+
+	selectedClip = nullptr;
 	clipToDelete = nullptr;
 
 	//can improve a lot

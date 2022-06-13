@@ -14,21 +14,6 @@ C_FollowPath::C_FollowPath(GameObject* parent) : Component(parent)
 	memset(waypoints, 0, sizeof(float3) * nWaypoints);
 }
 
-C_FollowPath::~C_FollowPath()
-{
-	CleanUp();
-}
-
-bool C_FollowPath::CleanUp()
-{
-	RELEASE(waypoints);
-
-	finalPath.clear();
-	finalPath.shrink_to_fit();
-
-	return true;
-}
-
 void C_FollowPath::Save(Json& json) const
 {
 	json["type"] = (int)type;

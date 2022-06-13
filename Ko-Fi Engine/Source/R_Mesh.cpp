@@ -104,6 +104,7 @@ R_Mesh::~R_Mesh()
 	boneInfo.clear();
 	boneInfo.shrink_to_fit();
 	boneNameToIndexMap.clear();
+	
 }
 
 void R_Mesh::SetUpMeshBuffers()

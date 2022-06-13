@@ -16,8 +16,6 @@ R_Material::~R_Material()
 
 	for (std::vector<Uniform*>::iterator it = uniforms.begin(); it != uniforms.end(); it++)
 	{
-		(*it)->name.clear();
-		(*it)->name.shrink_to_fit();
 		delete *it;
 	}
 	uniforms.clear();

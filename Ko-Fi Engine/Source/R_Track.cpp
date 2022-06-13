@@ -42,14 +42,8 @@ R_Track::R_Track() //: Resource(ResourceType::TRACK)
 
 R_Track::~R_Track()
 {
-	path.clear();
-	path.shrink_to_fit();
-	name.clear();
-	name.shrink_to_fit();
 	fxTracker.clear();
 	fxTracker.shrink_to_fit();
-	pcmData.clear();
-	pcmData.shrink_to_fit();
 
 	for (unsigned int i = 0; i < effects.size(); ++i)
 	{

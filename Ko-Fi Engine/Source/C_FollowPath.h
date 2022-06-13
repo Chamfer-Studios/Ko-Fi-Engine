@@ -10,9 +10,6 @@ class C_FollowPath : public Component
 {
 public:
 	C_FollowPath(GameObject* parent);
-	~C_FollowPath();
-
-	bool CleanUp() override;
 
 	void Save(Json& json) const override;
 	void Load(Json& json) override;

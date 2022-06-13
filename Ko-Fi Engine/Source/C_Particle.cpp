@@ -186,15 +186,18 @@ bool C_Particle::InspectorDraw(PanelChooser* chooser)
 					if (!chooser->OnChooserClosed().empty())
 					{
 						std::string path = chooser->OnChooserClosed();
+						if (emitter->texture->GetTextureId() == currentTextureId)
+						{
+							emitter->texture->SetTextureId(TEXTUREID_DEFAULT);
+							emitter->texture->SetAssetPath(nullptr);
+						}
 						if (!path.empty() || path != "")
 						{
 							if (emitter->texture != nullptr)
 								owner->GetEngine()->GetResourceManager()->FreeResource(emitter->texture->GetUID());
 
 							emitter->texture = nullptr;
-
 							emitter->texture = (R_Texture*)owner->GetEngine()->GetResourceManager()->GetResourceFromLibrary(path.c_str());
-
 							emitter->checkerTexture = false;
 						}
 						else

@@ -64,9 +64,6 @@ bool C_BoxCollider::CleanUp()
 	if (boxShape)
 		owner->GetEngine()->GetPhysics()->GetPhysicsCommon().destroyBoxShape(boxShape);
 
-	filter.clear();
-	filter.shrink_to_fit();
-
 	return true;
 }
 

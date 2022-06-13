@@ -66,11 +66,6 @@ bool C_RigidBody::CleanUp()
 	if (body)
 		owner->GetEngine()->GetPhysics()->GetWorld()->destroyRigidBody(body);
 
-	body = nullptr;
-
-	bodyType.clear();
-	bodyType.shrink_to_fit();
-
 	return true;
 }
 

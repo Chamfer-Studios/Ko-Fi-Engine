@@ -16,11 +16,11 @@ public:
 	SceneIntro(KoFiEngine* engine);
 	~SceneIntro();
 
-	bool Start() override;
-	bool PreUpdate(float dt) override;
-	bool Update(float dt) override;
-	bool PostUpdate(float dt) override;
-	bool CleanUp() override;
+	bool Start();
+	bool PreUpdate(float dt);
+	bool Update(float dt);
+	bool PostUpdate(float dt);
+	bool CleanUp();
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
