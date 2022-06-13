@@ -28,7 +28,7 @@ public:
 		drawSkybox = true;
 	}
 
-	~Scene()
+	virtual ~Scene()
 	{
 		CleanUp();
 	}
@@ -71,7 +71,12 @@ public:
 	// Called before quitting
 	virtual bool CleanUp()
 	{
-		DeleteCurrentScene();
+		for (auto gameObject : gameObjectList)
+		{
+			RELEASE(gameObject);
+		}
+		gameObjectList.clear();
+		gameObjectList.shrink_to_fit();
 		gameObjectListToDelete.clear();
 		gameObjectListToDelete.shrink_to_fit();
 		for (auto i : gameObjectListToCreate)
@@ -82,7 +87,6 @@ public:
 		gameObjectListToCreate.clear();
 		name.clear();
 		name.shrink_to_fit();
-		RELEASE(rootGo);
 		for (auto i : sceneModels)
 		{
 			i.second.second.clear();
@@ -93,9 +97,9 @@ public:
 		tags.shrink_to_fit();
 		lights.clear();
 		lights.shrink_to_fit();
+		rootGo = nullptr;
 		shadowCaster = nullptr;
 		currentCamera = nullptr;
-		engine = nullptr;
 		return true;
 	}
 

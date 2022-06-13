@@ -14,7 +14,7 @@ class SceneIntro : public Scene
 {
 public:
 	SceneIntro(KoFiEngine* engine);
-	~SceneIntro();
+	~SceneIntro() override;
 
 	bool Start() override;
 	bool PreUpdate(float dt) override;

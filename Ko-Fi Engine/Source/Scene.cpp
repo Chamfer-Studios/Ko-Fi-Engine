@@ -146,15 +146,8 @@ GameObject* Scene::CreateEmptyGameObject(const char* name, GameObject* parent, b
 
 void Scene::DeleteCurrentScene()
 {
-	for (GameObject* gameObject : gameObjectList)
-	{
-		RELEASE(gameObject);
-	}
+	CleanUp();
 	engine->GetPhysics()->ResetCollisionBodyToObjectMap();
-	gameObjectList.clear();
-	gameObjectList.shrink_to_fit();
-	lights.clear();
-	lights.shrink_to_fit();
 	engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.clear();
 	engine->GetEditor()->panelGameObjectInfo.selectedGameObjects.shrink_to_fit();
 	rootGo = new GameObject(0, engine, "Root");

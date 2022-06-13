@@ -293,6 +293,8 @@ bool SceneIntro::CleanUp()
 	CONSOLE_LOG("Unloading Intro scene");
 	appLog->AddLog("Unloading Intro scene\n");
 
+	Scene::CleanUp();
+
 	example::NodeEditorShutdown();
 
 	sceneNameGO.clear();
