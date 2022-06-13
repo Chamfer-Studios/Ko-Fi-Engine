@@ -221,8 +221,11 @@ bool SceneIntro::PostUpdate(float dt)
 	if (switchScene)
 	{
 		switchScene = false;
-		Importer::GetInstance()->sceneImporter->LoadScene(this, sceneNameGO.c_str());
-		engine->GetSceneManager()->OnSceneSwitch();
+		std::string oldName(engine->GetSceneManager()->currentScene->name);
+		if (sceneNameGO != oldName) {
+			Importer::GetInstance()->sceneImporter->LoadScene(this, sceneNameGO.c_str());
+			engine->GetSceneManager()->OnSceneSwitch();
+		}
 	}
 
 	if (quitPlease)
