@@ -114,12 +114,9 @@ void C_Image::SetTexture(const char* path)
 
 void C_Image::Draw()
 {
-	if (owner)
-	{
-		owner->GetEngine()->GetUI()->PrepareUIRender();
-		owner->GetComponent<C_Transform2D>()->drawablePlane->DrawPlane2D(openGLTexture.GetTextureId(), { 255, 255, 255 });
-		owner->GetEngine()->GetUI()->EndUIRender();
-	}
+	owner->GetEngine()->GetUI()->PrepareUIRender();
+	owner->GetComponent<C_Transform2D>()->drawablePlane->DrawPlane2D(openGLTexture.GetTextureId(), { 255, 255, 255 });
+	owner->GetEngine()->GetUI()->EndUIRender();
 }
 
 void C_Image::FreeTextures()

@@ -1,7 +1,6 @@
 {
     "CutsceneLevel1Level2": {
         "active": true,
-        "draw_skybox": true,
         "game_objects_amount": 32,
         "game_objects_list": [
             {
@@ -34,13 +33,10 @@
                     },
                     {
                         "active": true,
-                        "cameraType": 0,
                         "far_plane_distance": 500.0,
                         "frustum_culling": false,
                         "isMainCamera": true,
                         "near_plane_distance": 0.009999999776482582,
-                        "orthoHeight": 1000.0,
-                        "orthoWidth": 1000.0,
                         "sCullingRadius": 249,
                         "sphere_culling": true,
                         "type": 4,
@@ -84,7 +80,6 @@
                     {
                         "active": true,
                         "ambientValue": 0.5,
-                        "castShadows": false,
                         "diffuseValue": 0.800000011920929,
                         "lightColor": [
                             1.0,
@@ -107,21 +102,17 @@
                     },
                     {
                         "active": true,
-                        "cameraType": 1,
                         "far_plane_distance": 1000.0,
                         "frustum_culling": false,
                         "isMainCamera": false,
                         "near_plane_distance": 0.30000001192092896,
-                        "orthoHeight": 1000.0,
-                        "orthoWidth": 1000.0,
                         "sCullingRadius": 499,
                         "sphere_culling": false,
                         "type": 4,
-                        "vertical_fov": 1000.0
+                        "vertical_fov": 401.0
                     },
                     {
                         "active": true,
-                        "async": false,
                         "file_name": "Assets/Scripts/ChangeSceneDebugKey.lua",
                         "id": 1987852668,
                         "inspector_variables": [
@@ -176,7 +167,6 @@
                     },
                     {
                         "active": true,
-                        "async": false,
                         "file_name": "Assets/Scripts/HUD/UI_CutsceneLevel1Level2.lua",
                         "id": 1411300524,
                         "type": 5
@@ -268,7 +258,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Press enter to skip"
                     }
@@ -317,7 +307,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Their dread continued to grow as they rushed to Zhib’s Thopter,"
                     }
@@ -408,7 +398,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Rabban intelligence rivals that of a worm, so the fact that"
                     }
@@ -625,7 +615,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "As they looked back at their lost home, a message from a so called Muad’dib"
                     }
@@ -674,7 +664,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "they fell into a trap plotted by him made it the more infuriating."
                     }
@@ -849,7 +839,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "The flames coming from Sannara light Zhib, Omozra and Nerala’s hearts"
                     }
@@ -898,7 +888,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "with anger and sorrow. Sannara had been destroyed, they had failed. "
                     }
@@ -1031,7 +1021,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "He introduced himself as the leader of a rebellion against the harkonnen. Secluded"
                     }
@@ -1080,7 +1070,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "in their Sietch, the news hadn’t reached them, but this ignited their hope and will of revenge."
                     }
@@ -1129,7 +1119,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "He had heard of them and of the destruction of the legendary city. He knew he could trust "
                     }
@@ -1178,7 +1168,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "them with the most important mission of all: to take down the shields and Rabaan with them."
                     }
@@ -1311,7 +1301,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "All of them knew doing this mission was a death wish, but"
                     }
@@ -1360,7 +1350,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "nevertheless Paul trusted them, and they had nothing else to lose."
                     }
@@ -1409,7 +1399,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "With a newborn alliance, Zhib, Nerala and Omozra headed into"
                     }
@@ -1458,7 +1448,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "Rabban’s base of operations, location of the shield’s generators."
                     }
@@ -1507,7 +1497,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
+                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
                         "type": 16,
                         "value": "arrived to the thopter."
                     }

@@ -207,7 +207,7 @@
                         {
                             "bypass": false,
                             "custom_loop": false,
-                            "loop": true,
+                            "loop": false,
                             "loop_offset": 0.0,
                             "mute": false,
                             "offset": 0.0,
@@ -215,12 +215,12 @@
                             "play_on_start": false,
                             "track_path": "Assets/Audio/SFX/Generic/generic_sand_steps_fx.wav",
                             "transpose": 1.0,
-                            "volume": 50.0
+                            "volume": 100.0
                         },
                         {
                             "bypass": false,
                             "custom_loop": false,
-                            "loop": true,
+                            "loop": false,
                             "loop_offset": 0.0,
                             "mute": false,
                             "offset": 0.0,
@@ -228,7 +228,7 @@
                             "play_on_start": false,
                             "track_path": "Assets/Audio/SFX/Generic/generic_sand_run_fx.wav",
                             "transpose": 1.0,
-                            "volume": 50.0
+                            "volume": 100.0
                         },
                         {
                             "bypass": false,
@@ -626,7 +626,7 @@
                                                                     ],
                                                                     "rotation": [
                                                                         0.013312622904777527,
-                                                                        0.00683033699169755,
+                                                                        0.006830335594713688,
                                                                         -0.07146187126636505,
                                                                         0.9973311424255371
                                                                     ],
@@ -1403,12 +1403,12 @@
                                                                                                     ],
                                                                                                     "rotation": [
                                                                                                         0.1800972819328308,
-                                                                                                        -0.0006507087964564562,
-                                                                                                        -0.000563563487958163,
+                                                                                                        -0.000650708272587508,
+                                                                                                        -0.0005635631387121975,
                                                                                                         0.983648419380188
                                                                                                     ],
                                                                                                     "scale": [
-                                                                                                        0.9999032020568848,
+                                                                                                        0.9999035596847534,
                                                                                                         1.0,
                                                                                                         0.9999999403953552
                                                                                                     ],

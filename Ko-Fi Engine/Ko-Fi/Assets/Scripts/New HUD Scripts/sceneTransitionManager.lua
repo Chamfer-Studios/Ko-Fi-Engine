@@ -1,220 +1,184 @@
 local upgradeButton1Z = {
     state = false,
     object = Find("Skill 1 - Upgrade 1"),
-    unlocked = true,
-    id = 11
+    unlocked = true
 }
 local upgradeButton2Z = {
     state = false,
     object = Find("Skill 1 - Upgrade 2"),
-    unlocked = false,
-    id = 12
+    unlocked = false
 }
 local upgradeButton3Z = {
     state = false,
     object = Find("Skill 1 - Upgrade 3"),
-    unlocked = false,
-    id = 13
+    unlocked = false
 }
 local upgradeButton4Z = {
     state = false,
     object = Find("Skill 2 - Upgrade 1"),
-    unlocked = true,
-    id = 21
+    unlocked = true
 }
 local upgradeButton5Z = {
     state = false,
     object = Find("Skill 2 - Upgrade 2"),
-    unlocked = false,
-    id = 22
+    unlocked = false
 }
 local upgradeButton6Z = {
     state = false,
     object = Find("Skill 2 - Upgrade 3"),
-    unlocked = false,
-    id = 23
+    unlocked = false
 }
 local upgradeButton7Z = {
     state = false,
     object = Find("Skill 3 - Upgrade 1"),
-    unlocked = true,
-    id = 31
+    unlocked = true
 }
 local upgradeButton8Z = {
     state = false,
     object = Find("Skill 3 - Upgrade 2"),
-    unlocked = false,
-    id = 32
+    unlocked = false
 }
 local upgradeButton9Z = {
     state = false,
     object = Find("Skill 3 - Upgrade 3"),
-    unlocked = false,
-    id = 33
+    unlocked = false
 }
 local upgradeButton10Z = {
     state = false,
     object = Find("Passive - Upgrade 1"),
-    unlocked = true,
-    id = 41
+    unlocked = true
 }
 local upgradeButton11Z = {
     state = false,
     object = Find("Passive - Upgrade 2"),
-    unlocked = false,
-    id = 42
+    unlocked = false
 }
 local upgradeButton12Z = {
     state = false,
     object = Find("Passive - Upgrade 3"),
-    unlocked = false,
-    id = 43
+    unlocked = false
 }
---NERALA
+
 local upgradeButton1N = {
     state = false,
     object = Find("Skill 1 - Upgrade 1"),
-    unlocked = true,
-    id = 51
+    unlocked = true
 }
 local upgradeButton2N = {
     state = false,
     object = Find("Skill 1 - Upgrade 2"),
-    unlocked = false,
-    id = 52
+    unlocked = false
 }
 local upgradeButton3N = {
     state = false,
     object = Find("Skill 1 - Upgrade 3"),
-    unlocked = false,
-    id = 53
+    unlocked = false
 }
 local upgradeButton4N = {
     state = false,
     object = Find("Skill 2 - Upgrade 1"),
-    unlocked = true,
-    id = 61
+    unlocked = true
 }
 local upgradeButton5N = {
     state = false,
     object = Find("Skill 2 - Upgrade 2"),
-    unlocked = false,
-    id = 62
+    unlocked = false
 }
 local upgradeButton6N = {
     state = false,
     object = Find("Skill 2 - Upgrade 3"),
-    unlocked = false,
-    id = 63
+    unlocked = false
 }
 local upgradeButton7N = {
     state = false,
     object = Find("Skill 3 - Upgrade 1"),
-    unlocked = true,
-    id = 71
+    unlocked = true
 }
 local upgradeButton8N = {
     state = false,
     object = Find("Skill 3 - Upgrade 2"),
-    unlocked = false,
-    id = 72
+    unlocked = false
 }
 local upgradeButton9N = {
     state = false,
     object = Find("Skill 3 - Upgrade 3"),
-    unlocked = false,
-    id = 73
+    unlocked = false
 }
 local upgradeButton10N = {
     state = false,
     object = Find("Passive - Upgrade 1"),
-    unlocked = true,
-    id = 81
+    unlocked = true
 }
 local upgradeButton11N = {
     state = false,
     object = Find("Passive - Upgrade 2"),
-    unlocked = false,
-    id = 82
+    unlocked = false
 }
 local upgradeButton12N = {
     state = false,
     object = Find("Passive - Upgrade 3"),
-    unlocked = false,
-    id = 83
+    unlocked = false
 }
---OMOZRA
+
 local upgradeButton1O = {
     state = false,
     object = Find("Skill 1 - Upgrade 1"),
-    unlocked = true,
-    id = 91
+    unlocked = true
 }
 local upgradeButton2O = {
     state = false,
     object = Find("Skill 1 - Upgrade 2"),
-    unlocked = false,
-    id = 92
+    unlocked = false
 }
 local upgradeButton3O = {
     state = false,
     object = Find("Skill 1 - Upgrade 3"),
-    unlocked = false,
-    id = 93
+    unlocked = false
 }
 local upgradeButton4O = {
     state = false,
     object = Find("Skill 2 - Upgrade 1"),
-    unlocked = true,
-    id = 1011
+    unlocked = true
 }
 local upgradeButton5O = {
     state = false,
     object = Find("Skill 2 - Upgrade 2"),
-    unlocked = false,
-    id = 1012
+    unlocked = false
 }
 local upgradeButton6O = {
     state = false,
     object = Find("Skill 2 - Upgrade 3"),
-    unlocked = false,
-    id = 1013
+    unlocked = false
 }
 local upgradeButton7O = {
     state = false,
     object = Find("Skill 3 - Upgrade 1"),
-    unlocked = true,
-    id = 1021
+    unlocked = true
 }
 local upgradeButton8O = {
     state = false,
     object = Find("Skill 3 - Upgrade 2"),
-    unlocked = false,
-    id = 1022
+    unlocked = false
 }
 local upgradeButton9O = {
     state = false,
     object = Find("Skill 3 - Upgrade 3"),
-    unlocked = false,
-    id = 1023
+    unlocked = false
 }
 local upgradeButton10O = {
     state = false,
     object = Find("Passive - Upgrade 1"),
-    unlocked = true,
-    id = 1031
+    unlocked = true
 }
 local upgradeButton11O = {
     state = false,
     object = Find("Passive - Upgrade 2"),
-    unlocked = false,
-    id = 1032
+    unlocked = false
 }
 local upgradeButton12O = {
     state = false,
     object = Find("Passive - Upgrade 3"),
-    unlocked = false,
-    id = 1033
+    unlocked = false
 }
 local id = -1
 local src = " "
@@ -252,9 +216,6 @@ function Start()
     LoadJsonFile(path)
 
     skillUiArray = {1, 2, 3, 101}
-    upgradeArray = {upgradeButton1Z, upgradeButton2Z, upgradeButton3Z, upgradeButton4Z, upgradeButton5Z,
-                      upgradeButton6Z, upgradeButton7Z, upgradeButton8Z, upgradeButton9Z, upgradeButton10Z,
-                      upgradeButton11Z, upgradeButton12Z}
     dialogueGo = Find("Dialogue")
 
     firstSkillButton = Find("Button")
@@ -267,7 +228,6 @@ function Start()
 
     omozraTransition = Find("omozra_transition")
     neralaTransition = Find("nerala_transition")
-    
 
     id = 0
 
@@ -305,17 +265,14 @@ function Update(dt)
         SetDialogValue(3)
     elseif (fourthSkillButton:GetButton():IsIdle() == false and fourthSkillButton:GetButton():IsPressed() == false) then
         SetDialogValue(4)
-    -- Skill Buttons
     else
         SetDialogValue(0)
     end
 
     -- PRIMARY ABILITY : LEVEL 1
-    if (upgradeArray[1].object:GetButton():IsPressed() == true and upgradeArray[1].unlocked == true) then
-        Log("PRESSING")
+    if (upgradeArray[1].object:GetButton():IsPressed() and upgradeArray[1].unlocked == true) then
         if (upgradeArray[1].state == false) then
 
-            Log("leveling up")
             if (LevelUp(id, "primary", 1, true) ~= false) then
                 upgradeArray[1].state = true
                 upgradeArray[1].object:GetChildren()[1]:Active(true)
@@ -324,7 +281,6 @@ function Update(dt)
             end
 
         else
-            Log("leveling up")
             if upgradeArray[2].state == false then
                 upgradeArray[1].state = false
                 upgradeArray[1].object:GetChildren()[1]:Active(false)
@@ -333,10 +289,8 @@ function Update(dt)
                 LevelUp(id, "primary", 1, false)
             end
         end
-    elseif (upgradeArray[1].object:GetButton():IsIdle() == false and upgradeArray[1].object:GetButton():IsPressed() == false and upgradeArray[1].unlocked == true) then
-        SetDialogValue(5)
         -- PRIMARY ABILITY : LEVEL 2
-    elseif (upgradeArray[2].object:GetButton():IsPressed() == true and upgradeArray[2].unlocked == true) then
+    elseif (upgradeArray[2].object:GetButton():IsPressed() and upgradeArray[2].unlocked == true) then
         if (upgradeArray[2].state == false) then
 
             if (LevelUp(id, "primary", 2, true) ~= false) then
@@ -354,10 +308,8 @@ function Update(dt)
                 LevelUp(id, "primary", 2, false)
             end
         end
-    elseif (upgradeArray[2].object:GetButton():IsIdle() == false and upgradeArray[2].object:GetButton():IsPressed() == false and upgradeArray[2].unlocked == true) then
-        SetDialogValue(6)
         -- PRIMARY ABILITY : LEVEL 3
-    elseif (upgradeArray[3].object:GetButton():IsPressed() == true and upgradeArray[3].unlocked == true) then
+    elseif (upgradeArray[3].object:GetButton():IsPressed() and upgradeArray[3].unlocked == true) then
         if (upgradeArray[3].state == false) then
 
             if (LevelUp(id, "primary", 3, true) ~= false) then
@@ -370,10 +322,8 @@ function Update(dt)
 
             LevelUp(id, "primary", 3, false)
         end
-    elseif (upgradeArray[3].object:GetButton():IsIdle() == false and upgradeArray[3].object:GetButton():IsPressed() == false and upgradeArray[3].unlocked == true) then
-        SetDialogValue(7)
         -- SECONDARY ABILITY : LEVEL 1
-    elseif (upgradeArray[4].object:GetButton():IsPressed() == true and upgradeArray[4].unlocked == true) then
+    elseif (upgradeArray[4].object:GetButton():IsPressed() and upgradeArray[4].unlocked == true) then
         if (upgradeArray[4].state == false) then
 
             if (LevelUp(id, "secondary", 1, true) ~= false) then
@@ -391,10 +341,8 @@ function Update(dt)
                 LevelUp(id, "secondary", 1, false)
             end
         end
-    elseif (upgradeArray[4].object:GetButton():IsIdle() == false and upgradeArray[4].object:GetButton():IsPressed() == false and upgradeArray[4].unlocked == true) then
-        SetDialogValue(8)
         -- SECONDARY ABILITY : LEVEL 2
-    elseif (upgradeArray[5].object:GetButton():IsPressed() == true and upgradeArray[5].unlocked == true) then
+    elseif (upgradeArray[5].object:GetButton():IsPressed() and upgradeArray[5].unlocked == true) then
         if (upgradeArray[5].state == false) then
 
             if (LevelUp(id, "secondary", 2, true) ~= false) then
@@ -412,10 +360,8 @@ function Update(dt)
                 LevelUp(id, "secondary", 2, false)
             end
         end
-    elseif (upgradeArray[5].object:GetButton():IsIdle() == false and upgradeArray[5].object:GetButton():IsPressed() == false and upgradeArray[5].unlocked == true) then
-        SetDialogValue(9)
         -- SECONDARY ABILITY : LEVEL 3
-    elseif (upgradeArray[6].object:GetButton():IsPressed() == true and upgradeArray[6].unlocked == true) then
+    elseif (upgradeArray[6].object:GetButton():IsPressed() and upgradeArray[6].unlocked == true) then
         if (upgradeArray[6].state == false) then
 
             if (LevelUp(id, "secondary", 3, true) ~= false) then
@@ -428,10 +374,8 @@ function Update(dt)
 
             LevelUp(id, "secondary", 3, false)
         end
-    elseif (upgradeArray[6].object:GetButton():IsIdle() == false and upgradeArray[6].object:GetButton():IsPressed() == false and upgradeArray[6].unlocked == true) then
-        SetDialogValue(10)
         -- ULTIMATE ABILITY : LEVEL 1
-    elseif (upgradeArray[7].object:GetButton():IsPressed() == true and upgradeArray[7].unlocked == true) then
+    elseif (upgradeArray[7].object:GetButton():IsPressed() and upgradeArray[7].unlocked == true) then
         if (upgradeArray[7].state == false) then
 
             if (LevelUp(id, "ultimate", 1, true) ~= false) then
@@ -449,10 +393,8 @@ function Update(dt)
                 LevelUp(id, "ultimate", 1, false)
             end
         end
-    elseif (upgradeArray[7].object:GetButton():IsIdle() == false and upgradeArray[7].object:GetButton():IsPressed() == false and upgradeArray[7].unlocked == true) then
-        SetDialogValue(11)
         -- ULTIMATE ABILITY : LEVEL 2
-    elseif (upgradeArray[8].object:GetButton():IsPressed() == true and upgradeArray[8].unlocked == true) then
+    elseif (upgradeArray[8].object:GetButton():IsPressed() and upgradeArray[8].unlocked == true) then
         if (upgradeArray[8].state == false) then
 
             if (LevelUp(id, "ultimate", 2, true) ~= false) then
@@ -470,10 +412,8 @@ function Update(dt)
                 LevelUp(id, "ultimate", 2, false)
             end
         end
-    elseif (upgradeArray[8].object:GetButton():IsIdle() == false and upgradeArray[8].object:GetButton():IsPressed() == false and upgradeArray[8].unlocked == true) then
-        SetDialogValue(12)
         -- ULTIMATE ABILITY : LEVEL 3
-    elseif (upgradeArray[9].object:GetButton():IsPressed() == true and upgradeArray[9].unlocked == true) then
+    elseif (upgradeArray[9].object:GetButton():IsPressed() and upgradeArray[9].unlocked == true) then
         if (upgradeArray[9].state == false) then
 
             if (LevelUp(id, "ultimate", 3, true) ~= false) then
@@ -486,10 +426,8 @@ function Update(dt)
 
             LevelUp(id, "ultimate", 3, false)
         end
-    elseif (upgradeArray[9].object:GetButton():IsIdle() == false and upgradeArray[9].object:GetButton():IsPressed() == false and upgradeArray[9].unlocked == true) then
-        SetDialogValue(13)
         -- PASSIVE ABILITY : LEVEL 1
-    elseif (upgradeArray[10].object:GetButton():IsPressed() == true and upgradeArray[10].unlocked == true) then
+    elseif (upgradeArray[10].object:GetButton():IsPressed() and upgradeArray[10].unlocked == true) then
         if (upgradeArray[10].state == false) then
 
             if (LevelUp(id, "passive", 1, true) ~= false) then
@@ -507,10 +445,8 @@ function Update(dt)
                 LevelUp(id, "passive", 1, false)
             end
         end
-    elseif (upgradeArray[10].object:GetButton():IsIdle() == false and upgradeArray[10].object:GetButton():IsPressed() == false and upgradeArray[10].unlocked == true) then
-        SetDialogValue(14)
         -- PASSIVE ABILITY : LEVEL 2
-    elseif (upgradeArray[11].object:GetButton():IsPressed() == true and upgradeArray[11].unlocked == true) then
+    elseif (upgradeArray[11].object:GetButton():IsPressed() and upgradeArray[11].unlocked == true) then
         if (upgradeArray[11].state == false) then
 
             if (LevelUp(id, "passive", 2, true) ~= false) then
@@ -528,10 +464,8 @@ function Update(dt)
                 LevelUp(id, "passive", 2, false)
             end
         end
-    elseif (upgradeArray[11].object:GetButton():IsIdle() == false and upgradeArray[11].object:GetButton():IsPressed() == false and upgradeArray[11].unlocked == true) then
-        SetDialogValue(15)
         -- PASSIVE ABILITY : LEVEL 3
-    elseif (upgradeArray[12].object:GetButton():IsPressed() == true and upgradeArray[12].unlocked == true) then
+    elseif (upgradeArray[12].object:GetButton():IsPressed() and upgradeArray[12].unlocked == true) then
         if (upgradeArray[12].state == false) then
 
             if (LevelUp(id, "passive", 3, true) ~= false) then
@@ -544,8 +478,6 @@ function Update(dt)
 
             LevelUp(id, "passive", 3, false)
         end
-    elseif (upgradeArray[12].object:GetButton():IsIdle() == false and upgradeArray[12].object:GetButton():IsPressed() == false and upgradeArray[12].unlocked == true) then
-        SetDialogValue(16)
     end
 end
 
@@ -622,6 +554,7 @@ function SetDialogValue(index)
     if (index == 1) then
         dialogueGo:Active(true)
         dialog = GetTransString("description1", skillUiArray[1])
+        print(dialog)
         dialog1 = GetTransString("description2", skillUiArray[1])
         dialog2 = GetTransString("description3", skillUiArray[1])
         dialog3 = GetTransString("description4", skillUiArray[1])
@@ -651,102 +584,6 @@ function SetDialogValue(index)
         dialog3 = GetTransString("description4", skillUiArray[4])
         dialog4 = GetTransString("description5", skillUiArray[4])
         dialog5 = GetTransString("description6", skillUiArray[4])
-    elseif (index == 5) then
-        dialogueGo:Active(true)
-        dialog = GetTransString("description1", upgradeArray[index - 4].id)
-        dialog1 = GetTransString("description2", upgradeArray[index - 4].id)
-        dialog2 = GetTransString("description3", upgradeArray[index - 4].id)
-        dialog3 = GetTransString("description4", upgradeArray[index - 4].id)
-        dialog4 = GetTransString("description5", upgradeArray[index - 4].id)
-        dialog5 = GetTransString("description6", upgradeArray[index - 4].id)
-    elseif (index == 6) then
-        dialogueGo:Active(true)
-        dialog = GetTransString("description1", upgradeArray[index - 4].id)
-        dialog1 = GetTransString("description2", upgradeArray[index - 4].id)
-        dialog2 = GetTransString("description3", upgradeArray[index - 4].id)
-        dialog3 = GetTransString("description4", upgradeArray[index - 4].id)
-        dialog4 = GetTransString("description5", upgradeArray[index - 4].id)
-        dialog5 = GetTransString("description6", upgradeArray[index - 4].id)
-    elseif (index == 7) then
-        dialogueGo:Active(true)
-        dialog = GetTransString("description1", upgradeArray[index - 4].id)
-        dialog1 = GetTransString("description2", upgradeArray[index - 4].id)
-        dialog2 = GetTransString("description3", upgradeArray[index - 4].id)
-        dialog3 = GetTransString("description4", upgradeArray[index - 4].id)
-        dialog4 = GetTransString("description5", upgradeArray[index - 4].id)
-        dialog5 = GetTransString("description6", upgradeArray[index - 4].id)
-    elseif (index == 8) then
-        dialogueGo:Active(true)
-        dialog = GetTransString("description1", upgradeArray[index - 4].id)
-        dialog1 = GetTransString("description2", upgradeArray[index - 4].id)
-        dialog2 = GetTransString("description3", upgradeArray[index - 4].id)
-        dialog3 = GetTransString("description4", upgradeArray[index - 4].id)
-        dialog4 = GetTransString("description5", upgradeArray[index - 4].id)
-        dialog5 = GetTransString("description6", upgradeArray[index - 4].id)
-    elseif (index == 9) then
-        dialogueGo:Active(true)
-        dialog = GetTransString("description1", upgradeArray[index - 4].id)
-        dialog1 = GetTransString("description2", upgradeArray[index - 4].id)
-        dialog2 = GetTransString("description3", upgradeArray[index - 4].id)
-        dialog3 = GetTransString("description4", upgradeArray[index - 4].id)
-        dialog4 = GetTransString("description5", upgradeArray[index - 4].id)
-        dialog5 = GetTransString("description6", upgradeArray[index - 4].id)
-    elseif (index == 10) then
-        dialogueGo:Active(true)
-        dialog = GetTransString("description1", upgradeArray[index - 4].id)
-        dialog1 = GetTransString("description2", upgradeArray[index - 4].id)
-        dialog2 = GetTransString("description3", upgradeArray[index - 4].id)
-        dialog3 = GetTransString("description4", upgradeArray[index - 4].id)
-        dialog4 = GetTransString("description5", upgradeArray[index - 4].id)
-        dialog5 = GetTransString("description6", upgradeArray[index - 4].id)
-    elseif (index == 11) then
-        dialogueGo:Active(true)
-        dialog = GetTransString("description1", upgradeArray[index - 4].id)
-        dialog1 = GetTransString("description2", upgradeArray[index - 4].id)
-        dialog2 = GetTransString("description3", upgradeArray[index - 4].id)
-        dialog3 = GetTransString("description4", upgradeArray[index - 4].id)
-        dialog4 = GetTransString("description5", upgradeArray[index - 4].id)
-        dialog5 = GetTransString("description6", upgradeArray[index - 4].id)
-    elseif (index == 12) then
-        dialogueGo:Active(true)
-        dialog = GetTransString("description1", upgradeArray[index - 4].id)
-        dialog1 = GetTransString("description2", upgradeArray[index - 4].id)
-        dialog2 = GetTransString("description3", upgradeArray[index - 4].id)
-        dialog3 = GetTransString("description4", upgradeArray[index - 4].id)
-        dialog4 = GetTransString("description5", upgradeArray[index - 4].id)
-        dialog5 = GetTransString("description6", upgradeArray[index - 4].id)
-    elseif (index == 13) then
-        dialogueGo:Active(true)
-        dialog = GetTransString("description1", upgradeArray[index - 4].id)
-        dialog1 = GetTransString("description2", upgradeArray[index - 4].id)
-        dialog2 = GetTransString("description3", upgradeArray[index - 4].id)
-        dialog3 = GetTransString("description4", upgradeArray[index - 4].id)
-        dialog4 = GetTransString("description5", upgradeArray[index - 4].id)
-        dialog5 = GetTransString("description6", upgradeArray[index - 4].id)
-    elseif (index == 14) then
-        dialogueGo:Active(true)
-        dialog = GetTransString("description1", upgradeArray[index - 4].id)
-        dialog1 = GetTransString("description2", upgradeArray[index - 4].id)
-        dialog2 = GetTransString("description3", upgradeArray[index - 4].id)
-        dialog3 = GetTransString("description4", upgradeArray[index - 4].id)
-        dialog4 = GetTransString("description5", upgradeArray[index - 4].id)
-        dialog5 = GetTransString("description6", upgradeArray[index - 4].id)
-    elseif (index == 15) then
-        dialogueGo:Active(true)
-        dialog = GetTransString("description1", upgradeArray[index - 4].id)
-        dialog1 = GetTransString("description2", upgradeArray[index - 4].id)
-        dialog2 = GetTransString("description3", upgradeArray[index - 4].id)
-        dialog3 = GetTransString("description4", upgradeArray[index - 4].id)
-        dialog4 = GetTransString("description5", upgradeArray[index - 4].id)
-        dialog5 = GetTransString("description6", upgradeArray[index - 4].id)
-    elseif (index == 16) then
-        dialogueGo:Active(true)
-        dialog = GetTransString("description1", upgradeArray[index - 4].id)
-        dialog1 = GetTransString("description2", upgradeArray[index - 4].id)
-        dialog2 = GetTransString("description3", upgradeArray[index - 4].id)
-        dialog3 = GetTransString("description4", upgradeArray[index - 4].id)
-        dialog4 = GetTransString("description5", upgradeArray[index - 4].id)
-        dialog5 = GetTransString("description6", upgradeArray[index - 4].id)
     else
         dialogueGo:Active(false)
         dialog = " "

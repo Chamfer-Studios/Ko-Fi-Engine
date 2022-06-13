@@ -12,9 +12,6 @@ poisonCount = 1
 
 function Start()
 
-    SetOutlineThickness(40)
-    SetRenderOutline(false)
-
     componentRigidBody = gameObject:GetRigidBody() -- This is here instead of at "awake" so the order of component creation does not affect
 
     maxTetherRange = GetVariable("Nerala.lua", "ultimateMaxDistance", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
@@ -100,7 +97,6 @@ function Update(dt)
 
     -- Gather Inputs
     if (IsSelected() == true) then
-        SetRenderOutline(true)
 
         -- Right Click
         if (GetInput(3) == KEY_STATE.KEY_DOWN) then -- Right Click
@@ -136,8 +132,6 @@ function Update(dt)
         elseif (GetInput(23) == KEY_STATE.KEY_DOWN) then
             lifeTimer = lifeTime + 1
         end
-    else
-        SetRenderOutline(true)
     end
 
     if (componentSwitch:IsAnyTrackPlaying() == false) then

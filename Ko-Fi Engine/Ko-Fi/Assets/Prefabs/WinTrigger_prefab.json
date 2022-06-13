@@ -64,17 +64,7 @@
                 {
                     "name": "sceneName",
                     "type": "string",
-                    "value": "SceneLoadingTransition"
-                },
-                {
-                    "name": "neralaMust",
-                    "type": "bool",
-                    "value": true
-                },
-                {
-                    "name": "omozraMust",
-                    "type": "bool",
-                    "value": true
+                    "value": "SceneWin"
                 }
             ],
             "type": 5

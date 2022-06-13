@@ -516,7 +516,7 @@ function UpdateTargetAwareness()
 
     if #visualTriggers ~= 0 then
         targetAwareness = 2
-        prop = 1.7 - (distance / visionConeRadius)
+        prop = 1.2 - (distance / visionConeRadius)
         awarenessSpeed = awarenessVisualSpeed * prop * visualDebuffMultiplier
     elseif #repeatingAuditoryTriggers ~= 0 then
         targetAwareness = 2
@@ -1136,7 +1136,7 @@ end
 
 function AnyPlayerInRange()
     for i = 1, #players do
-        if (math.abs(Float3Distance(players[i]:GetTransform():GetPosition(), componentTransform:GetPosition())) <= 900) then
+        if (math.abs(Float3Distance(players[i]:GetTransform():GetPosition(), componentTransform:GetPosition())) <= 500) then
             return true
         end
     end

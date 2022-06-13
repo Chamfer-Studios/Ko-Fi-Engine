@@ -93,356 +93,42 @@
     {
       "id": 101,
       "src": "Assets/New UI/zhib_passive_icon.png",
-      "description1": "Zhib's Stats.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
+      "description1": "Omozra points at an ally, prompting Sadiq to emerge from the sand",
+      "description2": "and partly swallow them. While the ally is inside Sadiq, Omozra",
+      "description3": "can move, but not cast any other abilities. Then, Omozra points",
+      "description4": "at a desired spot inside a given range and Sadiq pops up and",
+      "description5": "regurgitates the ally before disappearing under the sand again",
+      "description6": "This ability can’t be casted on Omozra himself."
     },
     {
       "id": 102,
       "src": "Assets/New UI/nerala_passive_icon.png",
-      "description1": "Nerala's Stats.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
+      "description1": "Omozra points at an ally, prompting Sadiq to emerge from the sand",
+      "description2": "and partly swallow them. While the ally is inside Sadiq, Omozra",
+      "description3": "can move, but not cast any other abilities. Then, Omozra points",
+      "description4": "at a desired spot inside a given range and Sadiq pops up and",
+      "description5": "regurgitates the ally before disappearing under the sand again",
+      "description6": "This ability can’t be casted on Omozra himself."
     },
     {
       "id": 103,
       "src": "Assets/New UI/omozra_passive_icon.png",
-      "description1": "Omozra's Stats",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
+      "description1": "Omozra points at an ally, prompting Sadiq to emerge from the sand",
+      "description2": "and partly swallow them. While the ally is inside Sadiq, Omozra",
+      "description3": "can move, but not cast any other abilities. Then, Omozra points",
+      "description4": "at a desired spot inside a given range and Sadiq pops up and",
+      "description5": "regurgitates the ally before disappearing under the sand again",
+      "description6": "This ability can’t be casted on Omozra himself."
     },
     {
-      "id": 11,
-      "description1": "Impact Sound Range: 20->15.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 12,
-      "description1": "Throwing Range: 10->12.5.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 13,
-      "description1": "Increases overall chances of hitting enemies.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 21,
-      "description1": "Throwing Range: 13->15.",
-      "description2": "Effect Range: 8->10.   ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 22,
-      "description1": "Duration: 7.5->10.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 23,
-      "description1": "Cooldown: 7.5->6.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 31,
-      "description1": "Range: 5->7.5.    ",
-      "description2": "Chain Range: 5->6.",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 32,
-      "description1": "Range: 7.5->8.5.    ",
-      "description2": "Chain Range: 6->6.5.",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 33,
-      "description1": "Max Kills: 5->8.",
-      "description2": "Cost: 2000->1800.   ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 41,
-      "description1": "Range: 12->14.             ",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 42,
-      "description1": "Increases overall chances of hitting enemies.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 43,
-      "description1": "Visual Debuff: 0->25%.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 51,
-      "description1": "Range: 15->17.5.      ",
-      "description2": "Effect Radius: 3.33->4.",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 52,
-      "description1": "Duration: 5->7.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 53,
-      "description1": "Max Ammunition: 3->5.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 61,
-      "description1": "Max Range: 40->50.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 62,
-      "description1": "Duration: 10->15.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 63,
-      "description1": "Kills: 1->2.    ",
-      "description2": "Cost: 1000->750.",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 71,
-      "description1": "Range: 15->17.5.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 72,
-      "description1": "Corpses Needed: 6->5.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 73,
-      "description1": "Range: 15->17.5.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 81,
-      "description1": "Range: 15->17.5.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 82,
-      "description1": "Range: 17.5->20.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 83,
-      "description1": "Corpses Needed: 6->5.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 91,
-      "description1": "Range: 10->12.5.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 92,
-      "description1": "Range: 12.5->15.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 93,
-      "description1": "Cost: 1000->750.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 1011,
-      "description1": "Stamina: 5->6.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 1012,
-      "description1": "Sprint Speed: 133->144%.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 1013,
-      "description1": "Crouch Sound Range: 40->30%.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 1021,
-      "description1": "Stamina: 3->5.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 1022,
-      "description1": "Walking Sound Range: 14->12.  ",
-      "description2": "Time Between Attacks: 10.5->8.",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 1023,
-      "description1": "Crouch Sound Range: 37->25%.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 1031,
-      "description1": "Stamina: 6->7.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 1032,
-      "description1": "Sprint Speed: 133->144%.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
-    },
-    {
-      "id": 1033,
-      "description1": "Max Health: 3->4.",
-      "description2": " ",
-      "description3": " ",
-      "description4": " ",
-      "description5": " ",
-      "description6": " "
+      "id": 1000,
+      "src": "",
+      "description1": "Level: 1",
+      "description2": "",
+      "description3": "",
+      "description4": "",
+      "description5": "",
+      "description6": ""
     }
   ]
 }

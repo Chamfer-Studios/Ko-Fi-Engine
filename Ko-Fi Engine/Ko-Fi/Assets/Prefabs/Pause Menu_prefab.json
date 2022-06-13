@@ -352,7 +352,7 @@
                                 {
                                     "name": "name",
                                     "type": "string",
-                                    "value": "SceneLoadingMainMenu"
+                                    "value": "SceneMainMenu"
                                 }
                             ],
                             "type": 5
@@ -458,7 +458,7 @@
                                 {
                                     "name": "name",
                                     "type": "string",
-                                    "value": "SceneLoadingLevel1"
+                                    "value": "SceneLoading"
                                 }
                             ],
                             "type": 5

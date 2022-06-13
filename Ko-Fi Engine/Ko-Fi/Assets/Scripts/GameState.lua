@@ -3,8 +3,8 @@ levelNumber = 1
 
 characterSelected = 1
 
-spiceAmount = 0
-startingSpiceAmount = 0
+spiceAmount = 1000
+startingSpiceAmount = 1000
 deadAllyPenalization = 2000
 
 particleActive = false
@@ -49,8 +49,6 @@ NewVariable(startingSpiceAmountIV)
 levelNumberIVT = INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT
 levelNumberIV = InspectorVariable.new("levelNumber", levelNumberIVT, levelNumber)
 NewVariable(levelNumberIV)
-
-triggerDialogues = true
 
 -------------------- Methods ---------------------
 function Start()
@@ -135,45 +133,7 @@ function Update(dt)
                 Log("I am not god:(\n")
                 GodMode = false
             end
-            -- F4
-        elseif (GetInput(74) == KEY_STATE.KEY_DOWN) then
-            if (triggerDialogues == false) then
-                Log("I am triggering dialogues\n")
-                triggerDialogues = true
-            elseif (triggerDialogues == true) then
-                Log("I am not triggering dialogues :(\n")
-                triggerDialogues = false
-            end
-            -- F8
-        elseif (GetInput(78) == KEY_STATE.KEY_DOWN) then
-            if neralaAvailable == true then
-                if (characterSelected == 2) then
-                    DispatchGlobalEvent("Changed_Character", {characterSelected, 0}) -- From character 2 to 0
-                    characterSelected = 0
-                    neralaAvailable = false
-                else
-                    neralaAvailable = false
-                end
-                Log("Nerala is not available\n")
-            else
-                Log("Nerala is available\n")
-                neralaAvailable = true
-            end
-            -- F9
-        elseif (GetInput(79) == KEY_STATE.KEY_DOWN) then
-            if omozraAvailable == true then
-                if (characterSelected == 3) then
-                    DispatchGlobalEvent("Changed_Character", {characterSelected, 0}) -- From character 3 to 0
-                    characterSelected = 0
-                    omozraAvailable = false
-                else
-                    omozraAvailable = false
-                end
-                Log("Omozra is not available\n")
-            else
-                Log("Omozra is available\n")
-                omozraAvailable = true
-            end
+
         end
         if (characterSelected ~= 0) then
             if (characterSelected == 2 and characters[4] ~= nil) then
@@ -239,9 +199,6 @@ function EventHandler(key, fields)
     elseif (key == "Enemy_Defeated") then
         keyJson = "gameobjects_to_delete_lvl" .. levelNumber
         AddGameJsonElement(keyJson, fields[1])
-    elseif (key == "DialoguePassed") then
-        keyJson = "gameobjects_to_delete_lvl" .. levelNumber
-        AddGameJsonElement(keyJson, fields[1])
     elseif (key == "Dialogue_Opened") then
         auxGodMode = GodMode
         if (GodMode == false) then
@@ -303,7 +260,7 @@ function SaveGame()
     SetGameJsonInt("spice", spiceAmount)
 
     -- Zhib Save
-    SetGameJsonBool("zhib_available", zhibAvailable)
+    -- SetGameJsonBool("zhib_available", zhibAvailable)
     SetGameJsonInt("zhib_hp", GetVariable("Zhib.lua", "currentHP", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT))
 
     zhibPos = GetVariable("Zhib.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
@@ -313,7 +270,7 @@ function SaveGame()
     SetGameJsonFloat3(keyJson, zhibPos)
 
     -- Nerala Save
-    SetGameJsonBool("nerala_available", neralaAvailable)
+    -- SetGameJsonBool("nerala_available", neralaAvailable)
     SetGameJsonInt("nerala_hp", GetVariable("Nerala.lua", "currentHP", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT))
 
     neralaPos = GetVariable("Nerala.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
@@ -323,7 +280,7 @@ function SaveGame()
     SetGameJsonFloat3(keyJson, neralaPos)
 
     -- Omozra Save
-    SetGameJsonBool("omozra_available", omozraAvailable)
+    -- SetGameJsonBool("omozra_available", omozraAvailable)
     SetGameJsonInt("omozra_hp", GetVariable("Omozra.lua", "currentHP", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT))
     SetGameJsonInt("omozra_charges", GetVariable("Omozra.lua", "currentCharges", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT))
 
@@ -371,6 +328,11 @@ function LoadGame()
         {zhibPos.x, zhibPos.y, zhibPos.z, zhib_primary_level, zhib_secondary_level, zhib_ultimate_level,
          zhib_passive_level, zhib_hp})
 
+    -- zhibAvailable = GetGameJsonBool("zhib_available")
+    -- if(zhibAvailable == false) then
+    --     DispatchEvent("Disable_Character", {1})
+    -- end
+
     --- Nerala Load
     nerala_primary_level = GetGameJsonInt("nerala_primary_level")
     nerala_secondary_level = GetGameJsonInt("nerala_secondary_level")
@@ -385,6 +347,11 @@ function LoadGame()
     DispatchGlobalEvent("Update_Nerala_State",
         {neralaPos.x, neralaPos.y, neralaPos.z, nerala_primary_level, nerala_secondary_level, nerala_ultimate_level,
          nerala_passive_level, nerala_hp})
+
+    -- neralaAvailable = GetGameJsonBool("nerala_available")
+    -- if(neralaAvailable == false) then
+    --     DispatchEvent("Disable_Character", {2})
+    -- end
 
     --- Omozra Load
     omozra_primary_level = GetGameJsonInt("omozra_primary_level")
@@ -402,29 +369,10 @@ function LoadGame()
         {omozraPos.x, omozraPos.y, omozraPos.z, omozra_primary_level, omozra_secondary_level, omozra_ultimate_level,
          omozra_passive_level, omozra_hp, omozra_charges})
 
-    if (levelNumber == 1) then
-
-        zhibAvailable = GetGameJsonBool("zhib_available")
-        if (zhibAvailable == false) then
-            DispatchEvent("Disable_Character", {1})
-        end
-
-        neralaAvailable = GetGameJsonBool("nerala_available")
-        if (neralaAvailable == false) then
-            DispatchEvent("Disable_Character", {2})
-        end
-
-        omozraAvailable = GetGameJsonBool("omozra_available")
-        if (omozraAvailable == false) then
-            DispatchEvent("Disable_Character", {3})
-        end
-
-    elseif (levelNumber == 2) then
-        zhib_available = true
-        neralaAvailable = true
-        omozraAvailable = true
-    end
-
+    -- omozraAvailable = GetGameJsonBool("omozra_available")
+    -- if(omozraAvailable == false) then
+    --     DispatchEvent("Disable_Character", {3})
+    -- end
 end
 
 print("GameState.lua compiled successfully!")

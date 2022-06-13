@@ -152,7 +152,8 @@ function CastPrimary(thisTarget, omozraPos)
         sandParticles:GetComponentParticle():ResumeParticleSpawn()
     end
 
-    ChangeTrack({0, 1})
+    trackList = {0, 1}
+    ChangeTrack(trackList)
 
     currentState = State.SPIT_HEAL
 end
@@ -177,11 +178,12 @@ function DoPrimary()
     end
 
     while (currentTrackID == 0 or currentTrackID == 1) do
-        return
+       return
     end
 
-    if (currentTrackID ~= 3) then
-        ChangeTrack({3})
+    if (currentTrackID ~= 4) then
+        trackList = {4}
+        ChangeTrack(trackList)
     end
 
     currentState = State.IDLE
@@ -211,7 +213,8 @@ function CastDevour(castedOn)
         sandParticles:GetComponentParticle():ResumeParticleSpawn()
     end
 
-    ChangeTrack({0, 1})
+    trackList = {0, 1}
+    ChangeTrack(trackList)
     currentState = State.DEVOUR
 end
 
@@ -240,8 +243,9 @@ function DoDevour()
         return
     end
 
-    if (currentTrackID ~= 2) then
-        ChangeTrack({2})
+    if (currentTrackID ~= 3) then
+        trackList = {3}
+        ChangeTrack(trackList)
     end
 
     currentState = State.IDLE
@@ -271,7 +275,8 @@ function CastUltimate(castedOn)
         sandParticles:GetComponentParticle():ResumeParticleSpawn()
     end
 
-    ChangeTrack({0, 1})
+    trackList = {0, 1}
+    ChangeTrack(trackList)
 
     currentState = State.EAT
 end
@@ -301,7 +306,8 @@ function DoUltimate()
     end
 
     if (currentTrackID ~= 3) then
-        ChangeTrack({3})
+        trackList = {3}
+        ChangeTrack(trackList)
     end
 
     currentState = State.IDLE
@@ -333,7 +339,8 @@ function CastSpit(position)
         sandParticles:GetComponentParticle():ResumeParticleSpawn()
     end
 
-    ChangeTrack({0, 1})
+    trackList = {0, 1}
+    ChangeTrack(trackList)
 
     currentState = State.SPIT
 end
@@ -362,8 +369,9 @@ function DoSpit()
         return
     end
 
-    if (currentTrackID ~= 3) then
-        ChangeTrack({3})
+    if (currentTrackID ~= 4) then
+        trackList = {4}
+        ChangeTrack(trackList)
     end
 
     currentState = State.IDLE
@@ -385,7 +393,8 @@ function EventHandler(key, fields)
     elseif (key == "Sadiq_Heal") then -- fields[1] -> target; fields[2] -> pos;
         CastPrimary(fields[1], fields[2])
     elseif (key == "Spit_Heal_Hit") then
-        ChangeTrack({4})
+        trackList = {5}
+        ChangeTrack(trackList)
         if (healParticles ~= nil) then
             healParticles:GetTransform():SetPosition(float3.new(fields[1]:GetTransform():GetPosition().x,
                 fields[1]:GetTransform():GetPosition().y + 13, fields[1]:GetTransform():GetPosition().z))

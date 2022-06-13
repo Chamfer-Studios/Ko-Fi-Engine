@@ -7,6 +7,8 @@ healAmmount = 1
 function Start()
     boxCollider = gameObject:GetBoxCollider() -- This is here instead of at "awake" so the order of component creation does not affect
     componentRigidBody = gameObject:GetRigidBody() -- This is here instead of at "awake" so the order of component creation does not affect
+    componentSwitch = gameObject:GetAudioSwitch()
+    currentTrackID = -1
     target = GetVariable("Worm.lua", "target", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)
     if (target ~= nil) then
         worm = GetVariable("Worm.lua", "gameObject", INSPECTOR_VARIABLE_TYPE.INSPECTOR_GAMEOBJECT)

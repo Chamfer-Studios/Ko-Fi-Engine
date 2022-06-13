@@ -15,7 +15,7 @@ function Update(dt)
         isStarting = true
     end
     if (GetInput(44) == KEY_STATE.KEY_DOWN) then -- ENTER
-        isActive = 9
+        isActive = 14
         change = true
     end
     if (GetInput(43) == KEY_STATE.KEY_DOWN) then -- SPACE
@@ -55,7 +55,7 @@ function Update(dt)
             gameObject:GetChild("Text4"):GetChild("Text4Part3"):Active(false)
             gameObject:GetChild("Text4"):GetChild("Text4Part4"):Active(true)
         elseif (isActive == 9) then
-            gameObject:ChangeScene(true, "CutsceneRabbansDeath")
+            gameObject:ChangeScene(true, "Scene")
         end
         change = false
     end
