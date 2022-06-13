@@ -43,12 +43,12 @@ void PanelRuntimeState::DrawRuntimePanel()
 
         if (state == GameState::PLAYING)
         {
-            if (ImGui::Button("PAUSE", ImVec2(120, 22)) || input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+            if (ImGui::Button("PAUSE", ImVec2(120, 22)))
                 sceneManager->OnPause();
         }
         else if (state == GameState::PAUSED)
         {
-            if (ImGui::Button("CONTINUE", ImVec2(120, 22)) || input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+            if (ImGui::Button("CONTINUE", ImVec2(120, 22)))
                 sceneManager->OnResume();
         }
 
@@ -56,7 +56,7 @@ void PanelRuntimeState::DrawRuntimePanel()
 
         if (state != GameState::PLAYING && state != GameState::PAUSED)
         {
-            if (ImGui::Button("PLAY", ImVec2(120, 22)) || input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+            if (ImGui::Button("PLAY", ImVec2(120, 22)))
             {
                 sceneManager->OnPlay();
                 editor->OnPlay();
@@ -65,7 +65,7 @@ void PanelRuntimeState::DrawRuntimePanel()
         }
         else
         {
-            if (ImGui::Button("STOP", ImVec2(120, 22)) || input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+            if (ImGui::Button("STOP", ImVec2(120, 22)))
             {
                 sceneManager->OnStop();
                 _CrtDumpMemoryLeaks();
