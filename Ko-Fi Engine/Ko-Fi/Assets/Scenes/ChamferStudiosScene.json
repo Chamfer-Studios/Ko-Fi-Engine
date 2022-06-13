@@ -2,7 +2,7 @@
     "ChamferStudiosScene": {
         "active": true,
         "draw_skybox": true,
-        "game_objects_amount": 5,
+        "game_objects_amount": 6,
         "game_objects_list": [
             {
                 "UID": 1772434662,
@@ -69,15 +69,15 @@
                             0.0
                         ],
                         "rotation": [
-                            0.27059805393218994,
-                            -0.6532815098762512,
-                            0.27059805393218994,
-                            0.6532815098762512
+                            0.2705981135368347,
+                            -0.653281569480896,
+                            0.2705981135368347,
+                            0.6532813310623169
                         ],
                         "scale": [
-                            1.0,
+                            1.0000001192092896,
                             0.9999999403953552,
-                            0.9999999403953552
+                            1.0
                         ],
                         "type": 21
                     },
@@ -168,62 +168,6 @@
                 "tag": 0
             },
             {
-                "UID": 826927734,
-                "active": true,
-                "components": [
-                    {
-                        "active": true,
-                        "type": 23
-                    },
-                    {
-                        "active": true,
-                        "anchor": 4,
-                        "pivot": [
-                            0.5,
-                            0.5
-                        ],
-                        "position": [
-                            0.0,
-                            0.0
-                        ],
-                        "rotation": [
-                            0.0,
-                            0.0,
-                            0.0
-                        ],
-                        "size": [
-                            1920.0,
-                            1080.0
-                        ],
-                        "type": 22
-                    },
-                    {
-                        "active": true,
-                        "texture": "Assets/UI/Intro/ch_banner_white.png",
-                        "type": 14
-                    },
-                    {
-                        "active": true,
-                        "async": false,
-                        "file_name": "Assets/Scripts/Intro/IntroTransitionBegin.lua",
-                        "id": 622354712,
-                        "inspector_variables": [
-                            {
-                                "name": "transitionTo",
-                                "type": "string",
-                                "value": "DuneSSOScene"
-                            }
-                        ],
-                        "type": 5
-                    }
-                ],
-                "is3D": false,
-                "isPrefab": false,
-                "name": "Image",
-                "parent_UID": 1326020511,
-                "tag": 0
-            },
-            {
                 "UID": 2052709392,
                 "active": true,
                 "components": [
@@ -270,6 +214,104 @@
                 "isPrefab": false,
                 "name": "Main Camera",
                 "parent_UID": 0,
+                "tag": 0
+            },
+            {
+                "UID": 913539184,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            1920.0,
+                            1080.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/New UI/white.png",
+                        "type": 14
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Image (1)",
+                "parent_UID": 1326020511,
+                "tag": 0
+            },
+            {
+                "UID": 1296337801,
+                "active": true,
+                "components": [
+                    {
+                        "active": true,
+                        "type": 23
+                    },
+                    {
+                        "active": true,
+                        "anchor": 4,
+                        "pivot": [
+                            0.5,
+                            0.5
+                        ],
+                        "position": [
+                            0.0,
+                            0.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            1280.0,
+                            720.0
+                        ],
+                        "type": 22
+                    },
+                    {
+                        "active": true,
+                        "texture": "Assets/UI/Intro/ch_banner_white.png",
+                        "type": 14
+                    },
+                    {
+                        "active": true,
+                        "async": false,
+                        "file_name": "Assets/Scripts/Intro/IntroTransitionBegin.lua",
+                        "id": 622354712,
+                        "inspector_variables": [
+                            {
+                                "name": "transitionTo",
+                                "type": "string",
+                                "value": "DuneSSOScene"
+                            }
+                        ],
+                        "type": 5
+                    }
+                ],
+                "is3D": false,
+                "isPrefab": false,
+                "name": "Image",
+                "parent_UID": 1326020511,
                 "tag": 0
             }
         ],

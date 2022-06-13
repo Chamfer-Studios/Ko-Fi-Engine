@@ -163,6 +163,8 @@ smokebombFlag = false
 
 function Start()
 
+    SetOutlineThickness(40)
+
     -- Components
     componentRigidBody = gameObject:GetRigidBody()
     componentBoxCollider = gameObject:GetBoxCollider()
@@ -428,6 +430,19 @@ function Update(dt)
             end
         end
 
+        -- To Keep Making Walk/Run Sound After Pickup
+        if (currentMovement == Movement.WALK and currentTrackID == 2) then
+            if(componentSwitch:IsAnyTrackPlaying() == false) then
+                ChangeTrack({0})
+            end
+        end
+
+        if (currentMovement == Movement.RUN and currentTrackID == 2) then
+            if(componentSwitch:IsAnyTrackPlaying() == false) then
+                ChangeTrack({1})
+            end
+        end
+
         -- 1
         if (GetInput(21) == KEY_STATE.KEY_DOWN and currentState ~= State.AIM_ULTIMATE_RECAST) then
             ActivePrimary()
@@ -513,15 +528,13 @@ function SetMovement(newMovement)
         if (componentAnimator ~= nil) then
             componentAnimator:SetSelectedClip("Walk")
         end
-        trackList = {9}
-        ChangeTrack(trackList)
+        ChangeTrack({0})
     elseif (newMovement == Movement.RUN) then
         currentMovement = Movement.RUN
         if (componentAnimator ~= nil) then
             componentAnimator:SetSelectedClip("Run")
         end
-        trackList = {10}
-        ChangeTrack(trackList)
+        ChangeTrack({1})
     elseif (newMovement == Movement.IDLE_CROUCH) then
         currentMovement = Movement.IDLE_CROUCH
         if (componentAnimator ~= nil) then
@@ -535,8 +548,7 @@ function SetMovement(newMovement)
         end
     elseif (newMovement == Movement.CROUCH) then
         currentMovement = Movement.CROUCH
-        trackList = {9}
-        ChangeTrack(trackList)
+        ChangeTrack({0})
         if (componentAnimator ~= nil) then
             componentAnimator:SetSelectedClip("Crouch")
         end
@@ -980,8 +992,7 @@ function CastPrimary()
                     componentAnimator:SetSelectedClip("Point")
                     StopMovement(false)
 
-                    trackList = {4, 5, 6}
-                    ChangeTrack(trackList)
+                    ChangeTrack({7, 8, 9})
 
                     if (target ~= gameObject) then
                         LookAtTarget(target:GetTransform():GetPosition())
@@ -1052,8 +1063,7 @@ function CastSecondary()
                 componentAnimator:SetSelectedClip("Point")
                 StopMovement(false)
 
-                trackList = {4, 5, 6}
-                ChangeTrack(trackList)
+                ChangeTrack({7, 8, 9})
 
                 LookAtTarget(target:GetTransform():GetPosition())
             end
@@ -1133,8 +1143,7 @@ function CastUltimate()
 
                 LookAtTarget(target:GetTransform():GetPosition())
 
-                trackList = {4, 5, 6}
-                ChangeTrack(trackList)
+                ChangeTrack({7, 8, 9})
             end
         else
             if (footstepsParticle ~= nil) then
@@ -1198,8 +1207,7 @@ function RecastUltimate(isAlreadyCasted)
 
             LookAtTarget(target)
 
-            trackList = {4, 5, 6}
-            ChangeTrack(trackList)
+            ChangeTrack({7, 8, 9})
 
             ultimateTimer = 0.0
             abilities.AbilityUltimate = AbilityStatus.Cooldown
@@ -1247,8 +1255,7 @@ function TakeDamage(damage)
 
         DispatchGlobalEvent("Player_Health", {characterID, currentHP, maxHP})
 
-        trackList = {0, 1, 2}
-        ChangeTrack(trackList)
+        ChangeTrack({3, 4, 5})
     else
         currentHP = 0
         Log("Omozra: Dying\n")
@@ -1264,10 +1271,8 @@ function Die()
     if (componentAnimator ~= nil) then
         componentAnimator:SetSelectedClip("Death")
     end
-    if (currentTrackID ~= 3) then
-        trackList = {3}
-        ChangeTrack(trackList)
-    end
+
+    ChangeTrack({6})
 
     SetVariable(0, "GameState.lua", "gameOverTimer", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
 end
@@ -1307,6 +1312,7 @@ function EventHandler(key, fields)
         if (fields[1] == characterID) then
             -- If omozra is being changed
             CancelAbilities(true)
+            SetRenderOutline(false)
         end
         if (fields[2] == characterID) then
             DispatchGlobalEvent("Player_Health", {characterID, currentHP, maxHP})
@@ -1319,6 +1325,7 @@ function EventHandler(key, fields)
                 {characterID, Ability.Ultimate, abilities.AbilityUltimate, ultimateTimer})
             -- Log("Omozra: Ultimate = " .. abilities.AbilityUltimate .. "\n")
             DispatchGlobalEvent("Omozra_Charges", {currentCharges, maxCharges})
+            SetRenderOutline(true)
         end
     elseif (key == "Dialogue_Opened") then
         isDialogueOpen = true
@@ -1328,8 +1335,7 @@ function EventHandler(key, fields)
     elseif (key == "Dialogue_Closed") then
         isDialogueOpen = false
     elseif (key == "Spice_Reward") then
-        trackList = {7, 8}
-        ChangeTrack(trackList)
+        ChangeTrack({2})
     elseif (key == "Spit_Heal_Hit") then
         if (currentCharges >= primaryChargeCost) then
             abilities.AbilityPrimary = AbilityStatus.Normal

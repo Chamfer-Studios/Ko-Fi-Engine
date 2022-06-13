@@ -318,7 +318,7 @@ void C_Camera::SetProjectionType(const CameraType& type)
 {
 	cameraType = type;
 
-	if (type == CameraType::KOFI_ORTHOGRAPHIC)
+	if (owner && type == CameraType::KOFI_ORTHOGRAPHIC)
 	{
 		hFov = cameraFrustum.HorizontalFov();
 		vFov = cameraFrustum.VerticalFov();

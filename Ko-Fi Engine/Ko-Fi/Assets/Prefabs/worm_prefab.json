@@ -136,15 +136,15 @@
                                                                 -8.08376693725586
                                                             ],
                                                             "rotation": [
-                                                                -0.014398433268070221,
-                                                                -0.002675354015082121,
-                                                                -0.0006793678621761501,
+                                                                -0.01439843699336052,
+                                                                -0.0026753542479127645,
+                                                                -0.0006793680367991328,
                                                                 0.99989253282547
                                                             ],
                                                             "scale": [
                                                                 1.0,
                                                                 1.0,
-                                                                0.9999999403953552
+                                                                0.9999998211860657
                                                             ],
                                                             "type": 21
                                                         }
@@ -274,7 +274,7 @@
                                                                 0.1800231635570526
                                                             ],
                                                             "rotation": [
-                                                                -0.007257439661771059,
+                                                                -0.007257442455738783,
                                                                 0.22233296930789948,
                                                                 -0.08245581388473511,
                                                                 0.971450686454773
@@ -344,8 +344,8 @@
                                                             ],
                                                             "rotation": [
                                                                 0.2721167504787445,
-                                                                0.01935315690934658,
-                                                                -0.006201399955898523,
+                                                                0.01935316063463688,
+                                                                -0.0062014018185436726,
                                                                 0.9620497226715088
                                                             ],
                                                             "scale": [
@@ -414,12 +414,12 @@
                                                             "rotation": [
                                                                 -0.021602654829621315,
                                                                 -0.08305614441633224,
-                                                                0.012442432343959808,
+                                                                0.012442431412637234,
                                                                 0.9962329864501953
                                                             ],
                                                             "scale": [
                                                                 0.9999998807907104,
-                                                                0.9999990463256836,
+                                                                0.999998927116394,
                                                                 1.0
                                                             ],
                                                             "type": 21
@@ -622,7 +622,7 @@
                                                                 0.03874349594116211,
                                                                 -0.26563048362731934,
                                                                 0.143844872713089,
-                                                                0.952495813369751
+                                                                0.9524956941604614
                                                             ],
                                                             "scale": [
                                                                 1.0,
@@ -1063,6 +1063,7 @@
                 },
                 {
                     "active": true,
+                    "async": false,
                     "file_name": "Assets/Scripts/Characters/Omozra/Worm.lua",
                     "id": 244968381,
                     "type": 5
@@ -1071,7 +1072,7 @@
                     "active": true,
                     "fade_time": 2.0,
                     "offset_sync": false,
-                    "total_tracks": 6,
+                    "total_tracks": 5,
                     "tracks": [
                         {
                             "bypass": false,
@@ -1096,19 +1097,6 @@
                             "pan": 0.0,
                             "play_on_start": false,
                             "track_path": "Assets/Audio/SFX/Sadiq/sadiq_ground_unburrow_2_fx.wav",
-                            "transpose": 1.0,
-                            "volume": 100.0
-                        },
-                        {
-                            "bypass": false,
-                            "custom_loop": false,
-                            "loop": false,
-                            "loop_offset": 0.0,
-                            "mute": false,
-                            "offset": 0.0,
-                            "pan": 0.0,
-                            "play_on_start": false,
-                            "track_path": "Assets/Audio/SFX/Sadiq/sadiq_ground_burrow_fx.wav",
                             "transpose": 1.0,
                             "volume": 100.0
                         },
@@ -1524,7 +1512,7 @@
                     "clipDuration": 205.0,
                     "clipDurationInSeconds": 8.541666984558105,
                     "clipEndFrame": 205.0,
-                    "clipFinished": true,
+                    "clipFinished": false,
                     "clipLoop": true,
                     "clipName": "Default clip",
                     "clipStartFrame": 0.0,

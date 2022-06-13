@@ -85,8 +85,6 @@ public:
 			i.second.shrink_to_fit();
 		}
 		gameObjectListToCreate.clear();
-		name.clear();
-		name.shrink_to_fit();
 		for (auto i : sceneModels)
 		{
 			i.second.second.clear();

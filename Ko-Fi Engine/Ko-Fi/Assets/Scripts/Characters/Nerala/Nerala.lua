@@ -185,6 +185,8 @@ unlocked = false;
 
 function Start()
 
+    SetOutlineThickness(40)
+
     -- Components
     componentRigidBody = gameObject:GetRigidBody()
     componentBoxCollider = gameObject:GetBoxCollider()
@@ -430,6 +432,19 @@ function Update(dt)
             end
         end
 
+        -- To Keep Making Walk/Run Sound After Pickup
+        if (currentMovement == Movement.WALK and currentTrackID == 2) then
+            if(componentSwitch:IsAnyTrackPlaying() == false) then
+                ChangeTrack({0})
+            end
+        end
+
+        if (currentMovement == Movement.RUN and currentTrackID == 2) then
+            if(componentSwitch:IsAnyTrackPlaying() == false) then
+                ChangeTrack({1})
+            end
+        end
+
         -- 1
         if (GetInput(21) == KEY_STATE.KEY_DOWN) then
             ActivePrimary()
@@ -586,7 +601,7 @@ function DrawHoverParticle()
     if (isSelected == true) then
         local drawingTarget = GetGameObjectHovered()
         local finalPosition
-        if ((currentState == Sta or currentState == State.AIM_PRIMARY or currentState == State.AIM_SECONDARY or
+        if ((currentState == State.ATTACK or currentState == State.AIM_PRIMARY or currentState == State.AIM_SECONDARY or
             currentState == State.AIM_ULTIMATE) and target ~= nil) then
             if (target.x == nil) then
                 t = target:GetTransform():GetPosition()
@@ -1224,7 +1239,7 @@ function TakeDamage(damage)
 
         DispatchGlobalEvent("Player_Health", {characterID, currentHP, maxHP})
 
-        ChangeTrack({3,4,5})
+        ChangeTrack({3, 4, 5})
     else
         currentHP = 0
         Log("Nerala: Dying\n")
@@ -1241,9 +1256,7 @@ function Die()
         componentAnimator:SetSelectedClip("Death")
     end
 
-    if (currentTrackID ~= 3) then
-        ChangeTrack({6})
-    end
+    ChangeTrack({6})
 
     SetVariable(0, "GameState.lua", "gameOverTimer", INSPECTOR_VARIABLE_TYPE.INSPECTOR_INT)
 end
@@ -1283,6 +1296,7 @@ function EventHandler(key, fields)
         if (fields[1] == characterID) then
             -- If nerala is being changed
             CancelAbilities(true)
+            SetRenderOutline(false)
         end
         if (fields[2] == characterID) then
             DispatchGlobalEvent("Player_Health", {characterID, currentHP, maxHP})
@@ -1294,6 +1308,7 @@ function EventHandler(key, fields)
             DispatchGlobalEvent("Player_Ability",
                 {characterID, Ability.Ultimate, abilities.AbilityUltimate, ultimateTimer})
             -- Log("Nerala: Ultimate = " .. abilities.AbilityUltimate .. "\n")
+            SetRenderOutline(true)
         end
     elseif (key == "Mosquito_Death") then
         ChangeTrack({12})
@@ -1372,7 +1387,7 @@ function EventHandler(key, fields)
         componentRigidBody:SetRigidBodyPos(float3.new(fields[1], fields[2], fields[3]))
 
         if (fields[4] == 1) then
-            primaryCastRange = 195
+            primaryCastRange = 210
         elseif (fields[4] == 2) then
             unawareChanceHarkDart = 100
             awareChanceHarkDart = 100

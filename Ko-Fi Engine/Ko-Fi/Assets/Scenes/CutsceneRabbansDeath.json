@@ -117,10 +117,11 @@
                         "sCullingRadius": 499,
                         "sphere_culling": false,
                         "type": 4,
-                        "vertical_fov": 378.0
+                        "vertical_fov": 1000.0
                     },
                     {
                         "active": true,
+                        "async": false,
                         "file_name": "Assets/Scripts/ChangeSceneDebugKey.lua",
                         "id": 679004013,
                         "inspector_variables": [
@@ -175,6 +176,7 @@
                     },
                     {
                         "active": true,
+                        "async": false,
                         "file_name": "Assets/Scripts/HUD/UI_CutsceneRabbansDeath.lua",
                         "id": 1411300524,
                         "type": 5
@@ -266,7 +268,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Press enter to skip"
                     }
@@ -315,7 +317,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Zhib - You are done Rabban, at the end you were nothing more than a coward."
                     }
@@ -406,7 +408,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Omozra - Your water has no value, you are a dishonor to your people."
                     }
@@ -455,7 +457,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "A grain of sand in the great dune."
                     }
@@ -546,7 +548,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Omozra - You are right, we should save the great Rabban. What were we thinking..."
                     }
@@ -595,7 +597,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Zhib - Give him the antidote, quick!"
                     }
@@ -644,7 +646,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Omozra throws Rabban his bait pouch, filled to the brim"
                     }
@@ -693,7 +695,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "with the harkonnen that died in the underground."
                     }
@@ -1036,7 +1038,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Rabban - I knew you would understand, but still, you will be executed for your sins..."
                     }
@@ -1085,7 +1087,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Rabban’s smile disappeared after he opened the pouch"
                     }
@@ -1134,7 +1136,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "and saw the teeth of a worm appearing right under him."
                     }
@@ -1267,7 +1269,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "He tried to move but the poison was already too deep in his system."
                     }
@@ -1316,7 +1318,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "The last words from Rabban were the most hellish scream"
                     }
@@ -1365,7 +1367,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "a man could hear in the whole galaxy. leaving only behind"
                     }
@@ -1456,7 +1458,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Rabban - You did this to me… To the great Glossu Rabban"
                     }
@@ -1505,7 +1507,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Harkonnen, the beast! You should be kneeling down before me"
                     }
@@ -1554,7 +1556,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "like the insects that you are. Nothing more than ants..."
                     }
@@ -1603,7 +1605,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "his head as a trophy after the worm had ended him."
                     }

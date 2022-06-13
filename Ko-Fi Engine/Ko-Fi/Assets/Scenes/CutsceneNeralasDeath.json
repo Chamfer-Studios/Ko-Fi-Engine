@@ -121,6 +121,7 @@
                     },
                     {
                         "active": true,
+                        "async": false,
                         "file_name": "Assets/Scripts/ChangeSceneDebugKey.lua",
                         "id": 1293136323,
                         "inspector_variables": [
@@ -175,6 +176,7 @@
                     },
                     {
                         "active": true,
+                        "async": false,
                         "file_name": "Assets/Scripts/HUD/UI_CutsceneNeralasDeath.lua",
                         "id": 1411300524,
                         "type": 5
@@ -266,7 +268,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Press enter to skip"
                     }
@@ -315,7 +317,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Rabaan has his back turned, perfect for a surprise attack. With the"
                     }
@@ -406,7 +408,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "weight of every loved one that perished when their home was destroyed,"
                     }
@@ -497,7 +499,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "In a furious rage Nerala lunges forward, ignoring Zhib’s advice. "
                     }
@@ -756,7 +758,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Rabaan turns and catches her before the attack lands and laughs at the trio."
                     }
@@ -805,7 +807,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Rabban - “I am the Rabban,the Beast!!, you can't enter my"
                     }
@@ -854,7 +856,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "place and toy with my facility. You will die for this,"
                     }
@@ -945,7 +947,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Nerala feels the anger and the guilt building up inside her."
                     }
@@ -994,7 +996,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "just like your beloved Sannara!\""
                     }
@@ -1211,7 +1213,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Finally, Nerala snaps back and clears her mind, taking the opportunity to slash"
                     }
@@ -1260,7 +1262,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Rabaan on the forearm with a poisonous blade. Rabaan, unknowingly, laughs again."
                     }
@@ -1309,7 +1311,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Rabban - \"Your attacks are useless against me you fool. now die"
                     }
@@ -1358,7 +1360,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "you waste of flesh\"  killing Nerala and throwing her body aside."
                     }
@@ -1407,7 +1409,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Rabban - No... is not possible... No! What have you done to me!"
                     }
@@ -1456,7 +1458,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "You are nothing more than insects!!!"
                     }
@@ -1505,7 +1507,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "At the same time, he starts coughing and falls to his knees.His eyes open widely,"
                     }
@@ -1554,7 +1556,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": " fear flashing through them for the first time in his life."
                     }

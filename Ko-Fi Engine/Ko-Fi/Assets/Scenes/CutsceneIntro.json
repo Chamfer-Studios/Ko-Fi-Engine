@@ -268,7 +268,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Press enter to skip"
                     }
@@ -317,7 +317,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "It is the year 10193 in Arrakis.  This deserted planet is the only source of spice,  the key"
                     }
@@ -408,7 +408,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "to space travel, that has been found. War between the Atreides, who took on the"
                     }
@@ -457,7 +457,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "This war has shaken the infinite dunes of the planet, and has resulted in the near"
                     }
@@ -506,7 +506,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "annihilation of the Atreides and reinstated the tyranny of the Harkonnen."
                     }
@@ -597,7 +597,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "One of the only Fremen cities that escaped the Harkonnen control is Sannara,"
                     }
@@ -646,7 +646,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "which location remains hidden by mirages, something that was about to change..."
                     }
@@ -947,7 +947,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "The current ruler of Arrakis, the tyrant Glossu Rabaan Harkonnen, the Beast,"
                     }
@@ -996,7 +996,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "was made aware of the possible loation of Sannara. Immediately establishing a camp"
                     }
@@ -1045,7 +1045,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "near the locaton he was ready to sieze the opportunity, the beast was ready for a bloodbth."
                     }
@@ -1094,7 +1094,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "He had established a perimeter around the rock formation where Sannara"
                     }
@@ -1143,7 +1143,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "was established and had complete vision of the mirages that hid the Sietch."
                     }
@@ -1318,7 +1318,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "The only ones capable of stopping this threat were the group of warriors that"
                     }
@@ -1367,7 +1367,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "form the spearhead from Sannara: Nerala, fiercest hunter in Arrakis, Omozra, "
                     }
@@ -1416,7 +1416,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "master of worms, and their head, Zhib, son of Zhiffat, blade of the desert."
                     }
@@ -1465,7 +1465,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Nerala was sent on a reconnaissance mission and reported that Rabban had made a mistake.  He was"
                     }
@@ -1514,7 +1514,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "there, in the camp, at her reach, and she was going to end the bloodshed right then and there."
                     }
@@ -1563,7 +1563,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "planetary fief by order of the emperor, and the Harkonnen,previous rulers of Arrakis."
                     }
@@ -1612,7 +1612,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "The Fremen, the true inhabitants of the planet, now face the Harkonnen alone."
                     }
@@ -1661,7 +1661,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "She was going to kill him."
                     }
@@ -1752,7 +1752,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "Fearing the dangers of this improvised mission, Zhib and Omozra decided to go after her"
                     }
@@ -1801,7 +1801,7 @@
                             255,
                             255
                         ],
-                        "fontPath": "Assets/Fonts/Rubik_Mono_One/RubikMonoOne-Regular.ttf",
+                        "fontPath": "Assets/Fonts/Inter/Inter-Regular.otf",
                         "type": 16,
                         "value": "to stop her."
                     }

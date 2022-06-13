@@ -178,34 +178,12 @@ bool SceneIntro::Update(float dt)
 	{
 		GameObject* go = this->gameObjectList[i];
 		go->InitUpdateScripts(dt);
-		if (go->changeScene)
-		{
-			switchScene = true;
-			sceneNameGO = go->sceneName;
-			go->changeScene = false;
-		}
-		if (go->isQuitting)
-		{
-			quitPlease = true;
-			go->isQuitting = false;
-		}
 	}
 
 	for (int i = 0; i < this->gameObjectList.size(); i++)
 	{
 		GameObject* go = this->gameObjectList[i];
 		go->DoUpdateScripts(dt);
-		if (go->changeScene)
-		{
-			switchScene = true;
-			sceneNameGO = go->sceneName;
-			go->changeScene = false;
-		}
-		if (go->isQuitting)
-		{
-			quitPlease = true;
-			go->isQuitting = false;
-		}
 	}
 
 #pragma omp parallel for
@@ -213,17 +191,6 @@ bool SceneIntro::Update(float dt)
 	{
 		GameObject* go = this->gameObjectList[i];
 		go->DoUpdateAsyncScripts(dt);
-		if (go->changeScene)
-		{
-			switchScene = true;
-			sceneNameGO = go->sceneName;
-			go->changeScene = false;
-		}
-		if (go->isQuitting)
-		{
-			quitPlease = true;
-			go->isQuitting = false;
-		}
 	}
 
 	// example::NodeEditorShow();
@@ -297,8 +264,7 @@ bool SceneIntro::CleanUp()
 
 	example::NodeEditorShutdown();
 
-	sceneNameGO.clear();
-	sceneNameGO.shrink_to_fit();
+	
 	camera = nullptr;
 
 	return true;

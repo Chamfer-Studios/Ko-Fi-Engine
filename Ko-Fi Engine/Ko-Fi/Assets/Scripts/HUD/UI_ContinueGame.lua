@@ -5,7 +5,9 @@ function Start()
 
     levelToLoad = GetGameJsonInt("level_progression")
 
-    if(levelToLoad == 1) then
+    if(levelToLoad == 0) then
+        DeleteGameObject()
+    elseif (levelToLoad == 1) then
         levelToLoad = "SceneLoadingLevel1"
     elseif (levelToLoad == 2) then
         levelToLoad = "SceneLoadingLevel2"
