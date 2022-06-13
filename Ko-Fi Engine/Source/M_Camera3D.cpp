@@ -320,7 +320,7 @@ void M_Camera3D::OnClick(SDL_Event event)
 		if (!engine->GetEditor()->GetPanel<PanelViewport>()->IsWindowFocused())
 			return;
 
-	if (event.button.button == SDL_BUTTON_LEFT && engine->GetSceneManager()->GetGameState() != GameState::PLAYING && !ImGuizmo::IsOver())
+	if (event.button.button == SDL_BUTTON_LEFT && engine->GetSceneManager()->GetGameState() != GameState::PLAYING && engine->GetSceneManager()->GetGameState() != GameState::PAUSED && !ImGuizmo::IsOver())
 	{
 		GameObject* hit = engine->GetCamera3D()->MousePicking();
 		if (hit != nullptr)
